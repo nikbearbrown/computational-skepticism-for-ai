@@ -1,0 +1,37 @@
+---
+title: "Computational Skepticism for AI"
+subtitle: "Validation, Supervision, and the Practice of Catching the Failure That Does Not Announce Itself"
+author:
+  - Nik Bear Brown
+date: 2026
+lang: en-US
+description: |
+  A masters-level engineering textbook on the supervisory and validation
+  capacities required to catch the AI failure that does not announce
+  itself — the plausible answer to the wrong question, the statistically
+  valid output on a causally incoherent claim. Built around Pearl's three-
+  rung ladder of causal reasoning, the Five Supervisory Capacities, and a
+  longitudinal validation case threaded through eight chapters.
+rights: © 2026 Nik Bear Brown. All rights reserved.
+publisher: Bear Brown LLC
+subject:
+  - Artificial Intelligence — Validation
+  - Computational Skepticism
+  - Engineering Pedagogy
+  - Causal Reasoning
+keywords:
+  - computational skepticism
+  - Pearl's Ladder
+  - Five Supervisory Capacities
+  - AI validation
+  - frictional method
+  - agentic AI
+  - calibration
+  - explainability
+  - fairness metrics
+  - robustness
+  - accountability
+ibooks:
+  version: 1.0.0
+toc-title: Contents
+...
