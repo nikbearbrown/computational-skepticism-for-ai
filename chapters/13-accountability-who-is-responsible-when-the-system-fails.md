@@ -1,4 +1,11 @@
 # Chapter 13 — Accountability: Who Is Responsible When the System Fails?
+
+## TL;DR
+
+- I want to put a case in front of you.
+- The chapter moves through Why humans must be in the loop: the cognitive argument, AI as extended mind: what the capacities actually are, The seven-tier taxonomy, The Gödel argument, and related ideas.
+- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
+
 *Responsibility distributes. So does the work of building systems that can be held to account.*
 
 ---
@@ -33,7 +40,8 @@ But before we get to governance and regulation, there is a prior question — on
 
 The answer is cognitive. Specifically, it is about what kinds of cognitive work the accountability apparatus actually requires — and whether those kinds of work are ones AI systems can perform.
 
-<!-- → [FIGURE: Figure 13.1 — The mail-server case as a responsibility-attribution map. Five nodes (non-owner, agent, owner, framework developers, model provider) arranged by distance from the proximate event, with labeled arrows showing causal contribution and duty for each party. Caption: "None of these nodes, in isolation, produced the failure. Each was necessary. None was sufficient."] -->
+![None of these nodes, in isolation, produced the failure. Each was necessary. None was sufficient.](images/13-accountability-who-is-responsible-when-the-system-fails-fig-01.png)
+*Figure 13.1 — Figure 13*
 
 ---
 
@@ -66,7 +74,8 @@ There is a way of thinking about cognitive tools that goes back further than AI.
 
 AI is the latest entry in this series, and by far the most powerful. The question that matters for accountability is not whether AI can extend human cognition — it plainly can — but which cognitive operations it extends, which it simulates without performing, and which it cannot touch regardless of scale. Getting that map right is what makes the accountability argument structural rather than contingent.
 
-<!-- → [INFOGRAPHIC: The cognitive extension lineage — AI as the latest entry in a long series. Timeline running left to right: writing (extends memory, ~3200 BCE), the printed book (extends transmission fidelity), the microscope (extends perception), the calculator (extends working memory), GPS (extends spatial navigation — and begins to substitute for it), the bomb-sniffing dog (extends olfactory detection into hazard identification), AI (extends pattern recognition, semantic retrieval, constrained planning — and raises the question of what it cannot extend). Each entry labeled with: what capacity it extends, whether additive or substitutive, and what the human must still supply. Caption: "Nobody worried that the microscope would replace the scientist. The question is whether we are being equally clear about what AI does and does not extend."] -->
+![Nobody worried that the microscope would replace the scientist. The question is whether we are being equally clear about what AI does and does not extend.](images/13-accountability-who-is-responsible-when-the-system-fails-fig-02.png)
+*Figure 13.2 — The cognitive extension lineage *
 
 Let me take the capacities one at a time.
 
@@ -92,7 +101,8 @@ Let me take the capacities one at a time.
 
 Each capacity tells a version of the same story. Where AI is strong — pattern recognition, semantic memory, statistical language, metric navigation, constrained planning — it extends human cognitive reach in exactly the way that writing extended memory or the microscope extended perception. The extended mind is more capable than the unextended one. Where AI is weak or absent — episodic memory, genuine metacognition, calibrated self-awareness, collective practice, stakes — the capacity in question is not one that can be extended by adding more computation. It requires a different kind of thing: an agent with a history, with commitments, with the possibility of loss.
 
-<!-- → [CHART: Two-axis diagram of AI cognitive capacity. Horizontal axis: "Extension" (additive cognitive prosthetic) to "Substitution" (replaces biological capacity). Vertical axis: "AI strong" to "AI absent." Plotted points for each capacity: pattern recognition (strong / additive), semantic memory (strong / additive), constrained planning (strong / additive), metric navigation (strong / substitutive — note the GPS warning), statistical language (strong / additive for production, uncertain for communication), episodic memory (absent — nothing to extend or substitute), metacognition (absent — Gödel problem), calibrated self-awareness (absent), collective practice (absent — reflects output, not practice), stakes (absent by definition). Caption: "The capacities AI extends are the capacities that can be formalized. The capacities it cannot extend are the ones that require a subject — an agent with history, commitments, and the possibility of loss. Those are precisely the capacities accountability requires."] -->
+![The capacities AI extends are the capacities that can be formalized. The capacities it cannot extend are the ones that require a subject — an agent with history, commitments, and the possibility of loss. Those are precisely the capacities accountability requires.](images/13-accountability-who-is-responsible-when-the-system-fails-fig-03.png)
+*Figure 13.3 — Two-axis diagram of AI cognitive capacity*
 
 The accountability apparatus is built from both kinds of capacity. The specification, the audit trail, the recourse mechanism, the independent review, the sanctions — each draws on the second kind. The *Irreducibly Human* taxonomy organizes this observation into a structure you can use.
 
@@ -169,7 +179,8 @@ Every high-stakes validation system humans have built — clinical trials, aircr
 
 The plausibility auditor — the profession that the automated research vision forgot to invent — is not a fact-checker or a quality assurance technician. It is someone trained to stand outside sophisticated AI outputs and ask whether those outputs correspond to reality rather than merely to internal consistency. This requires two forms of expertise that current training pipelines do not produce together: deep domain knowledge sufficient to recognize when a result is subtly wrong, and knowledge of AI failure modes sufficient to know which kind of error to hunt. That combination is Tier 4 and Tier 5 work. No AI system operating at Tier 1 can substitute for it.
 
-<!-- → [FIGURE: Figure 13.2 — Why AI cannot close the accountability loop. A diagram with two components. Left: the Gödel argument — a formal system cannot verify its own consistency; a validator must be external to the system being validated. Right: the tier argument — the accountability apparatus requires Tier 4 (independent supervisory judgment), Tier 5 (causal-counterfactual reasoning), Tier 6 (institutional accountability), and Tier 7 (stakes). AI is at Tier 1. The diagram shows the structural gap rather than an empirical limitation.] -->
+![Figure 13](images/13-accountability-who-is-responsible-when-the-system-fails-fig-04.png)
+*Figure 13.4 — Figure 13*
 
 ---
 
@@ -302,7 +313,8 @@ This is what Rung 3 looks like in its governance form. The counterfactual lives 
 
 For a working engineer, this is liberating. *Most catastrophic AI failures are not algorithmic failures.* They are regime failures, and the regime is changeable in ways the algorithm often is not. The supervisory work — the work this book has been training — extends through the regime. This is the chapter where that extension becomes explicit.
 
-<!-- → [FIGURE: Figure 13.6 — Pearl's Ladder with the governance extension and the cognitive tier annotations. Three rungs: Rung 1 (association / the data — Tier 1 work), Rung 2 (intervention / the model — Tier 4 supervisory work), Rung 3 (counterfactual / the regime — Tier 5 causal-counterfactual work). Each rung annotated with the tier it requires and why AI cannot substitute. Below Rung 3: "The governance counterfactual — what regime, if implemented earlier, would have produced a different system?" Caption: "The standard treatment stops at Rung 2. The closure is at Rung 3, and it requires a human."] -->
+![The standard treatment stops at Rung 2. The closure is at Rung 3, and it requires a human.](images/13-accountability-who-is-responsible-when-the-system-fails-fig-05.png)
+*Figure 13.5 — Figure 13*
 
 ---
 
@@ -322,7 +334,8 @@ The *Irreducibly Human* framing adds a layer to this: the AI Use Disclosure is a
 
 For our chapter's question — who is responsible? — generative AI complicates the topology. Responsibility extends through training data, training procedure, deployment configuration, and downstream propagation. The list of parties extends. The distribution flattens. The governance counterfactual has more variables.
 
-<!-- → [INFOGRAPHIC: Generative vs. predictive AI accountability topology. Two side-by-side panels. Left (predictive): a linear chain from data → model → classified output → downstream decision. Responsibility nodes are few and clearly bounded; provenance is implicit. Right (generative): a branching structure from training corpus → model → generated artifact → circulation → downstream use; each branch point adds a new potentially responsible party (training data sources, training team, deployment configurer, prompter, publisher, downstream user). Annotation: "The distribution flattens — more parties, smaller individual contribution, harder attribution." Student should feel why generative AI makes clean attribution harder, not just different.] -->
+![Generative vs](images/13-accountability-who-is-responsible-when-the-system-fails-fig-06.png)
+*Figure 13.6 — Generative vs*
 
 ---
 
@@ -362,7 +375,8 @@ The *Irreducibly Human* framing adds a dimension to this structural claim: the r
 
 The automated researcher will produce more outputs of greater sophistication across more domains than any previous generation of scientific tools. Each of those outputs will be a candidate. Each candidate will require validation. The validation will require humans. Not because we cannot imagine systems smart enough to evaluate the outputs, but because the evaluation's credibility depends on the evaluator's accountability, and accountability requires the possibility of consequence.
 
-<!-- → [INFOGRAPHIC: The plausibility auditor profile. A two-column diagram. Left column: "What the role requires" — (1) deep domain expertise sufficient to recognize when a result is subtly wrong (Tier 1 knowledge, Tier 4 judgment); (2) AI failure-mode literacy — knowing which errors to hunt (pattern errors, distribution shift, confident extrapolation beyond valid range); (3) independence from the system being audited (Gödel requirement); (4) stakes — professional consequence when the judgment is wrong (Tier 7). Right column: "What the role is NOT" — not a fact-checker (Tier 1 only), not a safety researcher (AI-internal focus), not a quality assurance technician (process compliance, not epistemic independence). Caption: "This is the profession the accountability apparatus requires. It has not been built." Student uses this to evaluate whether a given "human in the loop" role actually supplies what the accountability chain needs.] -->
+![This is the profession the accountability apparatus requires. It has not been built.](images/13-accountability-who-is-responsible-when-the-system-fails-fig-07.png)
+*Figure 13.7 — The plausibility auditor profile*
 
 ---
 
@@ -519,11 +533,9 @@ End with: a one-paragraph claim about whether MY agent's deployment can support 
 
 **Preview of next chapter:** Chapter 14 is the close. You'll apply the three categorical limits to your agent, produce the final go/no-go memo with a defended position the casebook supports, and stake the supervisor's recommendation: deploy, deploy with constraints, or refuse.
 
-
 ---
 
-## AI Wayback Machine
-
+##  AI Wayback Machine
 The ideas in this chapter didn't appear from nowhere. **John Dewey** spent the 1920s working out — most fully in *The Public and Its Problems* (1927) — what accountability requires when a harm is produced by an extended chain of indirect consequences that no single actor intended or even fully understood. His answer, briefly: a *public* forms whenever the indirect consequences of joint action are recognized and made traceable; a public that has not yet recognized the chain cannot hold anyone accountable; and the work of recognizing the chain is itself prior to the work of assigning responsibility. The chapter's argument that accountability for AI failures is a problem of *making the chain visible* before it is a problem of assigning blame is Dewey's argument, applied a century later.
 
 ![John Dewey, c. 1920s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/john-dewey.jpg)
@@ -544,3 +556,53 @@ Who was John Dewey, and how does his account of *the public* — formed by traci
 - Add a constraint: "Answer as if you're writing the accountability map for a post-incident review"
 
 What changes? What gets better? What gets worse?
+
+## Prompts
+
+Use these prompts with Claude to generate interactive D3 v7 versions of the
+figures in this chapter. Each produces a standalone HTML file you can open
+in a browser and modify freely.
+
+**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
+your Claude project context before using these prompts. They define the stack,
+naming conventions, color system, and typography the figures use.
+
+---
+
+### Figure 1 — None of these nodes, in isolation, produced the failure
+
+Create a standalone D3 v7 HTML figure for "None of these nodes, in isolation, produced the failure". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/13-accountability-who-is-responsible-when-the-system-fails-fig-01.html`
+
+---
+
+### Figure 2 — Nobody worried that the microscope would replace the scientist
+
+Create a standalone D3 v7 HTML figure for "Nobody worried that the microscope would replace the scientist". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/13-accountability-who-is-responsible-when-the-system-fails-fig-02.html`
+
+---
+
+### Figure 3 — The capacities AI extends are the capacities that can be formalized
+
+Create a standalone D3 v7 HTML figure for "The capacities AI extends are the capacities that can be formalized". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/13-accountability-who-is-responsible-when-the-system-fails-fig-03.html`
+
+---
+
+### Figure 4 — Figure 13
+
+Create a standalone D3 v7 HTML figure for "Figure 13". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/13-accountability-who-is-responsible-when-the-system-fails-fig-04.html`
+
+---
+
+### Figure 6 — Generative vs
+
+Create a standalone D3 v7 HTML figure for "Generative vs". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/13-accountability-who-is-responsible-when-the-system-fails-fig-06.html`

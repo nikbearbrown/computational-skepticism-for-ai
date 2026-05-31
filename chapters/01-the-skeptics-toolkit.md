@@ -1,4 +1,11 @@
 # Chapter 1 — The Skeptic's Toolkit
+
+## TL;DR
+
+- The moves you perform before you trust what the machine just told you.
+- The chapter moves through What I mean by skepticism, The cave, The solve-verify asymmetry, The Five Supervisory Capacities, and related ideas.
+- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
+
 *The moves you perform before you trust what the machine just told you.*
 
 ---
@@ -50,13 +57,15 @@ Descartes used this move in the seventeenth century for a different purpose — 
 
 What makes the Cartesian move powerful is that it produces a *checklist*. When you ask "what would have to be true for this to be wrong?", the answers are checkable. The training data either underrepresented cases like this one or it did not. The input features either include the relevant signal or they do not. The deployment context either matches the validation context or it does not. None of these are metaphysical questions. They are engineering questions. Descartes hands you a method for turning philosophical doubt into a practical inspection protocol.
 
-<!-- → [INFOGRAPHIC: Cartesian doubt as an inspection protocol — the single question "what would have to be true for this to be wrong?" branching into three checkable engineering conditions: (1) training data representation, (2) input feature completeness, (3) deployment/validation context match. Each branch terminates in a yes/no check. Positioned here as a companion to the prose before the Hume paragraph.] -->
+![Cartesian doubt as an inspection protocol ](images/01-the-skeptics-toolkit-fig-01.png)
+*Figure 1.1 — Cartesian doubt as an inspection protocol *
 
 **Hume** donates *the limit of induction*. Here is the thing about induction that I want you to feel in your bones, because most engineers have heard the words and not really felt the thing. The model has been right thousands of times. Each one of those correct predictions adds *zero logical guarantee* that the next prediction will be right. None. Zero. The reason induction works in practice is that the world is doing some of the work for you — the distribution is stable, the patterns persist — and the working is invisible until it stops working. When it stops working, the model is exactly as confident as it was the day before, and the confidence is now a lie.
 
 Nassim Taleb gives a version of this problem that I find harder to shake than the philosophical formulation. A turkey is fed every morning for a thousand days. Each morning of feeding increases the turkey's confidence that tomorrow will also involve feeding. By day nine hundred and ninety-nine, the turkey's model of the world assigns very high probability to a meal on day one thousand. On day one thousand, the farmer arrives with an axe.
 
-<!-- → [IMAGE: The turkey problem as a confidence timeline — x-axis: days 1 through 1000, y-axis: turkey's model confidence that tomorrow involves feeding. Confidence rises smoothly toward 1.0, then a vertical drop and termination at day 1000. A small annotation at the peak: "maximum confidence, maximum wrongness." This is the single most important image in the Hume section; it should be sized generously.] -->
+![The turkey problem as a confidence timeline ](images/01-the-skeptics-toolkit-fig-02.png)
+*Figure 1.2 — The turkey problem as a confidence timeline *
 
 The problem is not that the turkey was foolish. The problem is that the turkey had genuinely good evidence, correctly processed, leading to a prediction that happened to be catastrophically wrong because the turkey's model had no representation of the causal structure underneath the pattern. The turkey knew the correlation. The turkey did not know the mechanism. When the mechanism changed — when the calendar flipped to late November — the correlation model had no way to notice.
 
@@ -85,7 +94,8 @@ The left column is compatible with any outcome. The right column specifies the c
 
 I want to be clear about something. You do not have to think Descartes was right about anything to use his move. You do not have to be a Humean or a Popperian. The moves are tools. A structural engineer does not have to believe in the metaphysics of steel to perform a load test on a beam. You perform the move. The move either reveals something or it does not. If it does, you have learned something about the system. If it does not, you have learned that this particular check came back clean. Either is useful.
 
-<!-- → [INFOGRAPHIC: The three moves as a portable checklist — Cartesian doubt (what would make this wrong? → produces a checkable list of conditions), Humean induction limit (confidence is a property of the model, not the world → check whether the distribution has shifted), Popperian falsifiability (what would failure look like, specified in metrics, thresholds, and windows → refuse claims that are compatible with every outcome). Designed for margin reference or pull-quote treatment — the kind of thing students photograph and tape to monitors. [Figure 1.1]] -->
+![The three moves as a portable checklist ](images/01-the-skeptics-toolkit-fig-03.png)
+*Figure 1.3 — The three moves as a portable checklist *
 
 ---
 
@@ -103,7 +113,8 @@ You will perform this move every time you encounter a model output for the rest 
 
 The triage system produced a score. The score was the artifact. The patient had a clot. The clot was the world. When the engineers reviewed the deployment, they reviewed the artifact — the score, the model, the validation set, the metrics — and they did not review the world. The world was on a gurney in the waiting room.
 
-<!-- → [IMAGE: Two-column split — left column labeled "The Artifact" (model, score, validation metrics, deployment review), right column labeled "The World" (patient, clot, waiting room, outcome). A dotted line connects them labeled "statistical relationship." A bold caption beneath: "The engineers reviewed the left column. The patient was in the right column." [Figure 1.2]] -->
+![Two-column split ](images/01-the-skeptics-toolkit-fig-04.png)
+*Figure 1.4 — Two-column split *
 
 ---
 
@@ -121,7 +132,8 @@ If you do not budget for verification, you will not get verification. The system
 
 Most of this book is about how to verify cheaply enough that verification scales. The answer is *never* "automate the verification" — because that is just another model, with the same problem, sitting one layer up. The answer is always: design the system so that the verification a human can perform tells you what you need to know.
 
-<!-- → [CHART: Cost asymmetry bar chart — horizontal axis: AI task type (triage scoring, loan decisioning, autonomous email management, medical imaging). Vertical axis: relative cost (log scale). Two bars per task: production cost (near-zero, consistent across all domains) vs. verification cost (variable, always higher, domain-dependent). The visual point is that production cost is flat and verification cost is not — the gap is the problem. [Figure 1.3]] -->
+![Cost asymmetry bar chart ](images/01-the-skeptics-toolkit-fig-05.png)
+*Figure 1.5 — Cost asymmetry bar chart *
 
 ---
 
@@ -151,8 +163,6 @@ These five are vocabulary for now. By the end of the book you will be able to lo
 | **Interpretive judgment** | Reads an output in the context of the deployment domain; the same number means different things in different fields, and the supervisor holds that meaning | Numbers are read off a dashboard without domain translation; a 5% false-positive rate acceptable in spam filtering is applied uncritically to a cancer screen because the threshold looked reasonable on paper | Ch. 8 |
 | **Executive integration** | Synthesizes outputs from multiple tools, models, and humans into a decision the integrating system can stand behind; this is where the buck stops — and it must stop somewhere | The pipeline produces decisions but no single person or body owns them; when something goes wrong, accountability dissolves into the architecture | Ch. 13 |
 
-
-
 ## The fluency trap
 
 There is an adjacent vocabulary — developed in the Botspeak framework, treated in full in Appendix A — that I will draw on throughout this book. For now I want one concept from it, because it is the single most operationally important idea in this chapter.
@@ -175,7 +185,8 @@ This is not a flaw that will be fixed in the next model. It is a structural feat
 
 The Popperian move helps here. Before you read the output: specify what a wrong answer would look like. Not vaguely — specifically. "A wrong answer would assign low risk to a patient with this combination of presenting symptoms and demographic profile." Then read the output. The prior specification is your anchor. Without it, you are reading the output with no criterion except fluency, and fluency is the trap.
 
-<!-- → [INFOGRAPHIC: The fluency trap as a two-stage mechanism — Stage 1: fluent output → elevated confidence in output. Stage 2: elevated confidence in output → elevated confidence in own evaluation. A third annotation breaking out the form/content independence: "in human speech, form tracks content; in AI output, they are generated by separate processes." Caption: "Fluency boosts wrong evaluations as readily as right ones. The shape of a sentence is not evidence about its truth." [Figure 1.5]] -->
+![Fluency boosts wrong evaluations as readily as right ones. The shape of a sentence is not evidence about its truth.](images/01-the-skeptics-toolkit-fig-06.png)
+*Figure 1.6 — The fluency trap as a two-stage mechanism *
 
 ---
 
@@ -191,7 +202,8 @@ This is not a bureaucratic point. It is an architectural one. When you design a 
 
 The five supervisory capacities are a framework for thinking about this architecture. For each capacity, the design question is: where in the workflow is this capacity exercised? Who exercises it? What do they see, and when, that makes exercising it possible? If the answer to any of those questions is "nobody" or "we haven't thought about that," you have found an undefended gap. Undefended gaps are where the patients die.
 
-<!-- → [IMAGE: Workflow diagram — a horizontal pipeline: input → model → output → human review → decision. Each stage annotated with which supervisory capacity lives there: problem formulation (before input), tool orchestration (at model selection), plausibility auditing (at human review), interpretive judgment (also at human review), executive integration (at decision). Red gap markers at the stages most commonly left unoccupied in real deployments. [Figure 1.6]] -->
+![Workflow diagram ](images/01-the-skeptics-toolkit-fig-07.png)
+*Figure 1.7 — Workflow diagram *
 
 ---
 
@@ -343,11 +355,9 @@ End with a one-paragraph "System Dossier" I can paste into my Claude Project's s
 
 **Preview of next chapter:** Chapter 2 takes your chosen agent and asks you to compute base rates and posterior probabilities for its claims — what is P(task actually completed | agent reports "task complete") given a realistic prior on agent reliability?
 
-
 ---
 
-## AI Wayback Machine
-
+##  AI Wayback Machine
 The ideas in this chapter didn't appear from nowhere. **Karl Popper** spent the 1930s working out which kinds of claims a scientific community can argue about productively and which it cannot — *demarcation* — and his answer (a claim is scientific only if it forbids some observation it could be checked against) is the spine of the toolkit you are about to use. The instruments in this chapter — falsifiability, prediction-lock before observation, the willingness to name what would change your mind — are Popper's instruments, applied to AI systems whose outputs the community has not yet learned to argue about productively.
 
 ![Karl Popper, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/karl-popper.jpg)
@@ -368,3 +378,45 @@ Who was Karl Popper, and how does his demarcation criterion — that a scientifi
 - Add a constraint: "Answer as if you're writing the rationale for the first move in a validator's toolkit"
 
 What changes? What gets better? What gets worse?
+
+## Prompts
+
+Use these prompts with Claude to generate interactive D3 v7 versions of the
+figures in this chapter. Each produces a standalone HTML file you can open
+in a browser and modify freely.
+
+**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
+your Claude project context before using these prompts. They define the stack,
+naming conventions, color system, and typography the figures use.
+
+---
+
+### Figure 1 — Cartesian doubt as an inspection protocol
+
+Create a standalone D3 v7 HTML figure for "Cartesian doubt as an inspection protocol". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/01-the-skeptics-toolkit-fig-01.html`
+
+---
+
+### Figure 2 — The turkey problem as a confidence timeline
+
+Create a standalone D3 v7 HTML figure for "The turkey problem as a confidence timeline". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/01-the-skeptics-toolkit-fig-02.html`
+
+---
+
+### Figure 4 — Two-column split
+
+Create a standalone D3 v7 HTML figure for "Two-column split". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/01-the-skeptics-toolkit-fig-04.html`
+
+---
+
+### Figure 5 — Cost asymmetry bar chart
+
+Create a standalone D3 v7 HTML figure for "Cost asymmetry bar chart". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/01-the-skeptics-toolkit-fig-05.html`

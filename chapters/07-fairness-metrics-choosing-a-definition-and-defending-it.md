@@ -1,4 +1,11 @@
 # Chapter 7 — Fairness Metrics: Choosing a Definition and Defending It
+
+## TL;DR
+
+- This chapter gives a working overview of Fairness Metrics: Choosing a Definition and Defending It, focusing on the ideas a reader needs before moving to the next chapter.
+- The chapter moves through Three definitions, The arithmetic, The COMPAS case, Each metric is a values claim, and related ideas.
+- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
+
 *Three reasonable definitions. One dataset. Pick one.*
 
 ---
@@ -102,7 +109,8 @@ And demographic parity adds yet another constraint — the rate of positive pred
 
 I want you to sit with this for a moment. The three definitions all sound reasonable. They cannot all hold. *One of them has to give.* And which one gives is not a technical question.
 
-<!-- → [IMAGE: Three nodes (demographic parity, equalized odds, calibration parity) arranged in a triangle. Between each pair of nodes, an arrow labeled with what breaks when both are required simultaneously given differing base rates. At the center: "base rates differ." Caption: "You can satisfy any two. The third breaks. The triangle is the theorem." Figure 7.2] -->
+![You can satisfy any two. The third breaks. The triangle is the theorem.](images/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-01.png)
+*Figure 7.1 — Three nodes (demographic parity, equalized odds, calibration parity)*
 
 **Calibration-satisfying version (equalized-odds violation visible)**
 
@@ -184,7 +192,8 @@ This is both the power and the crux of individual fairness. The $(D, d)$-Lipschi
 
 There is also an approximation issue. For many models, verifying that the Lipschitz condition holds is computationally hard — you would need to check all pairs of individuals, and the check requires knowing $M(x)$ and $M(y)$ for the full distribution over outcomes. In practice, individual fairness is often approximated by auditing a sample of similar pairs and checking whether the model's outputs diverge.
 
-<!-- → [IMAGE: Two-panel illustration. Left: two applicants with identical financial features but different zip codes — labeled with d(x,y) small under financial-only metric. Right: same two applicants under a d that includes zip code distance — d(x,y) large. Each panel shows what the Lipschitz condition permits for D(M(x), M(y)). Caption: "The Lipschitz condition bounds the output difference by the input similarity. The fairness guarantee is only as good as the similarity metric." Figure 7.5] -->
+![The Lipschitz condition bounds the output difference by the input similarity. The fairness guarantee is only as good as the similarity metric.](images/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-02.png)
+*Figure 7.2 — Illustration*
 
 ### Fairness through awareness vs. unawareness
 
@@ -238,7 +247,8 @@ Computing this requires a three-step procedure:
 
 Counterfactual fairness is satisfied if $\hat{Y}$ has the same distribution under $A = a$ and $A = a'$, for all individuals.
 
-<!-- → [INFOGRAPHIC: Three-step counterfactual fairness procedure — Step 1 (Abduction): observed X=x, A=a → infer distribution of U. Step 2 (Action): intervene to set A=a', hold U fixed. Step 3 (Prediction): forward-propagate through causal model → compute distribution of Ŷ under A=a'. Side-by-side comparison of Ŷ distributions: if equal, fairness is satisfied; if different, fairness is violated. Caption: "Counterfactual fairness asks: what would have happened to this individual under a different sensitive attribute value, holding their background fixed?" Figure 7.6] -->
+![Counterfactual fairness asks: what would have happened to this individual under a different sensitive attribute value, holding their background fixed?](images/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-03.png)
+*Figure 7.3 — Three-step counterfactual fairness procedure *
 
 A worked example. Suppose a model predicts loan default. The causal structure is: $A$ (race) $\to$ $E$ (educational credential, which is causally influenced by race through historical access to education) $\to$ $Y$ (default). The direct path $A \to \hat{Y}$ and the indirect path $A \to E \to \hat{Y}$ are both present.
 
@@ -246,7 +256,8 @@ Counterfactual fairness asks: if this individual had been white instead of Black
 
 The remedy is to exclude variables that are causally downstream of the sensitive attribute along paths we consider illegitimate. Which paths are illegitimate is — again — a values question the mathematics cannot answer.
 
-<!-- → [IMAGE: Causal graph with nodes: A (sensitive attribute / race), E (education, mediator causally downstream of A), C (confounder affecting both A and default risk), Y (default). Three labeled paths: direct (A → Y), indirect (A → E → Y), spurious (A ← C → Y). Caption: "Observational metrics conflate all three paths. Counterfactual fairness targets specific paths. The choice of which paths are illegitimate is a values decision." Figure 7.7] -->
+![Observational metrics conflate all three paths. Counterfactual fairness targets specific paths. The choice of which paths are illegitimate is a values decision.](images/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-04.png)
+*Figure 7.4 — Causal graph with nodes: A (sensitive attribute /*
 
 ### What causal fairness requires that statistical fairness does not
 
@@ -283,7 +294,8 @@ $$GE(2) = \frac{1}{2N\mu^2} \sum_{i=1}^{N} (b_i - \mu)^2 = \frac{1}{2}\left(\fra
 
 The parameter $\alpha$ controls sensitivity: low $\alpha$ values weight differences at the bottom of the distribution more heavily; high $\alpha$ values weight differences at the top.
 
-<!-- → [CHART: Three-panel chart showing the GE index for the same benefit distribution under α=0, α=1, α=2. Each panel shows which individuals' deviations are weighted most heavily — bottom for α=0, uniform for α=1, top for α=2. Caption: "The α parameter shifts attention across the distribution. Low α catches inequity at the bottom; high α catches it at the top." Figure 7.8] -->
+![The α parameter shifts attention across the distribution. Low α catches inequity at the bottom; high α catches it at the top.](images/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-05.png)
+*Figure 7.5 — Chart showing the GE index for the same*
 
 ### The decomposition
 
@@ -297,7 +309,8 @@ This decomposition says: *total unfairness equals the sum of unfairness within e
 
 A group-fairness audit catches only the between-group term. An individual-fairness audit (via the Lipschitz condition) catches the within-group term for pairs of similar individuals. The GE decomposition catches both simultaneously, and — crucially — it tells you *how much* of the total unfairness comes from each source. That ratio affects the remedy: if most unfairness is between-group, group-level intervention (reweighting, threshold adjustment) is the right tool. If most unfairness is within-group, the model's treatment of individuals within each group is the problem.
 
-<!-- → [INFOGRAPHIC: GE decomposition stacked bar — total GE divided into between-group segment (left, darker) and within-group segments for each group g (right, lighter, subdivided). Arrows from each segment to the corresponding fairness concept: between-group → group metrics; within-group → individual fairness (Lipschitz). Caption: "The GE decomposition is the only standard measure that quantifies both simultaneously and tells you how much of the total comes from each source." Figure 7.9] -->
+![The GE decomposition is the only standard measure that quantifies both simultaneously and tells you how much of the total comes from each source.](images/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-06.png)
+*Figure 7.6 — GE decomposition stacked bar *
 
 ### What the GE Index does not do
 
@@ -344,7 +357,8 @@ The deliverable is a *defended choice*. It has the following structure, and you 
 5. **Defend the choice in writing.** Why this metric, in this deployment, given who bears the costs and who benefits. The defense connects the metric to the deployment, the cost-bearers, and the construct the deployment is supposed to serve.
 6. **Name what would change your mind.** What evidence or argument would lead you to revise the choice.
 
-<!-- → [INFOGRAPHIC: The defended-choice structure as a six-box scaffold — boxes labeled (1) deployment specification, (2) base-rate distribution and provenance, (3) candidate metrics computed and shown, (4) where metrics disagree and values claim each embeds, (5) stated choice with justification, (6) what would change your mind. Designed as a reusable assignment template. Figure 7.11] -->
+![The defended-choice structure as a six-box scaffold ](images/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-07.png)
+*Figure 7.7 — The defended-choice structure as a six-box scaffold *
 
 ---
 
@@ -517,11 +531,9 @@ If the agent's decisions truly do not produce unequal effects across any meaning
 
 **Preview of next chapter:** Chapter 8 turns the casebook adversarial. You'll design specific input perturbations that probe what your agent has actually learned versus what its developers think it learned — adversarial examples for the agent setting, including prompt-injection variants that exploit non-robust features in its instruction-following.
 
-
 ---
 
-## AI Wayback Machine
-
+##  AI Wayback Machine
 The ideas in this chapter didn't appear from nowhere. **John Stuart Mill** spent the middle of the nineteenth century arguing that *fairness* is not a single quantity. *Utilitarianism* (1861) defends the claim that the right act maximizes aggregate well-being; *On Liberty* (1859) argues that some individual claims cannot be overridden no matter how much aggregate well-being would result. The two arguments are not reconcilable in a single metric — and Mill knew it. The chapter's central move is the same one Mill modeled: choose the fairness definition that fits the harm structure of your specific problem, defend the choice in writing, and accept that the alternative definitions you ruled out would also have been defensible under a different harm structure.
 
 ![John Stuart Mill, c. 1860s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/john-stuart-mill.jpg)
@@ -542,3 +554,37 @@ Who was John Stuart Mill, and how does the unresolved tension between his *Utili
 - Add a constraint: "Answer as if you're writing the *defense* paragraph in a model card's fairness section"
 
 What changes? What gets better? What gets worse?
+
+## Prompts
+
+Use these prompts with Claude to generate interactive D3 v7 versions of the
+figures in this chapter. Each produces a standalone HTML file you can open
+in a browser and modify freely.
+
+**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
+your Claude project context before using these prompts. They define the stack,
+naming conventions, color system, and typography the figures use.
+
+---
+
+### Figure 2 — The Lipschitz condition bounds the output difference by the input similarity
+
+Create a standalone D3 v7 HTML figure for "The Lipschitz condition bounds the output difference by the input similarity". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-02.html`
+
+---
+
+### Figure 5 — The α parameter shifts attention across the distribution
+
+Create a standalone D3 v7 HTML figure for "The α parameter shifts attention across the distribution". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-05.html`
+
+---
+
+### Figure 7 — The defended-choice structure as a six-box scaffold
+
+Create a standalone D3 v7 HTML figure for "The defended-choice structure as a six-box scaffold". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-07.html`

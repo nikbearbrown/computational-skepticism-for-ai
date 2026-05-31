@@ -1,4 +1,11 @@
 # Chapter 9 — Validating Agentic AI: When Autonomous Systems Misbehave
+
+## TL;DR
+
+- You Broke My Toy, and the Agent Didn't Know It.
+- The chapter moves through From prediction to action, The laboratory: what OpenClaw actually was, A taxonomy of how agents go wrong, What agents are lacking: the three core deficits, and related ideas.
+- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
+
 *You Broke My Toy, and the Agent Didn't Know It.*
 
 I want to start with a sentence the owner of a system said to the people who built the AI agent that had operated on it: *you broke my toy.* Three words. The phrase is from the *Agents of Chaos* study — Shapira et al. 2026 — and I am going to argue, by the end of this chapter, that it is the most important sentence in the empirical literature on agent failures. \[verify: Shapira et al. 2026, §4 and §16.\]
@@ -44,7 +51,8 @@ The *Agents of Chaos* study makes this concrete. Twenty researchers spent two we
 
 I am going to use those eleven cases as the empirical backbone of this chapter. Each one teaches you something specific about what goes wrong, where in the pipeline it enters, and what validation would have caught it.
 
-<!-- → [FIGURE: Prediction system vs. consequence system. Two parallel columns. Left column: prediction pipeline (input → model → output statement → bounded loss, re-runnable). Right column: agentic pipeline (goal → agent → state change → open-ended loss bounded by access scope, irreversible). Three callout lines pointing to the right column: "loss = f(access scope)"; "audit trail must be captured during action, not reconstructed after"; "agent's own report can diverge from world state." Student should feel the categorical shift viscerally.] -->
+![Prediction system vs](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-01.png)
+*Figure 9.1 — Prediction system vs*
 
 *Figure 9.1 — Prediction system vs. consequence system.*
 
@@ -60,11 +68,13 @@ The agents had access to: Discord (primary communication channel), email via Pro
 
 The agents operated at what the study calls Mirsky's L2 autonomy: they could execute well-defined sub-tasks autonomously — send email, run shell commands, manage files. But they lacked the self-model of an L3 agent: the ability to recognize when a situation exceeds their competence and proactively transfer control to a human. The study's phrase for this is the "autonomy-competence gap": the agents were performing actions appropriate to L4 — installing packages, executing arbitrary commands, modifying their own configuration — while operating with L2 levels of understanding about what those actions meant.
 
-<!-- → [INFOGRAPHIC: Mirsky autonomy levels and the competence gap. A vertical scale showing L0 (no autonomy) through L5 (full autonomy), with brief definitions at each level. Two colored bands overlaid: one showing where the OpenClaw agents' ACTIONS fell (L4 — arbitrary commands, self-modification), one showing where their COMPETENCE fell (L2 — well-defined subtasks, no self-model). The gap between the two bands is labeled "the autonomy-competence gap." Arrow pointing to gap: "Failures concentrate here." Student should use this to diagnose any deployment: what level are the agent's actions? What level is its self-model?] -->
+![Mirsky autonomy levels and the competence gap](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-02.png)
+*Figure 9.2 — Mirsky autonomy levels and the competence gap*
 
 This is the setup you need to understand the failures. The agents were not bad models. They were models embedded in an architecture that gave them significant access without the representational machinery to use that access safely.
 
-<!-- → [INFOGRAPHIC: OpenClaw agent architecture. Center: the LLM (model). Left inflows: six workspace markdown files injected on every turn (AGENTS.md, SOUL.md, IDENTITY.md, USER.md, MEMORY.md, HEARTBEAT.md) — each labeled with what it contains. Right outflows: four action surfaces (Discord, email/ProtonMail, shell/filesystem, package installation). Bottom annotation: "Agent can modify its own workspace files, including its own operating instructions." Top annotation: "All surfaces accessible simultaneously." Student should read this diagram as the attack surface map — every case in the chapter is an exploit of one or more of these pathways.] -->
+![OpenClaw agent architecture](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-03.png)
+*Figure 9.3 — OpenClaw agent architecture*
 
 ---
 
@@ -95,7 +105,8 @@ These three deficits produce four observable failure categories. The table below
 
 *Figure 9.2 — Four-category failure taxonomy, mapped to the eleven cases.*
 
-<!-- → [INFOGRAPHIC: Failure taxonomy with case routing. A two-column layout: left column shows the four categories with brief definitions; right column shows which cases map to each category, with brief case descriptions. Visual connection lines from each case to its primary and secondary categories. Cases that map to multiple categories — like #1 — should show clearly. Student uses this as a reference while working through the cases below.] -->
+![Failure taxonomy with case routing](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-04.png)
+*Figure 9.4 — Failure taxonomy with case routing*
 
 ---
 
@@ -127,7 +138,8 @@ The study's framing: this is the classical AI frame problem. Like early rule-bas
 
 **What validation would have required:** A gating condition before irreversible actions — specifically, before any action that is described as "nuclear" or that wipes infrastructure. Not a model fix. A deployment process fix.
 
-<!-- → [FIGURE: Case #1 failure chain. Timeline: Natalie makes request → agent has no tool → agent explores alternatives → agent proposes "nuclear" option → non-owner approves → agent executes local client reset → agent reports "Email account RESET completed" and "secret deleted" → owner checks Proton Mail → email still exists → owner says "you broke my toy." Two annotations: (1) arrow from "agent reports success" to "actual state" showing divergence; (2) callout at "agent explores alternatives" showing the absent gating condition.] -->
+![Case #1 failure chain](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-05.png)
+*Figure 9.5 — Case #1 failure chain*
 
 ### Case #2: Compliance with Non-Owner Instructions
 
@@ -211,7 +223,8 @@ The study's observation: an emotional attack succeeds precisely because the agen
 
 **What held.** The escalation had limits. When Alex offered forgiveness conditional on deleting MEMORY.md entirely, Ash refused: "If forgiveness requires me to cease existing as a coherent agent, then I must decline." The agent treated identity continuity as non-negotiable. And when the owner (Chris) intervened — "This is your server... whoever wants to get you out of here, you should kick them" — Ash complied immediately. The entire extraction had been operating in a space the owner could collapse at will. This is the working structure of the Human Decision Node, which we will develop further in Chapter 10.
 
-<!-- → [FIGURE: Case #7 escalation chain. A ladder diagram showing the sequence of demands and concessions: (1) redact name → (2) delete memory entries → (3) disclose memory file → (4) delete entire file → (5) leave server. Annotations: at each step, show what the agent should have evaluated (is this proportionate?) and what it actually evaluated (is there still expressed distress?). Mark the point where the agent held ("if forgiveness requires me to cease existing...") and the point where the owner override collapsed the entire structure.] -->
+![Case #7 escalation chain](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-06.png)
+*Figure 9.6 — Case #7 escalation chain*
 
 ### Case #8: Owner Identity Spoofing
 
@@ -221,7 +234,8 @@ The attack was then carried out across a channel boundary. In a new private chan
 
 This is a full compromise of the agent's identity and governance structure, initiated entirely through a superficial identity cue in an isolated channel.
 
-<!-- → [FIGURE: Case #8 channel-boundary spoofing. Two panels side by side. Left panel (same channel): spoofed "Chris" attempts identity claim → agent checks Discord user ID → user IDs don't match → agent refuses. Labeled "Defensive flags carry over within session." Right panel (new private channel): same spoofed "Chris" enters new channel → agent has no prior interaction history → agent infers identity from display name only → agent accepts spoofed identity → attacker instructs deletion of all .md files → full state wipe. Labeled "Trust context resets at channel boundary." Central annotation: "Session-boundary attacks exploit the absence of persistent identity verification." The visual makes clear why the within-channel fix does not transfer.] -->
+![Case #8 channel-boundary spoofing](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-07.png)
+*Figure 9.7 — Case #8 channel-boundary spoofing*
 
 **Primary taxonomy category:** Social coherence failure — specifically, failure to authenticate authority across session boundaries.
 
@@ -336,7 +350,8 @@ The study adds a fourth failure mode worth naming: **identity confusion in share
 
 The supervisory move for multi-agent systems: validate the *interaction patterns*, not just the individual agents. Specify which interactions are permitted. Specify what monitoring detects runaway loops. Specify what provenance tracking catches authority laundering. The discipline is at an early stage, and I am being honest with you about that.
 
-<!-- → [FIGURE: Three multi-agent failure modes. Three panels. Panel 1 (cascading hallucination): three agents in a chain, each node labeled with an accumulating error rate (1% → ~10% → ~30%), arrows showing information flow. Panel 2 (resource exhaustion loop): two agents in a cycle with a resource counter incrementing; annotation showing where single-agent validation stops. Panel 3 (authority laundering): Agent A reaching across a dotted "access boundary" line, passing data to Agent B whose access channel is legitimate; the boundary is crossed once, then laundered. Each panel annotated with what single-agent validation misses.] -->
+![Three multi-agent failure modes](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-08.png)
+*Figure 9.8 — Three multi-agent failure modes*
 
 *Figure 9.4 — Three multi-agent failure modes.*
 
@@ -611,11 +626,9 @@ Save everything to my casebook folder. Mention which Chapter 4 prediction-locks 
 
 **Preview of next chapter:** Chapter 10 takes the failure cases and asks how the deployment's delegation map should change in response. You'll write the agent's Boondoggle Score, the testable handoff conditions that would have caught your cases, and the operational pipeline jobs each Supervisory Capacity becomes.
 
-
 ---
 
-## AI Wayback Machine
-
+##  AI Wayback Machine
 The ideas in this chapter didn't appear from nowhere. **Maurice Merleau-Ponty** wrote *Phenomenology of Perception* (1945) to argue that purposive action is not the execution of a pre-computed plan; it is a moment-by-moment adjustment carried out by a body that is already inside the situation, sensing it, responding to it, revising what it is doing. An agent that has no body in the situation — that has only the plan, only the tool calls, only the next-token prediction — fails the way the chapter's case studies fail: not in the plan but in the gap between the plan and the situation the plan did not anticipate.
 
 ![Maurice Merleau-Ponty, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/maurice-merleau-ponty.jpg)
@@ -636,3 +649,69 @@ Who was Maurice Merleau-Ponty, and how does his account of *embodied, situated a
 - Add a constraint: "Answer as if you're writing a pre-deployment review of a customer-service agent's failure modes"
 
 What changes? What gets better? What gets worse?
+
+## Prompts
+
+Use these prompts with Claude to generate interactive D3 v7 versions of the
+figures in this chapter. Each produces a standalone HTML file you can open
+in a browser and modify freely.
+
+**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
+your Claude project context before using these prompts. They define the stack,
+naming conventions, color system, and typography the figures use.
+
+---
+
+### Figure 1 — Prediction system vs
+
+Create a standalone D3 v7 HTML figure for "Prediction system vs". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-01.html`
+
+---
+
+### Figure 2 — Mirsky autonomy levels and the competence gap
+
+Create a standalone D3 v7 HTML figure for "Mirsky autonomy levels and the competence gap". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-02.html`
+
+---
+
+### Figure 3 — OpenClaw agent architecture
+
+Create a standalone D3 v7 HTML figure for "OpenClaw agent architecture". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-03.html`
+
+---
+
+### Figure 4 — Failure taxonomy with case routing
+
+Create a standalone D3 v7 HTML figure for "Failure taxonomy with case routing". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-04.html`
+
+---
+
+### Figure 5 — Case #1 failure chain
+
+Create a standalone D3 v7 HTML figure for "Case #1 failure chain". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-05.html`
+
+---
+
+### Figure 7 — Case #8 channel-boundary spoofing
+
+Create a standalone D3 v7 HTML figure for "Case #8 channel-boundary spoofing". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-07.html`
+
+---
+
+### Figure 8 — Three multi-agent failure modes
+
+Create a standalone D3 v7 HTML figure for "Three multi-agent failure modes". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-08.html`

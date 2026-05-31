@@ -1,4 +1,11 @@
 # Chapter 11 — Visualization Under Validation: Honest, Misleading, and the Choices Between
+
+## TL;DR
+
+- You will practice Explain why visualization is an argument made through structural choices, not a transparent transmission of facts; Identify the nine misleading visualization choices in the catalog, distinguish honest from dishonest uses of each, and apply the catalog to audit your own dashboards; Use the perception hierarchy to choose the right visual channel for quantitative precision.
+- The chapter moves through Learning objectives, Prerequisites, Why this chapter, Two dashboards built from one CSV, and related ideas.
+- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
+
 *The dashboard is an argument. The design choices are yours.*
 
 ## Learning objectives
@@ -265,7 +272,8 @@ The medium of provisional analysis is provisional itself. A finished-looking art
 
 The course's research project uses the living deck format throughout. The final presentation includes the changelog as the second-to-last slide. The changelog is evidence of the work — the visible track of how the analysis evolved. Removing it before final submission would erase the supervisory log.
 
-<!-- → [IMAGE: A mock living-deck changelog slide. Title: "Changelog." Three rows with version dates (v1: [date], v2: [date], v3: [date]), a one-sentence description of what changed in each version, and a one-sentence reason why. Below the changelog: a "Previously" thumbnail showing an old claim that was superseded, struck through, with a note explaining what changed. The slide looks like a real slide from a validation deck — not a diagram about the concept, but an example artifact the student can copy. Caption: "The changelog slide is the second-to-last slide in every living deck. It is evidence of the supervisory process, not a confession of uncertainty. A deck without it is pretending to be finished."] -->
+![The changelog slide is the second-to-last slide in every living deck. It is evidence of the supervisory process, not a confession of uncertainty. A deck without it is pretending to be finished.](images/11-visualization-under-validation-honest-misleading-and-the-choices-between-fig-01.png)
+*Figure 11.1 — A mock living-deck changelog slide*
 
 ---
 
@@ -287,7 +295,8 @@ Pulling the frameworks together into a single operational pass:
 
 **7. Test the chart against a hostile read.** Give it to someone who did not produce it. Ask them what they think it says. If their interpretation does not match the data, the visualization is not yet doing its job. This step is almost always skipped because it is uncomfortable. It is the most useful thing on this list.
 
-<!-- → [INFOGRAPHIC: The seven-step working sequence as a vertical flowchart. Each step is a box with a short label and a decision fork where relevant. Step 1: State the question → Step 2: Locate in FT taxonomy → Step 3: Check data against question (decision: does data measure what question asks? No → change dataset, change question, or disclose prominently. Yes → continue) → Step 4: Identify aleatoric uncertainty → choose technique by audience type (lay: quantile dotplot; expert: CI band; group comparison: box plot) → Step 5: Identify epistemic uncertainty → place in disclosure hierarchy → Step 6: Apply perception hierarchy to encoding → Step 7: Hostile read test (decision: does non-author interpretation match data? No → redesign. Yes → ship). Caption: "This is the sequence, not a checklist. The decision forks at steps 3 and 7 are where most published charts quietly fail."] -->
+![This is the sequence, not a checklist. The decision forks at steps 3 and 7 are where most published charts quietly fail.](images/11-visualization-under-validation-honest-misleading-and-the-choices-between-fig-02.png)
+*Figure 11.2 — The seven-step working sequence as a vertical flowchart*
 
 ---
 
@@ -309,7 +318,8 @@ The deliverable is both versions, the prediction, the design-choice documentatio
 
 Building a misleading dashboard with intent is the most efficient way to learn what your default dashboards have been doing without intent. After you've done this once, you do not see dashboards the same way. You see the choices. You see the arguments the structures are making. You catch yourself about to truncate an axis for entirely defensible reasons, and you stop and ask whether the truncation is doing rhetorical work you did not intend.
 
-<!-- → [IMAGE: Side-by-side thumbnail of the two-dashboard opening example. Left panel (misleading): large bold "94% accuracy" headline, truncated y-axis bar charts in gray, calibration curve labeled "Advanced Metrics" in a sub-tab the reader would not click. Right panel (honest): headline panel showing overall + subgroup performance on consistent axes at equal visual weight, calibration curve in the main view with a banner noting overconfidence above 0.85, uniform color scheme. An annotation layer labels the specific misleading choices on the left panel and the specific honest choices on the right. Caption: "Same data. Same CSV. The difference is five design choices, each taking about thirty seconds to make in either direction. The Glimmer asks you to make those choices deliberately, then name them." Intended to anchor the Glimmer for students who learn best from a visual anchor of the deliverable they are building.] -->
+![Same data. Same CSV. The difference is five design choices, each taking about thirty seconds to make in either direction. The Glimmer asks you to make those choices deliberately, then name them.](images/11-visualization-under-validation-honest-misleading-and-the-choices-between-fig-03.png)
+*Figure 11.3 — Thumbnail of the two-dashboard opening example*
 
 ---
 
@@ -477,11 +487,9 @@ Finally — the LIVING DECK move — add a provisionality note to Dashboard A. S
 
 **Preview of next chapter:** Chapter 12 audits the casebook's WRITING — every claim against the verb taxonomy, every confidence number against actual calibration metrics computed on your prediction-locks. This is where the casebook's internal honesty is checked before it goes to peer critique.
 
-
 ---
 
-## AI Wayback Machine
-
+##  AI Wayback Machine
 The ideas in this chapter didn't appear from nowhere. **W. E. B. Du Bois** designed some of the most original data visualizations in history for the 1900 Paris Exposition — explicit, deliberate choices about what to show and how, with the politics of each choice fully visible. Here's a prompt to find out more — and then make it better.
 
 ![W. E. B. Du Bois, c. 1900. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/w-e-b-du-bois.jpg)
@@ -503,3 +511,20 @@ Who was W. E. B. Du Bois, and how do his 1900 Paris Exposition visualizations co
 
 What changes? What gets better? What gets worse?
 
+## Prompts
+
+Use these prompts with Claude to generate interactive D3 v7 versions of the
+figures in this chapter. Each produces a standalone HTML file you can open
+in a browser and modify freely.
+
+**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
+your Claude project context before using these prompts. They define the stack,
+naming conventions, color system, and typography the figures use.
+
+---
+
+### Figure 2 — This is the sequence, not a checklist
+
+Create a standalone D3 v7 HTML figure for "This is the sequence, not a checklist". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/11-visualization-under-validation-honest-misleading-and-the-choices-between-fig-02.html`

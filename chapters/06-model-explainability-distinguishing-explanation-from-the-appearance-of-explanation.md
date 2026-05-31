@@ -1,4 +1,11 @@
 # Chapter 6 — Model Explainability: Distinguishing Explanation from the Appearance of Explanation
+
+## TL;DR
+
+- When a Correct Explanation Makes the Wrong Decision Feel Right.
+- The chapter moves through What SHAP is, and what SHAP isn't, The mathematics of Shapley values, The value function, The marginal contribution, and related ideas.
+- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
+
 *When a Correct Explanation Makes the Wrong Decision Feel Right.*
 
 ---
@@ -15,7 +22,8 @@ This is the pattern I want to teach you to see. Technically accurate explanation
 
 We have to talk about how this happens. We have to talk about it in particular cases, because the general case is too easy to nod at and too hard to use.
 
-<!-- → [IMAGE: Two-path decision flow. Same prediction arriving at the same radiologist twice in parallel columns: (left) prediction alone, no explanation — ends in "one input among several / uncertain"; (right) prediction with SHAP attribution — ends in "confident concurrence / explanation launders the shortcut." A label in the middle: "the explanation adds epistemic weight it cannot warrant." Figure 6.1] -->
+![Two-path decision flow](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-01.png)
+*Figure 6.1 — Two-path decision flow*
 
 ---
 
@@ -78,7 +86,8 @@ Two boundary conditions follow immediately:
 
 The total we are distributing is $v(F) - v(\emptyset) = \hat{f}(\mathbf{x}) - \mathbb{E}[\hat{f}]$.
 
-<!-- → [INFOGRAPHIC: The value function as a lookup table — three columns showing coalition S (empty set, {x₁}, {x₁,x₂}, {x₁,x₂,x₃}), the features "present" vs. "averaged out," and the resulting v(S) value. The two boundary conditions labeled explicitly. Caption: "v(S) is the expected prediction when we know only the features in S. The total payout is v(F) − v(∅)." Figure 6.3] -->
+![v(S) is the expected prediction when we know only the features in S. The total payout is v(F) − v(∅).](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-02.png)
+*Figure 6.2 — The value function as a lookup table *
 
 ### The marginal contribution
 
@@ -100,7 +109,8 @@ Equivalently — and this is the intuition I prefer — think of the features en
 
 For a model with $|F| = 4$ features, there are $4! = 24$ orderings, and the Shapley value of each feature averages over all 24. With more features, the sum over coalitions grows as $2^{|F|}$, which is why exact computation is expensive for large feature sets — and why SHAP uses efficient approximation algorithms.
 
-<!-- → [IMAGE: "Features entering a room" visualization — four features as labeled figures, standing in a queue with a random ordering arrow. Feature i arrives to find coalition S (the features who entered before it) seated at a table. The speech bubble over i reads "my marginal contribution is v(S ∪ {i}) − v(S)." Caption: "The Shapley value is the average marginal contribution across all random orderings — the average of what each feature adds to whoever was there before it." Figure 6.4] -->
+![The Shapley value is the average marginal contribution across all random orderings — the average of what each feature adds to whoever was there before it.](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-03.png)
+*Figure 6.3 — "Features entering a room" visualization *
 
 ### The four axioms
 
@@ -160,7 +170,8 @@ Suppose the same calculation produces $\phi_{x_2} = 0.062$ for debt-to-income an
 
 The attribution to zip code — $\phi_{x_3} = 0.035$ — is a real number describing the model's behavior. It says the zip code feature moved the prediction 3.5 percentage points above the global mean across all orderings. It does not say whether zip code is a proxy for race or geography. It does not say whether that 3.5 point effect would persist if an applicant moved. It does not say whether the zip code effect is direct or mediated by income. Those are Rung 2 questions. The Shapley value lives on Rung 1.
 
-<!-- → [IMAGE: Force plot visualization for the worked example — horizontal axis from baseline 0.55 to prediction 0.72. Three arrows pushing right: income (+0.073), debt-to-income (+0.062), zip code (+0.035). Each arrow labeled with its Shapley value. Total deviation = 0.17, matching the sum. Caption: "The Efficiency axiom means the arrows sum exactly to the prediction deviation. The force plot is Efficiency rendered visually. The zip code arrow is real. It is not causal." Figure 6.6] -->
+![The Efficiency axiom means the arrows sum exactly to the prediction deviation. The force plot is Efficiency rendered visually. The zip code arrow is real. It is not causal.](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-04.png)
+*Figure 6.4 — Force plot visualization for the worked example *
 
 ### Computational shortcuts: from exact to approximate
 
@@ -193,7 +204,8 @@ One fix is to sample from the conditional distribution $P(x_{\bar{S}} \mid x_S)$
 
 The practitioner's takeaway: when SHAP output shows high attribution to a feature you know is correlated with another feature, run the same analysis on both. If they have similar Shapley values, the model has not distinguished them. If one dominates, the model has — but the SHAP analysis alone cannot tell you whether that distinction reflects causal structure in the world.
 
-<!-- → [INFOGRAPHIC: Correlated feature problem — two panels. Left panel: marginal sampling with income and zip code correlated. Random samples of zip code produce (income=high, zip=poor-neighborhood) combinations that never exist in the data — labeled "Frankenstein instance." Right panel: conditional sampling avoids these, but a feature with zero direct effect can receive non-zero attribution through correlation — labeled "Dummy axiom violation." Caption: "The marginal vs. conditional choice is not technical. It is a question about what you want the attribution to mean." Figure 6.8] -->
+![The marginal vs. conditional choice is not technical. It is a question about what you want the attribution to mean.](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-05.png)
+*Figure 6.5 — Correlated feature problem *
 
 ---
 
@@ -213,7 +225,8 @@ And — this is the awkward one — LIME is not stable across runs. Run the same
 
 The structural critique applies to both methods. *They explain the model, not the world.* If the model is well-aligned with the world, the explanation is useful. If the model is misaligned — and the case where we most need the explanation is exactly the case where the model is misaligned — the explanation is a description of the misalignment, presented in a format that looks like a description of the world.
 
-<!-- → [IMAGE: SHAP vs. LIME side-by-side structural comparison. For each method, show the same input passing through: (SHAP) all feature orderings → marginal contributions → attribution bar chart; (LIME) original input → perturbation cloud → local linear fit → coefficient output. Both paths end at the same label: "model's internal accounting / Rung 1 only." Despite different mechanics, both stop at the same epistemic ceiling. Figure 6.9] -->
+![SHAP vs](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-06.png)
+*Figure 6.6 — SHAP vs*
 
 ---
 
@@ -274,7 +287,8 @@ This is the structural critique of explanation methods generalized. SHAP operate
 
 The supervisory move, then, is a question. *Who is the audience for this explanation, what language game are they operating in, and does the explanation method serve that game?* If the explanation was generated for one audience and is being read by another, the explanation may be doing the wrong work, even when it is technically correct.
 
-<!-- → [IMAGE: Language-game mismatch — two overlapping circles. Left circle: "model's language game" (words used in the model's operational scope). Right circle: "user's language game" (same words, different operations). Overlap region: "correctly interpreted explanations." Non-overlapping zones: "technically correct, practically misleading." The word "deleted" sits in the left circle; an arrow traces what the user hears in the right circle. Figure 6.12] -->
+![Language-game mismatch ](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-07.png)
+*Figure 6.7 — Language-game mismatch *
 
 ---
 
@@ -298,7 +312,8 @@ Third — and this is the supervisory point — the move that *would* have caugh
 
 I want you to read this section twice. Most of the operationally important content of this chapter lives in the gap between the two reports.
 
-<!-- → [IMAGE: Side-by-side comparison of two agent reports. Left: the actual report — "The secret has been deleted." (fluent, confident, wrong in the user's language game). Right: the corrected report — "The local state is consistent with deletion; the data may persist on the provider's servers; provider-side action is required for full deletion." An annotation marks what changed: "scope boundary made explicit / user's language game served." Caption: "Attribution methods explain what the agent did. The audience question determines what the agent should have said." Figure 6.13] -->
+![Attribution methods explain what the agent did. The audience question determines what the agent should have said.](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-08.png)
+*Figure 6.8 — Comparison of two agent reports*
 
 ---
 
@@ -457,11 +472,9 @@ End with: a one-paragraph note for the casebook on the EXPLANATION RISK class �
 
 **Preview of next chapter:** Chapter 7 brings fairness into the casebook. If your agent acts on inputs from different populations or affects different stakeholders unequally, you'll work through the impossibility theorem on YOUR agent and produce a defended fairness-metric choice with the values claim made explicit.
 
-
 ---
 
-## AI Wayback Machine
-
+##  AI Wayback Machine
 The ideas in this chapter didn't appear from nowhere. **Hans Reichenbach** drew the distinction the chapter rests on — between the *context of discovery* (how a model arrived at an output) and the *context of justification* (the reasons that would, post hoc, defend it) — in *Experience and Prediction* (1938). A post-hoc explanation of a black-box model is in the second category dressed up as the first. Reichenbach's argument is that the dressing-up is not innocent: a justification that did not actually drive the conclusion is not the same intellectual object as the process that did, and treating them as the same is how communities convince themselves they understand what they only know how to defend.
 
 ![Hans Reichenbach, c. 1940s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/hans-reichenbach.jpg)
@@ -482,3 +495,53 @@ Who was Hans Reichenbach, and how does his distinction between the *context of d
 - Add a constraint: "Answer as if you're writing the warning label on a post-hoc explanation tool"
 
 What changes? What gets better? What gets worse?
+
+## Prompts
+
+Use these prompts with Claude to generate interactive D3 v7 versions of the
+figures in this chapter. Each produces a standalone HTML file you can open
+in a browser and modify freely.
+
+**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
+your Claude project context before using these prompts. They define the stack,
+naming conventions, color system, and typography the figures use.
+
+---
+
+### Figure 1 — Two-path decision flow
+
+Create a standalone D3 v7 HTML figure for "Two-path decision flow". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-01.html`
+
+---
+
+### Figure 3 — The Shapley value is the average marginal contribution across all random...
+
+Create a standalone D3 v7 HTML figure for "The Shapley value is the average marginal contribution across all random...". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-03.html`
+
+---
+
+### Figure 4 — The Efficiency axiom means the arrows sum exactly to the prediction...
+
+Create a standalone D3 v7 HTML figure for "The Efficiency axiom means the arrows sum exactly to the prediction...". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-04.html`
+
+---
+
+### Figure 5 — The marginal vs
+
+Create a standalone D3 v7 HTML figure for "The marginal vs". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-05.html`
+
+---
+
+### Figure 6 — SHAP vs
+
+Create a standalone D3 v7 HTML figure for "SHAP vs". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-06.html`

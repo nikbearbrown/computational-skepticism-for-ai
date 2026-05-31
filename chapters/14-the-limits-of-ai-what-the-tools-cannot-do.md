@@ -1,4 +1,11 @@
 # Chapter 14 — The Limits of AI: What the Tools Cannot Do
+
+## TL;DR
+
+- Three things capability scaling cannot fix, and what the supervisor does about them.
+- You will practice Name the three categorical limits of AI systems — meaning, intentionality, and the data-world gap — and explain why capability scaling does not close them; State what Turing's argument actually claims and what it does not, and do the same for Searle's Chinese Room; Identify which deployments require skepticism as a safety mechanism versus skepticism as methodology, and specify the criteria that distinguish them.
+- The chapter moves through Learning objectives, Prerequisites, Why this chapter, The model that passed every test and failed in deployment, and related ideas.
+
 *Three things capability scaling cannot fix, and what the supervisor does about them.*
 
 ## Learning objectives
@@ -199,7 +206,8 @@ AI systems do not bear this relationship to their outputs. They cannot be held r
 
 The chain of accountability in any AI-assisted validation workflow runs through the practitioners who apply the checking instruments: the practitioner who applies the verb taxonomy, the practitioner who reviews the chart for uncertainty suppression, the practitioner who signs off on the validation document. These moments are not checkboxes on a compliance form. They are the moments at which a human mind engages with the AI's output and takes on the obligation to be answerable for the judgment they make. If those moments are treated as mechanical, accountability disappears from the workflow — not into the AI, but into no one.
 
-<!-- → [FIGURE: Accountability chain diagram. A horizontal workflow: "AI generates output" → "Practitioner applies checking instrument" → "Practitioner makes judgment" → "Practitioner signs off" → "Decision affects people." An accountability arrow spans from "Practitioner makes judgment" through to "Decision affects people," labeled "Answerable for this." A second, absent arrow is shown in dashed red from "AI generates output" to "Decision affects people," labeled "Not accountable — no subject who can be answerable." A note below: "Accountability cannot be delegated to a system that cannot bear consequences. Each checking instrument in this book is a moment where the practitioner picks up the accountability chain." Caption: "When the practitioner uses the verb taxonomy, the chart-review discipline, the peer critique protocol — they are not just checking AI output. They are taking on accountability for the judgment the output will support."] -->
+![When the practitioner uses the verb taxonomy, the chart-review discipline, the peer critique protocol — they are not just checking AI output. They are taking on accountability for the judgment the output will support.](images/14-the-limits-of-ai-what-the-tools-cannot-do-fig-01.png)
+*Figure 14.1 — Accountability chain diagram*
 
 **The profile, applied to delegation.** The cognitive profile — great at retrieval/synthesis/generation under specification, weak at problem formulation/plausibility auditing/interpretive judgment, absent for accountability — translates directly into a delegation map.
 
@@ -233,7 +241,8 @@ Used well, AI is the most powerful cognitive tool humanity has built. Used as a 
 
 The capacities required to use AI well are precisely the capacities AI cannot replicate: problem formulation, plausibility auditing, interpretive judgment under stakes, and accountability for the consequences. These are not luxuries or checkboxes. They are the work. The tools in this book — the verb taxonomy, the chart-review discipline, the peer critique protocol, the prediction-lock, the delegation maps, the categorical-limit analysis — are all instruments for exercising these capacities more reliably in the presence of an extraordinarily fluent AI output stream that will, without intervention, produce fluent-sounding answers to questions it cannot answer, conclusions warranted by evidence it has not examined, and confident charts that hide the uncertainty they were supposed to show.
 
-<!-- → [FIGURE: Extended mind catalog — a horizontal timeline of cognitive tools from Chapter 2 onward, each labeled with the capacity it extends and the judgment it cannot replace. Tool 1 "pH meter / chemical sensors (Ch. 2)": extends gradient sensing → cannot determine what gradient is worth measuring or when a reading is anomalous. Tool 2 "Roomba / subsumption architecture (Ch. 3)": extends steering across a task domain → cannot determine what counts as a valuable state to steer toward. Tool 3 "Writing / external memory (Ch. 4)": extends long-term storage across generations → cannot determine what is worth recording or what a record means when retrieved. Tool 4 "GPS / spatial navigation (Ch. 7)": extends position awareness → cannot determine where to go or when the route is wrong. Tool 5 "Recommendation engines (Ch. 8)": extends reward prediction → cannot specify what reward is worth optimizing. Tool 6 "Digital twins / simulation software (Ch. 9)": extends forward simulation → cannot determine which futures are worth simulating or how to act on the result. Tool 7 "Social network analysis (Ch. 10)": extends relationship tracking beyond Dunbar's number → cannot determine which relationships matter or what trust requires. Tool 8 "AI (Ch. 14)": extends retrieval, synthesis, generation, and pattern recognition at scale → cannot replace problem formulation, plausibility auditing, interpretive judgment under stakes, or accountability. A consistent visual dividing line between each pair: left side "What the tool extends." Right side "What the mind using it must supply." Caption: "The extended mind has always had this structure: the tool extends a specific capacity; the mind supplies the judgment the tool cannot. AI is the most powerful entry in the series. Its power makes the confusion between extension and replacement more dangerous, not less."] -->
+![The extended mind has always had this structure: the tool extends a specific capacity; the mind supplies the judgment the tool cannot. AI is the most powerful entry in the series. Its power makes the confusion between extension and replacement more dangerous, not less.](images/14-the-limits-of-ai-what-the-tools-cannot-do-fig-02.png)
+*Figure 14.2 — Extended mind catalog *
 
 *Figure 14.1 — The extended mind: the catalog named.*
 
@@ -452,11 +461,9 @@ End with the supervisor's claim, in your own voice (not generated): the casebook
 
 **Preview of next chapter:** There is no next chapter. The next thing is to send the casebook to the deployment-review committee, the system's developers, and (if the agent is publicly deployed) to the appropriate accountability venue. The book closes here; your supervisory work begins.
 
-
 ---
 
-## AI Wayback Machine
-
+##  AI Wayback Machine
 The ideas in this chapter didn't appear from nowhere. **Alan Turing** named both the proof of fundamental limits and the test that has been most often used to argue past them. The 1936 paper *On Computable Numbers* established that some questions cannot be decided by any algorithmic procedure — there are problems no Turing machine can solve, regardless of speed. The 1950 paper *Computing Machinery and Intelligence* proposed the imitation game, which Turing offered as a *replacement* for the question *can machines think?* — a replacement specifically because Turing thought the original question was too vague to settle. The chapter's argument is in his lineage: there are limits the math forbids, and there are limits the test cannot detect, and the practitioner has to know the difference.
 
 ![Alan Turing, c. 1940s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/alan-turing.jpg)

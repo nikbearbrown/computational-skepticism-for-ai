@@ -1,4 +1,11 @@
 # Chapter 4 — The Frictional Method
+
+## TL;DR
+
+- I want to tell you about two students.
+- The chapter moves through What broke, Performance is not learning, The seven moves, The journal and its failure modes, and related ideas.
+- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
+
 *Predict before you observe. Lock it. Let the gap teach you.*
 
 ---
@@ -57,7 +64,8 @@ Call this the Decoupling Problem. I want to be careful about what kind of proble
 
 For a few years, faculty have been treating this as a temporary anomaly to be patched with detection tools, in-class examinations, and whispered hopes about "AI fingerprints." None of these patches has worked at scale. None is likely to. Detection tools are trained on yesterday's models and graded against tomorrow's. The arms race between generation and detection has a predictable winner. The Decoupling Problem is structural, not transient. It will not be patched. It must be redesigned around.
 
-<!-- → [IMAGE: Two-row timeline diagram. Row 1 labeled "Before AI": artifact ↔ work connected by a bidirectional arrow labeled "causally coupled." Row 2 labeled "AI era": artifact and work as disconnected nodes, with AI floating between them as the new producer of artifacts, a dotted line from AI to artifact. Caption: "The Decoupling Problem is structural. The artifact is no longer evidence of the work." Figure 4.1] -->
+![The Decoupling Problem is structural. The artifact is no longer evidence of the work.](images/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-01.png)
+*Figure 4.1 — Two-row timeline diagram*
 
 ---
 
@@ -79,7 +87,8 @@ This is not metaphorical. It is neurobiological. When a learner encounters mater
 
 BDNF — Brain-Derived Neurotrophic Factor — is upregulated during moderate cognitive challenge and drives the signaling pathways that support long-term memory consolidation. Structural growth of new synaptic connection sites increases substantially under moderate cognitive load compared to low-load conditions. These spines are the physical locations where memories are stored. Their formation requires effortful engagement. Passive processing of AI-generated explanations does not trigger the load necessary for durable storage.
 
-<!-- → [INFOGRAPHIC: The neurobiological chain of genuine learning — three stages: (1) prediction error triggers phasic dopamine release in midbrain, (2) dopamine initiates long-term potentiation and BDNF upregulation, (3) dendritic spine formation encodes the schema. A parallel track shows borrowed certainty: AI generates explanation → student processes fluently → none of the three stages fire. Caption: "AI can produce the artifact without triggering any of these events." Figure 4.3 (supplement to text).] -->
+![AI can produce the artifact without triggering any of these events.](images/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-02.png)
+*Figure 4.2 — The neurobiological chain of genuine learning *
 
 An AI can produce the artifact without triggering any of these events. It cannot produce the behavioral traces those events leave, because the events did not occur.
 
@@ -87,7 +96,8 @@ For our problem — and this is the hinge of the chapter — AI use in education
 
 The Frictional method is the inversion. It deliberately introduces conditions that produce structural friction because those conditions track learning in the Bjorkian sense, and they leave a *trace* that the AI cannot manufacture after the fact.
 
-<!-- → [CHART: Two-line chart. Horizontal axis: "friction in learning conditions" (low to high). Vertical axis: "outcome." Line 1: "immediate performance" — starts high at low friction, declines as friction increases. Line 2: "long-term retention" — starts low at low friction, rises as friction increases. The lines cross in the middle. Caption: "The conditions that feel productive are often the ones that teach the least. Bjork calls these desirable difficulties." Figure 4.2] -->
+![The conditions that feel productive are often the ones that teach the least. Bjork calls these desirable difficulties.](images/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-03.png)
+*Figure 4.3 — Two-line chart*
 
 ---
 
@@ -111,7 +121,8 @@ The seventh move is to **calibrate**. Periodically — built into the course as 
 
 Together, these seven moves produce what I call the Frictional record — the trace of genuine cognitive encounter with hard material. A submission missing any of them is not a complete entry, and the grade is on completeness, honesty, and depth of reflection — not on whether the predictions were right.
 
-<!-- → [INFOGRAPHIC: The seven moves as a circular flow: predict → lock → work → observe → reflect → trace → calibrate → (back to predict). Each node has a one-line description and its primary failure mode. The lock node is visually emphasized — heavier border, different weight — with a caption: "This is the load-bearing element. Everything else depends on it." Figure 4.3] -->
+![This is the load-bearing element. Everything else depends on it.](images/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-04.png)
+*Figure 4.4 — The seven moves as a circular flow: predict*
 
 ---
 
@@ -163,7 +174,8 @@ Genuine learning produces $Y_1 > 0$: time tracks difficulty because cognitive ef
 
 The Frictional journal captures a coarser version of this signal: the timestamp of the prediction-lock compared to the timestamp of the observation. A student who locks a prediction before encountering the material and records the observation at the appropriate time is generating the temporal signature. A retrospective journal destroys this signal entirely — timestamps cluster at submission, and the correlation structure collapses.
 
-<!-- → [CHART: Scatter plot with two overlaid point clouds. Horizontal axis: item difficulty (1–5 scale). Vertical axis: time on task (minutes). Cloud 1, labeled "Genuine engagement": positive slope, moderate scatter. Cloud 2, labeled "Borrowed certainty": flat slope near zero, tight scatter. Caption: "Y₁ is the correlation between item difficulty and time on task. Genuine engagement produces a positive slope; borrowed certainty produces a flat one." Figure 4.5] -->
+![Y₁ is the correlation between item difficulty and time on task. Genuine engagement produces a positive slope; borrowed certainty produces a flat one.](images/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-05.png)
+*Figure 4.5 — Scatter plot with two overlaid point clouds*
 
 ### Y₂ — Error Trajectory Coherence (ETC)
 
@@ -179,7 +191,8 @@ Genuine engagement produces elevated $Y_2$: errors follow conceptually meaningfu
 
 In the Frictional journal, the reflection move (move five) is the primary instrument for this signal. A structural reflection that identifies which specific assumption failed and why — as opposed to a generic "the AI surprised me" — is evidence of the conceptual adjacency structure being navigated in real time.
 
-<!-- → [IMAGE: Conceptual graph for a sample domain (e.g., Bayesian inference: nodes for prior, likelihood, posterior, base rate, Bayes' theorem). Two error trajectories overlaid: one that follows adjacency edges (genuine — labeled in one color), one that jumps randomly between non-adjacent nodes (borrowed — labeled in another color). Caption: "Y₂ measures whether a student's error sequence follows the graph structure of the domain." Figure 4.6] -->
+![Y₂ measures whether a student's error sequence follows the graph structure of the domain.](images/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-06.png)
+*Figure 4.6 — Conceptual graph for a sample domain (e*
 
 ### Y₃ — Cross-Context Transfer (CCT)
 
@@ -213,7 +226,8 @@ where $B_{\text{ref}}$ is a reference Brier score (e.g., from a baseline predict
 
 This component connects directly to Chapter 2's probability treatment. The student who has internalized what calibration means — who has genuinely done the Glimmer exercises that Chapter 2 requires — will show a $Y_4$ trajectory that improves over the semester. That trajectory is learning evidence.
 
-<!-- → [CHART: Two calibration curves on the same axes. Horizontal axis: expressed confidence (0–1). Vertical axis: actual accuracy (0–1). Diagonal reference line = perfect calibration. Curve 1 (genuine learning): close to diagonal, slight overconfidence early that corrects over time. Curve 2 (borrowed certainty): systematically bowed above diagonal — high confidence, low accuracy. Caption: "Y₄ detects the direction and magnitude of miscalibration. Borrowed certainty produces a characteristic overconfidence signature." Figure 4.7] -->
+![Y₄ detects the direction and magnitude of miscalibration. Borrowed certainty produces a characteristic overconfidence signature.](images/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-07.png)
+*Figure 4.7 — Two calibration curves on the same axes*
 
 ### Y₅ — Social Knowledge Texture (SKT)
 
@@ -245,7 +259,8 @@ Genuine learning produces $Y_6 > 0$: spaced retrieval benefits persist to the lo
 
 The Frictional journal's trace move (move six) — the longitudinal record over the semester — is designed precisely to generate this signal. The calibration move (move seven) makes it legible: when the student computes their own calibration curve, they are looking at the shape of $Y_6$ in their own data.
 
-<!-- → [CHART: Four-line chart showing performance over time (t₁, t₂, t₃). Two conditions × two student types. Genuine learning + spaced retrieval: retention curve with the characteristic bump at t₃. Genuine learning + no review: moderate decay. Borrowed certainty + spaced retrieval: steep decay regardless. Borrowed certainty + no review: steep decay. Caption: "Y₆ is the performance gap between spaced and unspaced conditions at long delay. Genuine learning produces the gap; borrowed certainty does not." Figure 4.8] -->
+![Y₆ is the performance gap between spaced and unspaced conditions at long delay. Genuine learning produces the gap; borrowed certainty does not.](images/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-08.png)
+*Figure 4.8 — Four-line chart showing performance over time (t₁, t₂,*
 
 ### Y₇ — Scaffolding Response Curve (SRC)
 
@@ -261,7 +276,8 @@ This is the ratio of partial hint benefit to full hint benefit. Genuine learning
 
 For the Frictional journal, the predict move (move one) implements a primitive version of this experiment. A student who makes specific, structured predictions — predictions that reveal partial understanding of the mechanism — is showing ZPD evidence in text form. A student whose predictions are either perfectly correct or completely uninformed is showing no ZPD: either full structure (and borrowed certainty is indistinguishable from this at a single time point) or no structure at all.
 
-<!-- → [CHART: Bar chart with three bar groups: "no hint (h₀)," "partial hint (h₁)," "full hint (h₂)." Two series per group: genuine learning (dark) and borrowed certainty (light). Genuine learning: large jump from h₀ to h₁, small additional gain from h₁ to h₂ — the partial hint found purchase. Borrowed certainty: no gain from h₀ to h₁, large gain from h₁ to h₂ — nothing for the partial hint to connect to. Caption: "Y₇ measures the Zone of Proximal Development as a ratio. High Y₇ means partial structure exists; low Y₇ means it does not." Figure 4.9] -->
+![Y₇ measures the Zone of Proximal Development as a ratio. High Y₇ means partial structure exists; low Y₇ means it does not.](images/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-09.png)
+*Figure 4.9 — Bar chart with three bar groups: "no hint*
 
 | Component | Abbr. | Neurobiological basis | Operational formula | Genuine learning signature | Borrowed-certainty signature | Primary data source | Frictional journal move that captures it |
 |---|---|---|---|---|---|---|---|
@@ -291,7 +307,8 @@ Now let me come back to the line about gaming. A student who manufactures all se
 
 This is why the Frictional method does not have the structural vulnerability of artifact-based detection. Detection fights a moving target. The GLP asks the student to do a thing that, if done convincingly enough to count as gaming, *is* the thing.
 
-<!-- → [CHART: Grouped bar chart. Horizontal axis: the seven components (Y₁ through Y₇) plus a final group "All seven simultaneously." Vertical axis: estimated cost-to-game (arbitrary units, normalized so that cost-of-genuine-learning = 1.0). Each individual component: low cost (0.1–0.2). "All seven simultaneously": approaches 1.0. A horizontal reference line at 1.0 labeled "cost of genuine learning." Caption: "Gaming the ensemble costs approximately as much as doing the work. At that point, the gaming has become the learning." Figure 4.11] -->
+![Gaming the ensemble costs approximately as much as doing the work. At that point, the gaming has become the learning.](images/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-10.png)
+*Figure 4.10 — Grouped bar chart*
 
 ---
 
@@ -475,11 +492,9 @@ End with: a one-paragraph note on the cognitive risk of using AI to analyze AI �
 
 **Preview of next chapter:** Chapter 5 turns to the agent's data layer. You'll reconstruct the epistemic frame of the dataset behind the agent (training data, retrieval corpus, system-prompt examples) and design a hidden-failure test of an assumption that the agent's developers almost certainly made and didn't write down.
 
-
 ---
 
-## AI Wayback Machine
-
+##  AI Wayback Machine
 The ideas in this chapter didn't appear from nowhere. **Lev Vygotsky** was theorizing that learning happens specifically in the gap between what you can do alone and what you can do with a more competent partner — long before the question became how to tell whether the AI is the partner or the substitute. Here's a prompt to find out more — and then make it better.
 
 ![Lev Vygotsky, c. 1930. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/lev-vygotsky.jpg)
@@ -501,3 +516,84 @@ Who was Lev Vygotsky, and how does his Zone of Proximal Development connect to d
 
 What changes? What gets better? What gets worse?
 
+## Prompts
+
+Use these prompts with Claude to generate interactive D3 v7 versions of the
+figures in this chapter. Each produces a standalone HTML file you can open
+in a browser and modify freely.
+
+**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
+your Claude project context before using these prompts. They define the stack,
+naming conventions, color system, and typography the figures use.
+
+---
+
+### Figure 1 — The Decoupling Problem is structural
+
+Create a standalone D3 v7 HTML figure for "The Decoupling Problem is structural". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-01.html`
+
+---
+
+### Figure 2 — AI can produce the artifact without triggering any of these events.
+
+Create a standalone D3 v7 HTML figure for "AI can produce the artifact without triggering any of these events.". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-02.html`
+
+---
+
+### Figure 3 — The conditions that feel productive are often the ones that teach the least
+
+Create a standalone D3 v7 HTML figure for "The conditions that feel productive are often the ones that teach the least". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-03.html`
+
+---
+
+### Figure 4 — This is the load-bearing element
+
+Create a standalone D3 v7 HTML figure for "This is the load-bearing element". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-04.html`
+
+---
+
+### Figure 6 — Y₂ measures whether a student's error sequence follows the graph...
+
+Create a standalone D3 v7 HTML figure for "Y₂ measures whether a student's error sequence follows the graph...". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-06.html`
+
+---
+
+### Figure 7 — Y₄ detects the direction and magnitude of miscalibration
+
+Create a standalone D3 v7 HTML figure for "Y₄ detects the direction and magnitude of miscalibration". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-07.html`
+
+---
+
+### Figure 8 — Y₆ is the performance gap between spaced and unspaced conditions at long...
+
+Create a standalone D3 v7 HTML figure for "Y₆ is the performance gap between spaced and unspaced conditions at long...". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-08.html`
+
+---
+
+### Figure 9 — Y₇ measures the Zone of Proximal Development as a ratio
+
+Create a standalone D3 v7 HTML figure for "Y₇ measures the Zone of Proximal Development as a ratio". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-09.html`
+
+---
+
+### Figure 10 — Gaming the ensemble costs approximately as much as doing the work
+
+Create a standalone D3 v7 HTML figure for "Gaming the ensemble costs approximately as much as doing the work". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact-fig-10.html`

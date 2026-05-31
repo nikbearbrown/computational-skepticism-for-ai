@@ -1,4 +1,11 @@
 # Chapter 10 — Delegation, Trust, and the Supervisory Role
+
+## TL;DR
+
+- Write the contract before you trust the handoff.
+- The chapter moves through The handoff condition, The Five Supervisory Capacities as pipeline jobs, The Boondoggle questions, The full delegation map structure, and related ideas.
+- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
+
 *Write the contract before you trust the handoff.*
 
 ---
@@ -184,7 +191,8 @@ Now Gru has something to work with. Notice what the sentence encodes: the word *
 
 **Why this is a human step.** Gru asks the question, but the answer requires me. An AI could generate plausible-sounding sentences of this form. It cannot determine whether *claim-linked* is the right specification for my deployment — whether researchers using this tool need sentence-level citations or paragraph-level, whether the summary structure matches how researchers actually read papers in this domain, whether the word *factual assertion* is the right boundary for what gets cited. Those are domain judgments. They determine the correctness criteria for every subsequent step. The problem formulation is not a form to fill in. It is the most consequential decision in the project, and it is irreducibly mine.
 
-<!-- → [IMAGE: Gru /v0 conversation flow — user types /v0, Gru asks three questions in sequence, user provides weak answer (shown with annotation "names a goal, not a thing"), user provides strong answer (shown with annotation "names thing / insertion point / output"). Caption: "The /v0 gate produces one sentence. That sentence is the engineering specification everything else is tested against." Figure 10.5] -->
+![The /v0 gate produces one sentence. That sentence is the engineering specification everything else is tested against.](images/10-delegation-trust-and-the-supervisory-role-fig-01.png)
+*Figure 10.1 — Gru /v0 conversation flow *
 
 ### Step 2 — Intake with /v1
 
@@ -265,7 +273,8 @@ The administrative flow: I need a way to see which extractions are being flagged
 
 **Why the flow requires human judgment to write.** Step 5 and step 6 are the load-bearing human steps. The reason they are human steps cannot be determined by AI: it requires knowing that researchers cannot rely on AI to evaluate domain-specific methodological quality. A language model may correctly extract the claim "we used a random effects model" and produce a citation. It cannot flag that a random effects model is inappropriate for this study design — that judgment requires domain knowledge the model does not reliably have. That is why step 6 is a human step, and why the handoff condition for step 5 must specify what the researcher is checking, not just that checking occurred.
 
-<!-- → [IMAGE: Happy path flow diagram for the Paper Summarizer — seven steps as labeled boxes in sequence, color-coded by owner: gray for AI steps (2, 3, 4), white with border for human steps (5, 6), neutral for boundary steps (1, 7). Annotations at the two transitions between AI and human ownership: "handoff condition must be testable here." Caption: "The flow shows where authority changes hands. Those transitions are where the delegation map must be tightest." Figure 10.7] -->
+![The flow shows where authority changes hands. Those transitions are where the delegation map must be tightest.](images/10-delegation-trust-and-the-supervisory-role-fig-02.png)
+*Figure 10.2 — Happy path flow diagram for the Paper Summarizer*
 
 ### Step 5 — Generating the Boondoggle Score with /claude
 
@@ -482,7 +491,8 @@ Flag: No executive integration step is documented. If this system is used in a t
 
 ---
 
-<!-- → [IMAGE: Boondoggle Score as a visual timeline — six steps arranged horizontally with alternating Claude/Human shading. Claude steps labeled with their task type (parsing, extraction, formatting); Human steps labeled with their supervisory capacity ([PF], [PA], [IJ]). Red flags at the two highest-risk handoffs. A footer bar shows the supervisory capacity distribution with [EI] explicitly flagged as absent. Caption: "Three of six steps are irreducibly human. The AI does the pattern work. The human does the judgment work. The EI gap is the flag." Figure 10.8] -->
+![Three of six steps are irreducibly human. The AI does the pattern work. The human does the judgment work. The EI gap is the flag.](images/10-delegation-trust-and-the-supervisory-role-fig-03.png)
+*Figure 10.3 — Boondoggle Score as a visual timeline *
 
 ### What the Boondoggle Score reveals
 
@@ -510,7 +520,8 @@ There are three failure modes, and each produces different downstream errors.
 
 In the Paper Summarizer, the trust calibration question is specific: over the last fifty papers processed, how often did the researcher in Step 4 find a correction to make in a HIGH-confidence extraction? If the answer is "almost never," the HIGH threshold is probably well-tuned and the researcher can spot-check less aggressively. If the answer is "frequently," the researcher is undertrusting the threshold or the threshold is miscalibrated. The Step 4 disposition data — confirmed / corrected / marked unverifiable — is in the audit trail. It should be reviewed periodically. It almost never is.
 
-<!-- → [CHART: Three-panel trust calibration visualization. Panel 1 (overtrust): researcher correction rate near zero, AI error rate 15% — gap labeled "uncaught errors, discovered later by affected user". Panel 2 (undertrust): researcher correction rate 60%, AI error rate 5% — gap labeled "wasted effort, backlash". Panel 3 (calibrated): correction rate tracks error rate, corrections concentrated in LOW-confidence entries. Horizontal axis: cases processed over time. Caption: "Calibrated trust is a property of the deployment, not the model. It requires monitoring the audit trail, not just running the pipeline." Figure 10.9] -->
+![Calibrated trust is a property of the deployment, not the model. It requires monitoring the audit trail, not just running the pipeline.](images/10-delegation-trust-and-the-supervisory-role-fig-04.png)
+*Figure 10.4 — Trust calibration visualization*
 
 ---
 
@@ -712,11 +723,9 @@ Plus a one-paragraph note on the deployment's TRUST CALIBRATION failure mode: is
 
 **Preview of next chapter:** Chapter 11 turns the casebook outward — you'll build a dashboard of your findings, in two versions: an honest one and a deliberately misleading one. The misleading version teaches you what the honest one is doing structurally.
 
-
 ---
 
-## AI Wayback Machine
-
+##  AI Wayback Machine
 The ideas in this chapter didn't appear from nowhere. **Donald Broadbent** ran the Applied Psychology Unit at Cambridge from 1958 to 1974 and produced the foundational work — *Perception and Communication* (1958), *Decision and Stress* (1971) — on how human attention degrades under monotony, low signal rate, and the structural conditions that supervisory roles tend to produce. The paradox of the well-running automated system is, in Broadbent's vocabulary, a vigilance problem: the rare event the supervisor is supposed to catch is rare specifically because the system runs well, and the supervisor's attentional capacity for that rare event has been quietly eroded by the monotony of the long stretches in between.
 
 ![Donald Broadbent, c. 1960s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/donald-broadbent.jpg)

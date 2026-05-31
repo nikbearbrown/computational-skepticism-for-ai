@@ -1,4 +1,11 @@
 # Chapter 2 — Probability, Uncertainty, and the Confidence Illusion
+
+## TL;DR
+
+- Why your intuition forgets the prior, and what to do when it does.
+- You will practice Apply Bayes' theorem to calculate the actual probability of a rare event given a positive test result, and explain why the result differs from naive intuition; Use the total probability theorem to decompose complex probability calculations into tractable pieces; Apply the multiplication (chain) rule to compute joint probabilities across sequential events.
+- The chapter moves through Learning objectives, Prerequisites, Why this chapter, What probability actually is — and why two engineers can disagree without either being wrong, and related ideas.
+
 *Why your intuition forgets the prior, and what to do when it does.*
 
 ## Learning objectives
@@ -105,7 +112,8 @@ provided $P(B) > 0$. The numerator is the probability that both $A$ and $B$ occu
 
 There is a helpful picture here. Conditioning on $B$ is like shrinking the sample space. Once you know $B$ happened, only outcomes inside $B$ are still possible. Among those outcomes, $P(A \mid B)$ asks: what fraction of them are also in $A$?
 
-<!-- → [FIGURE: Venn diagram — large rectangle labeled Ω (sample space). Inside it, event B is a large oval occupying roughly 40% of the space. Event A is a smaller oval overlapping B on its right side. The intersection A∩B is shaded dark. Outside B, the remainder of A is shown faded/grayed out. Two labels: "Before conditioning: A∩B is one piece of the full space." "After conditioning on B: only outcomes inside B remain; P(A|B) = shaded area ÷ B's full area." Students should see that conditioning physically shrinks the space of possibility, making P(A|B) a ratio within B, not within Ω.] -->
+![Venn diagram ](images/02-probability-uncertainty-and-the-confidence-illusion-fig-01.png)
+*Figure 2.1 — Venn diagram *
 
 A few worked examples, in increasing order of practical relevance.
 
@@ -169,7 +177,8 @@ $$P(A_1 \cap A_2 \cap A_3) = \frac{39}{52} \cdot \frac{38}{51} \cdot \frac{37}{5
 
 About 41%. You can verify this: it is the number of ways to choose 3 cards from 39 non-hearts divided by the number of ways to choose 3 cards from 52.
 
-<!-- → [FIGURE: Probability tree for the card-drawing example. Root node unlabeled. First branch: "1st card not heart (39/52)" going left; "1st card heart (13/52)" going right. From the left branch, second split: "2nd not heart (38/51)" and "2nd heart (13/51)." From that left branch, third split: "3rd not heart (37/50)" and "3rd heart (13/50)." The path leading to all three non-hearts is highlighted in a distinct color; at its leaf, the joint probability 39/52 × 38/51 × 37/50 ≈ 0.413 is shown. Caption: "Each edge is a conditional probability. Each leaf is a joint probability found by multiplying along the path — the chain rule made visible." Placed immediately after the multiplication at the end of the worked example, so the arithmetic and the picture are adjacent.] -->
+![Each edge is a conditional probability. Each leaf is a joint probability found by multiplying along the path — the chain rule made visible.](images/02-probability-uncertainty-and-the-confidence-illusion-fig-02.png)
+*Figure 2.2 — Probability tree for the card-drawing example*
 
 ### Worked example — independent events
 
@@ -193,7 +202,8 @@ This is the **total probability theorem**. It says: if you can compute the proba
 
 The intuition: each $A_i$ is a different state the world could be in. $P(B \mid A_i)$ is how likely $B$ is if the world is in state $A_i$. $P(A_i)$ is how likely that state is. Summing across all states gives you $P(B)$.
 
-<!-- → [FIGURE: Partition diagram — a large rectangle representing sample space Ω, divided vertically into four strips of different widths labeled A1, A2, A3, A4 (widths proportional to P(A_i)). A horizontal band labeled B cuts across all four strips. Each intersection A_i ∩ B is shaded a distinct color. Below the rectangle, an equation builds up: P(B) = [A1∩B area] + [A2∩B area] + [A3∩B area] + [A4∩B area] = P(A1)·P(B|A1) + P(A2)·P(B|A2) + ... Students should see that the total probability theorem is literally adding up the colored slivers. Placed immediately after the theorem statement, before the manufacturing example.] -->
+![Partition diagram ](images/02-probability-uncertainty-and-the-confidence-illusion-fig-03.png)
+*Figure 2.3 — Partition diagram *
 
 ### Worked example — manufacturing defects
 
@@ -229,7 +239,8 @@ $$P(U_3) = P(U_2) \cdot 0.8 + P(B_2) \cdot 0.4 = 0.72 \times 0.8 + 0.28 \times 0
 
 About 69%. This kind of recursive calculation — using this week's probabilities to compute next week's, via the total probability theorem — is the foundation of Markov chain analysis. You will see it again whenever we model systems that evolve over time.
 
-<!-- → [FIGURE: State transition diagram for Alice's two-state Markov chain. Two nodes labeled "Up-to-date (U)" and "Behind (B)." Four directed edges: U→U labeled 0.8; U→B labeled 0.2; B→U labeled 0.4; B→B labeled 0.6. Below the diagram, a small table showing the recursion: Week 0: P(U)=1.0, P(B)=0.0 | Week 1: P(U)=0.8, P(B)=0.2 | Week 2: P(U)=0.72, P(B)=0.28 | Week 3: P(U)=0.688, P(B)=0.312. Students should see both the state structure and the numerical convergence in one glance. Placed after the Week 3 calculation, before the section break.] -->
+![State transition diagram for Alice's two-state Markov chain](images/02-probability-uncertainty-and-the-confidence-illusion-fig-04.png)
+*Figure 2.4 — State transition diagram for Alice's two-state Markov chain*
 
 ---
 
@@ -253,7 +264,8 @@ The other 9,999 do not have the disease. "Ninety-nine percent accurate" also mea
 
 So we have: one true positive, and about one hundred false positives. One hundred and one positive results in total. If you pull a positive result out of that pool, the chance it came from someone who is actually sick is $\frac{1}{101}$, about one percent.
 
-<!-- → [FIGURE: Population grid of 10,000 dots arranged as a 100×100 array. One dot colored red (true positive, labeled "Has disease — test correctly positive"). Approximately 100 dots colored orange, scattered across the grid (false positives, labeled "No disease — test incorrectly positive"). Remaining ~9,899 dots gray (true negatives). A callout box pulls out all positive results — the 1 red dot and ~100 orange dots — and labels the pool: "101 positive results total. Only 1 in 101 is a true case." Caption: "Most positive results come from the large healthy population, not the tiny sick one. Even an excellent test produces mostly false positives when the base rate is low." Placed immediately after the 1/101 calculation, before "Now, isn't that something?"'] -->
+![Most positive results come from the large healthy population, not the tiny sick one. Even an excellent test produces mostly false positives when the base rate is low.](images/02-probability-uncertainty-and-the-confidence-illusion-fig-05.png)
+*Figure 2.5 — Population grid of 10,000 dots arranged as a*
 
 Now, isn't that something? The test is doing exactly what its specification said it would do. The number on the box is honest. Nothing is broken. And yet your intuition was off by two orders of magnitude.
 
@@ -298,7 +310,8 @@ There is a beautiful way to read Bayes' theorem that matters enormously for AI d
 
 Bayes' theorem tells you exactly how to update your prior into a posterior. This is formal belief revision. The formula prevents both overcounting evidence (acting as though a positive test proves disease) and undercounting prior beliefs (acting as though the test's accuracy is all that matters).
 
-<!-- → [FIGURE: Before/after bar chart pair. Left panel labeled "Before evidence (prior)": two bars — P(disease) = 0.0001 (a thin sliver, barely visible) and P(no disease) = 0.9999 (full-height bar). Right panel labeled "After positive test (posterior)": two bars — P(disease|positive) ≈ 0.0099 (small but about 100× taller than the prior sliver) and P(no disease|positive) ≈ 0.9901 (still dominant). A horizontal arrow between panels labeled "Bayesian update: multiply by likelihood ratio, renormalize." Caption: "The positive test does real work: it raises the probability of disease a hundredfold. But the prior was so low that the posterior is still very small. Both facts are important — and neither is visible if you only read the test's accuracy number." Placed between the inference interpretation paragraph and the factory worked example.] -->
+![The positive test does real work: it raises the probability of disease a hundredfold. But the prior was so low that the posterior is still very small. Both facts are important — and neither is visible if you only read the test's accuracy number.](images/02-probability-uncertainty-and-the-confidence-illusion-fig-06.png)
+*Figure 2.6 — Before/after bar chart pair*
 
 ### Worked example — factory revisited
 
@@ -372,7 +385,8 @@ Every machine learning deployment is a bet that the world you operate in looks e
 
 There is a documented case from the early pandemic. Models trained on pre-2020 medical imaging were deployed in 2021. The imaging signatures had been altered by COVID's effect on the lungs and on the population that ended up in scanners. The models produced confident predictions that no longer matched the underlying disease distribution. [Verify: DeGrave et al. 2021, *Nature Machine Intelligence* — confirm specific citation and scope before publication.]
 
-<!-- → [FIGURE: Two overlapping bell curves on a shared x-axis. Left curve (blue, taller) labeled "Training distribution — world the model learned." Right curve (orange, shifted right) labeled "Deployment distribution — world the model operates in." The gap between the two peaks is labeled "distribution shift." A horizontal band above both curves labeled "Model's confidence surface: unchanged regardless of shift" shows the same shape despite the shift below. Caption: "The model's confidence scores do not move when the world moves. The dashboards stay green. Detection requires watching actual outcomes — not just model outputs." Placed immediately after the pandemic imaging example, before "You will not, in general, be able to detect this kind of drift."'] -->
+![The model's confidence scores do not move when the world moves. The dashboards stay green. Detection requires watching actual outcomes — not just model outputs.](images/02-probability-uncertainty-and-the-confidence-illusion-fig-07.png)
+*Figure 2.7 — Two overlapping bell curves on a shared x-axis*
 You will not, in general, be able to detect this kind of drift just by watching the model's outputs. The model continues to look confident through the shift; the shape of its outputs stays similar; the dashboards stay green. Detection requires watching the inputs, watching the outputs, and — most of all — watching the actual outcomes the model was supposed to predict, when those outcomes eventually become observable. Most deployments do not budget for that. Most find out about distribution shift through the harm.
 
 Hume on the page, in our register: the model's track record tells you about the past. The honest question is *what would have to remain true about the deployment for the track record to keep being informative?* If you cannot answer that, you do not actually trust the track record. You just have not noticed yet.
@@ -387,7 +401,8 @@ A model is calibrated when its stated probabilities match what actually happens.
 
 You can see this in a picture. Put the model's stated probability on the horizontal axis. Put the actual frequency of positives on the vertical axis. A perfectly calibrated model traces the diagonal — where stated and actual are equal. A miscalibrated model peels off the diagonal, and the *shape* of how it peels off tells you something about how the model is wrong.
 
-<!-- → [FIGURE: Calibration curve — x-axis "Model's stated probability (0.0 to 1.0)," y-axis "Observed frequency of positive outcomes (0.0 to 1.0)." Diagonal dashed line labeled "Perfect calibration (stated = actual)." A second solid curve that tracks the diagonal from 0 to ~0.6, then bows upward above the diagonal in the 0.6–1.0 range, labeled "Typical deep learning overconfidence." A shaded region between the curve and the diagonal in the high-confidence zone, labeled "Overconfidence gap — the model says 0.95 when it should say ~0.75." Caption: "The well-calibrated region (left portion) is where the model's stated confidence is informative. The overconfident tail (right portion) is where it lies." Placed immediately after the paragraph ending "how the model is wrong," before the deep-learning overconfidence explanation.] -->
+![The well-calibrated region (left portion) is where the model's stated confidence is informative. The overconfident tail (right portion) is where it lies.](images/02-probability-uncertainty-and-the-confidence-illusion-fig-08.png)
+*Figure 2.8 — Calibration curve *
 
 Here is a pattern that turns up everywhere in modern deep learning. The model is reasonably calibrated in the middle of its range — when it says "sixty percent" it is about right. But at the extremes, especially toward the high end, it is badly overconfident. It says "ninety-nine percent" when it should be saying "eighty-five." The mathematics of how these models are trained — the use of softmax outputs and certain loss functions — actively rewards extreme confidence even when the underlying decision is not really that confident. [Verify: Guo et al. 2017, *On Calibration of Modern Neural Networks* — primary source for this finding.]
 
@@ -422,7 +437,8 @@ When either requirement fails, the theorem fails, and the failure is usually qui
 
 Power-law distributions are common in real systems: wealth, file sizes, network connection counts, earthquake magnitudes, training-loss spikes during model fitting, and the cost of a deployed AI system being wrong about a single decision.
 
-<!-- → [FIGURE: Two distributions overlaid on the same x-axis. Left: a Gaussian bell curve (blue, symmetric, thin tails) labeled "CLT applies — Gaussian." Right: a power-law distribution (orange, asymmetric, with a long fat tail extending far to the right) labeled "Heavy-tailed — CLT does not apply." A vertical dashed line at a large x-value (say, the 99th percentile of the Gaussian) shows: Gaussian probability near zero at that point; power-law probability still clearly non-trivial. Annotation on the fat tail: "This is where your confidence intervals lie to you." Caption: "In the heavy-tailed regime, the next observation can move your average dramatically no matter how many observations you have already collected." Placed immediately after the list of real-world power-law examples, before the paragraph on sample mean convergence.] -->
+![In the heavy-tailed regime, the next observation can move your average dramatically no matter how many observations you have already collected.](images/02-probability-uncertainty-and-the-confidence-illusion-fig-09.png)
+*Figure 2.9 — Two distributions overlaid on the same x-axis*
 
 In a heavy-tailed regime, the sample mean does not settle down as you collect more data. You compute the average of a thousand observations and the next observation moves the average by a lot. Confidence intervals computed under Gaussian assumptions are nonsense here — but they look exactly like normal confidence intervals, so you have to know to be suspicious.
 
@@ -440,7 +456,8 @@ Hume on the page, one more time: the past is informative about the past. The nex
 
 **Glimmer 2.3 — The 99% accurate test.** Take the disease example from this chapter. Vary the base rate from 1/100 to 1/100,000. Plot positive predictive value as a function of base rate. Predict, before plotting, where the curve goes through 50%. Identify, from a current AI deployment in your field, which base rate regime you are in.
 
-<!-- → [CHART: Line chart — x-axis "Base rate (log scale, from 1/100 to 1/100,000)," y-axis "Positive predictive value (0 to 1.0)." A single curve showing how PPV falls steeply as the base rate decreases, for a fixed test accuracy of 99%. A horizontal dashed line at PPV = 0.50 labeled "Coin-flip threshold." A vertical dashed line at the base rate where the curve crosses 0.50, labeled "Here, the test is no better than guessing." Caption: "Glimmer 2.3 warm-up plot. Students should lock their prediction of this crossing point before plotting. The curve's shape is the lesson — not the specific numbers." Placed immediately after Glimmer 2.3 description, as an anchor for the prediction-lock exercise.] -->
+![Glimmer 2.3 warm-up plot. Students should lock their prediction of this crossing point before plotting. The curve's shape is the lesson — not the specific numbers.](images/02-probability-uncertainty-and-the-confidence-illusion-fig-10.png)
+*Figure 2.10 — Line chart *
 
 ---
 
@@ -471,7 +488,8 @@ Four questions, in order:
 
 These four questions, asked in the right order, would have prevented most of the deployment disasters I have watched unfold. We use all four on every system we analyze in the remaining chapters.
 
-<!-- → [INFOGRAPHIC: Four-panel "diagnostic card" layout — one panel per question, suitable for printing as a reference card. Panel 1 (Q1 — Base rate): Icon of a population with a small fraction highlighted. Text: "What is the prior? Before the model, how likely was the positive class?" Indicator: "If rare: beware false positives." Panel 2 (Q2 — Calibration): Icon of a diagonal reference line with a curve peeling off it. Text: "Does stated confidence match empirical frequency on deployment data?" Indicator: "No calibration data = stated number is decorative." Panel 3 (Q3 — Cost distribution): Icon of a bell curve with a fat tail. Text: "Is the cost of being wrong uniform, or are there rare catastrophic failures?" Indicator: "If heavy-tailed: average-loss metrics are irrelevant." Panel 4 (Q4 — Distribution shift): Icon of two distributions with a gap between them. Text: "What would have to remain true for the training track record to hold?" Indicator: "If you can't answer: you don't actually trust the model." Caption: "The four questions. Carry these into every system you evaluate." Placed immediately after the four numbered questions, before "These four questions, asked in the right order."'] -->
+![The four questions. Carry these into every system you evaluate.](images/02-probability-uncertainty-and-the-confidence-illusion-fig-11.png)
+*Figure 2.11 — Four-panel "diagnostic card" layout *
 
 ---
 
@@ -598,11 +616,9 @@ End with: a one-page "Probabilistic Baseline" appendix to my casebook. Include t
 
 **Preview of next chapter:** Chapter 3 turns to where bias enters the agent's pipeline. You'll draw a causal graph for the agent (input → action → outcome → user) and identify the highest-leverage point at which the agent's behavior could be biased — and which of the ten canonical bias mechanisms is most likely operating.
 
-
 ---
 
-## AI Wayback Machine
-
+##  AI Wayback Machine
 The ideas in this chapter didn't appear from nowhere. **Frank Ramsey** died at twenty-six, in 1930, having already worked out — in *Truth and Probability* (1926) — the foundational case for treating probability as a property of a *person's* belief rather than a property of the world: a number you can elicit, score, and improve by checking your bets against outcomes. The calibration disciplines this chapter installs are Ramsey's, applied to AI systems whose reported confidence the user has been treating as a property of the world rather than a property of the model's belief.
 
 ![Frank P. Ramsey, c. 1925. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/frank-ramsey.jpg)
@@ -623,3 +639,69 @@ Who was Frank Ramsey, and how does his account of *subjective probability* — p
 - Add a constraint: "Answer as if you're writing the rationale for measuring an LLM's calibration with a Brier score"
 
 What changes? What gets better? What gets worse?
+
+## Prompts
+
+Use these prompts with Claude to generate interactive D3 v7 versions of the
+figures in this chapter. Each produces a standalone HTML file you can open
+in a browser and modify freely.
+
+**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
+your Claude project context before using these prompts. They define the stack,
+naming conventions, color system, and typography the figures use.
+
+---
+
+### Figure 1 — Venn diagram
+
+Create a standalone D3 v7 HTML figure for "Venn diagram". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/02-probability-uncertainty-and-the-confidence-illusion-fig-01.html`
+
+---
+
+### Figure 3 — Partition diagram
+
+Create a standalone D3 v7 HTML figure for "Partition diagram". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/02-probability-uncertainty-and-the-confidence-illusion-fig-03.html`
+
+---
+
+### Figure 4 — State transition diagram for Alice's two-state Markov chain
+
+Create a standalone D3 v7 HTML figure for "State transition diagram for Alice's two-state Markov chain". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/02-probability-uncertainty-and-the-confidence-illusion-fig-04.html`
+
+---
+
+### Figure 5 — Most positive results come from the large healthy population, not the...
+
+Create a standalone D3 v7 HTML figure for "Most positive results come from the large healthy population, not the...". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/02-probability-uncertainty-and-the-confidence-illusion-fig-05.html`
+
+---
+
+### Figure 6 — The positive test does real work: it raises the probability of disease a...
+
+Create a standalone D3 v7 HTML figure for "The positive test does real work: it raises the probability of disease a...". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/02-probability-uncertainty-and-the-confidence-illusion-fig-06.html`
+
+---
+
+### Figure 7 — The model's confidence scores do not move when the world moves
+
+Create a standalone D3 v7 HTML figure for "The model's confidence scores do not move when the world moves". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/02-probability-uncertainty-and-the-confidence-illusion-fig-07.html`
+
+---
+
+### Figure 9 — In the heavy-tailed regime, the next observation can move your average...
+
+Create a standalone D3 v7 HTML figure for "In the heavy-tailed regime, the next observation can move your average...". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/02-probability-uncertainty-and-the-confidence-illusion-fig-09.html`

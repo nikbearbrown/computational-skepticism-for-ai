@@ -1,4 +1,11 @@
 # Chapter 3 — Bias: Where It Enters and Who Is Responsible
+
+## TL;DR
+
+- Doing the Fix the Model Alone Cannot Do.
+- The chapter moves through What "bias" actually means, Ten mechanisms, distinguished, Selection bias, Confirmation bias, and related ideas.
+- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
+
 *Doing the Fix the Model Alone Cannot Do.*
 
 I want to tell you about three engineering teams.
@@ -49,7 +56,8 @@ This is not a theoretical concern. It is precisely what happened in the 1936 Lit
 
 The ten bias mechanisms covered in this chapter are ten distinct ways of introducing a nonzero value into the expression $E[\hat{\theta}] - \theta$. Each has a different causal structure, and the fix for each is different. Confusing them leads engineers to apply the right intervention at the wrong leverage point — which is exactly what Teams One and Two did.
 
-<!-- → [INFOGRAPHIC: Biased vs. unbiased estimator convergence. Two panels side by side. Left: unbiased estimator — as sample size increases, estimates scatter symmetrically around true θ, converging to it. Right: biased estimator — estimates converge confidently to a value offset from θ; the offset does not shrink with more data. Caption: "More data narrows the scatter. It does not move the systematic offset." This anchors the core claim that more data cannot fix a biased estimator.] -->
+![More data narrows the scatter. It does not move the systematic offset.](images/03-bias-where-it-enters-and-who-is-responsible-fig-01.png)
+*Figure 3.1 — Biased vs*
 
 ---
 
@@ -145,7 +153,8 @@ This type is structurally different from all the others, and understanding why i
 
 A hiring model trained on ten years of promotion records at a company that historically promoted men at higher rates in engineering roles is learning $P(Y_{\text{historical}} | \mathbf{x})$ rather than $P(Y_{\text{fair}} | \mathbf{x})$. The model is accurate on its training distribution. Its accuracy perpetuates the historical disparity. No data quality intervention helps, because the labels are accurately recorded. The bias is in what was recorded, not in how it was recorded.
 
-<!-- → [INFOGRAPHIC: Historical bias mechanism. A timeline showing: historical world with discriminatory patterns → data collection (accurate recording) → model training → deployment → perpetuation of historical patterns. Marked clearly: bias lives in the historical patterns, not the recording step. A counterfactual "fair world" branch shows what different labels would have looked like.] -->
+![Historical bias mechanism](images/03-bias-where-it-enters-and-who-is-responsible-fig-02.png)
+*Figure 3.2 — Historical bias mechanism*
 
 The practical mitigations are: finding a less-biased proxy for the outcome; applying fairness constraints during training that penalize perpetuation of historical disparities; or using time-sensitive weighting to de-emphasize older records from periods with more discriminatory practice. None of these fully solve the problem. They reduce the leverage of the historical signal on current predictions.
 
@@ -157,7 +166,8 @@ Implicit bias is the ambient background from which several other types emerge. I
 
 The most tractable algorithmic intervention is demographic parity auditing after the model is built: test whether $P(\hat{Y}=1|A=0) \approx P(\hat{Y}=1|A=1)$ across protected groups. Disparities in this test are not proof of implicit bias — they might reflect real differences in outcome base rates — but they are a flag that requires investigation. The systemic interventions are diverse teams (homogeneous teams share the same blind spots), structured decision processes (structure reduces the surface area for implicit judgment), and continuous auditing.
 
-<!-- → [INFOGRAPHIC: Pipeline entry-point map for all ten bias types. A horizontal pipeline showing stages: Research Design → Data Collection → Labeling / Annotation → Model Training → Model Output → Deployment Context → Final Outcome. Each of the ten bias types is positioned as an arrow entering the pipeline at its primary stage — confirmation bias at Research Design, selection bias and sampling bias at Data Collection, observer bias and data coding bias and self-report bias at Labeling, data entry bias spanning Collection to Labeling, historical bias entering at Labeling (labels reflect historical world), implicit bias shown as a diffuse overlay across all human-judgment stages, publication bias at a Research Synthesis branch, structural bias at Deployment Context. Student should be able to glance at this and locate any type's primary entry point.] -->
+![Pipeline entry-point map for all ten bias types](images/03-bias-where-it-enters-and-who-is-responsible-fig-03.png)
+*Figure 3.3 — Pipeline entry-point map for all ten bias types*
 
 ---
 
@@ -240,7 +250,8 @@ The general principle: when base rates differ across groups, you cannot simultan
 
 Which means the choice between fairness metrics is not a technical choice. It is a values claim. *Which kind of error are we less willing to make?* That question does not have a mathematical answer. It has a social answer, and the social answer depends on what the model is being used for, who bears the costs of each error type, and what the political economy of the deployment looks like. Engineers who treat this as a pure optimization problem are secretly making a values choice — the choice to optimize for whatever metric their loss function encodes — while appearing neutral.
 
-<!-- → [FIGURE: Visual proof sketch of the fairness impossibility. Show two groups with different base rates (30% vs 50%), demonstrate with concrete numbers why achieving equal false positive rates forces calibration disparity and vice versa. Student should see the arithmetic contradiction, not just be told it exists.] -->
+![Visual proof sketch of the fairness impossibility](images/03-bias-where-it-enters-and-who-is-responsible-fig-04.png)
+*Figure 3.4 — Visual proof sketch of the fairness impossibility*
 
 *Figure 3.2 — The fairness impossibility.*
 
@@ -263,7 +274,8 @@ This is what I mean by reading the dataset like a historian. The deepest dataset
 
 Now we need a tool. The tool is due to Judea Pearl, and it is, in my judgment, the single most useful conceptual instrument in this book. He calls it a ladder of causal reasoning, with three rungs. We are going to use the first two now, and the third in Chapter 8.
 
-<!-- → [FIGURE: Pearl's ladder of causal reasoning. A three-rung ladder with Rung 1 (association / seeing), Rung 2 (intervention / doing), Rung 3 (counterfactual / imagining). Each rung shows: the question it asks, the formal notation, the canonical example, and the kind of AI fairness question it can answer. Rung 3 visibly "coming soon" — grayed out, labeled "Chapter 8."] -->
+![Pearl's ladder of causal reasoning](images/03-bias-where-it-enters-and-who-is-responsible-fig-05.png)
+*Figure 3.5 — Pearl's ladder of causal reasoning*
 
 *Figure 3.3 — Pearl's ladder of causal reasoning.*
 
@@ -300,7 +312,8 @@ Each team intervened. They intervened at different points in the causal chain fr
 
 But the doings had different leverage. Imagine the causal graph for how the bias appears in the deployed outcome. The protected attribute sits at the top. Below it are proxies — features in the data that correlate with the protected attribute. Below those, the features the model uses. Below those, the model's output. Below that, the deployment context — the reviewer, the threshold, the appeal process. Below that, the final outcome that lands on a real person's life.
 
-<!-- → [FIGURE: Causal graph of a biased deployment pipeline. Layered flow: Protected attribute → Proxies (features correlated with the attribute) → Model input features → Model parameters → Model output → Deployment context (reviewer / threshold / appeals) → Final outcome. Three colored overlays showing where Team A's intervention acts, Team B's acts, and Team C's acts. Diagram makes visible why Team A and B leave the deployment-context path open.] -->
+![Causal graph of a biased deployment pipeline](images/03-bias-where-it-enters-and-who-is-responsible-fig-06.png)
+*Figure 3.6 — Causal graph of a biased deployment pipeline*
 
 *Figure 3.4 — Causal graph of a biased deployment pipeline.*
 
@@ -319,7 +332,8 @@ The procedure for leverage analysis, in working form:
 3. For each candidate intervention point, ask: *which paths does this intervention block, and which paths does it leave open?*
 4. The highest-leverage intervention is the one that blocks the largest fraction of the bias-carrying paths, ideally without blocking paths the deployment requires for its core function.
 
-<!-- → [INFOGRAPHIC: Leverage analysis decision flowchart. Four sequential steps: (1) Draw the causal graph — boxes for each variable, arrows showing causal flow. (2) Enumerate paths from protected attribute to outcome — list each distinct route. (3) For each candidate intervention, shade the paths it blocks vs. leaves open. (4) Select the intervention that blocks the most bias-carrying paths. Annotate with the Teams A/B/C example: show Team A blocking the model-parameter path only, Team B blocking the underrepresentation path only, Team C blocking the deployment-context path — with the proportion of total bias-carrying flow each intervention captures. Student should be able to follow this flowchart as a working tool on a new system.] -->
+![Leverage analysis decision flowchart](images/03-bias-where-it-enters-and-who-is-responsible-fig-07.png)
+*Figure 3.7 — Leverage analysis decision flowchart*
 
 This procedure is unromantic. It is also the difference between bias mitigation that works and bias mitigation that produces conference papers and persistent disparities.
 
@@ -512,11 +526,9 @@ End with: a one-page "Bias & Leverage Brief" for my casebook. Include the DAG, t
 
 **Preview of next chapter:** Chapter 4 sets up your Frictional journal — the prediction-lock log that will accompany every red-team case you collect, providing the verifiable provenance that proves YOU did the analysis (not the AI you're using to help analyze).
 
-
 ---
 
-## AI Wayback Machine
-
+##  AI Wayback Machine
 The ideas in this chapter didn't appear from nowhere. **Hannah Arendt** spent the postwar decades arguing — most famously in *Eichmann in Jerusalem* (1963) — that systemic harm is rarely the work of monstrous individuals. It is the predictable output of a system whose roles, rules, and routines diffuse responsibility across so many actors that no single one feels accountable for the result. The chapter's question — *where bias enters and who is responsible* — is Arendt's question, restated for a pipeline whose participants include data brokers, annotators, modelers, deployers, and a model that is not, itself, a moral agent.
 
 ![Hannah Arendt, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/hannah-arendt.jpg)
@@ -537,3 +549,53 @@ Who was Hannah Arendt, and how does her account of *the banality of evil* — th
 - Add a constraint: "Answer as if you're writing the accountability section of a model card"
 
 What changes? What gets better? What gets worse?
+
+## Prompts
+
+Use these prompts with Claude to generate interactive D3 v7 versions of the
+figures in this chapter. Each produces a standalone HTML file you can open
+in a browser and modify freely.
+
+**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
+your Claude project context before using these prompts. They define the stack,
+naming conventions, color system, and typography the figures use.
+
+---
+
+### Figure 2 — Historical bias mechanism
+
+Create a standalone D3 v7 HTML figure for "Historical bias mechanism". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/03-bias-where-it-enters-and-who-is-responsible-fig-02.html`
+
+---
+
+### Figure 3 — Pipeline entry-point map for all ten bias types
+
+Create a standalone D3 v7 HTML figure for "Pipeline entry-point map for all ten bias types". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/03-bias-where-it-enters-and-who-is-responsible-fig-03.html`
+
+---
+
+### Figure 4 — Visual proof sketch of the fairness impossibility
+
+Create a standalone D3 v7 HTML figure for "Visual proof sketch of the fairness impossibility". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/03-bias-where-it-enters-and-who-is-responsible-fig-04.html`
+
+---
+
+### Figure 5 — Pearl's ladder of causal reasoning
+
+Create a standalone D3 v7 HTML figure for "Pearl's ladder of causal reasoning". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/03-bias-where-it-enters-and-who-is-responsible-fig-05.html`
+
+---
+
+### Figure 7 — Leverage analysis decision flowchart
+
+Create a standalone D3 v7 HTML figure for "Leverage analysis decision flowchart". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
+
+> Reference implementation: `d3/03-bias-where-it-enters-and-who-is-responsible-fig-07.html`
