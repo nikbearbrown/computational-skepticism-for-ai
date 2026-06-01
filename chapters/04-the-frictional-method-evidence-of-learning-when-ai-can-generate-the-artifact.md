@@ -500,6 +500,10 @@ The ideas in this chapter didn't appear from nowhere. **Lev Vygotsky** was theor
 ![Lev Vygotsky, c. 1930. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/lev-vygotsky.jpg)
 *Lev Vygotsky, c. 1930. AI-generated portrait based on a public domain photograph.*
 
+![Lev Vygotsky](../images/lev-vygotsky-eo5.png)
+
+*Puppet Art by [Nik Bear Brown](https://www.nikbearbrown.com/).*
+
 **Run this:**
 
 ```

@@ -634,6 +634,10 @@ The ideas in this chapter didn't appear from nowhere. **Maurice Merleau-Ponty** 
 ![Maurice Merleau-Ponty, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/maurice-merleau-ponty.jpg)
 *Maurice Merleau-Ponty, c. 1950s. AI-generated portrait based on a public domain photograph.*
 
+![Maurice Merleau-Ponty](../images/maurice-merleau-ponty-26o.png)
+
+*Puppet Art by [Nik Bear Brown](https://www.nikbearbrown.com/).*
+
 **Run this:**
 
 ```

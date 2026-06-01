@@ -541,6 +541,10 @@ The ideas in this chapter didn't appear from nowhere. **John Dewey** spent the 1
 ![John Dewey, c. 1920s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/john-dewey.jpg)
 *John Dewey, c. 1920s. AI-generated portrait based on a public domain photograph.*
 
+![John Dewey](../images/john-dewey-beg.png)
+
+*Puppet Art by [Nik Bear Brown](https://www.nikbearbrown.com/).*
+
 **Run this:**
 
 ```

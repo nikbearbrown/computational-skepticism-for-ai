@@ -534,6 +534,10 @@ The ideas in this chapter didn't appear from nowhere. **Hannah Arendt** spent th
 ![Hannah Arendt, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/hannah-arendt.jpg)
 *Hannah Arendt, c. 1950s. AI-generated portrait based on a public domain photograph.*
 
+![Hannah Arendt](../images/hannah-arendt-b1v.png)
+
+*Puppet Art by [Nik Bear Brown](https://www.nikbearbrown.com/).*
+
 **Run this:**
 
 ```
