@@ -1,56 +1,56 @@
 # Introduction
 
-The first sign of trouble is usually not failure. It is fluency.
+A learner opens the first chapter of *Computational Skepticism for AI* with a familiar problem: there is too much information and not enough structure. The terms are available. The examples are available. The missing thing is a route through the material that turns exposure into understanding.
 
-The draft looks clean. The answer sounds reasonable. The chart has labels. The code runs. The plan has phases. The explanation has the rhythm of expertise. Nothing in the surface announces that a human still has work to do.
+This book is about the gap between knowing the name of Computational Skepticism for AI's subject and being able to use its ideas with judgment.
 
-This book is about the gap between a polished artifact and a trustworthy one.
+The central argument is that Computational Skepticism for AI is best learned as a sequence of distinctions, practices, and recurring problems rather than as a list of topics. A reader who can name those distinctions can move through the field with more confidence than a reader who has only memorized definitions.
 
-The central argument of **Computational Skepticism for AI** is that readers need a working method for the part of the work that cannot be delegated: the judgment that decides whether an output is correct, useful, ethical, situated, and worth acting on.
+This is written for learners, teachers, practitioners, and builders who want a clear path through the material.
 
 ## What This Book Is
 
-This book is a practical map of a domain under AI pressure. It names the concepts, habits, distinctions, and workflows that let a reader use AI while preserving the human competence the work depends on.
+This book is a structured introduction to Computational Skepticism for AI. It teaches the vocabulary of the field, shows how the main ideas connect, and gives readers enough conceptual grip to continue with more specialized work. It is designed to be read as a book, used as a reference, and integrated into an intelligent textbook system.
 
 ## What This Book Is Not
 
-This book is not a comprehensive technical manual for every AI system. It is not a replacement for disciplinary training. It is not a promise that AI will make hard work disappear. Avoidance is not a strategy. The strategy is disciplined use.
+This book is not a substitute for practice, mentorship, experimentation, or domain-specific judgment. It does not try to say everything. It tries to say enough, in the right order, so that the reader can recognize what matters next.
 
-## The Recurring Concept
+## The Concept Running Through the Book
 
-The recurring concept is the boundary between execution and judgment. Execution is the production of an artifact. Judgment is the disciplined decision about whether that artifact should exist, whether it is right, whether it fits the situation, what it leaves out, and what consequences follow from using it.
+The recurring idea is transfer: the movement from explanation to usable understanding. Each chapter should help the reader carry an idea from the page into a problem, a classroom, a project, or a decision.
 
 ## How This Book Is Organized
 
-- **Chapter 1: The Skeptic's Toolkit.** The Skeptic's Toolkit establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 2: Probability, Uncertainty, and the Confidence Illusion.** Probability, Uncertainty, and the Confidence Illusion establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 3: Bias: Where It Enters and Who Is Responsible.** Bias: Where It Enters and Who Is Responsible establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 4: The Frictional Method.** The Frictional Method establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 5: Data Validation: Reconstructing the Epistemic Frame Behind a Dataset.** Data Validation: Reconstructing the Epistemic Frame Behind a Dataset establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 6: Model Explainability: Distinguishing Explanation from the Appearance of Explanation.** Model Explainability: Distinguishing Explanation from the Appearance of Explanation establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 7: Fairness Metrics: Choosing a Definition and Defending It.** Fairness Metrics: Choosing a Definition and Defending It establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 8: Robustness: What "Understanding" Means When a Pixel Can Break the Model.** Robustness: What "Understanding" Means When a Pixel Can Break the Model establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 9: Validating Agentic AI: When Autonomous Systems Misbehave.** Validating Agentic AI: When Autonomous Systems Misbehave establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 10: Delegation, Trust, and the Supervisory Role.** Delegation, Trust, and the Supervisory Role establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 11: Visualization Under Validation: Honest, Misleading, and the Choices Between.** Visualization Under Validation: Honest, Misleading, and the Choices Between establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 12: Communicating Uncertainty: Calibrating Claims to Evidence.** Communicating Uncertainty: Calibrating Claims to Evidence establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 13: Accountability: Who Is Responsible When the System Fails?.** Accountability: Who Is Responsible When the System Fails? establishes one part of the book's working method and gives the reader language for using that method in practice.
-- **Chapter 14: The Limits of AI: What the Tools Cannot Do.** The Limits of AI: What the Tools Cannot Do establishes one part of the book's working method and gives the reader language for using that method in practice.
+- **Chapter 1: Chapter 1 — The Skeptic's Toolkit.** - The moves you perform before you trust what the machine just told you. - The chapter moves through What I mean by skepticism, The cave, The solve-verify asymmetry, The Five Supervisory Capacities, and related ideas. - Read it for the main...
+- **Chapter 2: Chapter 2 — Probability, Uncertainty, and the Confidence Illusion.** - Why your intuition forgets the prior, and what to do when it does. - You will practice Apply Bayes' theorem to calculate the actual probability of a rare event given a positive test result, and explain why the result differs from...
+- **Chapter 3: Chapter 3 — Bias: Where It Enters and Who Is Responsible.** - Doing the Fix the Model Alone Cannot Do. - The chapter moves through What "bias" actually means, Ten mechanisms, distinguished, Selection bias, Confirmation bias, and related ideas. - Read it for the main argument, the vocabulary it introduces, and the practical...
+- **Chapter 4: Chapter 4 — The Frictional Method.** - I want to tell you about two students. - The chapter moves through What broke, Performance is not learning, The seven moves, The journal and its failure modes, and related ideas. - Read it for the main argument, the vocabulary it...
+- **Chapter 5: Chapter 5 — Data Validation: Reconstructing the Epistemic Frame Behind a Dataset.** - What the histograms can see, and the failures that live in everything else. - You will practice Explain why procedural EDA is necessary but not sufficient for deployment-ready data validation, and describe what the interrogation approach adds; Execute the core procedural...
+- **Chapter 6: Chapter 6 — Model Explainability: Distinguishing Explanation from the Appearance of Explanation.** - When a Correct Explanation Makes the Wrong Decision Feel Right. - The chapter moves through What SHAP is, and what SHAP isn't, The mathematics of Shapley values, The value function, The marginal contribution, and related ideas. - Read it for the...
+- **Chapter 7: Chapter 7 — Fairness Metrics: Choosing a Definition and Defending It.** - This chapter gives a working overview of Fairness Metrics: Choosing a Definition and Defending It, focusing on the ideas a reader needs before moving to the next chapter. - The chapter moves through Three definitions, The arithmetic, The COMPAS case, Each...
+- **Chapter 8: Chapter 8 — Robustness: What "Understanding" Means When a Pixel Can Break the Model.** - You will practice Distinguish between "the model is fragile" and "the model learned a proxy instead of the human-relevant feature," and explain why the distinction changes the engineering response; Explain the linearity hypothesis and boundary-tilting perspective as competing geometric accounts of...
+- **Chapter 9: Chapter 9 — Validating Agentic AI: When Autonomous Systems Misbehave.** - You Broke My Toy, and the Agent Didn't Know It. - The chapter moves through From prediction to action, The laboratory: what OpenClaw actually was, A taxonomy of how agents go wrong, What agents are lacking: the three core deficits, and...
+- **Chapter 10: Chapter 10 — Delegation, Trust, and the Supervisory Role.** - Write the contract before you trust the handoff. - The chapter moves through The handoff condition, The Five Supervisory Capacities as pipeline jobs, The Boondoggle questions, The full delegation map structure, and related ideas. - Read it for the main argument,...
+- **Chapter 11: Chapter 11 — Visualization Under Validation: Honest, Misleading, and the Choices Between.** - You will practice Explain why visualization is an argument made through structural choices, not a transparent transmission of facts; Identify the nine misleading visualization choices in the catalog, distinguish honest from dishonest uses of each, and apply the catalog to audit...
+- **Chapter 12: Chapter 12 — Communicating Uncertainty: Calibrating Claims to Evidence.** - The Verb Is Doing Epistemic Work You Are Not Noticing. - The chapter moves through The verb taxonomy, Two readers, one document, Metrics and measures of trust calibration, The Brier score: a proper scoring rule, and related ideas. - Read it...
+- **Chapter 13: Chapter 13 — Accountability: Who Is Responsible When the System Fails?.** - I want to put a case in front of you. - The chapter moves through Why humans must be in the loop: the cognitive argument, AI as extended mind: what the capacities actually are, The seven-tier taxonomy, The Gödel argument, and...
+- **Chapter 14: Chapter 14 — The Limits of AI: What the Tools Cannot Do.** - Three things capability scaling cannot fix, and what the supervisor does about them. - You will practice Name the three categorical limits of AI systems — meaning, intentionality, and the data-world gap — and explain why capability scaling does not close...
 
-## How To Read This Book
+## How to Read This Book
 
-Read the introduction first, then move through the chapters in order if you are new to the subject. If you are using the book as a reference, you can skip to the chapter closest to the problem in front of you, but do not skip the judgment frame.
+Read the chapters in order if you are new to the subject. If you already know the area, use the chapter titles as a map and move directly to the parts where your understanding is weakest. The chapters are designed to be self-contained enough for reference, but they work best as a progression from Chapter 1 — The Skeptic's Toolkit to Chapter 14 — The Limits of AI: What the Tools Cannot Do.
 
 ## A Note About AI
 
-This book is written for the AI era, but it is not an invitation to outsource understanding. AI can help draft, summarize, transform, compare, and generate alternatives. Those are execution tasks. The book's deeper concern is the work that remains after execution becomes cheap: deciding what question matters, what evidence counts, what tradeoffs are acceptable, what failure would look like, and who is responsible when the output leaves the screen.
-
-These books are intended to integrate with **Medhavy** (also known as **Medhavi**), an AI-powered intelligent textbook system whose name comes from Sanskrit: मेधावी, meaning intelligent or intellectually brilliant. In that environment, chapters can become adaptive practice: hints, quizzes, worked examples, and feedback loops. But even there, the learning target remains human.
+AI matters to *Computational Skepticism for AI* because the modern textbook is no longer only a static container. It is also part of a learning system: searchable, remixable, explainable, and increasingly connected to tools such as Medhavy. For Humanitarians AI books, the relevant question is not whether AI can replace the learner or the teacher. It cannot. The useful question is what AI can make easier to inspect: definitions, worked examples, misconceptions, practice sequences, alternate explanations, and the structure of an argument. This book treats AI as infrastructure for open, public-interest learning infrastructure. The chapters should still stand on their own as readable prose, but they are also designed to be legible to an intelligent textbook system.
 
 ## Closing Return
 
-Return to the polished artifact. Do not ask first whether it is impressive. Ask what would have to be true for it to be trusted. Ask what the machine could not know. Ask what you are now responsible for. Then begin.
+The learner at the opening does not need more noise. They need a path. This book is that path: not the whole territory, but a reliable way to begin moving through it.
+
+Let's go.
 
 ## Tags
 
-#computational #skepticism #for #ai #AI #education #judgment #Medhavy #Medhavi #intelligent-textbook
+Computational Skepticism for AI, textbook, Medhavy, AI-assisted learning, Humanitarians AI Incorporated

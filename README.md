@@ -1,39 +1,42 @@
 # Computational Skepticism for AI
 
+AI+1, Hands on. Domain specific. No generic prompts.
+
 **Author:** Humanitarians AI Incorporated  
 **Publisher:** Humanitarians AI Incorporated, a 501(c)(3) nonprofit organization  
+**Copyright:** Copyright © 2026 Humanitarians AI Incorporated. All rights reserved.  
 **Edition:** 2026
 
-## Overview
+## Summary
 
-The first sign of trouble is usually not failure. It is fluency. The draft looks clean. The answer sounds reasonable. The chart has labels. The code runs. The plan has phases. The explanation has the rhythm of expertise. Nothing in the surface announces that a human still has work to do. This book is about the gap between a polished artifact and a trustworthy one. The central argument of **Computational Skepticism for AI** is that readers need a working method for the part of the work that cannot be delegated:...
+*Computational Skepticism for AI* is a structured textbook for readers who need a clear path through the subject rather than a loose collection of explanations. It begins with Chapter 1 — The Skeptic's Toolkit, moves through 14 core chapters, and ends with Chapter 14 — The Limits of AI: What the Tools Cannot Do.
+
+AI matters to *Computational Skepticism for AI* because the modern textbook is no longer only a static container. It is also part of a learning system: searchable, remixable, explainable, and increasingly connected to tools such as Medhavy. For Humanitarians AI books, the relevant question is not whether AI can replace the learner or the teacher. It cannot. The useful question is what AI can make easier to inspect: definitions, worked examples, misconceptions, practice sequences, alternate explanations, and the structure of an argument. This book treats AI as infrastructure for open, public-interest learning infrastructure. The chapters should still stand on their own as readable prose, but they are also designed to be legible to an intelligent textbook system.
 
 ## Table of Contents
 
-- [Front Matter](chapters/00-frontmatter.md)
-- [Introduction](chapters/00-introduction.md)
-- [Chapter 1 — The Skeptic's Toolkit](chapters/01-the-skeptics-toolkit.md)
-- [Chapter 2 — Probability, Uncertainty, and the Confidence Illusion](chapters/02-probability-uncertainty-and-the-confidence-illusion.md)
-- [Chapter 3 — Bias: Where It Enters and Who Is Responsible](chapters/03-bias-where-it-enters-and-who-is-responsible.md)
-- [Chapter 4 — The Frictional Method](chapters/04-the-frictional-method-evidence-of-learning-when-ai-can-generate-the-artifact.md)
-- [Chapter 5 — Data Validation: Reconstructing the Epistemic Frame Behind a Dataset](chapters/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset.md)
-- [Chapter 6 — Model Explainability: Distinguishing Explanation from the Appearance of Explanation](chapters/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation.md)
-- [Chapter 7 — Fairness Metrics: Choosing a Definition and Defending It](chapters/07-fairness-metrics-choosing-a-definition-and-defending-it.md)
-- [Chapter 8 — Robustness: What "Understanding" Means When a Pixel Can Break the Model](chapters/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model.md)
-- [Chapter 9 — Validating Agentic AI: When Autonomous Systems Misbehave](chapters/09-validating-agentic-ai-when-autonomous-systems-misbehave.md)
-- [Chapter 10 — Delegation, Trust, and the Supervisory Role](chapters/10-delegation-trust-and-the-supervisory-role.md)
-- [Chapter 11 — Visualization Under Validation: Honest, Misleading, and the Choices Between](chapters/11-visualization-under-validation-honest-misleading-and-the-choices-between.md)
-- [Chapter 12 — Communicating Uncertainty: Calibrating Claims to Evidence](chapters/12-communicating-uncertainty-calibrating-claims-to-evidence.md)
-- [Chapter 13 — Accountability: Who Is Responsible When the System Fails?](chapters/13-accountability-who-is-responsible-when-the-system-fails.md)
-- [Chapter 14 — The Limits of AI: What the Tools Cannot Do](chapters/14-the-limits-of-ai-what-the-tools-cannot-do.md)
-- [Back Matter](chapters/99-back-matter.md)
+- **Chapter 1: Chapter 1 — The Skeptic's Toolkit.** - The moves you perform before you trust what the machine just told you. - The chapter moves through What I mean by skepticism, The cave, The solve-verify asymmetry, The Five Supervisory Capacities, and related ideas. - Read it for the main...
+- **Chapter 2: Chapter 2 — Probability, Uncertainty, and the Confidence Illusion.** - Why your intuition forgets the prior, and what to do when it does. - You will practice Apply Bayes' theorem to calculate the actual probability of a rare event given a positive test result, and explain why the result differs from...
+- **Chapter 3: Chapter 3 — Bias: Where It Enters and Who Is Responsible.** - Doing the Fix the Model Alone Cannot Do. - The chapter moves through What "bias" actually means, Ten mechanisms, distinguished, Selection bias, Confirmation bias, and related ideas. - Read it for the main argument, the vocabulary it introduces, and the practical...
+- **Chapter 4: Chapter 4 — The Frictional Method.** - I want to tell you about two students. - The chapter moves through What broke, Performance is not learning, The seven moves, The journal and its failure modes, and related ideas. - Read it for the main argument, the vocabulary it...
+- **Chapter 5: Chapter 5 — Data Validation: Reconstructing the Epistemic Frame Behind a Dataset.** - What the histograms can see, and the failures that live in everything else. - You will practice Explain why procedural EDA is necessary but not sufficient for deployment-ready data validation, and describe what the interrogation approach adds; Execute the core procedural...
+- **Chapter 6: Chapter 6 — Model Explainability: Distinguishing Explanation from the Appearance of Explanation.** - When a Correct Explanation Makes the Wrong Decision Feel Right. - The chapter moves through What SHAP is, and what SHAP isn't, The mathematics of Shapley values, The value function, The marginal contribution, and related ideas. - Read it for the...
+- **Chapter 7: Chapter 7 — Fairness Metrics: Choosing a Definition and Defending It.** - This chapter gives a working overview of Fairness Metrics: Choosing a Definition and Defending It, focusing on the ideas a reader needs before moving to the next chapter. - The chapter moves through Three definitions, The arithmetic, The COMPAS case, Each...
+- **Chapter 8: Chapter 8 — Robustness: What "Understanding" Means When a Pixel Can Break the Model.** - You will practice Distinguish between "the model is fragile" and "the model learned a proxy instead of the human-relevant feature," and explain why the distinction changes the engineering response; Explain the linearity hypothesis and boundary-tilting perspective as competing geometric accounts of...
+- **Chapter 9: Chapter 9 — Validating Agentic AI: When Autonomous Systems Misbehave.** - You Broke My Toy, and the Agent Didn't Know It. - The chapter moves through From prediction to action, The laboratory: what OpenClaw actually was, A taxonomy of how agents go wrong, What agents are lacking: the three core deficits, and...
+- **Chapter 10: Chapter 10 — Delegation, Trust, and the Supervisory Role.** - Write the contract before you trust the handoff. - The chapter moves through The handoff condition, The Five Supervisory Capacities as pipeline jobs, The Boondoggle questions, The full delegation map structure, and related ideas. - Read it for the main argument,...
+- **Chapter 11: Chapter 11 — Visualization Under Validation: Honest, Misleading, and the Choices Between.** - You will practice Explain why visualization is an argument made through structural choices, not a transparent transmission of facts; Identify the nine misleading visualization choices in the catalog, distinguish honest from dishonest uses of each, and apply the catalog to audit...
+- **Chapter 12: Chapter 12 — Communicating Uncertainty: Calibrating Claims to Evidence.** - The Verb Is Doing Epistemic Work You Are Not Noticing. - The chapter moves through The verb taxonomy, Two readers, one document, Metrics and measures of trust calibration, The Brier score: a proper scoring rule, and related ideas. - Read it...
+- **Chapter 13: Chapter 13 — Accountability: Who Is Responsible When the System Fails?.** - I want to put a case in front of you. - The chapter moves through Why humans must be in the loop: the cognitive argument, AI as extended mind: what the capacities actually are, The seven-tier taxonomy, The Gödel argument, and...
+- **Chapter 14: Chapter 14 — The Limits of AI: What the Tools Cannot Do.** - Three things capability scaling cannot fix, and what the supervisor does about them. - You will practice Name the three categorical limits of AI systems — meaning, intentionality, and the data-world gap — and explain why capability scaling does not close...
 
-## Copyright and License
+## Files
 
-Copyright © 2026 Humanitarians AI Incorporated. All rights reserved.
+- `chapters/00-frontmatter.md` — title page, copyright, dedication, and preface
+- `chapters/00-introduction.md` — roadmap and book-level AI note
+- `chapters/99-back-matter.md` — acknowledgments, author note, references placeholder, and Medhavy note
+- `LICENSE.md` — rights and reuse terms
 
-See [LICENSE.md](LICENSE.md) for permissions and restrictions.
+## Medhavy
 
-## Medhavy / Medhavi Integration
-
-This book is intended for Kindle, online reading, and integration with Medhavy, an AI-powered intelligent textbook system. The static manuscript provides the durable text; Medhavy can provide adaptive practice, glossary support, study paths, and feedback loops.
+This book is prepared for Kindle, online publication, and integration with Medhavy: https://www.medhavy.com/
