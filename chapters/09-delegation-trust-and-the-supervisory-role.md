@@ -1,11 +1,5 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/09-delegation-trust-and-the-boondoggle.md into original; scaffolding preserved. For human rewrite. Draft was numbered Ch.9 "...and the Boondoggle"; kept original Ch.10 title/number. RENUMBERED 2026-07-02: file and H1 now Chapter 9 (13-chapter order per RENUMBERING.md). -->
+<!-- CHAPTERIZED 2026-07-02: TL;DR removed, exercises merged, bridges/prereqs updated to 13-chapter order. Rough draft for hand-rewrite; [verify]/[verify-xref] flags preserved. -->
 # Chapter 9 — Delegation, Trust, and the Supervisory Role
-
-## TL;DR
-
-- Write the contract before you trust the handoff.
-- The chapter moves through The handoff condition, The Five Supervisory Capacities as pipeline jobs, The Boondoggle questions, The full delegation map structure, and related ideas.
-- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
 
 *Write the contract before you trust the handoff.*
 
@@ -31,7 +25,7 @@ Let me be honest about one thing before we start, because the book's whole metho
 
 I want you to come away holding one idea: a delegation is not "the AI does this part." A delegation is a *contract* with explicit boundaries — what the AI does, what the human does, the testable handoff between them, and what happens when the handoff fails. That formulation sounds dry. It is the difference between a pipeline that passes adoption review and one that does not.
 
-There is a deeper reason this matters, and it is the reason this chapter sits at the center of the book. Computational skepticism, in the sense this book means it, is the meeting of two forces that do not naturally combine: the *speed* at which an AI can produce fluent, specific, plausible output, and the *irreducibly human doubt* that has to be exercised over that output before anyone commits to it. The AI moves fast. The doubt cannot be automated away — if it could, it would not be doubt, it would be another model in the loop, subject to the same fluency trap. Delegation is where those two forces meet. The delegation map is the instrument that keeps the speed from outrunning the doubt.
+There is a deeper reason this matters, and it is the reason this chapter sits at the center of the book. Delegation is where the pairing Chapter 1 committed us to — the machine's speed, your doubt — actually meets, and the delegation map is the instrument that keeps the speed from outrunning the doubt.
 
 ---
 
@@ -196,8 +190,8 @@ Now Gru has something to work with. Notice what the sentence encodes: the word *
 
 **Why this is a human step.** Gru asks the question, but the answer requires me. An AI could generate plausible-sounding sentences of this form. It cannot determine whether *claim-linked* is the right specification for my deployment — whether researchers using this tool need sentence-level citations or paragraph-level, whether the summary structure matches how researchers actually read papers in this domain, whether the word *factual assertion* is the right boundary for what gets cited. Those are domain judgments. They determine the correctness criteria for every subsequent step. The problem formulation is not a form to fill in. It is the most consequential decision in the project, and it is irreducibly mine.
 
-![The /v0 gate produces one sentence. That sentence is the engineering specification everything else is tested against.](images/10-delegation-trust-and-the-supervisory-role-fig-01.png)
-*Figure 10.1 — Gru /v0 conversation flow *
+![The /v0 gate produces one sentence. That sentence is the engineering specification everything else is tested against.](images/09-delegation-trust-and-the-supervisory-role-fig-01.png)
+*Figure 9.1 — Gru /v0 conversation flow *
 
 ### Step 2 — Intake with /v1
 
@@ -278,8 +272,8 @@ The administrative flow: I need a way to see which extractions are being flagged
 
 **Why the flow requires human judgment to write.** Step 5 and step 6 are the load-bearing human steps. The reason they are human steps cannot be determined by AI: it requires knowing that researchers cannot rely on AI to evaluate domain-specific methodological quality. A language model may correctly extract the claim "we used a random effects model" and produce a citation. It cannot flag that a random effects model is inappropriate for this study design — that judgment requires domain knowledge the model does not reliably have. That is why step 6 is a human step, and why the handoff condition for step 5 must specify what the researcher is checking, not just that checking occurred.
 
-![The flow shows where authority changes hands. Those transitions are where the delegation map must be tightest.](images/10-delegation-trust-and-the-supervisory-role-fig-02.png)
-*Figure 10.2 — Happy path flow diagram for the Paper Summarizer*
+![The flow shows where authority changes hands. Those transitions are where the delegation map must be tightest.](images/09-delegation-trust-and-the-supervisory-role-fig-02.png)
+*Figure 9.2 — Happy path flow diagram for the Paper Summarizer*
 
 ### Step 5 — Generating the Boondoggle Score with /claude
 
@@ -496,8 +490,8 @@ Flag: No executive integration step is documented. If this system is used in a t
 
 ---
 
-![Three of six steps are irreducibly human. The AI does the pattern work. The human does the judgment work. The EI gap is the flag.](images/10-delegation-trust-and-the-supervisory-role-fig-03.png)
-*Figure 10.3 — Boondoggle Score as a visual timeline *
+![Three of six steps are irreducibly human. The AI does the pattern work. The human does the judgment work. The EI gap is the flag.](images/09-delegation-trust-and-the-supervisory-role-fig-03.png)
+*Figure 9.3 — Boondoggle Score as a visual timeline *
 
 ### What the Boondoggle Score reveals
 
@@ -527,8 +521,8 @@ Now I want to be careful here, because this is the chapter that most preaches ag
 
 In the Paper Summarizer, the trust calibration question is specific and answerable directly from the audit trail: over the last fifty papers processed, how often did the researcher in Step 4 find a correction to make in a HIGH-confidence extraction? If the answer is "almost never," the HIGH threshold is probably well-tuned and the researcher can spot-check less aggressively. If the answer is "frequently," the researcher is undertrusting the threshold or the threshold is miscalibrated. The Step 4 disposition data — confirmed / corrected / marked unverifiable — is *right there* in the audit trail. It should be reviewed periodically. It almost never is. That gap — between having the monitoring data and looking at it — is, in my reading, the field's most easily closable failure.
 
-![Calibrated trust is a property of the deployment, not the model. It requires monitoring the audit trail, not just running the pipeline.](images/10-delegation-trust-and-the-supervisory-role-fig-04.png)
-*Figure 10.4 — Trust calibration visualization*
+![Calibrated trust is a property of the deployment, not the model. It requires monitoring the audit trail, not just running the pipeline.](images/09-delegation-trust-and-the-supervisory-role-fig-04.png)
+*Figure 9.4 — Trust calibration visualization*
 
 ---
 
@@ -587,7 +581,7 @@ The Paper Summarizer walkthrough is not a tutorial on how to build a summarizer.
 
 The two pipelines from the opening are no longer indistinguishable. The second team's pipeline has the contract written down. The first team's pipeline is held together by what the team members happen to remember, and that is not a basis for adoption review.
 
-The next chapter pivots from the pipeline to the *communication* of what the pipeline found. A dashboard tells a visual story. The same data can produce a dashboard that communicates accurately or one that misleads. The design choices are choices, with normative weight. We will treat them that way.
+The next chapter pivots from the pipeline to the *communication* of what the pipeline found. Chapter 10 puts two dashboards side by side — built from the same CSV, one honest, one misleading — and shows that a dashboard that misrepresents valid findings is a validation failure at the output layer, not a downstream communication problem. The design choices are choices, with normative weight. We will treat them that way.
 
 ---
 
@@ -601,7 +595,7 @@ The next chapter pivots from the pipeline to the *communication* of what the pip
 
 ### Glimmers
 
-**Glimmer 10.1 — Build your delegation map**
+**Glimmer 9.1 — Build your delegation map**
 
 1. Take your own research project (Project v2.0, submitted at the midterm milestone). The project is the case.
 2. Decompose the project's validation pipeline into discrete steps. Aim for between 8 and 20 steps. Specifically: data ingestion, EDA, model evaluation, fairness analysis, robustness testing, agentic-system validation if applicable, communication, decision.

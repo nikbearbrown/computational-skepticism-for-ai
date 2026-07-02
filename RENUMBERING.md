@@ -1,6 +1,6 @@
 # Renumbering Proposal — 13-Chapter Order
 
-Status: PROPOSAL, not executed. 2026-07-02.
+Status: EXECUTED 2026-07-02 (commit aa04769d) — renames, H1s, semantic cross-ref pass, TOC rewrite. Retitles deferred to hand-rewrite. Grep `verify-xref` for the 20 flagged refs.
 
 ## The decision
 

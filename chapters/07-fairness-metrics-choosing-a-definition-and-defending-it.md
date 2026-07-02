@@ -1,12 +1,6 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/07-fairness-choose-a-definition-and-defend-it.md into original; scaffolding preserved. For human rewrite. Note: draft retitles chapter "Fairness: Choose a Definition and Defend It" and reframes prereqs around Ch.6 (not Ch.3) for causal ladder and base-rate origins, and around BUILD/AUDIT + [PF]/[IJ] supervisory capacities — retitle/renumber is an author call, left as-is here. -->
+<!-- CHAPTERIZED 2026-07-02: TL;DR removed, exercises merged, bridges/prereqs updated to 13-chapter order. Rough draft for hand-rewrite; [verify]/[verify-xref] flags preserved. -->
 
 # Chapter 7 — Fairness Metrics: Choosing a Definition and Defending It
-
-## TL;DR
-
-- This chapter gives a working overview of Fairness Metrics: Choosing a Definition and Defending It, focusing on the ideas a reader needs before moving to the next chapter.
-- The chapter moves through Three definitions, The arithmetic, The COMPAS case, Each metric is a values claim, and related ideas.
-- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
 
 *Three reasonable definitions. One dataset. Pick one.*
 
@@ -28,7 +22,7 @@ Here is what is actually happening: you cannot. Not because the tools aren't goo
 
 The chapter has two jobs. First, I want you to *feel* why the impossibility is true — not as a formal result you take on authority, but as arithmetic that becomes obvious once you see it. Second, I want you to come away with a method for what to do about it. The impossibility does not let you avoid the question. It forces a choice. And choices in engineering have to be defended.
 
-That is the whole shape of computational skepticism here: the machine can compute all three metrics faster than you can blink, but *which* fairness to demand is a doubt no amount of computation dissolves. It is the irreducibly human part of the work — the part you cannot hand back to the model. The machine gives you the speed; you owe the judgment. This chapter pairs the two: **BUILD** — choose and defend a definition for a system you are building; **AUDIT** — judge someone else's chosen definition, prove the impossibility, and name who should have decided.
+This is the pairing Chapter 1 committed us to — the machine's speed, your doubt: the model computes all three metrics in a blink, and *which* fairness to demand is the judgment you owe. This chapter works that judgment as a pair: **BUILD** — choose and defend a definition for a system you are building; **AUDIT** — judge someone else's chosen definition, prove the impossibility, and name who should have decided.
 
 ---
 
@@ -413,7 +407,7 @@ The defense is the deliverable, and the defense connects the chosen metric to th
 
 The Pebble makes a brief appearance in this chapter — *Agents of Chaos* Case #6, where the bias sits in the model provider's training rather than in the deploying engineer's pipeline. We return to that contrast in Chapter 12's accountability discussion: who is responsible when the bias is structurally upstream of everyone in the deployment chain?
 
-The next chapter takes a different cut at what the model knows. Fairness metrics ask whether the model treats different inputs equitably. Adversarial robustness asks something else: can a perturbation imperceptible to a human change the model's output entirely? And if so — what does that say about what the model has actually learned?
+The next chapter moves from prediction to consequence. Chapter 8 takes up agentic AI — systems whose outputs are not scores but state changes in the world, where an agent can report "task complete" while the world says otherwise. The fairness lens travels with you: for an agent, it becomes the question of whose values are encoded in its behavior, and the impossibility you just proved does not dissolve when the model starts acting. (Chapter 4 already made the adversarial cut at what a model has actually learned — a perturbation imperceptible to a human can flip the output entirely. That question is behind us, and it returns in Chapter 8 as the social-engineering version of the same probe.)
 
 ---
 
@@ -548,7 +542,7 @@ If the agent's decisions truly do not produce unequal effects across any meaning
 
 **Connection to previous chapters:** Chapter 6's bias mechanisms and Chapter 5's language-game audit both feed into this chapter. The bias mechanisms tell you where unequal treatment originates; the language-game audit tells you whether the agent's self-explanations land differently in different audiences.
 
-**Preview of next chapter:** Chapter 4 turns the casebook adversarial. You'll design specific input perturbations that probe what your agent has actually learned versus what its developers think it learned — adversarial examples for the agent setting, including prompt-injection variants that exploit non-robust features in its instruction-following.
+**Preview of next chapter:** Chapter 8 turns the casebook toward consequences. You'll formalize your agent's failure cases into a four-category taxonomy — social coherence, stakeholder model, self-model, deliberation surface — and run the four validation lenses over each case; this Defended Fairness Choice becomes one of those lenses. (Chapter 4 already turned the casebook adversarial — the robustness probes you ran there feed directly into those case files.)
 
 ---
 

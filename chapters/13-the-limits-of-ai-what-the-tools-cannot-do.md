@@ -1,11 +1,5 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/13-the-limits-of-ai.md into original; scaffolding preserved. For human rewrite. NOTE: draft is numbered Ch.13 "The Limits of AI"; original is Ch.14 — retitle/renumber to reconcile is a human decision, left as-is. RENUMBERED 2026-07-02: file and H1 now Chapter 13 (13-chapter order per RENUMBERING.md). -->
+<!-- CHAPTERIZED 2026-07-02: TL;DR removed, exercises merged, bridges/prereqs updated to 13-chapter order. Rough draft for hand-rewrite; [verify]/[verify-xref] flags preserved. -->
 # Chapter 13 — The Limits of AI: What the Tools Cannot Do
-
-## TL;DR
-
-- Three things capability scaling cannot fix, and what the supervisor does about them.
-- You will practice Name the three categorical limits of AI systems — meaning, intentionality, and the data-world gap — and explain why capability scaling does not close them; State what Turing's argument actually claims and what it does not, and do the same for Searle's Chinese Room; Identify which deployments require skepticism as a safety mechanism versus skepticism as methodology, and specify the criteria that distinguish them.
-- The chapter moves through Learning objectives, Prerequisites, Why this chapter, The model that passed every test and failed in deployment, and related ideas.
 
 *Three things capability scaling cannot fix, and what the supervisor does about them.*
 
@@ -223,8 +217,8 @@ AI systems do not bear this relationship to their outputs. They cannot be held r
 
 The chain of accountability in any AI-assisted validation workflow runs through the practitioners who apply the checking instruments: the practitioner who applies the verb taxonomy, the practitioner who reviews the chart for uncertainty suppression, the practitioner who signs off on the validation document. These moments are not checkboxes on a compliance form. They are the moments at which a human mind engages with the AI's output and takes on the obligation to be answerable for the judgment they make. If those moments are treated as mechanical, accountability disappears from the workflow — not into the AI, but into no one.
 
-![When the practitioner uses the verb taxonomy, the chart-review discipline, the peer critique protocol — they are not just checking AI output. They are taking on accountability for the judgment the output will support.](images/14-the-limits-of-ai-what-the-tools-cannot-do-fig-01.png)
-*Figure 14.1 — Accountability chain diagram*
+![When the practitioner uses the verb taxonomy, the chart-review discipline, the peer critique protocol — they are not just checking AI output. They are taking on accountability for the judgment the output will support.](images/13-the-limits-of-ai-what-the-tools-cannot-do-fig-01.png)
+*Figure 13.1 — Accountability chain diagram*
 
 **The profile, applied to delegation.** The cognitive profile — great at retrieval/synthesis/generation under specification, weak at problem formulation/plausibility auditing/interpretive judgment, absent for accountability — translates directly into a delegation map.
 
@@ -260,14 +254,14 @@ Used well, AI is the most powerful cognitive tool humanity has built. Used as a 
 
 The capacities required to use AI well are precisely the capacities AI cannot replicate: problem formulation, plausibility auditing, interpretive judgment under stakes, and accountability for the consequences. These are not luxuries or checkboxes. They are the work. The tools in this book — the verb taxonomy, the chart-review discipline, the peer critique protocol, the prediction-lock, the delegation maps, the categorical-limit analysis — are all instruments for exercising these capacities more reliably in the presence of an extraordinarily fluent AI output stream that will, without intervention, produce fluent-sounding answers to questions it cannot answer, conclusions warranted by evidence it has not examined, and confident charts that hide the uncertainty they were supposed to show.
 
-![The extended mind has always had this structure: the tool extends a specific capacity; the mind supplies the judgment the tool cannot. AI is the most powerful entry in the series. Its power makes the confusion between extension and replacement more dangerous, not less.](images/14-the-limits-of-ai-what-the-tools-cannot-do-fig-02.png)
-*Figure 14.2 — Extended mind catalog *
+![The extended mind has always had this structure: the tool extends a specific capacity; the mind supplies the judgment the tool cannot. AI is the most powerful entry in the series. Its power makes the confusion between extension and replacement more dangerous, not less.](images/13-the-limits-of-ai-what-the-tools-cannot-do-fig-02.png)
+*Figure 13.2 — Extended mind catalog *
 
-*Figure 14.1 — The extended mind: the catalog named.*
+*Figure 13.1 — The extended mind: the catalog named.*
 
 ---
 
-## Glimmer 14.1 — The Limits Exercise
+## Glimmer 13.1 — The Limits Exercise
 
 The Glimmer comes in a pair — a **build** side and an **audit** side — because that is how the discipline actually runs: you name the irreducibly-human decision for a system you made, and again for a system someone else deployed.
 

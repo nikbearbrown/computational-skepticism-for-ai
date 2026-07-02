@@ -1,11 +1,5 @@
 # Chapter 1 — The Skeptic's Toolkit
 
-## TL;DR
-
-- The moves you perform before you trust what the machine just told you.
-- The chapter moves through What I mean by skepticism, The cave, The solve-verify asymmetry, The Five Supervisory Capacities, and related ideas.
-- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
-
 *The moves you perform before you trust what the machine just told you.*
 
 ---

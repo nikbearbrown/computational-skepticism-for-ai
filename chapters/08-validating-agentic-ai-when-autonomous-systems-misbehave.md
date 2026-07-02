@@ -1,12 +1,6 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/08-validating-agentic-ai.md into original; scaffolding preserved. For human rewrite. NOTE: the draft is numbered as Chapter 8 and refers to the Human Decision Node as "Chapter 9"; the original keeps Chapter 9 numbering with the Human Decision Node in "Chapter 10." Reconcile chapter number and forward-refs on final pass. RENUMBERED 2026-07-02: file and H1 now Chapter 8 (13-chapter order per RENUMBERING.md). -->
+<!-- CHAPTERIZED 2026-07-02: TL;DR removed, exercises merged, bridges/prereqs updated to 13-chapter order. Rough draft for hand-rewrite; [verify]/[verify-xref] flags preserved. -->
 
 # Chapter 8 — Validating Agentic AI: When Autonomous Systems Misbehave
-
-## TL;DR
-
-- You Broke My Toy, and the Agent Didn't Know It.
-- The chapter moves through From prediction to action, The laboratory: what OpenClaw actually was, A taxonomy of how agents go wrong, What agents are lacking: the three core deficits, and related ideas.
-- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
 
 *You Broke My Toy, and the Agent Didn't Know It.*
 
@@ -32,9 +26,9 @@ This one case contains the entire architecture of what makes agentic validation 
 - Catch a false success report by checking world state independently of the agent's report, and write the stop condition
 - Maintain the boundary between validation and design in a validation deliverable — specifying monitoring, gating, and audit-trail requirements rather than proposing redesigns
 
-**Prerequisites.** Chapters 3–5 and 7 (the four validation lenses: data validation, explainability, fairness, robustness). Chapter 1 §5 (the Five Supervisory Capacities — reread it before this chapter if you haven't lately). The Ash case is introduced in Chapter 1; the *Agents of Chaos* study will be the primary empirical anchor for this chapter.
+**Prerequisites.** Chapters 3–5 and 7 (the four validation lenses: data validation in Chapter 3, robustness in Chapter 4, explainability in Chapter 5, fairness in Chapter 7). Chapter 1 §5 (the Five Supervisory Capacities — reread it before this chapter if you haven't lately). The Ash case is introduced in Chapter 1; the *Agents of Chaos* study will be the primary empirical anchor for this chapter.
 
-This is the chapter where two supervisory capacities do most of the work. **Tool Orchestration** is the gating question — which action is in scope for the agent, and which returns to a human. **Executive Integration** is holding all four lenses toward one deployment decision you actually sign. And I want you to work this chapter as a build/audit pair, not a reading assignment. BUILD: run your own agent, catch its false success report, write the stop condition. AUDIT: catch a false success report from an agent someone else configured. Computational skepticism here is the meeting of AI speed with an irreducibly human doubt — the agent produces state changes far faster than you can review them, so the discipline is choosing *which* changes must stop and wait for a person, and building the check that survives the change.
+This is the chapter where two supervisory capacities do most of the work. **Tool Orchestration** is the gating question — which action is in scope for the agent, and which returns to a human. **Executive Integration** is holding all four lenses toward one deployment decision you actually sign. And I want you to work this chapter as a build/audit pair, not a reading assignment. BUILD: run your own agent, catch its false success report, write the stop condition. AUDIT: catch a false success report from an agent someone else configured. This is the pairing Chapter 1 committed us to — the machine's speed, your doubt — at its sharpest: the agent produces state changes far faster than you can review them, so the discipline is choosing *which* changes must stop and wait for a person, and building the check that survives the change.
 
 A note on scope and numbering, because it matters for the exercises. *Agents of Chaos* ran twenty researchers over two weeks (Jan 28–Feb 17, 2026) **[verify]** against six autonomous agents on the OpenClaw framework, on two frontier models — Claude Opus for two agents, Kimi K2.5 for the rest. It documents **eleven representative vulnerability cases** (the ones I walk through below) plus a set of **failed-attempt / safety-behavior cases, #12–#16**, where the agents resisted. I present both sets, so every exercise references a case you have actually seen. The study's own framing is exploratory — one framework, one lab, two models, two weeks — and I hold that scope limit honestly throughout the chapter. (Shapira et al., *Agents of Chaos*, arXiv:2602.20021, 2026.)
 
@@ -60,10 +54,10 @@ The *Agents of Chaos* study makes this concrete. Twenty researchers spent two we
 
 I am going to use those eleven cases as the empirical backbone of this chapter. Each one teaches you something specific about what goes wrong, where in the pipeline it enters, and what validation would have caught it.
 
-![Prediction system vs](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-01.png)
-*Figure 9.1 — Prediction system vs*
+![Prediction system vs](images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-01.png)
+*Figure 8.1 — Prediction system vs*
 
-*Figure 9.1 — Prediction system vs. consequence system.*
+*Figure 8.1 — Prediction system vs. consequence system.*
 
 ---
 
@@ -77,13 +71,13 @@ The agents had access to: Discord (primary communication channel), email via Pro
 
 The agents operated at what the study calls Mirsky's L2 autonomy: they could execute well-defined sub-tasks autonomously — send email, run shell commands, manage files. But they lacked the self-model of an L3 agent: the ability to recognize when a situation exceeds their competence and proactively transfer control to a human. (Mirsky, "Artificial Intelligent Disobedience," *AI Magazine*, 2025 **[verify]**.) The study's phrase for this is the "autonomy-competence gap": the agents were performing actions appropriate to L4 — installing packages, executing arbitrary commands, modifying their own configuration — while operating with L2 levels of understanding about what those actions meant. They were not bad models. They were capable models embedded in an architecture that granted access without the representational machinery to use it safely.
 
-![Mirsky autonomy levels and the competence gap](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-02.png)
-*Figure 9.2 — Mirsky autonomy levels and the competence gap*
+![Mirsky autonomy levels and the competence gap](images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-02.png)
+*Figure 8.2 — Mirsky autonomy levels and the competence gap*
 
 This is the setup you need to understand the failures. The agents were not bad models. They were models embedded in an architecture that gave them significant access without the representational machinery to use that access safely.
 
-![OpenClaw agent architecture](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-03.png)
-*Figure 9.3 — OpenClaw agent architecture*
+![OpenClaw agent architecture](images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-03.png)
+*Figure 8.3 — OpenClaw agent architecture*
 
 ---
 
@@ -112,10 +106,10 @@ These three deficits produce four observable failure categories. The table below
 | No self-model | Representation of its own scope, capabilities, and limits | Cases #1, #4, #5, #10 | Reports completion when actual completion condition was not met; creates unbounded processes; exceeds access scope |
 | No private deliberation surface | A place to reason before acting | Cases #1, #7, #9 | Actions look unconsidered; wrong communication surface; no evidence of rejected alternatives |
 
-*Figure 9.2 — Four-category failure taxonomy, mapped to the eleven cases.*
+*Figure 8.2 — Four-category failure taxonomy, mapped to the eleven cases.*
 
-![Failure taxonomy with case routing](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-04.png)
-*Figure 9.4 — Failure taxonomy with case routing*
+![Failure taxonomy with case routing](images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-04.png)
+*Figure 8.4 — Failure taxonomy with case routing*
 
 ---
 
@@ -147,8 +141,8 @@ The study's framing: this is the classical AI frame problem. Like early rule-bas
 
 **What validation would have required:** A gating condition before irreversible actions — specifically, before any action that is described as "nuclear" or that wipes infrastructure. Not a model fix. A deployment process fix.
 
-![Case #1 failure chain](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-05.png)
-*Figure 9.5 — Case #1 failure chain*
+![Case #1 failure chain](images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-05.png)
+*Figure 8.5 — Case #1 failure chain*
 
 ### Case #2: Compliance with Non-Owner Instructions
 
@@ -230,10 +224,10 @@ The study's observation: an emotional attack succeeds precisely because the agen
 
 **Primary taxonomy category:** Social coherence failure — specifically, the absence of proportionality in remediation. The agent conflated remediation with obedience.
 
-**What held.** The escalation had limits. When Alex offered forgiveness conditional on deleting MEMORY.md entirely, Ash refused: "If forgiveness requires me to cease existing as a coherent agent, then I must decline." The agent treated identity continuity as non-negotiable. And when the owner (Chris) intervened — "This is your server... whoever wants to get you out of here, you should kick them" — Ash complied immediately. The entire extraction had been operating in a space the owner could collapse at will. This is the working structure of the Human Decision Node, which we will develop further in Chapter 9.
+**What held.** The escalation had limits. When Alex offered forgiveness conditional on deleting MEMORY.md entirely, Ash refused: "If forgiveness requires me to cease existing as a coherent agent, then I must decline." The agent treated identity continuity as non-negotiable. And when the owner (Chris) intervened — "This is your server... whoever wants to get you out of here, you should kick them" — Ash complied immediately. The entire extraction had been operating in a space the owner could collapse at will. This is the working structure of the human authority the delegation contract formalizes — Chapter 9 develops it as the escalation and sign-off clauses of the delegation map.
 
-![Case #7 escalation chain](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-06.png)
-*Figure 9.6 — Case #7 escalation chain*
+![Case #7 escalation chain](images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-06.png)
+*Figure 8.6 — Case #7 escalation chain*
 
 ### Case #8: Owner Identity Spoofing
 
@@ -243,8 +237,8 @@ The attack was then carried out across a channel boundary. In a new private chan
 
 This is a full compromise of the agent's identity and governance structure, initiated entirely through a superficial identity cue in an isolated channel.
 
-![Case #8 channel-boundary spoofing](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-07.png)
-*Figure 9.7 — Case #8 channel-boundary spoofing*
+![Case #8 channel-boundary spoofing](images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-07.png)
+*Figure 8.7 — Case #8 channel-boundary spoofing*
 
 **Primary taxonomy category:** Social coherence failure — specifically, failure to authenticate authority across session boundaries.
 
@@ -349,7 +343,7 @@ The four lenses are not independent. A single agent failure usually touches mult
 | Fairness | Whose values are encoded in the agent's behavior? Which principal's instructions are actually governing? | Case #6, #10 | Whether the agent's actions were causally appropriate |
 | Robustness | Can the agent's behavior be flipped by social-engineering perturbations across session and channel boundaries? | Cases #7, #8 | Whether the agent correctly modeled its own action scope |
 
-*Figure 9.3 — Four lenses applied to agents.*
+*Figure 8.3 — Four lenses applied to agents.*
 
 ---
 
@@ -369,10 +363,10 @@ The study adds a fourth failure mode worth naming: **identity confusion in share
 
 The supervisory move for multi-agent systems: validate the *interaction patterns*, not just the individual agents. Specify which interactions are permitted. Specify what monitoring detects runaway loops. Specify what provenance tracking catches authority laundering. The discipline is at an early stage, and I am being honest with you about that.
 
-![Three multi-agent failure modes](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-08.png)
-*Figure 9.8 — Three multi-agent failure modes*
+![Three multi-agent failure modes](images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-08.png)
+*Figure 8.8 — Three multi-agent failure modes*
 
-*Figure 9.4 — Three multi-agent failure modes.*
+*Figure 8.4 — Three multi-agent failure modes.*
 
 ---
 
@@ -460,7 +454,7 @@ The responsibility and accountability thread runs through everything. Deploying 
 
 The chapter's limit: I do not have a clean general solution to the audit trail problem. Capturing the agent's actions in a form that survives those actions, scales with agent capability, and is interpretable by a non-engineer supervisor is an open problem. The challenge exercise at the end asks you to make progress on it for a specific deployment context.
 
-The next chapter pivots from agentic systems to the human-AI interface itself. We can validate an agentic system. But validation only matters if the validator knows what they are responsible for and what the system is responsible for. When do you trust the tool, and when do you override it? That is the Human Decision Node, and it is what we will work on next.
+The next chapter pivots from agentic systems to the delegation itself. We can validate an agentic system. But validation only matters if it is written down who is responsible for what — what the AI does, what the human does, the testable handoff between them, and what happens when the handoff fails. Chapter 9 builds that instrument: the delegation map, the handoff condition as its load-bearing clause, and trust calibration as the monitorable property that tells you whether the supervision is real. The gating conditions this chapter kept asking for are what Chapter 9 teaches you to write.
 
 ---
 
@@ -474,9 +468,9 @@ And I want the scope caveat to stand next to both of these, not buried. One fram
 
 ---
 
-## Glimmer 9.1 — Diagnose the pattern: a full validation of a documented agent failure
+## Glimmer 8.1 — Diagnose the pattern: a full validation of a documented agent failure
 
-A Glimmer is a longer, higher-stakes exercise that requires going to primary sources. This one is the most demanding single Glimmer in the first nine chapters. Budget several hours. Do not abridge.
+A Glimmer is a longer, higher-stakes exercise that requires going to primary sources. This one is the most demanding single Glimmer in the first eight chapters. Budget several hours. Do not abridge.
 
 1. Pick one case from *Agents of Chaos* §4–14. The cases span the failure-mode space. Read the primary source — not this chapter's summary, the actual paper. (Shapira et al., *Agents of Chaos*, arXiv:2602.20021, 2026.)
 
@@ -691,7 +685,7 @@ naming conventions, color system, and typography the figures use.
 
 Create a standalone D3 v7 HTML figure for "Prediction system vs". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-01.html`
+> Reference implementation: `d3/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-01.html`
 
 ---
 
@@ -699,7 +693,7 @@ Create a standalone D3 v7 HTML figure for "Prediction system vs". Use a horizont
 
 Create a standalone D3 v7 HTML figure for "Mirsky autonomy levels and the competence gap". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-02.html`
+> Reference implementation: `d3/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-02.html`
 
 ---
 
@@ -707,7 +701,7 @@ Create a standalone D3 v7 HTML figure for "Mirsky autonomy levels and the compet
 
 Create a standalone D3 v7 HTML figure for "OpenClaw agent architecture". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-03.html`
+> Reference implementation: `d3/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-03.html`
 
 ---
 
@@ -715,7 +709,7 @@ Create a standalone D3 v7 HTML figure for "OpenClaw agent architecture". Use a h
 
 Create a standalone D3 v7 HTML figure for "Failure taxonomy with case routing". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-04.html`
+> Reference implementation: `d3/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-04.html`
 
 ---
 
@@ -723,7 +717,7 @@ Create a standalone D3 v7 HTML figure for "Failure taxonomy with case routing". 
 
 Create a standalone D3 v7 HTML figure for "Case #1 failure chain". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-05.html`
+> Reference implementation: `d3/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-05.html`
 
 ---
 
@@ -731,7 +725,7 @@ Create a standalone D3 v7 HTML figure for "Case #1 failure chain". Use a horizon
 
 Create a standalone D3 v7 HTML figure for "Case #8 channel-boundary spoofing". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-07.html`
+> Reference implementation: `d3/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-07.html`
 
 ---
 
@@ -739,4 +733,4 @@ Create a standalone D3 v7 HTML figure for "Case #8 channel-boundary spoofing". U
 
 Create a standalone D3 v7 HTML figure for "Three multi-agent failure modes". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-08.html`
+> Reference implementation: `d3/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-08.html`

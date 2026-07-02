@@ -1,12 +1,6 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/05-explanation-vs-the-appearance-of-explanation.md into original; scaffolding preserved. For human rewrite. Note: source draft is numbered Chapter 5 ("Explanation vs. the Appearance of Explanation"); this file remains Chapter 6 — reconcile numbering/title at book level if the draft supersedes. RENUMBERED 2026-07-02: file and H1 now Chapter 5 (13-chapter order per RENUMBERING.md). -->
+<!-- CHAPTERIZED 2026-07-02: TL;DR removed, exercises merged, bridges/prereqs updated to 13-chapter order. Rough draft for hand-rewrite; [verify]/[verify-xref] flags preserved. -->
 
 # Chapter 5 — Model Explainability: Distinguishing Explanation from the Appearance of Explanation
-
-## TL;DR
-
-- When a Correct Explanation Makes the Wrong Decision Feel Right.
-- The chapter moves through What SHAP is, and what SHAP isn't, The mathematics of Shapley values, The value function, The marginal contribution, and related ideas.
-- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
 
 *When a Correct Explanation Makes the Wrong Decision Feel Right.*
 
@@ -22,14 +16,14 @@ Now look closely at what happened, because the failure here is interesting in a 
 
 And here is the thing that makes this case worth a chapter. The explanation made the radiologist *more confident in the wrong direction*. Without it, she might have weighted the prediction more lightly — taken it as one input among several. With it, the prediction acquired a coherence the underlying decision did not deserve. A correct explanation made a wrong decision feel right.
 
-That is the **fluency trap** in its purest form: well-formed output read as evidence. Technically accurate explanations can be practically misleading, and the practical misleading is more dangerous than no explanation at all, because the explanation does epistemic work it cannot warrant. The radiologist trusted not only the prediction but also her own evaluation of the prediction, because the evaluation now had a story attached. This is the whole shape of computational skepticism as I want you to hold it: AI supplies speed and coverage — a faithful number on every prediction — and the irreducibly human part is the doubt that asks *what does this number warrant?* The capacity this chapter trains is **Interpretive Judgment**: supplying the meaning and accountability the explanation itself cannot warrant. It is one of a small set of supervisory capacities a human keeps when the machine is faster at everything except knowing what its output means.
+That is the **fluency trap** in its purest form: well-formed output read as evidence. Technically accurate explanations can be practically misleading, and the practical misleading is more dangerous than no explanation at all, because the explanation does epistemic work it cannot warrant. The radiologist trusted not only the prediction but also her own evaluation of the prediction, because the evaluation now had a story attached. This is the pairing Chapter 1 committed us to — the machine supplies speed and coverage, a faithful number on every prediction; you supply the doubt that asks *what does this number warrant?* The capacity this chapter trains is **Interpretive Judgment**, one of Chapter 1's five supervisory capacities: supplying the meaning and accountability the explanation itself cannot warrant.
 
 We have to talk about how this happens. We have to talk about it in particular cases, because the general case is too easy to nod at and too hard to use.
 
 [^shortcuts]: Robert Geirhos et al., "Shortcut Learning in Deep Neural Networks," *Nature Machine Intelligence* 2:665–673, 2020, DOI:10.1038/s42256-020-00257-z; and Alex J. DeGrave, Joseph D. Janizek, Su-In Lee, "AI for radiographic COVID-19 detection selects shortcuts over signal," *Nature Machine Intelligence* 3:610–619, 2021, DOI:10.1038/s42256-021-00338-7.
 
-![Two-path decision flow](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-01.png)
-*Figure 6.1 — Two-path decision flow*
+![Two-path decision flow](images/05-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-01.png)
+*Figure 5.1 — Two-path decision flow*
 
 ---
 
@@ -42,7 +36,7 @@ We have to talk about how this happens. We have to talk about it in particular c
 - Apply the language-game framework to a real explanation output and identify whether the explanation serves the audience's language game
 - Use the "audience question" as a supervisory check: who is reading this explanation, and what do the words mean in their game?
 
-**Prerequisites.** Chapter 6 (Pearl's Ladder Rungs 1 and 2, the bias taxonomy) and Chapter 3. The Ash case is introduced in an earlier chapter — if you haven't read it, the section *Back to Ash* below recaps the setup.
+**Prerequisites.** Chapters 1, 3, and 4. Chapter 1 introduces the Ash case — if you haven't read it, the section *Back to Ash* below recaps the setup. Chapter 4 sketches Pearl's Ladder (Rung 1 association, Rung 2 intervention, Rung 3 counterfactual); that sketch is all this chapter assumes. Chapter 6 returns to the ladder from the other side, working Rungs 1 and 2 in detail through the bias taxonomy.
 
 ---
 
@@ -54,7 +48,7 @@ What SHAP shows is the additive contribution of each feature to the prediction, 
 
 What SHAP does not show is *why* the feature is contributing what it is contributing. The model has internalized some relationship between the feature and the output. SHAP tells you the magnitude of the contribution, not the nature of the relationship.
 
-It does not show whether the contribution is causal or correlational. SHAP lives entirely on Pearl's Rung 1, the associational rung, which we worked through in Chapter 6.[^pearl] The features it attributes high importance to may be confounders, mediators, colliders, or actual causes — and SHAP does not distinguish.
+It does not show whether the contribution is causal or correlational. SHAP lives entirely on Pearl's Rung 1, the associational rung — Chapter 4 sketched the ladder, and Chapter 6 works the first two rungs in detail.[^pearl] The features it attributes high importance to may be confounders, mediators, colliders, or actual causes — and SHAP does not distinguish.
 
 It does not show whether the model is wrong on this case. A high attribution to feature X does not tell you that X is the right feature for this case. It tells you the model used X.
 
@@ -95,8 +89,8 @@ Two boundary conditions follow immediately:
 
 The total we are distributing is $v(F) - v(\emptyset) = \hat{f}(\mathbf{x}) - \mathbb{E}[\hat{f}]$.
 
-![v(S) is the expected prediction when we know only the features in S. The total payout is v(F) − v(∅).](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-02.png)
-*Figure 6.2 — The value function as a lookup table *
+![v(S) is the expected prediction when we know only the features in S. The total payout is v(F) − v(∅).](images/05-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-02.png)
+*Figure 5.2 — The value function as a lookup table *
 
 ### The marginal contribution
 
@@ -118,8 +112,8 @@ Equivalently — and this is the intuition I prefer — think of the features en
 
 For a model with $|F| = 4$ features, there are $4! = 24$ orderings, and the Shapley value of each feature averages over all 24. With more features, the sum over coalitions grows as $2^{|F|}$, which is why exact computation is expensive for large feature sets — and why SHAP uses efficient approximation algorithms.
 
-![The Shapley value is the average marginal contribution across all random orderings — the average of what each feature adds to whoever was there before it.](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-03.png)
-*Figure 6.3 — "Features entering a room" visualization *
+![The Shapley value is the average marginal contribution across all random orderings — the average of what each feature adds to whoever was there before it.](images/05-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-03.png)
+*Figure 5.3 — "Features entering a room" visualization *
 
 ### The four axioms
 
@@ -181,8 +175,8 @@ Suppose the same calculation produces $\phi_{x_2} = 0.062$ for debt-to-income an
 
 And here is the sentence the whole chapter turns on — I want it to arrive *before* you bank the precision, not fifteen pages after. The attribution to zip code — $\phi_{x_3} = 0.035$ — is a real number describing the model's behavior, and it tells you *nothing* about the world. It says the zip code feature moved the prediction 3.5 percentage points above the global mean across all orderings. It does not say whether zip code is a proxy for race or geography. It does not say whether that 3.5 point effect would persist if an applicant moved. It does not say whether the zip code effect is direct or mediated by income. Those are Rung 2 questions. The Shapley value lives on Rung 1. The precision of the math is real; it is precision about the *model*, and the model is not the world. Do not let the rigor of the derivation buy the method more trust than the thesis allows.
 
-![The Efficiency axiom means the arrows sum exactly to the prediction deviation. The force plot is Efficiency rendered visually. The zip code arrow is real. It is not causal.](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-04.png)
-*Figure 6.4 — Force plot visualization for the worked example *
+![The Efficiency axiom means the arrows sum exactly to the prediction deviation. The force plot is Efficiency rendered visually. The zip code arrow is real. It is not causal.](images/05-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-04.png)
+*Figure 5.4 — Force plot visualization for the worked example *
 
 ### Computational shortcuts: from exact to approximate
 
@@ -217,8 +211,8 @@ One fix is to sample from the conditional distribution $P(x_{\bar{S}} \mid x_S)$
 
 The practitioner's takeaway: when SHAP output shows high attribution to a feature you know is correlated with another feature, run the same analysis on both. If they have similar Shapley values, the model has not distinguished them. If one dominates, the model has — but the SHAP analysis alone cannot tell you whether that distinction reflects causal structure in the world.
 
-![The marginal vs. conditional choice is not technical. It is a question about what you want the attribution to mean.](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-05.png)
-*Figure 6.5 — Correlated feature problem *
+![The marginal vs. conditional choice is not technical. It is a question about what you want the attribution to mean.](images/05-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-05.png)
+*Figure 5.5 — Correlated feature problem *
 
 ---
 
@@ -240,8 +234,8 @@ The structural critique applies to both methods. *They explain the model, not th
 
 [^lime]: Marco Tulio Ribeiro, Sameer Singh, Carlos Guestrin, "'Why Should I Trust You?': Explaining the Predictions of Any Classifier," KDD 2016, DOI:10.1145/2939672.2939778.
 
-![SHAP vs](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-06.png)
-*Figure 6.6 — SHAP vs*
+![SHAP vs](images/05-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-06.png)
+*Figure 5.6 — SHAP vs*
 
 ---
 
@@ -307,8 +301,8 @@ This is the structural critique of explanation methods generalized. SHAP operate
 
 The supervisory move, then, is a question. *Who is the audience for this explanation, what language game are they operating in, and does the explanation method serve that game?* If the explanation was generated for one audience and is being read by another, the explanation may be doing the wrong work, even when it is technically correct.
 
-![Language-game mismatch ](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-07.png)
-*Figure 6.7 — Language-game mismatch *
+![Language-game mismatch ](images/05-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-07.png)
+*Figure 5.7 — Language-game mismatch *
 
 ---
 
@@ -332,12 +326,12 @@ Third — and this is the supervisory point — the move that *would* have caugh
 
 I want you to read this section twice. Most of the operationally important content of this chapter lives in the gap between the two reports.
 
-![Attribution methods explain what the agent did. The audience question determines what the agent should have said.](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-08.png)
-*Figure 6.8 — Comparison of two agent reports*
+![Attribution methods explain what the agent did. The audience question determines what the agent should have said.](images/05-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-08.png)
+*Figure 5.8 — Comparison of two agent reports*
 
 ---
 
-## Glimmer 6.1 — Technically accurate, practically misleading
+## Glimmer 5.1 — Technically accurate, practically misleading
 
 A Glimmer is a longer, higher-stakes exercise that requires going to primary sources. Do not abridge this one.
 
@@ -363,7 +357,7 @@ Pearl's Rung 2 is the most useful framing for what a good explanation could do �
 
 The Pebble has shown its full structure now. We will see it once more, in Chapter 12, when the question becomes who is responsible for the gap.
 
-The next chapter takes a different cut at this same territory. An explanation can be technically accurate and practically misleading. So can a fairness metric. Two metrics, two competing definitions of *fair*, both mathematically valid — and they cannot both be satisfied at once. The choice is not technical. So who chooses?
+The next chapter goes upstream. If SHAP and LIME describe the model and not the world, the obvious question is where the model and the world came apart in the first place. Chapter 6 maps that territory: ten distinct mechanisms by which bias enters a pipeline, Pearl's Rungs 1 and 2 worked in full, and a leverage analysis for finding which intervention actually moves a disparity — which is rarely the one closest to your hands. And the pattern this chapter named — technically accurate, practically misleading — applies to fairness metrics too: Chapter 7 shows two competing definitions of *fair*, both mathematically valid, that cannot both be satisfied at once. The choice is not technical. So who chooses?
 
 ---
 
@@ -490,7 +484,7 @@ End with: a one-paragraph note for the casebook on the EXPLANATION RISK class �
 
 **Connection to previous chapters:** Chapter 3 audited the agent's data layer. This chapter audits the agent's *self-report* layer. The two together produce most of what your casebook will need to claim about the agent's epistemic reliability.
 
-**Preview of next chapter:** Chapter 7 brings fairness into the casebook. If your agent acts on inputs from different populations or affects different stakeholders unequally, you'll work through the impossibility theorem on YOUR agent and produce a defended fairness-metric choice with the values claim made explicit.
+**Preview of next chapter:** Chapter 6 brings bias into the casebook. You'll draw a causal DAG of your agent's pipeline, audit it against the ten bias mechanisms, and produce a Bias & Leverage Brief naming the highest-leverage intervention — the recommendation your final go/no-go memo will defend. Chapter 7 then works the impossibility theorem on YOUR agent and produces a defended fairness-metric choice with the values claim made explicit.
 
 ---
 

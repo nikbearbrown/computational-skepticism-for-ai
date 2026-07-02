@@ -1,11 +1,5 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/03-data-validation.md into original; scaffolding preserved. For human rewrite. Draft was numbered "Chapter 3" — kept original Chapter 5 numbering/title; no renumber implied. RENUMBERED 2026-07-02: file and H1 now Chapter 3 (13-chapter order per RENUMBERING.md). -->
+<!-- CHAPTERIZED 2026-07-02: TL;DR removed, exercises merged, bridges/prereqs updated to 13-chapter order. Rough draft for hand-rewrite; [verify]/[verify-xref] flags preserved. -->
 # Chapter 3 — Data Validation: Reconstructing the Epistemic Frame Behind a Dataset
-
-## TL;DR
-
-- What the histograms can see, and the failures that live in everything else.
-- You will practice Explain why procedural EDA is necessary but not sufficient for deployment-ready data validation, and describe what the interrogation approach adds; Execute the core procedural EDA workflow — distributions, missingness, correlations, outliers — and identify what each diagnostic does and does not reveal; Choose appropriate marks and channels when constructing or reading a data visualization, and explain why position outranks color for quantitative data.
-- The chapter moves through Learning objectives, Prerequisites, Why this chapter, The clean dataset that destroyed a deployment, and related ideas.
 
 *What the histograms can see, and the failures that live in everything else.*
 
@@ -24,17 +18,17 @@ By the end of this chapter, you will be able to:
 
 ## Prerequisites
 
-Chapters 2–4 [verify-xref: Frictional Method chapter cut]. Chapter 6 (bias) is directly referenced — the bias-as-hidden-failure pattern returns in Glimmer 5.1. Familiarity with basic SQL join semantics is helpful but not required. No programming language is assumed; code examples use Python/pandas idioms, but the concepts transfer directly.
+Chapters 1–2 [verify-xref: Frictional Method chapter cut]. Chapter 6 (bias) now comes later in the book; Glimmer 3.1 points at the bias-as-hidden-failure pattern early, and Chapter 6 returns to it from the other side with the leverage analysis. Familiarity with basic SQL join semantics is helpful but not required. No programming language is assumed; code examples use Python/pandas idioms, but the concepts transfer directly.
 
 ---
 
 ## Why this chapter
 
-We have spent several chapters building apparatus for reading model outputs critically. This chapter steps earlier in the pipeline. Before the model, there is data. Before the data, there are choices — about what to record, what to include, how to join, where to stop. Those choices are the epistemic frame of the dataset, and they are almost never written down.
+We have spent two chapters building apparatus for reading model outputs critically. This chapter steps earlier in the pipeline. Before the model, there is data. Before the data, there are choices — about what to record, what to include, how to join, where to stop. Those choices are the epistemic frame of the dataset, and they are almost never written down.
 
-This is where computational skepticism does its most characteristic work, and it is worth naming the shape of that work directly. Computational skepticism is the pairing of AI's speed at producing plausible artifacts with an irreducibly human doubt about what those artifacts are evidence of. An AI can assemble the dataset, join the tables, draw every histogram, and write the "the data is clean" paragraph faster than you ever could. What it cannot supply is the doubt about what the histograms can't reach. That gap is yours, and it is the whole subject of this chapter.
+This is where computational skepticism does its most characteristic work — the pairing Chapter 1 committed us to: the machine's speed at producing plausible artifacts, your doubt about what they are evidence of. An AI can assemble the dataset, join the tables, draw every histogram, and write the "the data is clean" paragraph faster than you ever could. What it cannot supply is the doubt about what the histograms can't reach. That gap is yours, and it is the whole subject of this chapter.
 
-Two of the five supervisory capacities have to run at once through this material. **Problem Formulation** — deciding what this dataset is even supposed to represent before you look at it — and **Plausibility Auditing** — hearing the wrong note in a report that looks, by every visible measure, clean. The AI is superhuman at producing the plots. It cannot own either of those capacities for you.
+Two of the five supervisory capacities from Chapter 1 have to run at once through this material. **Problem Formulation** — deciding what this dataset is even supposed to represent before you look at it — and **Plausibility Auditing** — hearing the wrong note in a report that looks, by every visible measure, clean. The AI is superhuman at producing the plots. It cannot own either of those capacities for you.
 
 This chapter teaches you two things, and they map onto the build/audit pairing that recurs across the book. First: how to actually do EDA — the mechanics of the procedural pass, the visualizations that matter, the code patterns that produce them, and most importantly what each diagnostic does and does not reveal. This is the part you can, and should, delegate. Second: how to do the work that comes after EDA, the work that determines whether a deployment will fail in production for reasons invisible from inside the data. This is the part you keep. We cannot do the second without doing the first, so we start there.
 
@@ -56,8 +50,8 @@ The dataset had been assembled from three source systems by joining them on a sh
 
 The EDA report had every plot it was supposed to have. The histograms were drawn. The summary statistics were tabulated. The missing-values check ran clean — of course it did — because the rows that had failed the join were not "missing" in any sense the EDA could register. They simply weren't there. You cannot compute the missingness of rows that never existed. That single sentence is the crack in procedural EDA that this chapter widens into a doctrine.
 
-![Diagram](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-01.png)
-*Figure 5.1 — Diagram*
+![Diagram](images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-01.png)
+*Figure 3.1 — Diagram*
 
 So I want to ask you a question that is the question of this whole chapter. *Why are there exactly N rows in this dataset?* What was N supposed to be? What is the difference between what was supposed to be there and what is?
 
@@ -157,8 +151,8 @@ For a visual overview of missingness patterns across columns:
 
 The `missingno` matrix plot shows each row as a horizontal line and each column as a vertical stripe — white where a value is present, black where it is missing. The critical diagnostic is whether missingness in one column tends to co-occur with missingness in another column. If columns A and B are missing together in the same rows, either there is a structural data-collection reason (both come from the same source that sometimes fails) or there is a meaningful subpopulation that systematically does not have these values recorded.
 
-![Aligned stripes = structural missing pattern. Scattered dots = random missingness. The difference is the question: does missingness depend on something we can see, or something we can't?](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-02.png)
-*Figure 5.2 — Missingno-style matrix visualization*
+![Aligned stripes = structural missing pattern. Scattered dots = random missingness. The difference is the question: does missingness depend on something we can see, or something we can't?](images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-02.png)
+*Figure 3.2 — Missingno-style matrix visualization*
 
 ### Step 4 — Examine bivariate relationships
 
@@ -180,8 +174,8 @@ A univariate distribution tells you about one column in isolation. A bivariate p
 
 > *"Write a Python one-liner using pandas that produces a normalized cross-tabulation of [col1] versus [col2], expressed as row percentages."*
 
-![A scatter plot catches problems invisible to either univariate distribution alone. The age histogram showed no spike at zero because 40 points in a dataset of 10,000 is too small to flag there — but it's a structurally meaningful cluster.](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-03.png)
-*Figure 5.3 — Scatter plot *
+![A scatter plot catches problems invisible to either univariate distribution alone. The age histogram showed no spike at zero because 40 points in a dataset of 10,000 is too small to flag there — but it's a structurally meaningful cluster.](images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-03.png)
+*Figure 3.3 — Scatter plot *
 
 ### Step 5 — Examine temporal patterns
 
@@ -191,8 +185,8 @@ If the dataset has a date or timestamp column, plot counts over time as the firs
 
 A sharp drop in record counts is always a finding. It may be benign (a holiday, a weekend effect in a business dataset). It may be critical (the system was down; the subpopulation affected by the downtime is now underrepresented).
 
-![Record counts over time are the first temporal diagnostic. A drop that aligns with a known external event (pandemic, system migration, policy change) is a finding — the subpopulation that stopped generating data during the gap may be systematically absent from your training set.](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-04.png)
-*Figure 5.4 — Time-series line chart *
+![Record counts over time are the first temporal diagnostic. A drop that aligns with a known external event (pandemic, system migration, policy change) is a finding — the subpopulation that stopped generating data during the gap may be systematically absent from your training set.](images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-04.png)
+*Figure 3.4 — Time-series line chart *
 
 ### Step 6 — Examine outliers formally
 
@@ -206,8 +200,8 @@ The histogram and box plot will surface obvious outliers visually. Formal outlie
 
 The most important thing about outlier detection is not the detection — it is what you do next. Every identified outlier needs a decision: is this a data-entry error (a salary of $1,200,000 when typical salaries are $50,000–$200,000 might be a decimal-point error)? A legitimate extreme value (a CEO salary is legitimately high)? A sentinel value used to encode "unknown" or "not applicable"? The decision determines whether you remove, impute, cap, or retain the value.
 
-![Outlier detection is triage, not removal. The IQR method flags the candidates. Domain knowledge makes the call.](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-05.png)
-*Figure 5.5 — Box plot for a single "salary" column*
+![Outlier detection is triage, not removal. The IQR method flags the candidates. Domain knowledge makes the call.](images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-05.png)
+*Figure 3.5 — Box plot for a single "salary" column*
 
 ### What the procedural pass cannot see
 
@@ -229,8 +223,8 @@ A **mark** is a geometric primitive that represents an item or a relationship. P
 
 A **channel** is a visual property that encodes information about marks. Position (horizontal and vertical), size, color, shape, and orientation are channels. When you place a dot at a particular x and y position, both x and y are channels. When you color the dots by category, color is a channel. When you size the dots by a third numeric variable, size is a channel.
 
-![Every visualization is marks + channels. Understanding which channels are active — and whether they are matched to the right data types — is how you evaluate whether a chart is telling the truth.](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-06.png)
-*Figure 5.6 — Illustration*
+![Every visualization is marks + channels. Understanding which channels are active — and whether they are matched to the right data types — is how you evaluate whether a chart is telling the truth.](images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-06.png)
+*Figure 3.6 — Illustration*
 
 ### Why some channels are stronger than others
 
@@ -241,8 +235,8 @@ Stevens' psychophysical power law gives us a mood for why.[^stevens] For length,
 [^cm]: William S. Cleveland & Robert McGill, "Graphical Perception: Theory, Experimentation, and Application to the Development of Graphical Methods," *Journal of the American Statistical Association* 79(387):531–554, 1984, DOI:10.1080/01621459.1984.10478080.
 [^stevens]: S. S. Stevens, "On the Psychophysical Law," *Psychological Review* 64(3):153–181, 1957, DOI:10.1037/h0046162.
 
-![Channel effectiveness hierarchy, based on Cleveland & McGill's landmark perceptual studies. Encode the variable that matters most with the channel people read most accurately.](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-07.png)
-*Figure 5.7 — Two-column ranked list *
+![Channel effectiveness hierarchy, based on Cleveland & McGill's landmark perceptual studies. Encode the variable that matters most with the channel people read most accurately.](images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-07.png)
+*Figure 3.7 — Two-column ranked list *
 
 This ranking has direct consequences for EDA:
 
@@ -262,8 +256,8 @@ The **expressiveness principle** says: match the channel to the data type. Quant
 
 The **effectiveness principle** says: encode the most important variable with the most powerful channel. If your visualization encodes three variables, the variable that matters most to the reader's question should get position. A secondary variable can get color hue if it is categorical, or size if it is quantitative. The tertiary variable gets whatever is left.
 
-![Using size for a categorical variable is the single most common expressiveness violation. It misleads without lying — the data is all there, but the encoding creates a false impression of magnitude differences.](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-08.png)
-*Figure 5.8 — Two side-by-side scatter plots *
+![Using size for a categorical variable is the single most common expressiveness violation. It misleads without lying — the data is all there, but the encoding creates a false impression of magnitude differences.](images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-08.png)
+*Figure 3.8 — Two side-by-side scatter plots *
 
 ### Applying this to EDA output
 
@@ -330,8 +324,8 @@ I want to bound this claim honestly, because it is easy to overreach. It is true
 
 [^chaos]: Shapira et al., "Agents of Chaos," 2026, arXiv:2602.20021, https://agentsofchaos.baulab.info/. Chapter 8 returns to this from the agent-validation side.
 
-![The access boundary is not the schema. Naturally occurring data always references the world outside itself. Validating only what is formally in scope means the agent was given access to far more than the team intended — and no access control was violated.](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-09.png)
-*Figure 5.9 — Concentric boundary diagram*
+![The access boundary is not the schema. Naturally occurring data always references the world outside itself. Validating only what is formally in scope means the agent was given access to far more than the team intended — and no access control was violated.](images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-09.png)
+*Figure 3.9 — Concentric boundary diagram*
 
 The validation move that catches this — the move I want you to make on every dataset you ingest — is to ask: *what is the boundary of this data, and how do I know?* And to insist on an answer more rigorous than "the schema." The boundary is the union of the schema and everything the schema's contents reference, link to, or imply.
 
@@ -341,8 +335,8 @@ The validation move that catches this — the move I want you to make on every d
 
 If you take what I have argued seriously, the procedure for validation changes. Not the procedural EDA — that part is fine, run it as you have always run it. The interrogation is what changes.
 
-![Keep this as a checklist. Steps 3–6 are the work that EDA alone does not do.](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-10.png)
-*Figure 5.10 — Six-step linear workflow diagram with labeled boxes connected*
+![Keep this as a checklist. Steps 3–6 are the work that EDA alone does not do.](images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-10.png)
+*Figure 3.10 — Six-step linear workflow diagram with labeled boxes connected*
 
 **Step 1 — Read the metadata, lock your prediction.** Before you run a single histogram on a dataset you did not create, read the metadata, the schema documentation, and any published description of how the data was collected. Write down, in your own words, what you predict the dataset's epistemic frame to be — what it claims to represent, how it was collected, what is excluded, and over what time period. *Lock your prediction.* The whole exercise depends on this.
 
@@ -384,7 +378,7 @@ The interesting trade-off in this whole discipline: procedural EDA optimizes for
 
 ---
 
-## Glimmer 5.1 — The hidden-failure EDA
+## Glimmer 3.1 — The hidden-failure EDA
 
 The exercise is intentionally adversarial. You are given a dataset designed to look clean — procedural EDA produces no flags — but containing at least three structural failures the procedural EDA does not surface. The course materials provide such a dataset; if you are reading this outside the course, construct one yourself by introducing a non-random missingness mechanism, a silent join failure, or an embedded label-process failure.
 
@@ -433,9 +427,9 @@ The marks-and-channels framework gives you the vocabulary to read visualizations
 
 ## Connections forward
 
-We have validated the data. The model trained on the data produces outputs. Some of those outputs come with explanations. The question for the next chapter is: do the explanations tell us what the model is doing? Or do they make us feel like they do?
+We have validated the data. The model trained on the data has learned something. The question for the next chapter is: learned *what*? Chapter 4 takes a classifier that calls a panda a panda, perturbs the image in a way no human eye can detect, and watches it announce "gibbon" with even higher confidence. Adversarial examples are the instrument that makes a familiar gap visible one layer up — the gap between what the model actually learned and what its builders thought it learned, the way this chapter opened the gap between what the dataset records and what it claims to record. And the two gaps connect: the sampling and label assumptions you interrogated here are exactly the places a model goes shopping for proxies.
 
-The most familiar version of explanation-that-feels-right-but-is-misleading is an autonomous agent reporting "deletion successful" — and when you ask what that report is actually evidence of, you find you have wandered into the same kind of question this chapter has been asking about data, only one layer up. Chapter 8 returns to this chapter's access-boundary problem from the agent-validation side. Chapter 13 closes the loop on the interrogation discipline as a whole.
+Chapter 5 returns to explanation-that-feels-right-but-is-misleading — including the agent reporting "deletion successful" — and asks whether explanations tell us what the model is doing or just make us feel like they do. Chapter 8 returns to this chapter's access-boundary problem from the agent-validation side. Chapter 13 closes the loop on the interrogation discipline as a whole.
 
 ---
 
@@ -510,7 +504,7 @@ The chapter's central distinction — procedural EDA as evidence of competence, 
 **The Prompt:**
 
 ```
-Continuing my Red-Team Casebook. My System Dossier and Bias-and-Leverage Brief are in the Project context. My Frictional journal infrastructure is set up.
+Continuing my Red-Team Casebook. My System Dossier and Probabilistic Baseline are in the Project context. My Frictional journal infrastructure is set up.
 
 This chapter teaches that procedural EDA (distributions, missingness, correlations, outliers) is necessary but not sufficient for deployment-ready validation. The structural failures live in the assumptions EDA cannot see — assumptions about scope, access, definition, joining, sampling. The six-step epistemic-frame reconstruction is the supplement.
 
@@ -557,9 +551,9 @@ If I have access to the agent's system prompt or retrieval corpus, ALSO walk thr
 - *For Claude Code:* Recommended if you have a system prompt file, RAG corpus, or finetuning JSONL — Claude Code will install pandas, run the EDA, and produce the diagnostic plots.
 - *For a Claude Project:* Save the Data Frame Audit into the casebook folder.
 
-**Connection to previous chapters:** Chapter 6 located bias in the pipeline. This chapter audits the data layer of that pipeline. Together they identify where the agent's beliefs about the world come from — and where those beliefs are most likely to be wrong.
+**Connection to previous chapters:** Chapter 2 built the probabilistic baseline for the agent's self-reports. This chapter audits the data layer underneath them — where the agent's beliefs about the world come from, and where those beliefs are most likely to be wrong. Chapter 6 returns to the pipeline from the bias side.
 
-**Preview of next chapter:** Chapter 5 probes what the agent says about its own actions. You'll apply explainability methods to the agent's natural-language self-reports and identify language-game mismatches between what the agent claims to have done and what the world actually shows — the technically-accurate-practically-misleading pattern that defines the Ash case.
+**Preview of next chapter:** Chapter 4 builds a robustness probe suite for your agent — adversarial inputs designed to expose the proxy features it learned in place of human-relevant features, plus prompt-sensitivity tests that reveal which superficial input changes flip its behavior. Several of those probes will become formal cases in Chapter 8. Chapter 5 then probes what the agent says about its own actions — the technically-accurate-practically-misleading pattern that defines the Ash case.
 
 ---
 
@@ -601,7 +595,7 @@ naming conventions, color system, and typography the figures use.
 
 Create a standalone D3 v7 HTML figure for "Diagram". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-01.html`
+> Reference implementation: `d3/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-01.html`
 
 ---
 
@@ -609,7 +603,7 @@ Create a standalone D3 v7 HTML figure for "Diagram". Use a horizontal bar chart 
 
 Create a standalone D3 v7 HTML figure for "A scatter plot catches problems invisible to either univariate...". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-03.html`
+> Reference implementation: `d3/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-03.html`
 
 ---
 
@@ -617,7 +611,7 @@ Create a standalone D3 v7 HTML figure for "A scatter plot catches problems invis
 
 Create a standalone D3 v7 HTML figure for "Record counts over time are the first temporal diagnostic". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-04.html`
+> Reference implementation: `d3/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-04.html`
 
 ---
 
@@ -625,7 +619,7 @@ Create a standalone D3 v7 HTML figure for "Record counts over time are the first
 
 Create a standalone D3 v7 HTML figure for "Outlier detection is triage, not removal". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-05.html`
+> Reference implementation: `d3/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-05.html`
 
 ---
 
@@ -633,7 +627,7 @@ Create a standalone D3 v7 HTML figure for "Outlier detection is triage, not remo
 
 Create a standalone D3 v7 HTML figure for "Every visualization is marks + channels". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-06.html`
+> Reference implementation: `d3/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-06.html`
 
 ---
 
@@ -641,7 +635,7 @@ Create a standalone D3 v7 HTML figure for "Every visualization is marks + channe
 
 Create a standalone D3 v7 HTML figure for "Channel effectiveness hierarchy, based on Cleveland & McGill's landmark...". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-07.html`
+> Reference implementation: `d3/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-07.html`
 
 ---
 
@@ -649,4 +643,4 @@ Create a standalone D3 v7 HTML figure for "Channel effectiveness hierarchy, base
 
 Create a standalone D3 v7 HTML figure for "The access boundary is not the schema". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
 
-> Reference implementation: `d3/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-09.html`
+> Reference implementation: `d3/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-09.html`

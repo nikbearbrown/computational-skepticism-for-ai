@@ -1,11 +1,5 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/06-bias-where-it-enters-and-whos-responsible.md into original; scaffolding preserved. For human rewrite. Renumber/retitle implication: draft was numbered "Chapter 6 — Bias: Where It Enters, Who's Responsible"; original is Chapter 3. Kept original numbering/title. Draft's BUILD/AUDIT exercise pairing folded in ALONGSIDE the original Glimmers/Warm-Up/Application/Synthesis/Challenge set, not replacing it — human may want to reconcile the two exercise systems. RENUMBERED 2026-07-02: file and H1 now Chapter 6 (13-chapter order per RENUMBERING.md). -->
+<!-- CHAPTERIZED 2026-07-02: TL;DR removed, exercises merged, bridges/prereqs updated to 13-chapter order. Rough draft for hand-rewrite; [verify]/[verify-xref] flags preserved. -->
 # Chapter 6 — Bias: Where It Enters and Who Is Responsible
-
-## TL;DR
-
-- Doing the Fix the Model Alone Cannot Do.
-- The chapter moves through What "bias" actually means, Ten mechanisms, distinguished, Selection bias, Confirmation bias, and related ideas.
-- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
 
 *Doing the Fix the Model Alone Cannot Do. The fix with the most leverage is almost never the one closest to your hands.*
 
@@ -36,9 +30,9 @@ To get there, we need four things. We need a rigorous definition of what "bias" 
 - Explain, in plain language, why two contradictory fairness metrics can both be mathematically correct at the same time
 - Assign the accountable owner of a bias, including when the leverage sits upstream of your team entirely
 
-**Prerequisites.** Chapters 1 and 2 — the supervisory posture, the vocabulary of uncertainty, and the fluency trap. You'll also need the basic idea that a model learns from data; nothing else is assumed.
+**Prerequisites.** Chapters 1 and 2 — the supervisory posture, the vocabulary of uncertainty, and the fluency trap. Chapter 4's opening of Pearl's Rung 3 is picked up here, but this chapter develops Rungs 1 and 2 from scratch, so nothing from that chapter is strictly required. You'll also need the basic idea that a model learns from data; nothing else is assumed.
 
-**Why this chapter uses the capacity twice.** This chapter exercises one supervisory capacity — supplying the meaning and the accountability the model cannot — and it does so in two passes. A **BUILD** pass, where you conduct a persona/data build and hunt for where *you* let bias in (the hard part is not believing your own fluent output). And an **AUDIT** pass, where a deployed system lands on your desk and you trace where the bias entered and assign the owner (the hard part is reconstructing a process you never saw). Computational skepticism, at bottom, is the pairing of the machine's speed with a doubt that stays irreducibly human: the model builds fast, and you supply the suspicion.
+**Why this chapter uses the capacity twice.** This chapter exercises one supervisory capacity — supplying the meaning and the accountability the model cannot — and it does so in two passes. A **BUILD** pass, where you conduct a persona/data build and hunt for where *you* let bias in (the hard part is not believing your own fluent output). And an **AUDIT** pass, where a deployed system lands on your desk and you trace where the bias entered and assign the owner (the hard part is reconstructing a process you never saw). This is the pairing Chapter 1 committed us to: the model builds fast, and you supply the suspicion.
 
 Let me start with a definition.
 
@@ -62,8 +56,8 @@ The ten bias mechanisms covered in this chapter are ten distinct ways of introdu
 
 Think of it this way, as a design-critic would: the newspaper meaning of "bias" was optimized for moral clarity at the expense of causal precision. The formal definition makes the opposite trade — it gives up the moral punch and buys you something you can act on. It tells you *where* to intervene.
 
-![More data narrows the scatter. It does not move the systematic offset.](images/03-bias-where-it-enters-and-who-is-responsible-fig-01.png)
-*Figure 3.1 — Biased vs*
+![More data narrows the scatter. It does not move the systematic offset.](images/06-bias-where-it-enters-and-who-is-responsible-fig-01.png)
+*Figure 6.1 — Biased vs*
 
 ---
 
@@ -161,8 +155,8 @@ This type is structurally different from all the others, and understanding why i
 
 A hiring model trained on ten years of promotion records at a company that historically promoted men at higher rates in engineering roles is learning $P(Y_{\text{historical}} | \mathbf{x})$ rather than $P(Y_{\text{fair}} | \mathbf{x})$. The model is accurate on its training distribution. Its accuracy perpetuates the historical disparity. No data quality intervention helps, because the labels are accurately recorded. The bias is in what was recorded, not in how it was recorded.
 
-![Historical bias mechanism](images/03-bias-where-it-enters-and-who-is-responsible-fig-02.png)
-*Figure 3.2 — Historical bias mechanism*
+![Historical bias mechanism](images/06-bias-where-it-enters-and-who-is-responsible-fig-02.png)
+*Figure 6.2 — Historical bias mechanism*
 
 The practical mitigations are: finding a less-biased proxy for the outcome; applying fairness constraints during training that penalize perpetuation of historical disparities; or using time-sensitive weighting to de-emphasize older records from periods with more discriminatory practice. None of these fully solve the problem. They reduce the leverage of the historical signal on current predictions.
 
@@ -174,8 +168,8 @@ Implicit bias is the ambient background from which several other types emerge. I
 
 The most tractable algorithmic intervention is demographic parity auditing after the model is built: test whether $P(\hat{Y}=1|A=0) \approx P(\hat{Y}=1|A=1)$ across protected groups. Disparities in this test are not proof of implicit bias — they might reflect real differences in outcome base rates — but they are a flag that requires investigation. The systemic interventions are diverse teams (homogeneous teams share the same blind spots), structured decision processes (structure reduces the surface area for implicit judgment), and continuous auditing.
 
-![Pipeline entry-point map for all ten bias types](images/03-bias-where-it-enters-and-who-is-responsible-fig-03.png)
-*Figure 3.3 — Pipeline entry-point map for all ten bias types*
+![Pipeline entry-point map for all ten bias types](images/06-bias-where-it-enters-and-who-is-responsible-fig-03.png)
+*Figure 6.3 — Pipeline entry-point map for all ten bias types*
 
 ---
 
@@ -200,7 +194,7 @@ And sometimes — the hardest case — the data is fine, the labels are fine, th
 | **What a fix looks like** | Resample, rebalance, broaden collection | Fix the labeling process; find a less-biased proxy; model the labeling step itself | Change the deployment structure — the review process, the decision criteria, the institutional context |
 | **What a fix cannot do** | Fix a biased labeling process by adding more data | Undo structural inequities that shaped the labeled outcomes | Be accomplished from inside the model or the dataset |
 
-*Figure 3.1 — Three types of bias, their mechanisms, and what fixes each.*
+*Figure 6.1 — Three types of bias, their mechanisms, and what fixes each.*
 
 I want you to feel the difference between these three. Dataset bias is a sampling problem. Label bias is a measurement problem. Structural bias is a question about the world the model lives in. They live at different points in the chain from "world" to "decision," and they respond to interventions at different points. If you have structural bias and you treat it as a dataset problem, you will spend a quarter and move the disparity zero. This happens constantly. It is the most common failure in this whole field.
 
@@ -264,10 +258,10 @@ The general principle: when base rates differ across groups, you cannot simultan
 
 Which means the choice between fairness metrics is not a technical choice. It is a values claim. *Which kind of error are we less willing to make?* That question does not have a mathematical answer. It has a social answer, and the social answer depends on what the model is being used for, who bears the costs of each error type, and what the political economy of the deployment looks like. Engineers who treat this as a pure optimization problem are secretly making a values choice — the choice to optimize for whatever metric their loss function encodes — while appearing neutral.
 
-![Visual proof sketch of the fairness impossibility](images/03-bias-where-it-enters-and-who-is-responsible-fig-04.png)
-*Figure 3.4 — Visual proof sketch of the fairness impossibility*
+![Visual proof sketch of the fairness impossibility](images/06-bias-where-it-enters-and-who-is-responsible-fig-04.png)
+*Figure 6.4 — Visual proof sketch of the fairness impossibility*
 
-*Figure 3.2 — The fairness impossibility.*
+*Figure 6.2 — The fairness impossibility.*
 
 But there is something even deeper in the COMPAS case. The data being analyzed was not "did this person commit another crime." It was "was this person re-arrested." Those are not the same. Re-arrest is a function of crime *and* policing. If policing is unevenly distributed across populations, then re-arrest is an uneven measurement of crime. And every model trained on that data inherits the unevenness. This is historical bias and label bias operating simultaneously — the labels accurately record re-arrest, which is itself a biased measurement of the underlying variable the model is supposed to predict.
 
@@ -288,12 +282,12 @@ A note on a case I will *not* over-claim, because the fluency trap runs hardest 
 
 ## Pearl's Ladder — Rungs 1 and 2
 
-Now we need a tool. The tool is due to Judea Pearl, and it is, in my judgment, the single most useful conceptual instrument in this book. He calls it a ladder of causal reasoning, with three rungs. We are going to use the first two now, and the third in Chapter 4.
+Now we need a tool. The tool is due to Judea Pearl, and it is, in my judgment, the single most useful conceptual instrument in this book. He calls it a ladder of causal reasoning, with three rungs. Chapter 4 sketched the whole ladder and opened the third rung from the robustness side; we are going to work the first two properly now.
 
-![Pearl's ladder of causal reasoning](images/03-bias-where-it-enters-and-who-is-responsible-fig-05.png)
-*Figure 3.5 — Pearl's ladder of causal reasoning*
+![Pearl's ladder of causal reasoning](images/06-bias-where-it-enters-and-who-is-responsible-fig-05.png)
+*Figure 6.5 — Pearl's ladder of causal reasoning*
 
-*Figure 3.3 — Pearl's ladder of causal reasoning.*
+*Figure 6.3 — Pearl's ladder of causal reasoning.*
 
 **Rung 1 — Association.** The level of correlation. *What is the probability of Y, given that we observe X?* This is what most machine learning lives on. The model learns conditional distributions from data: $P(Y | X)$. What happens, given what we see. Rung 1 is what calibration curves describe. It is what most fairness metrics measure. It is also where most thinking about deployed AI quietly stops.
 
@@ -301,7 +295,7 @@ Now we need a tool. The tool is due to Judea Pearl, and it is, in my judgment, t
 
 The classical illustration is the rooster and the sun. If you observe roosters and sunrises in the wild, $P(\text{sunrise} \mid \text{rooster crowed})$ is high. They go together. But $P(\text{sunrise} \mid \text{do}(\text{rooster doesn't crow}))$ — given that I went out and prevented the rooster from crowing, *intervened* on the rooster — is also high. The sun rises anyway. Observation said they were associated. Intervention said the rooster was not the cause.
 
-**Rung 3 — Counterfactual.** The level of imagining. *What would have happened to this specific case if X had been different, holding everything else fixed?* This is the deepest level and the hardest to access from data alone. It opens in Chapter 4 and closes in Chapter 12. For now, it sits at the top of the ladder, visible but not yet in reach.
+**Rung 3 — Counterfactual.** The level of imagining. *What would have happened to this specific case if X had been different, holding everything else fixed?* This is the deepest level and the hardest to access from data alone. Chapter 4 opened it — the robustness gap is a Rung 3 question — and it closes in Chapter 12. For now, it sits at the top of the ladder, visible but not yet closed.
 
 For our problem: $P(\text{loan denial} \mid \text{race} = x)$ is the *observational* quantity. This is what the model sees in training data. It is what most fairness metrics measure. $P(\text{loan denial} \mid \text{do}(\text{race} = x))$ is the *interventional* quantity. It asks: would the decision change if we changed only this variable, holding everything else fixed?
 
@@ -328,10 +322,10 @@ Each team intervened. They intervened at different points in the causal chain fr
 
 But the doings had different leverage. Imagine the causal graph for how the bias appears in the deployed outcome. The protected attribute sits at the top. Below it are proxies — features in the data that correlate with the protected attribute. Below those, the features the model uses. Below those, the model's output. Below that, the deployment context — the reviewer, the threshold, the appeal process. Below that, the final outcome that lands on a real person's life.
 
-![Causal graph of a biased deployment pipeline](images/03-bias-where-it-enters-and-who-is-responsible-fig-06.png)
-*Figure 3.6 — Causal graph of a biased deployment pipeline*
+![Causal graph of a biased deployment pipeline](images/06-bias-where-it-enters-and-who-is-responsible-fig-06.png)
+*Figure 6.6 — Causal graph of a biased deployment pipeline*
 
-*Figure 3.4 — Causal graph of a biased deployment pipeline.*
+*Figure 6.4 — Causal graph of a biased deployment pipeline.*
 
 Now ask: from the protected attribute at the top to the outcome at the bottom, how many paths are there? Some paths run through the model. Some *bypass* the model — they run through the proxies into the deployment context directly. Some are mediated by the reviewer, by the way the score is read, by what gets appealed and what does not.
 
@@ -348,8 +342,8 @@ The procedure for leverage analysis, in working form:
 3. For each candidate intervention point, ask: *which paths does this intervention block, and which paths does it leave open?*
 4. The highest-leverage intervention is the one that blocks the largest fraction of the bias-carrying paths, ideally without blocking paths the deployment requires for its core function.
 
-![Leverage analysis decision flowchart](images/03-bias-where-it-enters-and-who-is-responsible-fig-07.png)
-*Figure 3.7 — Leverage analysis decision flowchart*
+![Leverage analysis decision flowchart](images/06-bias-where-it-enters-and-who-is-responsible-fig-07.png)
+*Figure 6.7 — Leverage analysis decision flowchart*
 
 Here is the classical move underneath the whole procedure, named explicitly because these moves earn their keep only when named: leverage analysis is Descartes' doubt turned on a pipeline. *What would have to be true for this bias to live here?* You suspend the tempting explanation — the model, the thing closest to your hands — and demand that each candidate location survive the question. The location that survives is where you intervene.
 
@@ -399,15 +393,15 @@ I want to say where I am uncertain, because intellectual honesty is part of the 
 
 ## Synthesis and bridge
 
-Bias is not one thing. It is a family of phenomena that enter at different points in an AI pipeline and respond to different interventions. The map of where the bias is and where the leverage is requires a causal-reasoning apparatus, and that apparatus is Pearl's Ladder. We have introduced the first two rungs. Rung 3 — counterfactual reasoning — opens in Chapter 4 and closes in Chapter 12. The arc is the most distinctive pedagogical move in the book.
+Bias is not one thing. It is a family of phenomena that enter at different points in an AI pipeline and respond to different interventions. The map of where the bias is and where the leverage is requires a causal-reasoning apparatus, and that apparatus is Pearl's Ladder. We have worked the first two rungs in detail. Rung 3 — counterfactual reasoning — opened in Chapter 4 and closes in Chapter 12. The arc is the most distinctive pedagogical move in the book.
 
 The chapter's working tools: a formal definition of bias as a property of estimators; ten distinct mechanisms by which $E[\hat{\theta}] \neq \theta$ can enter a pipeline; three structural categories that map those mechanisms to intervention logic; the epistemic-frame move (what is the data, what does it claim, what does it exclude); the fairness impossibility as a theorem rather than a controversy; Pearl's Rungs 1 and 2; the leverage analysis procedure; and the accountability move that traces the highest-leverage path to the node — and the owner — that controls it. You will use all of them.
 
-The next chapter shifts again. We have introduced a posture, a vocabulary, and an apparatus. What we do not yet have is *evidence that any particular student has done the work*. In an era when AI can generate any artifact — a chapter like this one, a project, a defense — the artifact alone does not show that anyone understood it. The next chapter is the apparatus for checking that.
+The next chapter picks up the thread this chapter deliberately left hanging. I asserted the fairness impossibility and sketched its algebra; Chapter 7 makes you *feel* why it is true — three reasonable definitions of fairness, demographic parity, equalized odds, calibration parity, worked through arithmetic until the incompatibility becomes obvious — and then does the thing the impossibility forces: choose one, defend the choice, and name who should have decided. The values claim this chapter located inside the metric choice becomes, there, the whole subject.
 
 ---
 
-## Glimmer 3.1 — The Bias Trace
+## Glimmer 6.1 — The Bias Trace
 
 A Glimmer is a longer, higher-stakes exercise that requires going to primary sources. Do not abridge this one.
 
@@ -424,31 +418,7 @@ The deliverable is the graph, the mechanism identification, the prediction, and 
 
 ## Exercises
 
-The exercises come in two systems. The **BUILD / AUDIT** pair below runs the chapter's one supervisory capacity twice — once on work you generate yourself, once on a deployed system you inherit. The graduated **Warm-up → Challenge** set that follows drills the individual tools. Do the BUILD/AUDIT pair for the integrated skill; do the graduated set for coverage.
-
-### BUILD — conduct your own persona/data build, and find where you let bias in
-
-**B1.** Ask an AI to assemble a small labeled dataset or a set of user personas for a system you are actually building (or a plausible one). Get it in seconds — that fluency is the trap. Now name, in writing, *why you want to believe it*: what about ownership makes this dataset feel clean to you?
-
-*Tests: interpretive judgment, the fluency trap on your own output. Difficulty: low.*
-
-**B2.** Walk your build against the ten mechanisms. For each, ask honestly: could it be operating here, and at which pipeline stage does it enter? Do not force all ten to apply. End with the top three ranked by expected harm, and for each classify it dataset / label / structural.
-
-*Tests: mechanism identification, the three-flavor mapping. Difficulty: medium.*
-
-**B3.** Draw the causal graph of your build from world to the decision your system feeds, then run the four-step leverage analysis. Name the single highest-leverage intervention — and be explicit about whether it lives in your house or someone else's.
-
-*Tests: causal graph construction, leverage analysis, interpretive judgment. Difficulty: medium.*
-
-### AUDIT — trace where bias entered a deployed system, and assign the owner
-
-**AU1.** Pick a documented case — COMPAS (Angwin et al. 2016), the Amazon résumé screener (Dastin, Reuters 2018), or the health-cost-proxy algorithm (Obermeyer, Powers, Vogeli, Mullainathan, *Science* 2019). \[verify all citations.\] Read the primary source, not the summary. Draw the causal graph. Before reading the post-mortem, lock a prediction: which mechanisms are active, and the highest-leverage intervention for each.
-
-*Tests: dataset-as-artifact reading, falsifiable prediction. Difficulty: medium.*
-
-**AU2.** For your audited case, trace the highest-leverage bias-carrying path to its source node and name the accountable owner — the party who sits at that node. If the leverage is upstream of the deploying team (as in *Agents of Chaos* Case #6), say so explicitly and name whose reach it is in.
-
-*Tests: accountability assignment, upstream-leverage recognition. Difficulty: medium.*
+One graduated progression. Two stances run through it: some exercises ask you to **build** — generate the artifact yourself and hunt for where you let bias in, where the discipline is fighting self-trust — and some ask you to **audit** — inherit a deployed system and reconstruct a process you never saw. Chapter 1 defines the pairing; here you run it on bias. The BUILD exercise sits at Synthesis level, the AUDIT exercise at Challenge level.
 
 ### Warm-up
 
@@ -518,6 +488,16 @@ Using the tools from this chapter, describe the diagnostic procedure you would f
 
 *Tests: interaction between bias types, causal graph reasoning, systems thinking. Difficulty: high.*
 
+**S4 (BUILD).** Conduct your own persona/data build, and find where you let bias in.
+
+(a) Ask an AI to assemble a small labeled dataset or a set of user personas for a system you are actually building (or a plausible one). Get it in seconds — that fluency is the trap. Now name, in writing, *why you want to believe it*: what about ownership makes this dataset feel clean to you?
+
+(b) Walk your build against the ten mechanisms. For each, ask honestly: could it be operating here, and at which pipeline stage does it enter? Do not force all ten to apply. End with the top three ranked by expected harm, and for each classify it dataset / label / structural.
+
+(c) Draw the causal graph of your build from world to the decision your system feeds, then run the four-step leverage analysis. Name the single highest-leverage intervention — and be explicit about whether it lives in your house or someone else's.
+
+*Tests: interpretive judgment, the fluency trap on your own output, mechanism identification, the three-flavor mapping, causal graph construction, leverage analysis. Difficulty: high.*
+
 ---
 
 ### Challenge
@@ -525,6 +505,14 @@ Using the tools from this chapter, describe the diagnostic procedure you would f
 **C1.** The chapter acknowledges that distinguishing dataset bias from label bias is difficult when the engineer has access only to the labeled training set and not the labeling process. Design an audit protocol — a sequence of analyses a practitioner could run on a labeled dataset alone — that provides the strongest possible *inferential* (not direct) evidence about which type of bias is present. Specify what patterns in the data would shift your prior toward dataset bias vs. label bias, and what residual uncertainty your protocol cannot resolve.
 
 *Tests: diagnostic reasoning under limited access, dataset-as-artifact thinking, intellectual honesty about limits. Difficulty: high.*
+
+**C2 (AUDIT).** Trace where bias entered a deployed system, and assign the owner.
+
+(a) Pick a documented case — COMPAS (Angwin et al. 2016), the Amazon résumé screener (Dastin, Reuters 2018), or the health-cost-proxy algorithm (Obermeyer, Powers, Vogeli, Mullainathan, *Science* 2019). \[verify all citations.\] Read the primary source, not the summary. Draw the causal graph. Before reading the post-mortem, lock a prediction: which mechanisms are active, and the highest-leverage intervention for each. (If you have already done Glimmer 6.1, use that case and its graph, and go straight to part (b).)
+
+(b) For your audited case, trace the highest-leverage bias-carrying path to its source node and name the accountable owner — the party who sits at that node. If the leverage is upstream of the deploying team (as in *Agents of Chaos* Case #6), say so explicitly and name whose reach it is in.
+
+*Tests: dataset-as-artifact reading, falsifiable prediction, accountability assignment, upstream-leverage recognition. Difficulty: high.*
 
 ---
 
@@ -570,7 +558,7 @@ End with: a one-page "Bias & Leverage Brief" for my casebook. Include the DAG, t
 
 **Connection to previous chapters:** Chapter 1 named the supervisory capacity gap. Chapter 2 quantified the trust deficit. This chapter locates *where in the pipeline* the gap originates — which is what the rest of the validation toolkit (Chs 3–5 and 7–8) will probe.
 
-**Preview of next chapter:** Chapter 4 [verify-xref: Frictional Method chapter cut] sets up your Frictional journal — the prediction-lock log that will accompany every red-team case you collect, providing the verifiable provenance that proves YOU did the analysis (not the AI you're using to help analyze).
+**Preview of next chapter:** Chapter 7 brings fairness into the casebook: you'll work through the impossibility theorem on YOUR agent and produce a defended fairness-metric choice with the values claim made explicit. (An earlier version of this preview pointed to the Frictional-journal setup — the prediction-lock log accompanying every red-team case — [verify-xref: Frictional Method chapter cut].)
 
 ---
 

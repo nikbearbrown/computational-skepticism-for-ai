@@ -1,12 +1,6 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/11-communicating-uncertainty.md into original; scaffolding preserved. For human rewrite. Note: draft is numbered Ch 11, original is Ch 12 — resolve chapter number on rewrite. RENUMBERED 2026-07-02: file and H1 now Chapter 11 (13-chapter order per RENUMBERING.md). -->
+<!-- CHAPTERIZED 2026-07-02: TL;DR removed, exercises merged, bridges/prereqs updated to 13-chapter order. Rough draft for hand-rewrite; [verify]/[verify-xref] flags preserved. -->
 
 # Chapter 11 — Communicating Uncertainty: Calibrating Claims to Evidence
-
-## TL;DR
-
-- The Verb Is Doing Epistemic Work You Are Not Noticing.
-- The chapter moves through The verb taxonomy, Two readers, one document, Metrics and measures of trust calibration, The Brier score: a proper scoring rule, and related ideas.
-- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
 
 *The Verb Is Doing Epistemic Work You Are Not Noticing.*
 
@@ -22,7 +16,7 @@ Three sentences. The numbers never changed. What changed was the verb — *concl
 
 Engineers default to sentence A. They do it without noticing, because the verb feels like grammar rather than a claim. But it *is* a claim. Engineering papers are full of conclusions stated more strongly than the evidence permits. This is not malicious. It is mostly inattention to a particular kind of calibration — the calibration of the *verb* of a claim to the evidence the claim is built on. The verb is doing real epistemic work, and most engineering writers do not notice the verb at all.
 
-This is where I want you to feel the shape of the whole book pressing in. Computational skepticism is the collision of two things: AI's speed at *producing* claims, and the irreducibly human work of *doubting* them. A model can draft a validation paragraph in a second; deciding whether the verb in that paragraph is licensed by the evidence is not something the model does for you, and it is not something you can hand back to it. Calibrating that verb — downgrading it when the evidence is thinner than the verb implies — is, in my experience, the single most operationally useful skill in communicating a validation finding. And it runs in two directions that turn out to be the same skill: **build** — calibrate the verbs in a report *you* write, mapping every claim to its proof — and **audit** — downgrade the verbs in an AI-written claim that someone hands you. Same instrument, two hands. That build/audit pairing is one of the supervisory capacities this book keeps circling back to, and this chapter is the one where the capacity is *communicating validation findings in prose*.
+This is the pairing Chapter 1 committed us to — the machine's speed at producing claims, your doubt about them — arriving in prose. A model can draft a validation paragraph in a second; deciding whether the verb in that paragraph is licensed by the evidence is not something the model does for you, and it is not something you can hand back to it. Calibrating that verb — downgrading it when the evidence is thinner than the verb implies — is, in my experience, the single most operationally useful skill in communicating a validation finding. And it runs in two directions that turn out to be the same skill: **build** — calibrate the verbs in a report *you* write, mapping every claim to its proof — and **audit** — downgrade the verbs in an AI-written claim that someone hands you. Same instrument, two hands. That build/audit pairing is one of the supervisory capacities this book keeps circling back to, and this chapter is the one where the capacity is *communicating validation findings in prose*.
 
 The fix is a taxonomy. We are going to build it now.
 
@@ -115,8 +109,8 @@ The layered approach is harder to write than two separate documents. It is easie
 
 Layer 1 is not "dumbed down." Dumbing down is condescending and loses information. Layer 1 is a specific, careful, accurate summary in plain English. Plain English is *harder* to write than jargon — and here is why that matters for this chapter specifically: jargon lets you hide an un-calibrated verb behind a technical term. "The model achieves state-of-the-art calibration" hides the *conclude*-strength verb inside a phrase that sounds like measurement. Forced into plain English, the verb has nowhere to hide. The technical reader benefits from Layer 1 as much as the non-technical reader does — it forces the writer to articulate what the section is really doing, which is sometimes a useful discovery for the writer. The layered document also beats keeping two separate documents, because two documents drift, and every translation between them is a fresh chance to lose the nuance the calibration was protecting.
 
-![Layered document structure ](images/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-01.png)
-*Figure 12.1 — Layered document structure *
+![Layered document structure ](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-01.png)
+*Figure 11.1 — Layered document structure *
 
 ---
 
@@ -146,8 +140,8 @@ where $\overline{y}$ is the base rate of positive outcomes, REL is the resolutio
 
 For example: a model with a low Brier score but poor resolution is one that is well-calibrated but predicts close to the base rate for every instance — it is honest about uncertainty but useless for triage. A model with high resolution but poor calibration is one that discriminates well but whose probabilities are misleading — it ranks cases correctly but the absolute numbers cannot be trusted.
 
-![The Brier score collapse hides which of the three components is driving the number. Always decompose.](images/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-02.png)
-*Figure 12.2 — Brier score decomposition *
+![The Brier score collapse hides which of the three components is driving the number. Always decompose.](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-02.png)
+*Figure 11.2 — Brier score decomposition *
 
 ### Expected Calibration Error: binning the predictions
 
@@ -178,8 +172,8 @@ The shape of the deviation is diagnostic:
 - **Sigmoidal pattern**: overconfident at the extremes, underconfident in the middle. Common in gradient-boosted tree models.
 - **Well-calibrated in aggregate but locally miscalibrated**: the aggregate reliability diagram looks good, but specific subpopulations or confidence ranges show large deviations. This is the failure mode that aggregate metrics miss entirely.
 
-![The shape of the deviation from the diagonal tells you what kind of miscalibration you have. The aggregate ECE does not.](images/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-03.png)
-*Figure 12.3 — Four reliability diagrams in a 2×2 grid*
+![The shape of the deviation from the diagonal tells you what kind of miscalibration you have. The aggregate ECE does not.](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-03.png)
+*Figure 11.3 — Four reliability diagrams in a 2×2 grid*
 
 ### Subgroup calibration: where aggregate metrics lie
 
@@ -224,8 +218,8 @@ The Platt scaling and isotonic regression alternatives offer more flexibility at
 
 None of these methods address distribution shift. When the deployment population differs from the calibration population — which is the normal situation for a model deployed across multiple sites, over time, or on a population with different demographics — post-hoc calibration on historical data is not a calibration guarantee for the current deployment.
 
-![Temperature scaling corrects the symptom. It does not transfer across distribution shift.](images/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-04.png)
-*Figure 12.4 — Temperature scaling effect diagram *
+![Temperature scaling corrects the symptom. It does not transfer across distribution shift.](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-04.png)
+*Figure 11.4 — Temperature scaling effect diagram *
 
 ### From calibration metrics to trust claims
 
@@ -279,8 +273,8 @@ Distribution shift breaks the exchangeability assumption. When the deployment po
 
 The verb warranted by conformal coverage: *prove* — but only for the exchangeability-holding case. When deployment involves distribution shift, *show* is the strongest defensible verb, with the assumption explicitly documented. (Angelopoulos and Bates, 2021, is the accessible introduction; Vovk, Gammerman, and Shafer, 2005, is the foundation.)
 
-![Conformal prediction proves the guarantee holds under exchangeability. Distribution shift is not exchangeability.](images/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-05.png)
-*Figure 12.5 — Conformal prediction mechanism *
+![Conformal prediction proves the guarantee holds under exchangeability. Distribution shift is not exchangeability.](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-05.png)
+*Figure 11.5 — Conformal prediction mechanism *
 
 ### What calibration metrics cannot see
 
@@ -363,8 +357,8 @@ In practice, downgrading verbs in AI output is one of the highest-leverage editi
 
 One honest caveat, because "only the posture changes" is itself a slight over-claim: verbs carry action-warrant. Downgrading *conclude* to *suggest* can change a deployment decision, because someone reading *conclude* would ship and someone reading *suggest* would ask for another study. When the downgrade changes an action, that is not the taxonomy failing — that is the taxonomy earning its keep. The fluency trap was about to cost you a decision, and the verb caught it.
 
-![AI-generated paragraph ](images/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-06.png)
-*Figure 12.6 — AI-generated paragraph *
+![AI-generated paragraph ](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-06.png)
+*Figure 11.6 — AI-generated paragraph *
 
 ---
 
@@ -380,7 +374,7 @@ The pivotal move is to write for the adversarial reviewer. Not to defeat them. T
 
 ---
 
-## Glimmer 12.1 — The peer critique as collective synthesis
+## Glimmer 11.1 — The peer critique as collective synthesis
 
 A Glimmer is a longer, higher-stakes exercise. This one is the operational form of the cohort-as-validation-infrastructure claim.
 
@@ -410,7 +404,7 @@ Peer critique is collective validation infrastructure, structurally necessary be
 
 This chapter is the second half of the communication act. The previous chapter fought the misleading *chart* — the truncated axis, the tilted color. This one fights the misleading *verb*, and the verb is harder, because there is no axis to truncate and no color to tilt. There is just the word, quietly claiming more than the evidence gave it. Together the two chapters are the supervisory capacity for *communicating validation findings*, which is, structurally, where validation work meets its readers.
 
-The next chapter pivots. We have validated a system, mapped our delegation, communicated the findings. But when a system fails — and our validation missed it — *who is responsible?* That question is the next chapter, and it is where the counterfactual we opened earlier closes. The accountability question has been hanging over the book since Chapter 1. We are about to give it the answer the book can give.
+The next chapter pivots. We have validated a system, mapped our delegation, communicated the findings. But when a system fails — and our validation missed it — *who is responsible?* That question is the next chapter, and it is where the counterfactual the book opened in Chapter 4 — Pearl's Rung 3 — finally closes. The accountability question has been hanging over the book since Chapter 1. We are about to give it the answer the book can give.
 
 ---
 

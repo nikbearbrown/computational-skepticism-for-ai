@@ -1,12 +1,6 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/12-accountability-who-signs-the-gate.md into original; scaffolding preserved. For human rewrite. NOTE: source draft is numbered Ch.12 "Who Signs the Gate" — if the attestation framing becomes the spine, consider adopting the "Who Signs the Gate" subtitle and reconciling chapter numbering. RENUMBERED 2026-07-02: file and H1 now Chapter 12 (13-chapter order per RENUMBERING.md). -->
+<!-- CHAPTERIZED 2026-07-02: TL;DR removed, exercises merged, bridges/prereqs updated to 13-chapter order. Rough draft for hand-rewrite; [verify]/[verify-xref] flags preserved. -->
 
 # Chapter 12 — Accountability: Who Is Responsible When the System Fails?
-
-## TL;DR
-
-- I want to put a case in front of you.
-- The chapter moves through Why humans must be in the loop: the cognitive argument, AI as extended mind: what the capacities actually are, The seven-tier taxonomy, The Gödel argument, and related ideas.
-- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
 
 *Responsibility distributes. So does the work of building systems that can be held to account.*
 
@@ -46,8 +40,8 @@ But before we get to governance and regulation, there is a prior question — on
 
 The answer is cognitive. Specifically, it is about what kinds of cognitive work the accountability apparatus actually requires — and whether those kinds of work are ones AI systems can perform.
 
-![None of these nodes, in isolation, produced the failure. Each was necessary. None was sufficient.](images/13-accountability-who-is-responsible-when-the-system-fails-fig-01.png)
-*Figure 13.1 — Figure 13*
+![None of these nodes, in isolation, produced the failure. Each was necessary. None was sufficient.](images/12-accountability-who-is-responsible-when-the-system-fails-fig-01.png)
+*Figure 12.1 — Figure 13*
 
 ---
 
@@ -80,8 +74,8 @@ There is a way of thinking about cognitive tools that goes back further than AI.
 
 AI is the latest entry in this series, and by far the most powerful. The question that matters for accountability is not whether AI can extend human cognition — it plainly can — but which cognitive operations it extends, which it simulates without performing, and which it cannot touch regardless of scale. Getting that map right is what makes the accountability argument structural rather than contingent.
 
-![Nobody worried that the microscope would replace the scientist. The question is whether we are being equally clear about what AI does and does not extend.](images/13-accountability-who-is-responsible-when-the-system-fails-fig-02.png)
-*Figure 13.2 — The cognitive extension lineage *
+![Nobody worried that the microscope would replace the scientist. The question is whether we are being equally clear about what AI does and does not extend.](images/12-accountability-who-is-responsible-when-the-system-fails-fig-02.png)
+*Figure 12.2 — The cognitive extension lineage *
 
 Let me take the capacities one at a time.
 
@@ -107,8 +101,8 @@ Let me take the capacities one at a time.
 
 Each capacity tells a version of the same story. Where AI is strong — pattern recognition, semantic memory, statistical language, metric navigation, constrained planning — it extends human cognitive reach in exactly the way that writing extended memory or the microscope extended perception. The extended mind is more capable than the unextended one. Where AI is weak or absent — episodic memory, genuine metacognition, calibrated self-awareness, collective practice, stakes — the capacity in question is not one that can be extended by adding more computation. It requires a different kind of thing: an agent with a history, with commitments, with the possibility of loss.
 
-![The capacities AI extends are the capacities that can be formalized. The capacities it cannot extend are the ones that require a subject — an agent with history, commitments, and the possibility of loss. Those are precisely the capacities accountability requires.](images/13-accountability-who-is-responsible-when-the-system-fails-fig-03.png)
-*Figure 13.3 — Two-axis diagram of AI cognitive capacity*
+![The capacities AI extends are the capacities that can be formalized. The capacities it cannot extend are the ones that require a subject — an agent with history, commitments, and the possibility of loss. Those are precisely the capacities accountability requires.](images/12-accountability-who-is-responsible-when-the-system-fails-fig-03.png)
+*Figure 12.3 — Two-axis diagram of AI cognitive capacity*
 
 The accountability apparatus is built from both kinds of capacity. The specification, the audit trail, the recourse mechanism, the independent review, the sanctions — each draws on the second kind. The *Irreducibly Human* taxonomy organizes this observation into a structure you can use.
 
@@ -187,8 +181,8 @@ Every high-stakes validation system humans have built — clinical trials, aircr
 
 The plausibility auditor — the profession that the automated research vision forgot to invent — is not a fact-checker or a quality assurance technician. It is someone trained to stand outside sophisticated AI outputs and ask whether those outputs correspond to reality rather than merely to internal consistency. This requires two forms of expertise that current training pipelines do not produce together: deep domain knowledge sufficient to recognize when a result is subtly wrong, and knowledge of AI failure modes sufficient to know which kind of error to hunt. That combination is Tier 4 and Tier 5 work. No AI system operating at Tier 1 can substitute for it.
 
-![Figure 13](images/13-accountability-who-is-responsible-when-the-system-fails-fig-04.png)
-*Figure 13.4 — Figure 13*
+![Figure 13](images/12-accountability-who-is-responsible-when-the-system-fails-fig-04.png)
+*Figure 12.4 — Figure 13*
 
 ---
 
@@ -289,11 +283,7 @@ An honest attestation has four parts.
 
 The reason part 2 is the heart of it: an attestation that lists only what you tested reads like a clean bill of health, and a clean bill of health is exactly what the affected party cannot act on when the untested region is where the harm lives. The value of the document is in its *declared limits*. A regulator or an adoption committee reading it should be able to see what the validation does and does not warrant — not buried in fine print, but as the product itself. This is the Tier 4 metacognitive move made concrete: separating what you know from what you merely produced.
 
-Now the build/audit pairing, because this is how you learn to write one honestly. There are two versions of the exercise, and they expose different failure modes.
-
-**BUILD (the hard part is signing off on the output you want to believe).** For your own project's most recent build, write the attestation. Four parts. Force yourself, in part 2, to name at least three things you did not test — and for each, say whether you skipped it because it was out of scope (say why) or because you ran out of time (say so). Sign it with a named role. The discomfort you feel writing part 2 honestly is the ownership bias this pass is designed to expose: you want to sign a clean bill because *you made the thing*. The attestation is the instrument that makes you say what the clean bill would hide.
-
-**AUDIT (the hard part is reconstructing who should have signed when nobody did).** Now take a system that failed and that you did *not* build: the **Epic Sepsis Model**. It was a proprietary early-warning tool for sepsis, deployed widely across hospitals, whose independent real-world validation found it performed substantially worse than its marketed accuracy — missing a large fraction of sepsis cases while generating a heavy alert burden (Wong et al., "External Validation of a Widely Implemented Proprietary Sepsis Prediction Model in Hospitalized Patients," *JAMA Internal Medicine*, 2021, doi:10.1001/jamainternmed.2021.2626). \[verify: specific sensitivity and alert-burden figures against the paper before quoting numbers.\] Its failure is instructive precisely because so many parties *could* have signed a gate, and the ones who signed were not answerable to the patients. Reconstruct the accountability distribution: the vendor who trained and marketed it, the health systems that deployed it against their own populations without independent local validation, the clinicians who accepted its flags, and the absent independent reviewer. Then answer the chapter's question directly: **who should have signed the gate, and what should their attestation have said about what was NOT tested?** The answer that matters is the one about independent *local* validation — the review that was structurally external, the review nobody was required to perform, the gate nobody signed because the regime did not demand a signature.
+The way you learn to write one honestly is the build/audit pairing: write the attestation for something you built, then reconstruct the attestation nobody wrote for a system that failed. The two passes expose different failure modes — signing off on the output you want to believe, and reconstructing who should have signed when nobody did. Both live in the exercises: the build at Synthesis (S4), the audit at Challenge (C3).
 
 ---
 
@@ -344,8 +334,8 @@ This is what Rung 3 looks like in its governance form. The counterfactual lives 
 
 For a working engineer, this is liberating. *Most catastrophic AI failures are not algorithmic failures.* They are regime failures, and the regime is changeable in ways the algorithm often is not. The supervisory work — the work this book has been training — extends through the regime. This is the chapter where that extension becomes explicit.
 
-![The standard treatment stops at Rung 2. The closure is at Rung 3, and it requires a human.](images/13-accountability-who-is-responsible-when-the-system-fails-fig-05.png)
-*Figure 13.5 — Figure 13*
+![The standard treatment stops at Rung 2. The closure is at Rung 3, and it requires a human.](images/12-accountability-who-is-responsible-when-the-system-fails-fig-05.png)
+*Figure 12.5 — Figure 13*
 
 ---
 
@@ -365,8 +355,8 @@ The *Irreducibly Human* framing adds a layer to this: the AI Use Disclosure is a
 
 For our chapter's question — who is responsible? — generative AI complicates the topology. Responsibility extends through training data, training procedure, deployment configuration, and downstream propagation. The list of parties extends. The distribution flattens. The governance counterfactual has more variables.
 
-![Generative vs](images/13-accountability-who-is-responsible-when-the-system-fails-fig-06.png)
-*Figure 13.6 — Generative vs*
+![Generative vs](images/12-accountability-who-is-responsible-when-the-system-fails-fig-06.png)
+*Figure 12.6 — Generative vs*
 
 ---
 
@@ -406,8 +396,8 @@ The *Irreducibly Human* framing adds a dimension to this structural claim: the r
 
 The automated researcher will produce more outputs of greater sophistication across more domains than any previous generation of scientific tools. Each of those outputs will be a candidate. Each candidate will require validation. The validation will require humans. Not because we cannot imagine systems smart enough to evaluate the outputs, but because the evaluation's credibility depends on the evaluator's accountability, and accountability requires the possibility of consequence.
 
-![This is the profession the accountability apparatus requires. It has not been built.](images/13-accountability-who-is-responsible-when-the-system-fails-fig-07.png)
-*Figure 13.7 — The plausibility auditor profile*
+![This is the profession the accountability apparatus requires. It has not been built.](images/12-accountability-who-is-responsible-when-the-system-fails-fig-07.png)
+*Figure 12.7 — The plausibility auditor profile*
 
 ---
 
@@ -447,7 +437,7 @@ The second thing that would change my mind: if a Tier 4 or Tier 5 AI capability 
 
 ### Glimmers
 
-**Glimmer 13.1 — The governance counterfactual**
+**Glimmer 12.1 — The governance counterfactual**
 
 1. Take a documented AI failure with sufficient detail to reconstruct the regime under which it occurred. Candidate cases: the COMPAS deployment in Broward County (Chapters 6, 7); the Apple Card credit-limit case (Chapter 6); the Dutch SyRI welfare-fraud case, struck down by The Hague District Court in 2020 (NJCM c.s. v. The Netherlands, ECLI:NL:RBDHA:2020:865); a case at your own institution if you know one with sufficient documentation. *Agents of Chaos* §16 provides full detail for agentic cases.
 2. Document the regime: the specifications, audit trail provisions, recourse mechanisms, independent review status, and sanction structure that were actually in place at the time of the failure. Be specific. If a component was absent, document that.
@@ -504,6 +494,8 @@ For each absent requirement, also identify which cognitive tier a proper impleme
 
 **S3.** The chapter argues that the plausibility auditor is a profession that has not been built. Using the tier taxonomy, write a job description for the plausibility auditor role. What domain expertise is required? What AI-failure-mode literacy is required? Which tiers must the role exercise, and what does exercising each tier look like in practice? What would distinguish a plausibility auditor who is genuinely performing Tier 4–5 work from one who is performing Tier 1 work while appearing to do more?
 
+**S4.** *(Build.)* For your own project's most recent build, write the attestation from the chapter's gate section. Four parts. Force yourself, in part 2, to name at least three things you did not test — and for each, say whether you skipped it because it was out of scope (say why) or because you ran out of time (say so). Sign it with a named role. The discomfort you feel writing part 2 honestly is the ownership bias this pass is designed to expose: you want to sign a clean bill because *you made the thing*. The attestation is the instrument that makes you say what the clean bill would hide.
+
 ---
 
 ### Challenge
@@ -512,7 +504,7 @@ For each absent requirement, also identify which cognitive tier a proper impleme
 
 **C2.** The chapter makes a structural claim: responsibility distributes because the *systems* are distributed, and a different architecture would distribute responsibility differently. Evaluate this claim against a specific architectural alternative — for example, strict liability for deploying organizations, or required vertical integration of model provider and deployer. For your chosen alternative: what would the responsibility topology look like? What incentives would it produce? What cognitive tiers would the alternative architecture concentrate, and what new failure modes might it generate? Does it actually solve the distribution problem, or does it relocate it?
 
-**C3.** The **Epic Sepsis Model** (Wong et al., 2021) failed after wide deployment. Build the full accountability audit: distribute responsibility across vendor, deploying health systems, clinicians, and the absent independent reviewer. Then write the attestation *you* would have required before deployment — including, in the "what was NOT tested" section, the independent local validation that was never performed. State who should have signed each gate, and what specific signal would have triggered a refusal to sign. This integrates the distribution method, the five requirements, and the attestation artifact into one deliverable.
+**C3.** *(Audit.)* Take a system that failed and that you did *not* build: the **Epic Sepsis Model**. It was a proprietary early-warning tool for sepsis, deployed widely across hospitals, whose independent real-world validation found it performed substantially worse than its marketed accuracy — missing a large fraction of sepsis cases while generating a heavy alert burden (Wong et al., "External Validation of a Widely Implemented Proprietary Sepsis Prediction Model in Hospitalized Patients," *JAMA Internal Medicine*, 2021, doi:10.1001/jamainternmed.2021.2626). \[verify: specific sensitivity and alert-burden figures against the paper before quoting numbers.\] Its failure is instructive precisely because so many parties *could* have signed a gate, and the ones who signed were not answerable to the patients. Build the full accountability audit: distribute responsibility across the vendor who trained and marketed it, the health systems that deployed it against their own populations without independent local validation, the clinicians who accepted its flags, and the absent independent reviewer. Then write the attestation *you* would have required before deployment — including, in the "what was NOT tested" section, the independent local validation that was never performed. State who should have signed each gate, and what specific signal would have triggered a refusal to sign. The answer that matters is the one about independent *local* validation — the review that was structurally external, the review nobody was required to perform, the gate nobody signed because the regime did not demand a signature. This integrates the distribution method, the five requirements, and the attestation artifact into one deliverable.
 
 ---
 

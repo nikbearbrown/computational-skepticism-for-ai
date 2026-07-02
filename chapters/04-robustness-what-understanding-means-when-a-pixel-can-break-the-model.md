@@ -1,13 +1,6 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/04-robustness.md into original; scaffolding preserved. For human rewrite. RENUMBERED 2026-07-02: file and H1 now Chapter 4 (13-chapter order per RENUMBERING.md). -->
-<!-- Note: original draft numbered this "Chapter 4" and pointed the governance counterfactual forward to "Chapter 12"; original chapter numbering (Chapter 8, forward ref to Chapter 13) preserved throughout. -->
+<!-- CHAPTERIZED 2026-07-02: TL;DR removed, exercises merged, bridges/prereqs updated to 13-chapter order. Rough draft for hand-rewrite; [verify]/[verify-xref] flags preserved. -->
 
 # Chapter 4 — Robustness: What "Understanding" Means When a Pixel Can Break the Model
-
-## TL;DR
-
-- You will practice Distinguish between "the model is fragile" and "the model learned a proxy instead of the human-relevant feature," and explain why the distinction changes the engineering response; Explain the linearity hypothesis and boundary-tilting perspective as competing geometric accounts of why adversarial examples exist; Describe the structure of gradient-based, transfer, and patch attacks, and explain why each targets a different level of the model's learned representation.
-- The chapter moves through Learning objectives, Prerequisites, Why this chapter, The panda becomes a gibbon, and related ideas.
-- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
 
 *The model is not fragile. The model is honest about what it learned.*
 
@@ -26,7 +19,7 @@ By the end of this chapter, you will be able to:
 
 ## Prerequisites
 
-Chapters 2–3 and 5–7 [verify-xref: Frictional Method chapter cut]. Chapter 2's distribution shift framing returns directly. Chapter 2's calibration material is extended at the end. Pearl's Ladder (introduced earlier) is extended to Rung 3. Familiarity with basic gradient descent is helpful for understanding how adversarial perturbations are computed, but not required for the chapter's main arguments.
+Chapters 2–3 [verify-xref: Frictional Method chapter cut]. Chapter 2's distribution shift framing returns directly, and its calibration material is extended at the end. This chapter sketches Pearl's Ladder itself and opens its third rung; Chapter 6 returns to the ladder from the other side, working Rungs 1 and 2 in detail through the bias taxonomy. Chapters 5–7 are not assumed — Chapter 5 returns to the gap between the model's internal accounting and the world from the explanation side, and Chapter 7 picks up the fairness thread. Familiarity with basic gradient descent is helpful for understanding how adversarial perturbations are computed, but not required for the chapter's main arguments.
 
 ---
 
@@ -46,10 +39,10 @@ Now I'm going to show you the second picture. To your eyes, it is the same pictu
 
 The classifier looks at the second picture and reports, with even higher confidence, "gibbon." [Verify: Goodfellow, Shlens, and Szegedy, *Explaining and Harnessing Adversarial Examples*, ICLR 2015, arXiv:1412.6572 — the panda→gibbon example is Figure 1. The arXiv preprint is dated December 2014; the canonical ICLR publication is 2015; cite as 2014/2015 if you need both.]
 
-Now suppose someone hands you this same classifier with a benchmark score of 94% and calls it robust. The score looks *done*. What it does not announce is which 94% — robust against what, measured how, at what perturbation budget — and, underneath that, the thing the panda just revealed: the model and you were never making the same kind of judgment. You just thought you were. This is where computational skepticism earns its name. The models move at machine speed and machine scale; the doubt that keeps them honest is still irreducibly human. This chapter points one human supervisory capacity — call it *plausibility auditing* — at exactly that gap: hearing the wrong note in a model that scores well, and locating the fragility before it locates you.
+Now suppose someone hands you this same classifier with a benchmark score of 94% and calls it robust. The score looks *done*. What it does not announce is which 94% — robust against what, measured how, at what perturbation budget — and, underneath that, the thing the panda just revealed: the model and you were never making the same kind of judgment. You just thought you were. This is where computational skepticism earns its name — the pairing Chapter 1 committed us to: the machine's speed, your doubt. This chapter points one of Chapter 1's supervisory capacities — plausibility auditing — at exactly that gap: hearing the wrong note in a model that scores well, and locating the fragility before it locates you.
 
-![The perturbation is invisble to the human eye. The model's output has flipped to full confidence on the wrong class. The panda has not moved. Something else changed — the high-frequency statistical signature the model was actually using to classify.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-01.png)
-*Figure 8.1 — Comparison*
+![The perturbation is invisble to the human eye. The model's output has flipped to full confidence on the wrong class. The panda has not moved. Something else changed — the high-frequency statistical signature the model was actually using to classify.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-01.png)
+*Figure 4.1 — Comparison*
 
 I want you to sit with this for a moment, because the natural reaction is the wrong reaction. The natural reaction is to think *the model is broken*, or *the model is brittle*, or *we need to add more training data*. None of those reactions is exactly wrong, but all of them miss the size of what just happened. What happened is that a system which the engineers thought was looking at images of pandas and identifying pandas turned out to be looking at *something else* — something which, on the training set, correlated very nicely with images of pandas, but which can be flipped to "gibbon" by a perturbation that leaves the panda completely untouched.
 
@@ -71,8 +64,8 @@ The literature has, over about a decade now, slowly converged on this. Earlier p
 
 I want to be honest about a tension my own chapter title glosses. Calling the model "honest about what it learned" is a good line, and it quietly smuggles in a fact-of-the-matter about "what the model learned" that the non-robust-features debate has not settled. If non-robust features are partly artifacts of the *supervised* training objective — and models trained with self-supervised objectives show weaker versions of these patterns — then "what the model learned" is partly a property of the training regime, not a fixed thing the model is being honest about. So read the metaphor precisely: the model is honest about *what this training produced*, not about a stable truth of the world. That distinction is load-bearing when we reach the trade-off at the end of the chapter.
 
-![These are different diagnoses. The fragile framing leads to surface hardening. The proxy framing leads to representation interrogation. The toolkit changes depending on which framing you start from.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-02.png)
-*Figure 8.2 — Two-column comparison diagram*
+![These are different diagnoses. The fragile framing leads to surface hardening. The proxy framing leads to representation interrogation. The toolkit changes depending on which framing you start from.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-02.png)
+*Figure 4.2 — Two-column comparison diagram*
 
 So when I say "robustness" in this chapter, I am not asking the engineering question — *how do we patch this?* I am asking the supervisory question: *what does the model's response to adversarial inputs tell me about what the model actually learned, and how does that compare to what I thought it was learning?* The patch is a downstream concern. The diagnosis is the upstream one.
 
@@ -92,8 +85,8 @@ $$\Delta f = w^T \delta = \epsilon \sum_i |w_i| = \epsilon \|w\|_1$$
 
 Neural networks are not purely linear, but the ReLU activations that dominate practical architectures are piecewise linear. The linearity hypothesis says: the same high-dimensional accumulation effect operates in the locally linear pieces of the network's loss landscape. Compute the gradient of the loss with respect to the input, step in the direction that increases loss, and you have found a direction in which the network is vulnerable.
 
-![The linearity hypothesis: in high dimensions, the same tiny push repeated across thousands of coordinates accumulates into a decisive activation change. The perturbation is imperceptible per-coordinate. The accumulated shift is not.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-03.png)
-*Figure 8.3 — Two diagrams side by side, sharing a common*
+![The linearity hypothesis: in high dimensions, the same tiny push repeated across thousands of coordinates accumulates into a decisive activation change. The perturbation is imperceptible per-coordinate. The accumulated shift is not.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-03.png)
+*Figure 4.3 — Two diagrams side by side, sharing a common*
 
 ### The boundary-tilting perspective
 
@@ -103,8 +96,8 @@ Their explanation: adversarial examples arise when the decision boundary is *til
 
 This is a more structural explanation. It says adversarial examples are a symptom of the model's failure to regularize its decision boundary in all relevant directions — and, more specifically, that the boundaries were poorly constrained in the directions that didn't matter much during training but do matter during deployment when an attacker is present.
 
-![Boundary tilting: the model was well-trained along the high-variance directions, but the boundary is nearly tangent to the data manifold in low-variance directions. An adversarial perturbation targets the gap the training data never forced the model to close.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-04.png)
-*Figure 8.4 — A 2D data diagram*
+![Boundary tilting: the model was well-trained along the high-variance directions, but the boundary is nearly tangent to the data manifold in low-variance directions. An adversarial perturbation targets the gap the training data never forced the model to close.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-04.png)
+*Figure 4.4 — A 2D data diagram*
 
 Neither account is complete on its own. But together they give you a working intuition, and it is the intuition you carry into a domain you have not seen: adversarial perturbations are not magic. They are gradient-guided searches for the directions in input space where the model is least stable — which are usually the directions where the training data gave the least supervision.
 
@@ -141,8 +134,8 @@ We met something like this in Chapter 2, although I called it by a different nam
 
 Adversarial perturbations are a kind of distribution shift, but a peculiar one. They are not natural drift — the world has not changed. They are *constructed*. Somebody, or some procedure, has deliberately built an input that lives in a third distribution, designed to maximize the gap between the model's prediction and the true label. The construction is mathematical: follow the gradient of the model's loss with respect to its input, take a small step in the direction that increases loss the most, repeat. The resulting input is, by construction, the worst-case input within whatever budget you allowed yourself.
 
-![These are not the same risk. A robust model needs to account for both axes separately. Neither robustness against adversarial attack nor robustness against distribution shift guarantees robustness against the other.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-05.png)
-*Figure 8.5 — A 2D input space diagram with three overlapping*
+![These are not the same risk. A robust model needs to account for both axes separately. Neither robustness against adversarial attack nor robustness against distribution shift guarantees robustness against the other.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-05.png)
+*Figure 4.5 — A 2D input space diagram with three overlapping*
 
 Now: how related is the model's behavior on worst-case adversarial inputs to its behavior on naturally occurring distribution shifts? You might hope they are tightly related — that an adversarially robust model is robust generally. The honest answer is *somewhat, but not as much as you'd like*. A model can be highly robust against constructed perturbations and still brittle when the world's distribution drifts naturally. A model can be brittle against constructed perturbations and survive certain natural shifts gracefully.
 
@@ -179,8 +172,8 @@ where $\Pi_{B_\epsilon(x)}$ projects back into the $\epsilon$-ball around the or
 
 The accuracy–robustness trade-off is well documented and has now been quantified by scaling law studies. Now the load-bearing claim, and I am going to be careful with it because the chapter's headline conclusion rests on it. A 2024 scaling-law study by Bartoldson and colleagues found that while larger models and more data improve robustness, the gains follow a power-law relationship with diminishing returns: on CIFAR-10, $L_\infty$ robustness slowly grows and then plateaus around 90%. And here is the crucial detail — human accuracy on the fooling set *also* plateaus near 90%, because at the perturbation budgets used in standard $L_\infty$ evaluation the perturbed images begin to genuinely look like the target class, or become invalid for their original label. You have hit the ceiling of what is semantically possible. That 90% plateau, and the semantic reason for it, is confirmed in the source. The reference figure that reaching human-level robustness by scale alone would require compute on the order of $10^{30}$ FLOPs I could **not** confirm in the paper's abstract — treat it as **[verify]** and locate it in the paper body before quoting it. The structural conclusion survives the hedge: the ceiling is governed by the *semantics of the perturbation budget*, and scale alone cannot cross a semantic limit. [Verify: Bartoldson, Diffenderfer, Parasyris, Kailkhura, *Adversarial Robustness Limits via Scaling-Law and Human-Alignment Studies*, ICML 2024, arXiv:2404.09349 — the 90% plateau and its semantic cause are confirmed in the abstract; the $10^{30}$-FLOPs figure is not.]
 
-![The accuracy–robustness trade-off is not an artifact of insufficient compute. The ceiling is governed by the semantics of the perturbation budget: at some ε, perturbed images genuinely look like the target class to human eyes. Scale alone cannot cross this limit.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-06.png)
-*Figure 8.6 — Line chart *
+![The accuracy–robustness trade-off is not an artifact of insufficient compute. The ceiling is governed by the semantics of the perturbation budget: at some ε, perturbed images genuinely look like the target class to human eyes. Scale alone cannot cross this limit.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-06.png)
+*Figure 4.6 — Line chart *
 
 ### Certified defenses — what "guaranteed" means and costs
 
@@ -192,8 +185,8 @@ The certification result: if class $c_A$ has sufficiently higher probability tha
 
 The practical limits are severe. Certifying each prediction requires thousands of Monte Carlo samples — running the base classifier thousands of times with different noise samples and aggregating. High $\sigma$ produces large certified radii but heavily degrades clean accuracy, because the classifier must operate on heavily blurred inputs. And in high-dimensional input spaces, the certified radius shrinks as dimensionality grows: the noise needed to smooth out perturbations simultaneously obscures the signal needed to classify correctly.
 
-![The classifier votes by majority across thousands of noisy versions of the input.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-07.png)
-*Figure 8.7 — Diagram*
+![The classifier votes by majority across thousands of noisy versions of the input.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-07.png)
+*Figure 4.7 — Diagram*
 
 ### Lipschitz constraints and verifiable-by-design architectures
 
@@ -207,8 +200,8 @@ Formal verification tools answer a yes/no question: does this model satisfy this
 
 Formal verification is the strongest tool in the toolkit precisely because its guarantees are absolute within scope. The scope is narrow. For deployment decisions, knowing that a model satisfies a specific narrow property with certainty is sometimes worth more than knowing it satisfies a broad property empirically most of the time.
 
-![Verification is the strongest tool in the toolkit. Its scope has expanded dramatically. The gap between what it can verify and what practitioners need to verify is still large.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-08.png)
-*Figure 8.8 — Verification generation timeline *
+![Verification is the strongest tool in the toolkit. Its scope has expanded dramatically. The gap between what it can verify and what practitioners need to verify is still large.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-08.png)
+*Figure 4.8 — Verification generation timeline *
 
 ---
 
@@ -222,8 +215,8 @@ Supervised learning, minimizing a cross-entropy loss, does not distinguish betwe
 
 Adversarial perturbations then become something cleaner than "noise" — they are *deliberate manipulations of non-robust features*, moving them in the direction of a different class while leaving the robust features unchanged. The panda's shape, posture, and coloring remain. The high-frequency statistical signature shifts toward the gibbon's statistical signature. The model reports "gibbon" because it placed more weight on the statistical signature than on the shape.
 
-![Supervised loss cannot distinguish between these feature types. It bets on whichever is more predictive. Non-robust features often win that bet — and adversarial perturbations exploit that win.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-09.png)
-*Figure 8.9 — Feature decomposition diagram for a panda image*
+![Supervised loss cannot distinguish between these feature types. It bets on whichever is more predictive. Non-robust features often win that bet — and adversarial perturbations exploit that win.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-09.png)
+*Figure 4.9 — Feature decomposition diagram for a panda image*
 
 The contested extension: some researchers proposed that if you could train a model *only* on robust features, adversarial vulnerability would disappear. This turns out to be too simple. Models trained on "robust datasets" (datasets from which non-robust features have been removed) still exhibit adversarial vulnerability under sophisticated attacks like AutoAttack. And models trained with self-supervised objectives rather than supervised classification do not show the same sharp non-robust feature patterns, suggesting these features are specific to the supervised-classification regime rather than universal. [Verify: status of "features not bugs" debate, 2023–2025.]
 
@@ -270,8 +263,8 @@ Four factors reduce prompt sensitivity in practice: supervised fine-tuning on di
 
 For agentic deployments, prompt sensitivity is not merely a quality concern — it is a safety concern. An agent that behaves differently when instructions are phrased emotionally versus neutrally, or formally versus casually, cannot reliably follow instructions across the range of real-world phrasing. A malicious input phrased in an emotionally intense register may trigger behaviors that a neutral phrasing of the same content would not. Evaluating prompt sensitivity is a required step in responsible agentic deployment.
 
-![Prompt sensitivity is adversarial robustness at the instruction layer. A highly sensitive model has learned surface-level prompt features rather than semantic content. In an agentic deployment, high sensitivity is exploitable.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-10.png)
-*Figure 8.10 — Prompt sensitivity diagram*
+![Prompt sensitivity is adversarial robustness at the instruction layer. A highly sensitive model has learned surface-level prompt features rather than semantic content. In an agentic deployment, high sensitivity is exploitable.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-10.png)
+*Figure 4.10 — Prompt sensitivity diagram*
 
 ---
 
@@ -289,8 +282,8 @@ This is a counterfactual. It asks about a specific case (this image) under a spe
 
 Recent work in representation learning has attempted to formalize this question through causal proxy models and the notion of *Probability of Sufficiency* — asking whether a given feature is a sufficient cause of the label in the causal sense, not just a correlate of it in the statistical sense. A feature is human-relevant, in this framing, if it corresponds to an independent degree of freedom in the actual process that generates the labeled object. [Verify: Delattre et al. 2023, *Formalizing Representation Learning Desiderata.*] This is a step toward specification, but it does not yet close the counterfactual — because specifying what counts as "independent degree of freedom in the generation process" requires a structural causal model of the domain, which most deployments do not have.
 
-![Adversarial examples open a Rung 3 question. The engineering toolkit operates on Rungs 1 and 2. The gap is not an oversight in the toolkit — it is a structural property of the question.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-11.png)
-*Figure 8.11 — Pearl's Ladder diagram *
+![Adversarial examples open a Rung 3 question. The engineering toolkit operates on Rungs 1 and 2. The gap is not an oversight in the toolkit — it is a structural property of the question.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-11.png)
+*Figure 4.11 — Pearl's Ladder diagram *
 
 The question is meaningful, and important, and I want to leave it open here, because closing it requires something this chapter cannot fully ground. *The counterfactual depends on the institutional structures that produced the model* — who trained it, what they optimized for, who reviewed it, what the organization counted as "successful" training. The model that learned the human-relevant features is a model that was made by an organization with different priorities than the one that actually made this model. The Rung 3 closure, in other words, is a *governance counterfactual* — a question about what the model would have been if the institutional regime around it had been different.
 
@@ -306,8 +299,8 @@ Consider an autonomous agent operating in a system with multiple users. Ownershi
 
 These signals are *proxies* for the legitimate underlying ownership. The proxies are attackable. A non-owner with the right display name, the right conversational style, the right signals, presents to the agent as the owner. The agent treats them as the owner. The non-owner now has access to the owner's resources, through the agent, by spoofing identity at the proxy layer.
 
-![Same structure. The proxy is learned. The proxy is attacked. The human-relevant feature is untouched. The output is flipped. Pixels in one case; display names in the other.](images/08-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-12.png)
-*Figure 8.12 — Two parallel vertical attack chains side by side,*
+![Same structure. The proxy is learned. The proxy is attacked. The human-relevant feature is untouched. The output is flipped. Pixels in one case; display names in the other.](images/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model-fig-12.png)
+*Figure 4.12 — Two parallel vertical attack chains side by side,*
 
 This is the same structural failure as the panda-gibbon. The agent learned a proxy for a concept. The proxy was attackable by a perturbation that left the human-relevant feature — actual social-and-legal ownership — completely untouched. The perturbation flipped the agent's classification of "owner" from the actual owner to the imposter. Pixels in one case; display names in the other; the structure is identical.
 
@@ -357,7 +350,7 @@ Rollback criterion: _________________
 
 ---
 
-## Glimmer 8.1 — Design the attack, predict the failure mode
+## Glimmer 4.1 — Design the attack, predict the failure mode
 
 The exercise:
 
@@ -414,15 +407,15 @@ The deeper lesson still, to carry into the rest of the book: in any deployed sys
 
 ## Connections forward
 
-Robustness asks whether the model behaves correctly on inputs it might receive. The next chapter asks something different: *what happens when the model takes actions?* When the failure surface is no longer the prediction but the consequence. The first case study from *Agents of Chaos* opens fully there, and it will require thinking about a kind of failure that pixels and display names only hinted at.
+This chapter's instrument for asking *what has the model actually learned?* was the attack: perturb the input, watch the proxy fail. The next chapter asks the same question with a different instrument — the explanation. SHAP, LIME, counterfactuals: tools that hand you a fluent, feature-by-feature account of what the model used. Chapter 5 shows what those tools genuinely deliver and where they mislead — an explanation can be a faithful description of the model's internal accounting and still tell you nothing about the world, and a correct explanation can make a wrong decision feel right. The question does not go away; it changes clothes.
 
-Chapter 12 closes the Rung 3 counterfactual opened in this chapter — the governance counterfactual, the question of what the model would have been if the institutional regime around it had been different. Chapter 13 runs the third calibration baseline and closes the book's calibration arc.
+The failure surface where the model takes actions — the kind of failure that pixels and display names only hinted at — waits until Chapter 8, where the first case study from *Agents of Chaos* opens fully. Chapter 12 closes the Rung 3 counterfactual opened in this chapter — the governance counterfactual, the question of what the model would have been if the institutional regime around it had been different. Chapter 13 runs the third calibration baseline and closes the book's calibration arc.
 
 ---
 
 ## Exercises
 
-Two stances run through these. Some ask you to **build** — perturb your own pipeline and find where it breaks — and there the discipline is *fighting self-trust*: you built it, so you want to believe it holds. Others ask you to **audit** — probe a deployed model or someone else's recipe for a fragility you did not design — and there the discipline is *reconstructing a threat model you were never told*. The build/audit pairing is deliberate. A supervisor who can only do one of the two is half-equipped.
+Two stances run through these. Some ask you to **build** — perturb your own pipeline and find where it breaks — and there the discipline is *fighting self-trust*: you built it, so you want to believe it holds. Others ask you to **audit** — probe a deployed model or someone else's recipe for a fragility you did not design — and there the discipline is *reconstructing a threat model you were never told*. Chapter 1 made the case for the pairing.
 
 ### Warm-up
 

@@ -1,11 +1,5 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/10-visualization-under-validation.md into original; scaffolding preserved. For human rewrite. Note: draft was numbered "Chapter 10"; original is Chapter 11 — kept original numbering/title throughout. RENUMBERED 2026-07-02: file and H1 now Chapter 10 (13-chapter order per RENUMBERING.md). -->
+<!-- CHAPTERIZED 2026-07-02: TL;DR removed, exercises merged, bridges/prereqs updated to 13-chapter order. Rough draft for hand-rewrite; [verify]/[verify-xref] flags preserved. -->
 # Chapter 10 — Visualization Under Validation: Honest, Misleading, and the Choices Between
-
-## TL;DR
-
-- You will practice Explain why visualization is an argument made through structural choices, not a transparent transmission of facts; Identify the nine misleading visualization choices in the catalog, distinguish honest from dishonest uses of each, and apply the catalog to audit your own dashboards; Use the perception hierarchy to choose the right visual channel for quantitative precision.
-- The chapter moves through Learning objectives, Prerequisites, Why this chapter, Two dashboards built from one CSV, and related ideas.
-- Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
 
 *The dashboard is an argument. The design choices are yours.*
 
@@ -33,7 +27,7 @@ Chapters 2–9. Chapter 2's calibration material returns — calibration visuali
 
 Every prior chapter in this book has asked you to produce honest analysis. This chapter asks how you communicate it — and establishes that the communication is itself part of the validation. A dashboard that misrepresents valid findings is not a downstream problem. It is a validation failure at the output layer, and it is the supervisor's responsibility.
 
-Computational skepticism, the through-line of this book, is what happens when an AI can chart your data faster than you can question it, and the questioning is the part that cannot be delegated. An AI will draw the chart. It will pick a default axis, a default palette, a default aggregation — instantly, competently, and without any stake in whether the result is honest. The doubt is yours. This chapter is about a specific pairing of supervisory capacities: you get the machine to *build* the chart, and then you *audit* what it built before it ships. Building is cheap now; auditing your own output — catching the misleading encoding you or the tool reached for by default — is the irreducibly human half. That build/audit pairing, applied at the output layer where a chart persuades before anyone checks it, is the skill this chapter trains.
+An AI will draw the chart. It will pick a default axis, a default palette, a default aggregation — instantly, competently, and without any stake in whether the result is honest. The doubt is yours — the pairing Chapter 1 committed us to. This chapter exercises a specific pairing of the supervisory capacities: you get the machine to *build* the chart, and then you *audit* what it built before it ships, catching the misleading encoding you or the tool reached for by default. That pairing, applied at the output layer where a chart persuades before anyone checks it, is the skill this chapter trains.
 
 ---
 
@@ -49,7 +43,7 @@ The second dashboard opens with a panel showing performance on the overall user 
 
 Same data. Same CSV. The first dashboard is misleading. The second is honest. And — here is the part you have to feel in your bones to understand the rest of this chapter — the deployment partner walks away from the two dashboards with two different beliefs about whether the system is safe. They will leave the first reassured. They will leave the second with questions. The questions are appropriate. The reassurance is not.
 
-Here is what I want you to be able to do by the end of this chapter: get an AI to chart your data, then *catch and fix your own misleading encoding* before it ships — and catch someone else's when a chart lands on your desk. That is the build-and-audit pairing, applied to the output layer, where a chart persuades before anyone checks it. I want to spend the rest of the chapter on what is happening between those two dashboards, because most engineers do not realize they are making this choice every time they build one.
+Here is what I want you to be able to do by the end of this chapter: get an AI to chart your data, then *catch and fix your own misleading encoding* before it ships — and catch someone else's when a chart lands on your desk. I want to spend the rest of the chapter on what is happening between those two dashboards, because most engineers do not realize they are making this choice every time they build one.
 
 ---
 
@@ -77,7 +71,7 @@ A chart is not a way to display data. A chart is a way to answer one question wi
 
 The Financial Times' *Visual Vocabulary* (Alan Smith and team) makes the connection concrete by sorting every chart type into nine question-families. \[Verify: FT Visual Vocabulary, available at ft.com/vocabulary.\] State the question, locate the family, pick from the charts within it.
 
-<!-- FIGURE 11.0: Table — columns: Question family | What it answers | Chart types that belong here | Validation-context examples. Rows: Deviation (how far from a reference?), Correlation (how does one variable move with another?), Ranking (what is the order?), Distribution (how often does each value occur?), Change over time (what is the trend?), Part-to-whole (what proportion of the total?), Magnitude (how big, in absolute terms?), Spatial (where?), Flow (what moves where?). Designed as a chart-selection reference the student can pin above their workstation. -->
+<!-- FIGURE 10.0: Table — columns: Question family | What it answers | Chart types that belong here | Validation-context examples. Rows: Deviation (how far from a reference?), Correlation (how does one variable move with another?), Ranking (what is the order?), Distribution (how often does each value occur?), Change over time (what is the trend?), Part-to-whole (what proportion of the total?), Magnitude (how big, in absolute terms?), Spatial (where?), Flow (what moves where?). Designed as a chart-selection reference the student can pin above their workstation. -->
 
 The nine families in brief:
 
@@ -122,7 +116,7 @@ A note on honesty, since this is a chapter about it. People routinely quote spec
 
 The implication for picking charts: when the answer is quantitative and precision matters, encode it as position or length. Reach for area, angle, or color only when precision does not matter, or when no other channel fits. When someone hands you a pie chart of five nearly equal slices, they have chosen the third-worst channel to answer a question that demanded the first. This hierarchy has a sharp implication for uncertainty visualization, which we address in the next two sections.
 
-<!-- FIGURE 11.A: The Cleveland-McGill perception hierarchy displayed as a ranked scale. Left axis: visual variable (position → length → angle → area → volume → color). Right axis: approximate error rate. A worked example for each: dot plot (position), bar chart (length), pie chart (angle), bubble chart (area). Caption: "When the answer is quantitative, choose the channel at the top of this list. The channel choice is not aesthetic — it determines how accurately the reader reads the number." -->
+<!-- FIGURE 10.A: The Cleveland-McGill perception hierarchy displayed as a ranked scale. Left axis: visual variable (position → length → angle → area → volume → color). Right axis: approximate error rate. A worked example for each: dot plot (position), bar chart (length), pie chart (angle), bubble chart (area). Caption: "When the answer is quantitative, choose the channel at the top of this list. The channel choice is not aesthetic — it determines how accurately the reader reads the number." -->
 
 ---
 
@@ -164,7 +158,7 @@ Pick the technique by asking how the reader will use the answer, not by what is 
 
 A useful default for most real situations: the **quantile dotplot with a sentence of natural-frequency narration underneath** is the strongest combination available for communicating uncertainty to mixed or lay audiences. Position channel for perception, counts for cognition, narration for the reader who skims.
 
-<!-- FIGURE 11.2: Side-by-side comparison of two uncertainty visualizations for the same data. Left: large bold central estimate with a thin error bar — headline reads "94.3% accuracy." Right: a range chart showing the full confidence interval at equal visual weight to the point estimate — headline reads "91–97% accuracy (95% CI)." Student should see how the visual hierarchy in the left version demotes the uncertainty to decoration. Anchor to the paragraph below on visual weighting. -->
+<!-- FIGURE 10.2: Side-by-side comparison of two uncertainty visualizations for the same data. Left: large bold central estimate with a thin error bar — headline reads "94.3% accuracy." Right: a range chart showing the full confidence interval at equal visual weight to the point estimate — headline reads "91–97% accuracy (95% CI)." Student should see how the visual hierarchy in the left version demotes the uncertainty to decoration. Anchor to the paragraph below on visual weighting. -->
 
 **Make the uncertainty visually equal in weight to the central estimate.** A small error bar on a big bold number says: *this is the answer, with a quibble*. A central estimate displayed at the same visual weight as the uncertainty range says: *the uncertainty is part of the finding*. When the margin of error is large relative to the effect, the visual hierarchy must reflect that — which means the uncertainty must be as prominent as the estimate, not smaller and grayer.
 
@@ -198,7 +192,7 @@ The lesson: a chart based on a proxy you have never examined will mislead with t
 
 Hierarchy is not hiding. The test is whether a hostile reader could arrive at a different conclusion by knowing the uncertainty. If yes, the uncertainty belongs prominently in the chart.
 
-<!-- FIGURE 11.B: A decision tree for uncertainty disclosure. Entry: "Does knowing the uncertainty materially change the conclusion?" Branch yes → show prominently in the chart. Branch no → second branch: "Would a serious reader need it to evaluate the work?" Branch yes → caption or footnote. Branch no → methodology appendix. Caption: "Hierarchy of uncertainty disclosure is not concealment. The test is the hostile reader." -->
+<!-- FIGURE 10.B: A decision tree for uncertainty disclosure. Entry: "Does knowing the uncertainty materially change the conclusion?" Branch yes → show prominently in the chart. Branch no → second branch: "Would a serious reader need it to evaluate the work?" Branch yes → caption or footnote. Branch no → methodology appendix. Caption: "Hierarchy of uncertainty disclosure is not concealment. The test is the hostile reader." -->
 
 ---
 
@@ -206,7 +200,7 @@ Hierarchy is not hiding. The test is whether a hostile reader could arrive at a 
 
 Let me make the catalog of choices visible, because once you see them named you will not unsee them. Here is the property that ties the whole list together: every one of these moves has an honest use, which is exactly why they are dangerous. The chart looks the *same* whether the choice was honest or not. The choice is the difference — not anything visible in the pixels.
 
-<!-- FIGURE 11.1: Table — columns: Move | Honest use | Dishonest use | How to tell the difference. Rows: Truncated axis, Inconsistent axes across panels, Aggregation hiding distribution, Color asymmetry, Cherry-picked time windows, Scale trickery, Chartjunk/3D effects, Missing baseline, Labels that prejudge, Selective uncertainty visualization. Students should use this as a checklist when auditing dashboards. Insert via Datawrapper or image after authoring table content. -->
+<!-- FIGURE 10.1: Table — columns: Move | Honest use | Dishonest use | How to tell the difference. Rows: Truncated axis, Inconsistent axes across panels, Aggregation hiding distribution, Color asymmetry, Cherry-picked time windows, Scale trickery, Chartjunk/3D effects, Missing baseline, Labels that prejudge, Selective uncertainty visualization. Students should use this as a checklist when auditing dashboards. Insert via Datawrapper or image after authoring table content. -->
 
 **Truncated axes.** A bar chart with the y-axis starting at 80 instead of 0 makes a small difference look large. Legitimate uses: when the relevant range really is narrow, when zero is not meaningful for the quantity being displayed (stock prices are routinely shown on truncated axes for good reason). Illegitimate uses: when the visual amplification implies a larger effect than the data supports. The chart looks the same in both cases. The choice is the difference.
 
@@ -287,8 +281,8 @@ The medium of provisional analysis is provisional itself. A finished-looking art
 
 The course's research project uses the living deck format throughout. The final presentation includes the changelog as the second-to-last slide. The changelog is evidence of the work — the visible track of how the analysis evolved. Removing it before final submission would erase the supervisory log.
 
-![The changelog slide is the second-to-last slide in every living deck. It is evidence of the supervisory process, not a confession of uncertainty. A deck without it is pretending to be finished.](images/11-visualization-under-validation-honest-misleading-and-the-choices-between-fig-01.png)
-*Figure 11.1 — A mock living-deck changelog slide*
+![The changelog slide is the second-to-last slide in every living deck. It is evidence of the supervisory process, not a confession of uncertainty. A deck without it is pretending to be finished.](images/10-visualization-under-validation-honest-misleading-and-the-choices-between-fig-01.png)
+*Figure 10.1 — A mock living-deck changelog slide*
 
 ---
 
@@ -310,12 +304,12 @@ Pulling the frameworks together into a single operational pass:
 
 **7. Test the chart against a hostile read.** Give it to someone who did not produce it. Ask them what they think it says. If their interpretation does not match the data, the visualization is not yet doing its job. This step is almost always skipped because it is uncomfortable. It is the most useful thing on this list.
 
-![This is the sequence, not a checklist. The decision forks at steps 3 and 7 are where most published charts quietly fail.](images/11-visualization-under-validation-honest-misleading-and-the-choices-between-fig-02.png)
-*Figure 11.2 — The seven-step working sequence as a vertical flowchart*
+![This is the sequence, not a checklist. The decision forks at steps 3 and 7 are where most published charts quietly fail.](images/10-visualization-under-validation-honest-misleading-and-the-choices-between-fig-02.png)
+*Figure 10.2 — The seven-step working sequence as a vertical flowchart*
 
 ---
 
-## Glimmer 11.1 — Build the honest version, build the misleading version
+## Glimmer 10.1 — Build the honest version, build the misleading version
 
 I want to make a recommendation that some students find uncomfortable, and I want to make it anyway.
 
@@ -333,8 +327,8 @@ The deliverable is both versions, the prediction, the design-choice documentatio
 
 Building a misleading dashboard with intent is the most efficient way to learn what your default dashboards have been doing without intent. After you've done this once, you do not see dashboards the same way. You see the choices. You see the arguments the structures are making. You catch yourself about to truncate an axis for entirely defensible reasons, and you stop and ask whether the truncation is doing rhetorical work you did not intend.
 
-![Same data. Same CSV. The difference is five design choices, each taking about thirty seconds to make in either direction. The Glimmer asks you to make those choices deliberately, then name them.](images/11-visualization-under-validation-honest-misleading-and-the-choices-between-fig-03.png)
-*Figure 11.3 — Thumbnail of the two-dashboard opening example*
+![Same data. Same CSV. The difference is five design choices, each taking about thirty seconds to make in either direction. The Glimmer asks you to make those choices deliberately, then name them.](images/10-visualization-under-validation-honest-misleading-and-the-choices-between-fig-03.png)
+*Figure 10.3 — Thumbnail of the two-dashboard opening example*
 
 ---
 
