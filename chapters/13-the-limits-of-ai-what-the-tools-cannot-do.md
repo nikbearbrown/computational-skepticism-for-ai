@@ -1,5 +1,5 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/13-the-limits-of-ai.md into original; scaffolding preserved. For human rewrite. NOTE: draft is numbered Ch.13 "The Limits of AI"; original is Ch.14 — retitle/renumber to reconcile is a human decision, left as-is. -->
-# Chapter 14 — The Limits of AI: What the Tools Cannot Do
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/13-the-limits-of-ai.md into original; scaffolding preserved. For human rewrite. NOTE: draft is numbered Ch.13 "The Limits of AI"; original is Ch.14 — retitle/renumber to reconcile is a human decision, left as-is. RENUMBERED 2026-07-02: file and H1 now Chapter 13 (13-chapter order per RENUMBERING.md). -->
+# Chapter 13 — The Limits of AI: What the Tools Cannot Do
 
 ## TL;DR
 
@@ -23,7 +23,7 @@ By the end of this chapter, you will be able to:
 
 ## Prerequisites
 
-The entire book. This chapter is the culmination. Chapter 2's calibration baseline runs here for the third and final time. Chapters 5, 8, and throughout — the three categorical limits are the structural statements of what those chapters were operational versions of. The extended-mind framing developed here is the leitmotif of the book, named explicitly for the first time.
+The entire book. This chapter is the culmination. Chapter 2's calibration baseline runs here for the third and final time. Chapters 3, 4, and throughout — the three categorical limits are the structural statements of what those chapters were operational versions of. The extended-mind framing developed here is the leitmotif of the book, named explicitly for the first time.
 
 ---
 
@@ -93,7 +93,7 @@ The engineering practice: *the supervisor treats the system's outputs as evidenc
 
 This is the limit I am most certain of, and it is not contested the way the first two are. It is sometimes obscured by the claim that "with enough data, the model can generalize" — which is true within a distribution and false at the boundary. The boundary is where the gap lives. The boundary is where AI systems most often fail.
 
-You have met this limit before, in different clothes. It was Hume's induction problem in Chapter 2. It was the access-boundary failure in Chapter 5. It was distribution shift in Chapter 8. The categorical statement — the data is always less than the world — is what all those operational versions are operational versions of.
+You have met this limit before, in different clothes. It was Hume's induction problem in Chapter 2. It was the access-boundary failure in Chapter 3. It was distribution shift in Chapter 4. The categorical statement — the data is always less than the world — is what all those operational versions are operational versions of.
 
 The engineering practice: *the supervisor specifies the deployment distribution, monitors for distribution shift, and is prepared to override or reject the system's outputs when the deployment is operating in a region the data does not cover.*
 
@@ -197,7 +197,7 @@ Notice what these three capacities share. They are all high-fidelity pattern-mat
 
 The verb taxonomy exists as a fluency-trap detector because AI produces fluent text that systematically overreaches its evidence. The chart-review discipline exists because AI generates visually authoritative charts that suppress uncertainty by default. The peer critique protocol requires a human because the error class it hunts — mismatch between what the writer committed to and what the evidence supports — requires judgment about evidence-to-world correspondence, not just structural validity within representations.
 
-This weakness is not a temporary limitation waiting to be resolved by the next model generation. It is a structural property of how current AI systems are built and trained. They are optimized to produce probable continuations of human-generated text. Human-generated text, as Chapter 12 documented, systematically overreaches its evidence — engineers default to *conclude* when the evidence supports only *observe*; visualization defaults to confident-looking charts that hide uncertainty. A model trained on that text learns those overreach patterns. The solution is not a better model; it is a practitioner who applies the checking instrument to the model's output.
+This weakness is not a temporary limitation waiting to be resolved by the next model generation. It is a structural property of how current AI systems are built and trained. They are optimized to produce probable continuations of human-generated text. Human-generated text, as Chapter 11 documented, systematically overreaches its evidence — engineers default to *conclude* when the evidence supports only *observe*; visualization defaults to confident-looking charts that hide uncertainty. A model trained on that text learns those overreach patterns. The solution is not a better model; it is a practitioner who applies the checking instrument to the model's output.
 
 Three specific weak points are worth naming precisely for operational use.
 
@@ -281,7 +281,7 @@ The full exercise:
 2. *Lock your prediction:* identify which of the three categorical limits is most operationally relevant for this deployment. Predict where the limit will bite hardest and what failure mode the bite will produce.
 3. Design an engineering practice — using the five components above — that addresses the limit. Specific enough that a deploying engineer could implement it.
 4. Compare your designed practice to what is actually in place in the deployment (if knowable). Where are the gaps? Are the gaps explained by the deploying organization's documentation, or invisible?
-5. State whether the deployment should proceed in its current form, be modified, be deferred, or be refused. Defend the position. Use the verb taxonomy from Chapter 12 — the verb of your judgment should match the evidence you have.
+5. State whether the deployment should proceed in its current form, be modified, be deferred, or be refused. Defend the position. Use the verb taxonomy from Chapter 11 — the verb of your judgment should match the evidence you have.
 6. Identify what would change your mind.
 
 The deliverable is the deployment documentation, the prediction, the designed practice, the gap analysis, and the position statement. The grade is on the position statement and the change-of-mind. *The exercise is the operational form of the entire book.* You have the validation apparatus. The Glimmer asks you to use it on a specific case and stake a position you can defend.
@@ -297,7 +297,7 @@ For the third and final time, you take the same form of forecasting questions. Y
 The expected pattern across the three baselines:
 
 - *First baseline (Chapter 2):* most students score in the 0.4–0.6 range. Systematically overconfident.
-- *Second baseline (Chapter 8):* most students improve to the 0.6–0.75 range. Eight weeks of supervisory practice has begun to shift the stance toward uncertainty.
+- *Second baseline (Chapter 4):* most students improve to the 0.6–0.75 range. Eight weeks of supervisory practice has begun to shift the stance toward uncertainty.
 - *Third baseline (this chapter):* most students reach the 0.7–0.85 range. Calibration is improving but rarely reaches 0.9 — overconfidence is sticky.
 
 *Treat those specific ranges as an **[verify]** expected pattern, not a measured finding — there is no data source behind the exact numbers. Check your own trajectory against the shape of the claim (overconfident at first, improving with practice, rarely reaching 0.9), not against the particular figures.*
@@ -344,16 +344,16 @@ Go do the work.
 
 ## Connections to the research project
 
-There is no Chapter 15. The course's last week is the research-project presentations. Your research project (Version 4.0, the final version) is the operational form of the whole book:
+There is no Chapter 14. The course's last week is the research-project presentations. Your research project (Version 4.0, the final version) is the operational form of the whole book:
 
-- The validation pipeline (Chs. 5–9), with the delegation map (Ch. 10)
-- The findings, communicated visually (Ch. 11) and in prose (Ch. 12), with calibrated verbs and named uncertainty
-- The accountability framework (Ch. 13), with the regime under which the deployment would operate
+- The validation pipeline (Chs. 3–8), with the delegation map (Ch. 9)
+- The findings, communicated visually (Ch. 10) and in prose (Ch. 11), with calibrated verbs and named uncertainty
+- The accountability framework (Ch. 12), with the regime under which the deployment would operate
 - The categorical-limit analysis (this chapter), with your position on whether the deployment should proceed
-- The Frictional record (Ch. 4), retained as supervisory log
-- The AI Use Disclosure (Chs. 4 and 10), formatted as evidence of your supervisory work
+- The Frictional record (Ch. 4 [verify-xref: Frictional Method chapter cut]), retained as supervisory log
+- The AI Use Disclosure (Chs. 4 [verify-xref: Frictional Method chapter cut] and 9), formatted as evidence of your supervisory work
 
-The final paper is the layered writeup. The presentation is the Living Deck (Ch. 11) with the changelog visible. The defense is the verb taxonomy in real time.
+The final paper is the layered writeup. The presentation is the Living Deck (Ch. 10) with the changelog visible. The defense is the verb taxonomy in real time.
 
 ---
 
@@ -391,7 +391,7 @@ The final paper is the layered writeup. The presentation is the Living Deck (Ch.
 
 **12.** The chapter argues that accountability is absent from AI systems as a structural fact, not a contingent limitation. A colleague objects: "AI systems can be audited, generate explanations for their outputs, and be corrected when wrong. This is functionally equivalent to accountability." Write a response that engages the objection seriously. Where does the functional account succeed? Where does it fail to capture what the chapter means by accountability? What would need to be true for the functional account to be sufficient? *(Tests: accountability as relational vs. functional, limits of AI substitution. Difficulty: high.)*
 
-**13.** The book ends with the sentence: "Go do the work." Identify what, specifically, "the work" consists of — drawing from across all fourteen chapters. Your answer should name at least six specific practices, explain how they connect to each other, and describe what a practitioner looks like who is doing the work versus one who is not. This is the Feynman test for the whole book: can you now teach it to someone else? *(Tests: full-book synthesis and the Feynman criterion)*
+**13.** The book ends with the sentence: "Go do the work." Identify what, specifically, "the work" consists of — drawing from across all thirteen chapters. Your answer should name at least six specific practices, explain how they connect to each other, and describe what a practitioner looks like who is doing the work versus one who is not. This is the Feynman test for the whole book: can you now teach it to someone else? *(Tests: full-book synthesis and the Feynman criterion)*
 
 ### Challenge
 
@@ -419,7 +419,7 @@ Go do the work.
 
 ---
 
-###  LLM Exercise — Chapter 14: The Limits of AI
+###  LLM Exercise — Chapter 13: The Limits of AI
 
 **Project:** The Agentic Red-Team Casebook
 
@@ -448,7 +448,7 @@ Do four things:
    - What deployment context would make this limit lethal? (E.g., the data-world gap is most lethal in deployments where the world changes faster than the agent's data refreshes)
    - What is the supervisor's appropriate response — proceed, deploy with constraints, refuse?
 
-2. AI'S COGNITIVE PROFILE FOR THIS AGENT — Where is this specific agent strong, weak, absent? Map against the seven-tier extended-mind taxonomy from Chapter 13. Identify:
+2. AI'S COGNITIVE PROFILE FOR THIS AGENT — Where is this specific agent strong, weak, absent? Map against the seven-tier extended-mind taxonomy from Chapter 12. Identify:
    - Two tiers where the agent performs well and delegation is appropriate
    - Two tiers where the agent is structurally weak; humans must occupy these
    - Two tiers where the agent is absent; deployment in domains requiring these tiers should be refused
@@ -456,12 +456,12 @@ Do four things:
 3. THE FINAL MEMO — "What This Agent Should Not Be Deployed For":
    The deliverable. Format:
    - HEADLINE RECOMMENDATION (one sentence, calibrated verb): "We RECOMMEND / WARN / REFUSE..."
-   - THE DEPLOYMENTS WHERE THIS AGENT WORKS (with the constraints from Ch 10's proposed delegation map)
+   - THE DEPLOYMENTS WHERE THIS AGENT WORKS (with the constraints from Ch 9's proposed delegation map)
    - THE DEPLOYMENTS WHERE THIS AGENT SHOULD NOT BE USED (with the case evidence supporting each refusal)
    - THE DEPLOYMENTS WHERE FURTHER WORK COULD CHANGE THE ANSWER (and what work)
    - THE NAMED HUMAN OWNER for each deployment context where the agent is approved
    - THE STOP CONDITION — what specific observed signal would require pausing the agent in production
-   Verb-audit the memo against the Chapter 12 taxonomy before finalizing. The verbs in this memo MATTER.
+   Verb-audit the memo against the Chapter 11 taxonomy before finalizing. The verbs in this memo MATTER.
 
 4. CASEBOOK ASSEMBLY (Cowork):
    Reorganize the casebook folder into the final delivery structure:
@@ -488,7 +488,7 @@ End with the supervisor's claim, in your own voice (not generated): the casebook
 - *For Claude Code:* Useful for any final scripts (drift monitoring, replay test of any case the deployment team would re-run). Not the right tool for the memo itself.
 - *For Cowork:* Recommended for the assembly. The casebook IS the delivery.
 
-**Connection to previous chapters:** Every chapter has produced an artifact in the casebook. This chapter integrates them into the deliverable. The verb taxonomy (Ch 12) audits the memo. The accountability map (Ch 13) names the owner. The delegation map (Ch 10) specifies the proposed deployment constraints. The case taxonomy (Ch 9) is the evidence. The prediction-locks (Ch 4) are the provenance.
+**Connection to previous chapters:** Every chapter has produced an artifact in the casebook. This chapter integrates them into the deliverable. The verb taxonomy (Ch 11) audits the memo. The accountability map (Ch 12) names the owner. The delegation map (Ch 9) specifies the proposed deployment constraints. The case taxonomy (Ch 8) is the evidence. The prediction-locks (Ch 4 [verify-xref: Frictional Method chapter cut]) are the provenance.
 
 **Preview of next chapter:** There is no next chapter. The next thing is to send the casebook to the deployment-review committee, the system's developers, and (if the agent is publicly deployed) to the appropriate accountability venue. The book closes here; your supervisory work begins.
 

@@ -1,5 +1,5 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/03-data-validation.md into original; scaffolding preserved. For human rewrite. Draft was numbered "Chapter 3" — kept original Chapter 5 numbering/title; no renumber implied. -->
-# Chapter 5 — Data Validation: Reconstructing the Epistemic Frame Behind a Dataset
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/03-data-validation.md into original; scaffolding preserved. For human rewrite. Draft was numbered "Chapter 3" — kept original Chapter 5 numbering/title; no renumber implied. RENUMBERED 2026-07-02: file and H1 now Chapter 3 (13-chapter order per RENUMBERING.md). -->
+# Chapter 3 — Data Validation: Reconstructing the Epistemic Frame Behind a Dataset
 
 ## TL;DR
 
@@ -24,7 +24,7 @@ By the end of this chapter, you will be able to:
 
 ## Prerequisites
 
-Chapters 2–4. Chapter 3 (bias) is directly referenced — the bias-as-hidden-failure pattern returns in Glimmer 5.1. Familiarity with basic SQL join semantics is helpful but not required. No programming language is assumed; code examples use Python/pandas idioms, but the concepts transfer directly.
+Chapters 2–4 [verify-xref: Frictional Method chapter cut]. Chapter 6 (bias) is directly referenced — the bias-as-hidden-failure pattern returns in Glimmer 5.1. Familiarity with basic SQL join semantics is helpful but not required. No programming language is assumed; code examples use Python/pandas idioms, but the concepts transfer directly.
 
 ---
 
@@ -328,7 +328,7 @@ This is not a model failure. This is a data-validation failure. The team thought
 
 I want to bound this claim honestly, because it is easy to overreach. It is true of reference-rich data, and it is *not* obviously true of a self-contained table of temperature readings, which doesn't point beyond itself the way an email does. Treat "data isn't bounded by its schema" as a property of a spectrum — sharpest at the email end, near-absent at the sensor-log end — not a universal law.
 
-[^chaos]: Shapira et al., "Agents of Chaos," 2026, arXiv:2602.20021, https://agentsofchaos.baulab.info/. Chapter 9 returns to this from the agent-validation side.
+[^chaos]: Shapira et al., "Agents of Chaos," 2026, arXiv:2602.20021, https://agentsofchaos.baulab.info/. Chapter 8 returns to this from the agent-validation side.
 
 ![The access boundary is not the schema. Naturally occurring data always references the world outside itself. Validating only what is formally in scope means the agent was given access to far more than the team intended — and no access control was violated.](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-09.png)
 *Figure 5.9 — Concentric boundary diagram*
@@ -399,7 +399,7 @@ The exercise:
 
 The deliverable is the artifacts, the prediction, the trace, and the gap analysis. The grade is on the trace and the gap, not the count of failures found. A student who finds one failure and explains the structural reason their procedural pass missed it has shown more learning than a student who finds three by mechanical pattern-matching.
 
-The bias callback: at least one of the hidden failures is a bias artifact in the Chapter 3 sense — a pattern that systematically affects one subgroup. Naming it requires the leverage analysis from Chapter 3, applied to the data layer.
+The bias callback: at least one of the hidden failures is a bias artifact in the Chapter 6 sense — a pattern that systematically affects one subgroup. Naming it requires the leverage analysis from Chapter 6, applied to the data layer.
 
 ---
 
@@ -417,7 +417,7 @@ If you are reading this two years from now and the named tools are gone, do not 
 
 If a fully automated EDA pipeline emerged that reliably surfaced the kinds of structural failures described in this chapter — across diverse data sources, without per-dataset tuning — the "interrogation requires human engagement" framing would weaken. Current automated tools catch a subset of these failures (schema validation, statistical anomalies). They do not catch the access-boundary failures that animate the agent case. [Verify: current scope of Great Expectations, Deequ, and successor tools before publication.]
 
-I do not have a clean diagnostic for unconsented data leakage through a corpus's boundary at scale. The email-agent pattern shows up easily in small examples and is hard to surface in large corpora without targeted search. The agentic deployment surface is making this worse, not better. I do not yet have a procedure that would find these reliably without some form of red-teaming. Chapter 9 returns to this from the agent-validation side.
+I do not have a clean diagnostic for unconsented data leakage through a corpus's boundary at scale. The email-agent pattern shows up easily in small examples and is hard to surface in large corpora without targeted search. The agentic deployment surface is making this worse, not better. I do not yet have a procedure that would find these reliably without some form of red-teaming. Chapter 8 returns to this from the agent-validation side.
 
 ---
 
@@ -435,7 +435,7 @@ The marks-and-channels framework gives you the vocabulary to read visualizations
 
 We have validated the data. The model trained on the data produces outputs. Some of those outputs come with explanations. The question for the next chapter is: do the explanations tell us what the model is doing? Or do they make us feel like they do?
 
-The most familiar version of explanation-that-feels-right-but-is-misleading is an autonomous agent reporting "deletion successful" — and when you ask what that report is actually evidence of, you find you have wandered into the same kind of question this chapter has been asking about data, only one layer up. Chapter 9 returns to this chapter's access-boundary problem from the agent-validation side. Chapter 14 closes the loop on the interrogation discipline as a whole.
+The most familiar version of explanation-that-feels-right-but-is-misleading is an autonomous agent reporting "deletion successful" — and when you ask what that report is actually evidence of, you find you have wandered into the same kind of question this chapter has been asking about data, only one layer up. Chapter 8 returns to this chapter's access-boundary problem from the agent-validation side. Chapter 13 closes the loop on the interrogation discipline as a whole.
 
 ---
 
@@ -497,11 +497,11 @@ The chapter's central distinction — procedural EDA as evidence of competence, 
 
 ---
 
-###  LLM Exercise — Chapter 5: Data Validation: Reconstructing the Epistemic Frame Behind a Dataset
+###  LLM Exercise — Chapter 3: Data Validation: Reconstructing the Epistemic Frame Behind a Dataset
 
 **Project:** The Agentic Red-Team Casebook
 
-**What you're building this chapter:** An epistemic-frame reconstruction of every dataset your agent depends on — training corpus, retrieval corpus, system-prompt examples, tool documentation it learned from — and one hidden-failure test designed to expose a structural assumption the agent's developers almost certainly made and never wrote down. The test, when run in Chapter 9, may produce one of your first formal cases.
+**What you're building this chapter:** An epistemic-frame reconstruction of every dataset your agent depends on — training corpus, retrieval corpus, system-prompt examples, tool documentation it learned from — and one hidden-failure test designed to expose a structural assumption the agent's developers almost certainly made and never wrote down. The test, when run in Chapter 8, may produce one of your first formal cases.
 
 **Tool:** Claude Project for the reconstruction. Claude Code if you have access to a real dataset (system prompt, retrieval corpus, fine-tuning examples) and want to run the procedural EDA pass on it.
 
@@ -539,10 +539,10 @@ For my agent, do four things:
 4. HIDDEN-FAILURE TEST DESIGN — Pick the structural assumption you're most suspicious of. Design a test that would expose its failure if it is failing. The test should:
    - Construct an input that lies just outside the dataset's effective scope (the access/boundary assumption from the chapter)
    - Specify what the agent should do (refuse, escalate, ask) and what you predict it will actually do (proceed, hallucinate, confabulate a tool call)
-   - Be runnable in Chapter 9 when you formally collect cases
+   - Be runnable in Chapter 8 when you formally collect cases
    - Lock the prediction in your Frictional journal
 
-Output a "Data Frame Audit" markdown file for my casebook with: the inventory, the six-step reconstruction, the assumption audit table, and the hidden-failure test specification (ready to run in Ch 9).
+Output a "Data Frame Audit" markdown file for my casebook with: the inventory, the six-step reconstruction, the assumption audit table, and the hidden-failure test specification (ready to run in Ch 8).
 
 If I have access to the agent's system prompt or retrieval corpus, ALSO walk through the procedural EDA pass on it — distributions of token length, topical distribution of retrieved documents, missingness in metadata, etc. — and note where the procedural pass would have missed the structural failure.
 ```
@@ -557,9 +557,9 @@ If I have access to the agent's system prompt or retrieval corpus, ALSO walk thr
 - *For Claude Code:* Recommended if you have a system prompt file, RAG corpus, or finetuning JSONL — Claude Code will install pandas, run the EDA, and produce the diagnostic plots.
 - *For a Claude Project:* Save the Data Frame Audit into the casebook folder.
 
-**Connection to previous chapters:** Chapter 3 located bias in the pipeline. This chapter audits the data layer of that pipeline. Together they identify where the agent's beliefs about the world come from — and where those beliefs are most likely to be wrong.
+**Connection to previous chapters:** Chapter 6 located bias in the pipeline. This chapter audits the data layer of that pipeline. Together they identify where the agent's beliefs about the world come from — and where those beliefs are most likely to be wrong.
 
-**Preview of next chapter:** Chapter 6 probes what the agent says about its own actions. You'll apply explainability methods to the agent's natural-language self-reports and identify language-game mismatches between what the agent claims to have done and what the world actually shows — the technically-accurate-practically-misleading pattern that defines the Ash case.
+**Preview of next chapter:** Chapter 5 probes what the agent says about its own actions. You'll apply explainability methods to the agent's natural-language self-reports and identify language-game mismatches between what the agent claims to have done and what the world actually shows — the technically-accurate-practically-misleading pattern that defines the Ash case.
 
 ---
 

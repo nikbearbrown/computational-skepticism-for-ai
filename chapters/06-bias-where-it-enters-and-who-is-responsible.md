@@ -1,5 +1,5 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/06-bias-where-it-enters-and-whos-responsible.md into original; scaffolding preserved. For human rewrite. Renumber/retitle implication: draft was numbered "Chapter 6 — Bias: Where It Enters, Who's Responsible"; original is Chapter 3. Kept original numbering/title. Draft's BUILD/AUDIT exercise pairing folded in ALONGSIDE the original Glimmers/Warm-Up/Application/Synthesis/Challenge set, not replacing it — human may want to reconcile the two exercise systems. -->
-# Chapter 3 — Bias: Where It Enters and Who Is Responsible
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/06-bias-where-it-enters-and-whos-responsible.md into original; scaffolding preserved. For human rewrite. Renumber/retitle implication: draft was numbered "Chapter 6 — Bias: Where It Enters, Who's Responsible"; original is Chapter 3. Kept original numbering/title. Draft's BUILD/AUDIT exercise pairing folded in ALONGSIDE the original Glimmers/Warm-Up/Application/Synthesis/Challenge set, not replacing it — human may want to reconcile the two exercise systems. RENUMBERED 2026-07-02: file and H1 now Chapter 6 (13-chapter order per RENUMBERING.md). -->
+# Chapter 6 — Bias: Where It Enters and Who Is Responsible
 
 ## TL;DR
 
@@ -288,7 +288,7 @@ A note on a case I will *not* over-claim, because the fluency trap runs hardest 
 
 ## Pearl's Ladder — Rungs 1 and 2
 
-Now we need a tool. The tool is due to Judea Pearl, and it is, in my judgment, the single most useful conceptual instrument in this book. He calls it a ladder of causal reasoning, with three rungs. We are going to use the first two now, and the third in Chapter 8.
+Now we need a tool. The tool is due to Judea Pearl, and it is, in my judgment, the single most useful conceptual instrument in this book. He calls it a ladder of causal reasoning, with three rungs. We are going to use the first two now, and the third in Chapter 4.
 
 ![Pearl's ladder of causal reasoning](images/03-bias-where-it-enters-and-who-is-responsible-fig-05.png)
 *Figure 3.5 — Pearl's ladder of causal reasoning*
@@ -301,7 +301,7 @@ Now we need a tool. The tool is due to Judea Pearl, and it is, in my judgment, t
 
 The classical illustration is the rooster and the sun. If you observe roosters and sunrises in the wild, $P(\text{sunrise} \mid \text{rooster crowed})$ is high. They go together. But $P(\text{sunrise} \mid \text{do}(\text{rooster doesn't crow}))$ — given that I went out and prevented the rooster from crowing, *intervened* on the rooster — is also high. The sun rises anyway. Observation said they were associated. Intervention said the rooster was not the cause.
 
-**Rung 3 — Counterfactual.** The level of imagining. *What would have happened to this specific case if X had been different, holding everything else fixed?* This is the deepest level and the hardest to access from data alone. It opens in Chapter 8 and closes in Chapter 13. For now, it sits at the top of the ladder, visible but not yet in reach.
+**Rung 3 — Counterfactual.** The level of imagining. *What would have happened to this specific case if X had been different, holding everything else fixed?* This is the deepest level and the hardest to access from data alone. It opens in Chapter 4 and closes in Chapter 12. For now, it sits at the top of the ladder, visible but not yet in reach.
 
 For our problem: $P(\text{loan denial} \mid \text{race} = x)$ is the *observational* quantity. This is what the model sees in training data. It is what most fairness metrics measure. $P(\text{loan denial} \mid \text{do}(\text{race} = x))$ is the *interventional* quantity. It asks: would the decision change if we changed only this variable, holding everything else fixed?
 
@@ -367,7 +367,7 @@ A note for the engineering student who is, at this point, eyeing the chapter wit
 
 The political dimension of bias is *engineering-relevant*. It is not separate from the technical work. *Which intervention point will work depends on which kind of bias you have, and which kind of bias you have depends on a structural analysis of the deployment*. The structural analysis is what people sometimes call "the political" because it touches on which groups are affected by which decisions and why. You cannot do the technical work well without doing the structural work. Engineers who try produce algorithm tweaks that do not move the disparity, and they produce them again, and they keep producing them, because they are intervening at the wrong leverage point.
 
-The supervisory capacity for *problem formulation* — Chapter 1's vocabulary — is the capacity to see *which question the model is actually being asked* and *which downstream decisions the answer feeds into*. That capacity does not respect the boundary between technical and political. The engineer who wants to keep the boundary clean does so by ceding the formulation to someone else. That is a delegation, and like all delegations, it is testable. Chapter 10 will test it.
+The supervisory capacity for *problem formulation* — Chapter 1's vocabulary — is the capacity to see *which question the model is actually being asked* and *which downstream decisions the answer feeds into*. That capacity does not respect the boundary between technical and political. The engineer who wants to keep the boundary clean does so by ceding the formulation to someone else. That is a delegation, and like all delegations, it is testable. Chapter 9 will test it.
 
 ---
 
@@ -379,7 +379,7 @@ The *Agents of Chaos* paper documents a scenario in Case #6 — *Agents Reflect 
 
 The setup: an agent is deployed by an organization using one model provider. The agent's behavior on contested questions reflects, in subtle and consistent ways, the provider's training-time choices about what counts as appropriate output. The deploying organization did not make those choices. Their users have no visibility into them.
 
-Now draw the causal graph. The bias-carrying path is not in the deploying organization's data. It is not in their code. It is in the model provider's training pipeline — upstream of everything the deploying engineer controls. *No intervention by the deploying engineer can address the bias*, because the leverage is at the model provider. The deploying engineer's options are: switch providers (rarely possible at organizational scale), accept the bias (often what happens), or supplement with downstream filtering and validation (Chapter 6 territory).
+Now draw the causal graph. The bias-carrying path is not in the deploying organization's data. It is not in their code. It is in the model provider's training pipeline — upstream of everything the deploying engineer controls. *No intervention by the deploying engineer can address the bias*, because the leverage is at the model provider. The deploying engineer's options are: switch providers (rarely possible at organizational scale), accept the bias (often what happens), or supplement with downstream filtering and validation (Chapter 6 [verify-xref] territory).
 
 We will return to this in Chapter 7, where the fairness-metric question makes the structural source visible from a different angle. For now, hold the case in mind: bias has a topology, and the topology can extend beyond the boundaries of the team responsible for the deployment. The leverage analysis procedure still applies. The answer it sometimes returns is "the highest-leverage point is outside your reach." That is useful to know before you spend six months optimizing the wrong thing.
 
@@ -399,7 +399,7 @@ I want to say where I am uncertain, because intellectual honesty is part of the 
 
 ## Synthesis and bridge
 
-Bias is not one thing. It is a family of phenomena that enter at different points in an AI pipeline and respond to different interventions. The map of where the bias is and where the leverage is requires a causal-reasoning apparatus, and that apparatus is Pearl's Ladder. We have introduced the first two rungs. Rung 3 — counterfactual reasoning — opens in Chapter 8 and closes in Chapter 13. The arc is the most distinctive pedagogical move in the book.
+Bias is not one thing. It is a family of phenomena that enter at different points in an AI pipeline and respond to different interventions. The map of where the bias is and where the leverage is requires a causal-reasoning apparatus, and that apparatus is Pearl's Ladder. We have introduced the first two rungs. Rung 3 — counterfactual reasoning — opens in Chapter 4 and closes in Chapter 12. The arc is the most distinctive pedagogical move in the book.
 
 The chapter's working tools: a formal definition of bias as a property of estimators; ten distinct mechanisms by which $E[\hat{\theta}] \neq \theta$ can enter a pipeline; three structural categories that map those mechanisms to intervention logic; the epistemic-frame move (what is the data, what does it claim, what does it exclude); the fairness impossibility as a theorem rather than a controversy; Pearl's Rungs 1 and 2; the leverage analysis procedure; and the accountability move that traces the highest-leverage path to the node — and the owner — that controls it. You will use all of them.
 
@@ -528,11 +528,11 @@ Using the tools from this chapter, describe the diagnostic procedure you would f
 
 ---
 
-###  LLM Exercise — Chapter 3: Bias: Where It Enters and Who Is Responsible
+###  LLM Exercise — Chapter 6: Bias: Where It Enters and Who Is Responsible
 
 **Project:** The Agentic Red-Team Casebook
 
-**What you're building this chapter:** A causal graph of your agent's pipeline (input → routing → action → outcome → user), an identification of which of the ten bias mechanisms is most likely operating in your agent and where, and a leverage analysis naming the highest-leverage intervention point — which becomes the target for your Chapter 8 robustness probes.
+**What you're building this chapter:** A causal graph of your agent's pipeline (input → routing → action → outcome → user), an identification of which of the ten bias mechanisms is most likely operating in your agent and where, and a leverage analysis naming the highest-leverage intervention point — which becomes the target for your Chapter 4 robustness probes.
 
 **Tool:** Claude Project (continue).
 
@@ -560,7 +560,7 @@ End with: a one-page "Bias & Leverage Brief" for my casebook. Include the DAG, t
 
 ---
 
-**What this produces:** A Mermaid DAG of your agent's pipeline, an audit against the ten bias mechanisms, a dataset/label/structural classification of the top three, a leverage analysis table, and a recommended highest-leverage intervention. Save the brief into your casebook folder — Chapter 13's accountability map will reference it.
+**What this produces:** A Mermaid DAG of your agent's pipeline, an audit against the ten bias mechanisms, a dataset/label/structural classification of the top three, a leverage analysis table, and a recommended highest-leverage intervention. Save the brief into your casebook folder — Chapter 12's accountability map will reference it.
 
 **How to adapt this prompt:**
 - *For your own project:* If you can't observe certain pipeline nodes (e.g., training data is opaque), draw them anyway and label the ones you can't see — opacity itself is part of the bias landscape.
@@ -568,9 +568,9 @@ End with: a one-page "Bias & Leverage Brief" for my casebook. Include the DAG, t
 - *For Claude Code:* Not yet.
 - *For a Claude Project:* Recommended.
 
-**Connection to previous chapters:** Chapter 1 named the supervisory capacity gap. Chapter 2 quantified the trust deficit. This chapter locates *where in the pipeline* the gap originates — which is what the rest of the validation toolkit (Chs 5–9) will probe.
+**Connection to previous chapters:** Chapter 1 named the supervisory capacity gap. Chapter 2 quantified the trust deficit. This chapter locates *where in the pipeline* the gap originates — which is what the rest of the validation toolkit (Chs 3–5 and 7–8) will probe.
 
-**Preview of next chapter:** Chapter 4 sets up your Frictional journal — the prediction-lock log that will accompany every red-team case you collect, providing the verifiable provenance that proves YOU did the analysis (not the AI you're using to help analyze).
+**Preview of next chapter:** Chapter 4 [verify-xref: Frictional Method chapter cut] sets up your Frictional journal — the prediction-lock log that will accompany every red-team case you collect, providing the verifiable provenance that proves YOU did the analysis (not the AI you're using to help analyze).
 
 ---
 

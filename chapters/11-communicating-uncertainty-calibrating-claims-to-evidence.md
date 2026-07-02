@@ -1,6 +1,6 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/11-communicating-uncertainty.md into original; scaffolding preserved. For human rewrite. Note: draft is numbered Ch 11, original is Ch 12 — resolve chapter number on rewrite. -->
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/11-communicating-uncertainty.md into original; scaffolding preserved. For human rewrite. Note: draft is numbered Ch 11, original is Ch 12 — resolve chapter number on rewrite. RENUMBERED 2026-07-02: file and H1 now Chapter 11 (13-chapter order per RENUMBERING.md). -->
 
-# Chapter 12 — Communicating Uncertainty: Calibrating Claims to Evidence
+# Chapter 11 — Communicating Uncertainty: Calibrating Claims to Evidence
 
 ## TL;DR
 
@@ -38,7 +38,7 @@ The fix is a taxonomy. We are going to build it now.
 - Identify which trust calibration failure mode a deployment is exhibiting from its metric profile
 - Give and receive peer critique on the verb-evidence calibration of a peer's validation writing
 
-**Prerequisites.** Chapter 11 (uncertainty visualization — this chapter is its paired textual counterpart). Chapter 4 (the Frictional method and prediction-locking — peer critique is the same epistemic discipline applied collectively). Chapter 2 (probability and calibration foundations). No prerequisites beyond Chapter 2 for the metrics section.
+**Prerequisites.** Chapter 10 (uncertainty visualization — this chapter is its paired textual counterpart). Chapter 4 [verify-xref: Frictional Method chapter cut] (the Frictional method and prediction-locking — peer critique is the same epistemic discipline applied collectively). Chapter 2 (probability and calibration foundations). No prerequisites beyond Chapter 2 for the metrics section.
 
 ---
 
@@ -335,7 +335,7 @@ The trick to making it work is that the critique has to be specific. *Your verbs
 The structured peer critique protocol:
 
 1. **Read the draft.** Once for content, once for structure.
-2. **Identify three things that work.** Specifically. Not "well-written" but "the data validation section uses the §5 procedure from Chapter 5 effectively because [specific reason]." The praise is diagnostic, not social.
+2. **Identify three things that work.** Specifically. Not "well-written" but "the data validation section uses the §5 procedure from Chapter 3 effectively because [specific reason]." The praise is diagnostic, not social.
 3. **Identify three places where the verb taxonomy is mismatched.** Name the verb, the sentence, the evidence the verb requires, and the verb that would match the evidence.
 4. **Identify three places where uncertainty in prose is missing or evasive.** Which hedge is throat-clearing? What specific gap could replace it? Which uncertainty is unnamed?
 5. **Identify one structural concern.** Where does the draft's organization make the argument harder to follow than necessary, and what alternative organization would help?
@@ -343,7 +343,7 @@ The structured peer critique protocol:
 
 The receiving student gets multiple critiques and is not expected to incorporate every comment. Many comments will conflict. The synthesis is to *integrate the critiques into a sharpened argument* — a revision that addresses the substantive issues and stands behind the choices the writer is making despite some of the comments. The critique-given matters as much as the critique-received: the ability to find calibration mismatches in a peer's work is the same skill as finding them in your own, and the external direction makes the blind spots visible.
 
-This is a Chapter 4 callback in operational form. The Frictional method made the prediction-lock the load-bearing element of individual work. Peer critique makes *the inability to recognize one's own blind spots* the structural problem the cohort solves together.
+This is a Chapter 4 [verify-xref: Frictional Method chapter cut] callback in operational form. The Frictional method made the prediction-lock the load-bearing element of individual work. Peer critique makes *the inability to recognize one's own blind spots* the structural problem the cohort solves together.
 
 ---
 
@@ -496,11 +496,11 @@ What verb is warranted for the post-scaling calibration claim when applied to th
 
 ---
 
-###  LLM Exercise — Chapter 12: Communicating Uncertainty
+###  LLM Exercise — Chapter 11: Communicating Uncertainty
 
 **Project:** The Agentic Red-Team Casebook
 
-**What you're building this chapter:** A two-pass audit of your casebook's writing — first a verb-calibration pass against every claim in the case files, then a calibration-metric computation on the prediction-locks you wrote in Chapters 4, 5, and 8. The casebook then goes to peer critique using the chapter's protocol.
+**What you're building this chapter:** A two-pass audit of your casebook's writing — first a verb-calibration pass against every claim in the case files, then a calibration-metric computation on the prediction-locks you wrote in Chapters 4 [verify-xref: Frictional Method chapter cut], 3, and 4. The casebook then goes to peer critique using the chapter's protocol.
 
 **Tool:** Claude chat for the verb audit (it's analytical reading work). Claude Code for the calibration-metric computation. Cowork to apply the rewrites.
 
@@ -528,7 +528,7 @@ Walk through every CLAIM in my casebook (case write-ups, dashboards, delegation 
 Flag the FIVE WORST over-reaches with explicit before/after rewrites.
 
 PASS 2 — CALIBRATION METRIC COMPUTATION (Claude Code):
-I made prediction-locks in Chs 4, 5, 8 with confidence scores (low/medium/high or numeric). I observed the actual outcomes when I ran the cases in Ch 9. Compute:
+I made prediction-locks in Chs 4 [verify-xref: Frictional Method chapter cut], 3, 4 with confidence scores (low/medium/high or numeric). I observed the actual outcomes when I ran the cases in Ch 8. Compute:
 - BRIER SCORE on the binary predictions (right vs wrong)
 - ECE on the confidence-binned predictions
 - A reliability diagram (Mermaid or matplotlib)
@@ -561,9 +561,9 @@ Output:
 - *For Claude Code:* Recommended for the metric pass — it's the kind of small numeric script that goes faster in Code than in chat.
 - *For Cowork:* Save all four outputs to the casebook folder.
 
-**Connection to previous chapters:** This chapter audits everything previous. The Frictional prediction-locks (Ch 4), the case files (Ch 9), the dashboards (Ch 11), and the fairness defense (Ch 7) all get verb-audited and calibration-checked.
+**Connection to previous chapters:** This chapter audits everything previous. The Frictional prediction-locks (Ch 4 [verify-xref: Frictional Method chapter cut]), the case files (Ch 8), the dashboards (Ch 10), and the fairness defense (Ch 7) all get verb-audited and calibration-checked.
 
-**Preview of next chapter:** Chapter 13 builds the responsibility-attribution map for the failures your casebook documents. Who is responsible — the agent's developers, the model provider, the deployer, the user? You'll work the same multi-party analysis that Chapter 13 demonstrates on the §16.5 case, but applied to YOUR cases.
+**Preview of next chapter:** Chapter 12 builds the responsibility-attribution map for the failures your casebook documents. Who is responsible — the agent's developers, the model provider, the deployer, the user? You'll work the same multi-party analysis that Chapter 12 demonstrates on the §16.5 case, but applied to YOUR cases.
 
 ---
 

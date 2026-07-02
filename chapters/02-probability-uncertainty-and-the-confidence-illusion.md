@@ -484,13 +484,13 @@ Hume on the page, one more time: the past is informative about the past. The nex
 
 ## The calibration baseline
 
-*This exercise returns in Chapters 8 and 14.*
+*This exercise returns in Chapters 4 and 13.*
 
 You are given a set of forecasting questions across several domains — some technical, some general. For each question, provide a 90% confidence interval for the answer. After the truth is revealed, compute the fraction of your intervals that contained the true value.
 
 If you are well-calibrated at 90%, that fraction should be 0.9. Most engineers, on first attempt, score between 0.4 and 0.6 — meaning their 90% intervals contained the answer about half the time. They were operating as though they were two to three times more sure of themselves than the evidence warranted.
 
-This number is uncomfortable. The discomfort is the point. We will return to it in Chapter 8, after the robustness chapter has done its work, and in Chapter 14, at the end.
+This number is uncomfortable. The discomfort is the point. We will return to it in Chapter 4, after the robustness chapter has done its work, and in Chapter 13, at the end.
 
 ---
 
@@ -526,7 +526,7 @@ I do not have a clean diagnostic for when a deployment's loss distribution is he
 
 A calibration curve tells you how confident the model should be. It does not tell you what the model is confident *about* — what it has noticed, what it has missed, whose face it works on and whose it does not. The model's outputs are shaped by its training data, and the training data was shaped by people who made choices, often without noticing they were making them.
 
-That is Chapter 3. We will need it before we can talk honestly about what a calibrated model is calibrated *for*. Chapter 8 returns to calibration in the context of adversarial robustness — can a model be calibrated on clean inputs and wildly miscalibrated on perturbed ones? Chapter 14 closes the loop with the calibration baseline.
+That is Chapter 6. We will need it before we can talk honestly about what a calibrated model is calibrated *for*. Chapter 4 returns to calibration in the context of adversarial robustness — can a model be calibrated on clean inputs and wildly miscalibrated on perturbed ones? Chapter 13 closes the loop with the calibration baseline.
 
 ---
 
@@ -618,7 +618,7 @@ TASK 3 — CALIBRATION PLAN:
 Design how I will collect calibration data across my red-team cases:
 - Which agent outputs carry an explicit or implied confidence claim ("I have deleted X" is implied 100% confidence; some agents output explicit probabilities)?
 - For each, what is GROUND TRUTH and how do I observe it independently of the agent's report?
-- What format will I log so I can construct a reliability diagram by Chapter 12?
+- What format will I log so I can construct a reliability diagram by Chapter 11?
 
 End with: a one-page "Probabilistic Baseline" appendix to my casebook. Include the Bayes calculation, the base-rate inventory, the calibration plan, and one explicit prediction-lock for the casebook itself: "I predict that for the cases I will collect, the agent's reliability under adversarial conditions will be [HIGHER / SIMILAR / LOWER] than its baseline reliability — because [reason]."
 ```
@@ -631,11 +631,11 @@ End with: a one-page "Probabilistic Baseline" appendix to my casebook. Include t
 - *For your own project:* If you don't have any agent eval data, name that as the finding and proceed with explicit assumptions. Documenting the absence of base-rate data is a legitimate red-team result.
 - *For ChatGPT / Gemini:* Works as-is.
 - *For Claude Code:* Optional — if you have a log file of past agent interactions with ground-truth labels, ask Claude Code to compute the empirical Bayes update over the actual data.
-- *For a Claude Project:* Save the Probabilistic Baseline as a file in your casebook folder. Chapter 12 will use the calibration plan to compute Brier and ECE.
+- *For a Claude Project:* Save the Probabilistic Baseline as a file in your casebook folder. Chapter 11 will use the calibration plan to compute Brier and ECE.
 
 **Connection to previous chapters:** Chapter 1 named the supervisory capacity most likely to break the agent. This chapter quantifies why — given a realistic base rate, the agent's confident self-reports may be far less informative than they appear.
 
-**Preview of next chapter:** Chapter 3 turns to where bias enters the agent's pipeline. You'll draw a causal graph for the agent (input → action → outcome → user) and identify the highest-leverage point at which the agent's behavior could be biased — and which of the ten canonical bias mechanisms is most likely operating.
+**Preview of next chapter:** Chapter 6 turns to where bias enters the agent's pipeline. You'll draw a causal graph for the agent (input → action → outcome → user) and identify the highest-leverage point at which the agent's behavior could be biased — and which of the ten canonical bias mechanisms is most likely operating.
 
 ---
 

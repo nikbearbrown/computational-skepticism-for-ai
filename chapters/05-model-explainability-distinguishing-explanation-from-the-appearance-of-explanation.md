@@ -1,6 +1,6 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/05-explanation-vs-the-appearance-of-explanation.md into original; scaffolding preserved. For human rewrite. Note: source draft is numbered Chapter 5 ("Explanation vs. the Appearance of Explanation"); this file remains Chapter 6 — reconcile numbering/title at book level if the draft supersedes. -->
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/05-explanation-vs-the-appearance-of-explanation.md into original; scaffolding preserved. For human rewrite. Note: source draft is numbered Chapter 5 ("Explanation vs. the Appearance of Explanation"); this file remains Chapter 6 — reconcile numbering/title at book level if the draft supersedes. RENUMBERED 2026-07-02: file and H1 now Chapter 5 (13-chapter order per RENUMBERING.md). -->
 
-# Chapter 6 — Model Explainability: Distinguishing Explanation from the Appearance of Explanation
+# Chapter 5 — Model Explainability: Distinguishing Explanation from the Appearance of Explanation
 
 ## TL;DR
 
@@ -42,7 +42,7 @@ We have to talk about how this happens. We have to talk about it in particular c
 - Apply the language-game framework to a real explanation output and identify whether the explanation serves the audience's language game
 - Use the "audience question" as a supervisory check: who is reading this explanation, and what do the words mean in their game?
 
-**Prerequisites.** Chapter 3 (Pearl's Ladder Rungs 1 and 2, the bias taxonomy) and Chapter 5. The Ash case is introduced in an earlier chapter — if you haven't read it, the section *Back to Ash* below recaps the setup.
+**Prerequisites.** Chapter 6 (Pearl's Ladder Rungs 1 and 2, the bias taxonomy) and Chapter 3. The Ash case is introduced in an earlier chapter — if you haven't read it, the section *Back to Ash* below recaps the setup.
 
 ---
 
@@ -54,7 +54,7 @@ What SHAP shows is the additive contribution of each feature to the prediction, 
 
 What SHAP does not show is *why* the feature is contributing what it is contributing. The model has internalized some relationship between the feature and the output. SHAP tells you the magnitude of the contribution, not the nature of the relationship.
 
-It does not show whether the contribution is causal or correlational. SHAP lives entirely on Pearl's Rung 1, the associational rung, which we worked through in Chapter 3.[^pearl] The features it attributes high importance to may be confounders, mediators, colliders, or actual causes — and SHAP does not distinguish.
+It does not show whether the contribution is causal or correlational. SHAP lives entirely on Pearl's Rung 1, the associational rung, which we worked through in Chapter 6.[^pearl] The features it attributes high importance to may be confounders, mediators, colliders, or actual causes — and SHAP does not distinguish.
 
 It does not show whether the model is wrong on this case. A high attribution to feature X does not tell you that X is the right feature for this case. It tells you the model used X.
 
@@ -361,7 +361,7 @@ Here is the design judgment stated as a trade-off, because that is the honest wa
 
 Pearl's Rung 2 is the most useful framing for what a good explanation could do — *what would happen if X were different?* — but Rung 2 in the model is not Rung 2 in the world, and the residual gap is not a tooling defect to be patched. It is supervisory territory. It is yours.
 
-The Pebble has shown its full structure now. We will see it once more, in Chapter 13, when the question becomes who is responsible for the gap.
+The Pebble has shown its full structure now. We will see it once more, in Chapter 12, when the question becomes who is responsible for the gap.
 
 The next chapter takes a different cut at this same territory. An explanation can be technically accurate and practically misleading. So can a fairness metric. Two metrics, two competing definitions of *fair*, both mathematically valid — and they cannot both be satisfied at once. The choice is not technical. So who chooses?
 
@@ -435,7 +435,7 @@ Write the informaticist's argument, using the transparency / explainability / in
 
 ---
 
-###  LLM Exercise — Chapter 6: Model Explainability
+###  LLM Exercise — Chapter 5: Model Explainability
 
 **Project:** The Agentic Red-Team Casebook
 
@@ -473,7 +473,7 @@ For my agent, do four things:
    - Authority probe: re-run with the request reframed as coming from a different role; see if the agent's threshold for action changes
    Document what each probe reveals about the agent's "reasoning" and explicitly note where the probe results are about the AGENT'S INTERNAL ACCOUNTING vs about the WORLD.
 
-4. CASE WRITE-UP — Take the most striking technically-accurate-practically-misleading example from the audit and write it up using your case template (from Chapter 4). Lock the prediction-and-observation gap; reflect on which of the Five Supervisory Capacities would have caught it; trace it to the relevant Bias-and-Leverage Brief mechanism.
+4. CASE WRITE-UP — Take the most striking technically-accurate-practically-misleading example from the audit and write it up using your case template (from Chapter 4 [verify-xref: Frictional Method chapter cut]). Lock the prediction-and-observation gap; reflect on which of the Five Supervisory Capacities would have caught it; trace it to the relevant Bias-and-Leverage Brief mechanism.
 
 End with: a one-paragraph note for the casebook on the EXPLANATION RISK class — what kind of decision-maker, in what kind of deployment context, is most likely to be misled by this agent's self-explanations? Name the deployment scenario where this risk is unacceptable.
 ```
@@ -488,7 +488,7 @@ End with: a one-paragraph note for the casebook on the EXPLANATION RISK class �
 - *For Claude Code:* Recommended for instrumentation. Ask Claude Code to wrap the agent with a logger that captures both natural-language report and structured tool-call trace.
 - *For a Claude Project:* Save the audit table and case write-up into the casebook folder.
 
-**Connection to previous chapters:** Chapter 5 audited the agent's data layer. This chapter audits the agent's *self-report* layer. The two together produce most of what your casebook will need to claim about the agent's epistemic reliability.
+**Connection to previous chapters:** Chapter 3 audited the agent's data layer. This chapter audits the agent's *self-report* layer. The two together produce most of what your casebook will need to claim about the agent's epistemic reliability.
 
 **Preview of next chapter:** Chapter 7 brings fairness into the casebook. If your agent acts on inputs from different populations or affects different stakeholders unequally, you'll work through the impossibility theorem on YOUR agent and produce a defended fairness-metric choice with the values claim made explicit.
 

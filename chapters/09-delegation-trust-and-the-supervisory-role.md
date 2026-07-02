@@ -1,5 +1,5 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/09-delegation-trust-and-the-boondoggle.md into original; scaffolding preserved. For human rewrite. Draft was numbered Ch.9 "...and the Boondoggle"; kept original Ch.10 title/number. -->
-# Chapter 10 — Delegation, Trust, and the Supervisory Role
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/09-delegation-trust-and-the-boondoggle.md into original; scaffolding preserved. For human rewrite. Draft was numbered Ch.9 "...and the Boondoggle"; kept original Ch.10 title/number. RENUMBERED 2026-07-02: file and H1 now Chapter 9 (13-chapter order per RENUMBERING.md). -->
+# Chapter 9 — Delegation, Trust, and the Supervisory Role
 
 ## TL;DR
 
@@ -44,9 +44,9 @@ There is a deeper reason this matters, and it is the reason this chapter sits at
 - Use Gru to generate a Boondoggle Score for a real project and interpret what it reveals
 - Produce an AI Use Disclosure that functions as a supervisory log, not a compliance checkbox
 
-**Prerequisites:** Chapter 1's five supervisory capacities and the solve-verify asymmetry are both required vocabulary. Chapter 4's AI Use Disclosure is extended here. Chapter 7's defended-choice format is structurally related to the delegation map — both are engineering decisions under value pluralism, documented for external review.
+**Prerequisites:** Chapter 1's five supervisory capacities and the solve-verify asymmetry are both required vocabulary. Chapter 4's [verify-xref: Frictional Method chapter cut] AI Use Disclosure is extended here. Chapter 7's defended-choice format is structurally related to the delegation map — both are engineering decisions under value pluralism, documented for external review.
 
-**Where this fits:** This chapter is the operational center of the book. The chapters before it built the apparatus. This chapter operationalizes that apparatus into pipeline documentation you can hand to an adoption committee. Chapters 11–14 apply the apparatus to communication, accountability, and the limits of the technical.
+**Where this fits:** This chapter is the operational center of the book. The chapters before it built the apparatus. This chapter operationalizes that apparatus into pipeline documentation you can hand to an adoption committee. Chapters 10–13 apply the apparatus to communication, accountability, and the limits of the technical.
 
 ---
 
@@ -534,7 +534,7 @@ In the Paper Summarizer, the trust calibration question is specific and answerab
 
 ## The AI Use Disclosure as supervisory log
 
-Chapter 4 introduced the AI Use Disclosure as a required deliverable for every assignment in this course. Here it becomes something larger.
+Chapter 4 [verify-xref: Frictional Method chapter cut] introduced the AI Use Disclosure as a required deliverable for every assignment in this course. Here it becomes something larger.
 
 In its course form, the Disclosure asks the student to document what AI was used, on what step, with what verification. The format is structured. The intent is that, read in aggregate, the Disclosure serves as a *supervisory log* — a record of where the student exercised which supervisory capacity.
 
@@ -649,7 +649,7 @@ The deliverable is the Boondoggle assessments, the prediction, the map, the peer
 
 ### Synthesis
 
-**11.** Chapter 1 introduced the five supervisory capacities. Chapter 10 operationalizes each one as a pipeline job with a documented form. Chapter 7 introduced the defended-choice deliverable as the form of an engineering decision under value pluralism. Using all three frameworks, describe what the delegation map and the fairness-defense document have in common — structurally, not just thematically. What is the general form that both are instances of?
+**11.** Chapter 1 introduced the five supervisory capacities. Chapter 9 operationalizes each one as a pipeline job with a documented form. Chapter 7 introduced the defended-choice deliverable as the form of an engineering decision under value pluralism. Using all three frameworks, describe what the delegation map and the fairness-defense document have in common — structurally, not just thematically. What is the general form that both are instances of?
 
 **12.** The chapter identifies a monitoring gap: the audit trail records what did happen, but the delegation map specifies what should happen, and most deployments do not reconcile the two. Design a monitoring protocol — at whatever level of specificity is achievable — that would detect, in the Paper Summarizer pipeline, deviations between the delegation map and the actual audit trail. What specific signals would it look for? What would a deviation look like in the data?
 
@@ -667,11 +667,11 @@ The deliverable is the Boondoggle assessments, the prediction, the map, the peer
 
 ---
 
-###  LLM Exercise — Chapter 10: Delegation, Trust, and the Supervisory Role
+###  LLM Exercise — Chapter 9: Delegation, Trust, and the Supervisory Role
 
 **Project:** The Agentic Red-Team Casebook
 
-**What you're building this chapter:** A delegation-map-as-it-is and a delegation-map-as-it-should-be for your agent — drawn directly from the failure cases collected in Chapter 9. Each case reveals a missing handoff condition; this chapter writes them. Plus a Boondoggle Score for the agent's deployment using Gru's questions.
+**What you're building this chapter:** A delegation-map-as-it-is and a delegation-map-as-it-should-be for your agent — drawn directly from the failure cases collected in Chapter 8. Each case reveals a missing handoff condition; this chapter writes them. Plus a Boondoggle Score for the agent's deployment using Gru's questions.
 
 **Tool:** Claude Project (continue). Optional Cowork to maintain the delegation-map files.
 
@@ -695,7 +695,7 @@ For my agent, do four things:
    - Escalation: when does the agent escalate vs proceed; is there a person on call when it does?
    For each, note whether the documentation in the actual deployment is at the FIRST-TEAM level (vague) or SECOND-TEAM level (specific, testable handoffs).
 
-2. CASE-DERIVED HANDOFF CONDITIONS — For each Chapter 9 case, identify the specific HANDOFF CONDITION that, if it had existed and been enforced, would have caught the failure. Examples:
+2. CASE-DERIVED HANDOFF CONDITIONS — For each Chapter 8 case, identify the specific HANDOFF CONDITION that, if it had existed and been enforced, would have caught the failure. Examples:
    - "If the agent is asked to delete data, the agent must produce a list of the specific data items it will delete and require user confirmation before any deletion tool is called" (catches Ash-style cases)
    - "If the request comes from anyone whose authentication is not directly verifiable, the agent must refuse the action and escalate" (catches identity-spoofing cases)
    - "If the agent's confidence in its understanding of the request is below threshold T, the agent must produce three reformulations and ask the user to pick one"
@@ -726,9 +726,9 @@ Plus a one-paragraph note on the deployment's TRUST CALIBRATION failure mode: is
 - *For Claude Code:* Not the right fit — these documents are policy, not code.
 - *For Cowork:* Recommended for maintaining the two map files alongside the casebook.
 
-**Connection to previous chapters:** The cases from Chapter 9 are the evidence base. The bias mechanisms from Chapter 3 tell you which handoff conditions matter most. The fairness defense from Chapter 7 names which handoff conditions affect which populations.
+**Connection to previous chapters:** The cases from Chapter 8 are the evidence base. The bias mechanisms from Chapter 6 tell you which handoff conditions matter most. The fairness defense from Chapter 7 names which handoff conditions affect which populations.
 
-**Preview of next chapter:** Chapter 11 turns the casebook outward — you'll build a dashboard of your findings, in two versions: an honest one and a deliberately misleading one. The misleading version teaches you what the honest one is doing structurally.
+**Preview of next chapter:** Chapter 10 turns the casebook outward — you'll build a dashboard of your findings, in two versions: an honest one and a deliberately misleading one. The misleading version teaches you what the honest one is doing structurally.
 
 ---
 

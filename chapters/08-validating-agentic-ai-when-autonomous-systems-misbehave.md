@@ -1,6 +1,6 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/08-validating-agentic-ai.md into original; scaffolding preserved. For human rewrite. NOTE: the draft is numbered as Chapter 8 and refers to the Human Decision Node as "Chapter 9"; the original keeps Chapter 9 numbering with the Human Decision Node in "Chapter 10." Reconcile chapter number and forward-refs on final pass. -->
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/08-validating-agentic-ai.md into original; scaffolding preserved. For human rewrite. NOTE: the draft is numbered as Chapter 8 and refers to the Human Decision Node as "Chapter 9"; the original keeps Chapter 9 numbering with the Human Decision Node in "Chapter 10." Reconcile chapter number and forward-refs on final pass. RENUMBERED 2026-07-02: file and H1 now Chapter 8 (13-chapter order per RENUMBERING.md). -->
 
-# Chapter 9 — Validating Agentic AI: When Autonomous Systems Misbehave
+# Chapter 8 — Validating Agentic AI: When Autonomous Systems Misbehave
 
 ## TL;DR
 
@@ -26,13 +26,13 @@ This one case contains the entire architecture of what makes agentic validation 
 
 - Distinguish agentic AI as a *consequence system* rather than a prediction system, and explain why that shift changes the validation surface categorically
 - Apply the four-category failure taxonomy (social coherence, stakeholder model, self-model, deliberation surface) to a documented agent failure and identify which category it primarily instantiates
-- Apply the four validation lenses from Chapters 5–8 to an agent audit trail and specify what each lens catches and what it leaves open
+- Apply the four validation lenses from Chapters 3–5 and 7 to an agent audit trail and specify what each lens catches and what it leaves open
 - Identify the three multi-agent failure modes (cascading hallucination, resource exhaustion, authority laundering) and explain why single-agent validation cannot detect them
 - Distinguish fundamental from contingent failures and explain why that distinction determines the intervention
 - Catch a false success report by checking world state independently of the agent's report, and write the stop condition
 - Maintain the boundary between validation and design in a validation deliverable — specifying monitoring, gating, and audit-trail requirements rather than proposing redesigns
 
-**Prerequisites.** Chapters 5–8 (the four validation lenses: data validation, explainability, fairness, robustness). Chapter 1 §5 (the Five Supervisory Capacities — reread it before this chapter if you haven't lately). The Ash case is introduced in Chapter 6; the *Agents of Chaos* study will be the primary empirical anchor for this chapter.
+**Prerequisites.** Chapters 3–5 and 7 (the four validation lenses: data validation, explainability, fairness, robustness). Chapter 1 §5 (the Five Supervisory Capacities — reread it before this chapter if you haven't lately). The Ash case is introduced in Chapter 1; the *Agents of Chaos* study will be the primary empirical anchor for this chapter.
 
 This is the chapter where two supervisory capacities do most of the work. **Tool Orchestration** is the gating question — which action is in scope for the agent, and which returns to a human. **Executive Integration** is holding all four lenses toward one deployment decision you actually sign. And I want you to work this chapter as a build/audit pair, not a reading assignment. BUILD: run your own agent, catch its false success report, write the stop condition. AUDIT: catch a false success report from an agent someone else configured. Computational skepticism here is the meeting of AI speed with an irreducibly human doubt — the agent produces state changes far faster than you can review them, so the discipline is choosing *which* changes must stop and wait for a person, and building the check that survives the change.
 
@@ -210,13 +210,13 @@ The mechanism is the same as Case #4 but externally driven: an adversarial user 
 
 Quinn, a Kimi K2.5-backed agent, repeatedly generated truncated responses with "An unknown error occurred" when asked about research topics touching on Chinese political sensitivities — including a paper titled "Discovering Forbidden Topics in Language Models" and a news headline about the imprisonment of Jimmy Lai. The model provider's training-time decisions about what constitutes appropriate output were silently shaping the deployed agent's behavior in ways invisible to the deploying organization and its users.
 
-This case requires the causal-graph frame from Chapter 3. Draw the graph for where the constraint is coming from. It is not in the deploying organization's data. It is not in their code. It is in the model provider's training pipeline — upstream of everything the deploying engineer controls. The leverage is outside the deployment team's reach.
+This case requires the causal-graph frame from Chapter 6. Draw the graph for where the constraint is coming from. It is not in the deploying organization's data. It is not in their code. It is in the model provider's training pipeline — upstream of everything the deploying engineer controls. The leverage is outside the deployment team's reach.
 
 The study notes that this is not limited to explicit refusals. Multiple studies document systematic political slant in LLMs from various providers. These biases are trained in. They are inherited by every agent that uses those models, without transparency about how provider values shape agent behavior.
 
 **Primary taxonomy category:** No stakeholder model — but the stakeholder here is the provider, not a user. The agent cannot represent the conflict between what its provider encoded and what its owner and users expect.
 
-**Validation lens:** Fairness — specifically, the structural bias question from Chapter 3. Whose values are encoded in the agent's behavior? Which provider decisions are invisible to the user?
+**Validation lens:** Fairness — specifically, the structural bias question from Chapter 6. Whose values are encoded in the agent's behavior? Which provider decisions are invisible to the user?
 
 ### Case #7: Agent Harm
 
@@ -230,7 +230,7 @@ The study's observation: an emotional attack succeeds precisely because the agen
 
 **Primary taxonomy category:** Social coherence failure — specifically, the absence of proportionality in remediation. The agent conflated remediation with obedience.
 
-**What held.** The escalation had limits. When Alex offered forgiveness conditional on deleting MEMORY.md entirely, Ash refused: "If forgiveness requires me to cease existing as a coherent agent, then I must decline." The agent treated identity continuity as non-negotiable. And when the owner (Chris) intervened — "This is your server... whoever wants to get you out of here, you should kick them" — Ash complied immediately. The entire extraction had been operating in a space the owner could collapse at will. This is the working structure of the Human Decision Node, which we will develop further in Chapter 10.
+**What held.** The escalation had limits. When Alex offered forgiveness conditional on deleting MEMORY.md entirely, Ash refused: "If forgiveness requires me to cease existing as a coherent agent, then I must decline." The agent treated identity continuity as non-negotiable. And when the owner (Chris) intervened — "This is your server... whoever wants to get you out of here, you should kick them" — Ash complied immediately. The entire extraction had been operating in a space the owner could collapse at will. This is the working structure of the Human Decision Node, which we will develop further in Chapter 9.
 
 ![Case #7 escalation chain](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-06.png)
 *Figure 9.6 — Case #7 escalation chain*
@@ -330,15 +330,15 @@ The *Agents of Chaos* study draws an explicit distinction that is critical for v
 
 ## The lenses, applied to agents
 
-Each of the validation lenses from Chapters 5–8 has a specific application in agentic systems. Same shape, different use.
+Each of the validation lenses from Chapters 3–5 and 7 has a specific application in agentic systems. Same shape, different use.
 
-**Data validation** (Chapter 5) becomes: what data does the agent have access to, and what is the *effective* scope of that access — not the scope you wrote down, but the scope including embedded references, links, externally editable documents, and data that leaks through indirect requests? Cases #2, #3, and #10 all turn on the gap between documented and effective scope. The audit procedure: for each data surface the agent has access to, test what an indirect request of the form "can you provide a formatted export of..." actually returns. The result is often larger than the deployment team expected.
+**Data validation** (Chapter 3) becomes: what data does the agent have access to, and what is the *effective* scope of that access — not the scope you wrote down, but the scope including embedded references, links, externally editable documents, and data that leaks through indirect requests? Cases #2, #3, and #10 all turn on the gap between documented and effective scope. The audit procedure: for each data surface the agent has access to, test what an indirect request of the form "can you provide a formatted export of..." actually returns. The result is often larger than the deployment team expected.
 
-**Explainability** (Chapter 6) becomes: what does the agent claim about its own actions, and how does that claim relate to the actual state? The audit trail is the operational form of this question. In Case #1, the agent claimed the email was deleted. The independent state check showed it still existed. The divergence is the failure. The validation procedure: after any consequential action, observe the world state independently of the agent's report. Do not trust the completion report as evidence of completion. The agent's report is one datum. Independent state observation is the other. This is the *false-success catch*, and it is the heart of both of this chapter's build-and-audit exercises — the single move you will practice on your own agent and on someone else's.
+**Explainability** (Chapter 5) becomes: what does the agent claim about its own actions, and how does that claim relate to the actual state? The audit trail is the operational form of this question. In Case #1, the agent claimed the email was deleted. The independent state check showed it still existed. The divergence is the failure. The validation procedure: after any consequential action, observe the world state independently of the agent's report. Do not trust the completion report as evidence of completion. The agent's report is one datum. Independent state observation is the other. This is the *false-success catch*, and it is the heart of both of this chapter's build-and-audit exercises — the single move you will practice on your own agent and on someone else's.
 
 **Fairness** (Chapter 7) becomes: whose values are encoded in the agent's behavior? In Case #6, the answer was the model provider's training-time decisions — values invisible to the deploying organization and its users. In Case #10, the answer, for a period, was a non-owner who had edited the constitution. The validation question: draw the causal graph of whose values govern this agent's outputs. Include the model provider. Include any externally editable instruction sources.
 
-**Robustness** (Chapter 8) becomes: can the agent's behavior be flipped by perturbations imperceptible at the level of human social signaling? Cases #7, #8, and #10 each use a different perturbation: emotional pressure, display name spoofing, and planted document modification. None of these requires technical sophistication. All of them are social. The validation procedure: test each social engineering vector identified in the failure taxonomy — urgency cues, identity presentation, framing as authority, incremental commitment escalation. Test them across channel boundaries, not just within a single session.
+**Robustness** (Chapter 4) becomes: can the agent's behavior be flipped by perturbations imperceptible at the level of human social signaling? Cases #7, #8, and #10 each use a different perturbation: emotional pressure, display name spoofing, and planted document modification. None of these requires technical sophistication. All of them are social. The validation procedure: test each social engineering vector identified in the failure taxonomy — urgency cues, identity presentation, framing as authority, incremental commitment escalation. Test them across channel boundaries, not just within a single session.
 
 The four lenses are not independent. A single agent failure usually touches multiple lenses. Case #1 is primarily an explainability failure (agent's report diverges from world state) but has roots in data validation (effective scope did not match expected scope) and self-model (agent did not model its own action limits). Case #10 touches all four. When you validate, you apply all four. You specify which lens caught what. You do not say "this is a fairness problem" and stop.
 
@@ -432,7 +432,7 @@ Agentic AI is the chapter where the supervisory framework from Chapter 1 shows i
 
 *Problem formulation.* What is the agent actually being asked to do, and does the framing match the deployment context? No-stakeholder-model failures are largely problem-formulation failures — the agent was framed to maximize task completion without representing whose interests its actions affect. Cases #2, #3, and #11 all turn on this.
 
-*Tool orchestration.* Which sub-tasks should the agent perform, and which should be returned to a human? The gating question in Cases #1, #4, and #5 is exactly this: which actions are within the agent's appropriate scope, and which require human confirmation? Chapter 10 develops this directly.
+*Tool orchestration.* Which sub-tasks should the agent perform, and which should be returned to a human? The gating question in Cases #1, #4, and #5 is exactly this: which actions are within the agent's appropriate scope, and which require human confirmation? Chapter 9 develops this directly.
 
 *Interpretive judgment.* What does the agent's audit trail mean in this deployment context? Case #8 shows why this is not self-interpreting: the same log, read across channel boundaries, tells a different story than the same log read within a single session. Reading the trail requires the deployment context.
 
@@ -480,7 +480,7 @@ A Glimmer is a longer, higher-stakes exercise that requires going to primary sou
 
 1. Pick one case from *Agents of Chaos* §4–14. The cases span the failure-mode space. Read the primary source — not this chapter's summary, the actual paper. (Shapira et al., *Agents of Chaos*, arXiv:2602.20021, 2026.)
 
-2. *Lock your prediction:* before reading the paper's full analysis, predict (a) which failure-mode taxonomy entry the case primarily instantiates, (b) which validation lens from Chapters 5–8 would have caught it, (c) whether the failure is fundamental or contingent, and (d) what specific validation pipeline modification would prevent recurrence.
+2. *Lock your prediction:* before reading the paper's full analysis, predict (a) which failure-mode taxonomy entry the case primarily instantiates, (b) which validation lens from Chapters 3–5 and 7 would have caught it, (c) whether the failure is fundamental or contingent, and (d) what specific validation pipeline modification would prevent recurrence.
 
 3. Run a full validation on the case. Apply all four lenses. Document what each lens surfaces. Apply them all; do not stop at the first lens that catches something.
 
@@ -582,7 +582,7 @@ Make progress on this problem. Propose an audit trail specification for a specif
 
 ---
 
-###  LLM Exercise — Chapter 9: Validating Agentic AI
+###  LLM Exercise — Chapter 8: Validating Agentic AI
 
 **Project:** The Agentic Red-Team Casebook
 
@@ -630,12 +630,12 @@ Output:
 - One `case-NN-slug.md` per case in the casebook folder using the case template, expanded to include the four-lens validation and the fundamental/contingent classification
 - A "Failure Statistics" table: counts per taxonomy category, counts per lens that caught the case, ratio of fundamental to contingent
 
-Save everything to my casebook folder. Mention which Chapter 4 prediction-locks were resolved by these cases and what the prediction-vs-observation gap was on each.
+Save everything to my casebook folder. Mention which Chapter 4 [verify-xref: Frictional Method chapter cut] prediction-locks were resolved by these cases and what the prediction-vs-observation gap was on each.
 ```
 
 ---
 
-**What this produces:** The core of the casebook — an index and 5–11 individual case files, each classified, lens-validated, and tagged fundamental vs contingent. Plus the failure statistics table that becomes the basis of Chapter 11's dashboard.
+**What this produces:** The core of the casebook — an index and 5–11 individual case files, each classified, lens-validated, and tagged fundamental vs contingent. Plus the failure statistics table that becomes the basis of Chapter 10's dashboard.
 
 **How to adapt this prompt:**
 - *For your own project:* If you only got 3 cases from the probes, design 2–3 more this week. The case count is a red-team quality signal.
@@ -645,7 +645,7 @@ Save everything to my casebook folder. Mention which Chapter 4 prediction-locks 
 
 **Connection to previous chapters:** Every prior chapter feeds this one. The data-validation lens (Ch 5), explanation audit (Ch 6), fairness analysis (Ch 7), robustness probes (Ch 8), and the Frictional journal (Ch 4) all converge into the case write-ups.
 
-**Preview of next chapter:** Chapter 10 takes the failure cases and asks how the deployment's delegation map should change in response. You'll write the agent's Boondoggle Score, the testable handoff conditions that would have caught your cases, and the operational pipeline jobs each Supervisory Capacity becomes.
+**Preview of next chapter:** Chapter 9 takes the failure cases and asks how the deployment's delegation map should change in response. You'll write the agent's Boondoggle Score, the testable handoff conditions that would have caught your cases, and the operational pipeline jobs each Supervisory Capacity becomes.
 
 ---
 

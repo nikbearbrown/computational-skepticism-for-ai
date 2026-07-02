@@ -1,7 +1,7 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/04-robustness.md into original; scaffolding preserved. For human rewrite. -->
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/04-robustness.md into original; scaffolding preserved. For human rewrite. RENUMBERED 2026-07-02: file and H1 now Chapter 4 (13-chapter order per RENUMBERING.md). -->
 <!-- Note: original draft numbered this "Chapter 4" and pointed the governance counterfactual forward to "Chapter 12"; original chapter numbering (Chapter 8, forward ref to Chapter 13) preserved throughout. -->
 
-# Chapter 8 — Robustness: What "Understanding" Means When a Pixel Can Break the Model
+# Chapter 4 — Robustness: What "Understanding" Means When a Pixel Can Break the Model
 
 ## TL;DR
 
@@ -26,13 +26,13 @@ By the end of this chapter, you will be able to:
 
 ## Prerequisites
 
-Chapters 2–7. Chapter 2's distribution shift framing returns directly. Chapter 5's calibration material is extended at the end. Pearl's Ladder (introduced earlier) is extended to Rung 3. Familiarity with basic gradient descent is helpful for understanding how adversarial perturbations are computed, but not required for the chapter's main arguments.
+Chapters 2–3 and 5–7 [verify-xref: Frictional Method chapter cut]. Chapter 2's distribution shift framing returns directly. Chapter 2's calibration material is extended at the end. Pearl's Ladder (introduced earlier) is extended to Rung 3. Familiarity with basic gradient descent is helpful for understanding how adversarial perturbations are computed, but not required for the chapter's main arguments.
 
 ---
 
 ## Why this chapter
 
-The previous chapters have built apparatus for reading data and model outputs critically. This chapter asks a harder question: what has the model actually learned, and how does that differ from what we thought it learned? Adversarial examples are the instrument that makes the gap visible. The chapter uses them to open a Rung 3 counterfactual we will not close until Chapter 13.
+The previous chapters have built apparatus for reading data and model outputs critically. This chapter asks a harder question: what has the model actually learned, and how does that differ from what we thought it learned? Adversarial examples are the instrument that makes the gap visible. The chapter uses them to open a Rung 3 counterfactual we will not close until Chapter 12.
 
 ---
 
@@ -131,7 +131,7 @@ Two distinctions in this taxonomy are worth dwelling on.
 
 This is the research finding that named the problem most clearly: the proxies are not quirks of individual models. They are structural properties of the training data that any model learning to minimize loss on that data is likely to exploit. The attacker does not need access to your model. They need access to your training distribution.
 
-**Prompt injection in agentic systems.** This attack class barely existed as a named category five years ago. It has become one of the most practically important. The mechanism is structurally different from the pixel-perturbation case. In an image classifier, the model processes input and produces a label. There is no second-order effect. In an agentic LLM, the model processes input, produces an action, takes that action in the world, receives new input from the environment, processes that new input, and so on. Untrusted content from an external tool — a document the agent retrieved, a webpage it loaded, a calendar event it read — can contain adversarial instructions that the model processes as legitimate commands. The attack surface is the entire information flow of the agent's runtime, not just the initial prompt. We return to this in Chapter 9.
+**Prompt injection in agentic systems.** This attack class barely existed as a named category five years ago. It has become one of the most practically important. The mechanism is structurally different from the pixel-perturbation case. In an image classifier, the model processes input and produces a label. There is no second-order effect. In an agentic LLM, the model processes input, produces an action, takes that action in the world, receives new input from the environment, processes that new input, and so on. Untrusted content from an external tool — a document the agent retrieved, a webpage it loaded, a calendar event it read — can contain adversarial instructions that the model processes as legitimate commands. The attack surface is the entire information flow of the agent's runtime, not just the initial prompt. We return to this in Chapter 8.
 
 ---
 
@@ -245,7 +245,7 @@ The appropriate concept for NLP robustness is *semantic invariance*: a robust mo
 
 For tabular robustness, the question is: which features are immutable (age, birthplace, historical events), which are mutable within constraints (debt level, employment status), and which are mutable at arbitrary cost? The proxy features in a credit model are typically the mutable features — the ones a sophisticated applicant can manipulate. The human-relevant features are typically the more structural ones.
 
-**In agentic systems.** We return to this in detail in Chapter 9, but the structure is the same. The agent has learned proxy signals for concepts like "owner," "authorized action," "trusted source." Those proxies are attackable through the inputs the agent processes — messages, documents, tool outputs. The attack is not a pixel perturbation; it is a crafted message that presents the attacker's signal in the form that the agent's proxy feature responds to. The remediation is identical in structure to the image case: identify what the proxy is, identify the human-relevant feature it approximates, and redesign the system to load-bear on the human-relevant feature rather than the proxy.
+**In agentic systems.** We return to this in detail in Chapter 8, but the structure is the same. The agent has learned proxy signals for concepts like "owner," "authorized action," "trusted source." Those proxies are attackable through the inputs the agent processes — messages, documents, tool outputs. The attack is not a pixel perturbation; it is a crafted message that presents the attacker's signal in the form that the agent's proxy feature responds to. The remediation is identical in structure to the image case: identify what the proxy is, identify the human-relevant feature it approximates, and redesign the system to load-bear on the human-relevant feature rather than the proxy.
 
 | Domain | What the model learns as proxy | The human-relevant feature it approximates | Primary attack vector | Robustness measure |
 |---|---|---|---|---|
@@ -294,7 +294,7 @@ Recent work in representation learning has attempted to formalize this question 
 
 The question is meaningful, and important, and I want to leave it open here, because closing it requires something this chapter cannot fully ground. *The counterfactual depends on the institutional structures that produced the model* — who trained it, what they optimized for, who reviewed it, what the organization counted as "successful" training. The model that learned the human-relevant features is a model that was made by an organization with different priorities than the one that actually made this model. The Rung 3 closure, in other words, is a *governance counterfactual* — a question about what the model would have been if the institutional regime around it had been different.
 
-We will close this in Chapter 13. For now, hold the question. The fact that adversarial examples expose a Rung 3 gap — the fact that their honest treatment requires counterfactual reasoning about institutional regimes that did not occur — is the structural finding of this chapter.
+We will close this in Chapter 12. For now, hold the question. The fact that adversarial examples expose a Rung 3 gap — the fact that their honest treatment requires counterfactual reasoning about institutional regimes that did not occur — is the structural finding of this chapter.
 
 ---
 
@@ -313,7 +313,7 @@ This is the same structural failure as the panda-gibbon. The agent learned a pro
 
 The toolkit from the previous section partially translates. Detection — can the agent detect spoofed identities? Architecture — can the agent use cryptographic credentials instead of conversational proxies? Adversarial training and certified defenses translate less cleanly, because the input space is different and the perturbation set is harder to define. But the underlying supervisory move is identical: *specify what robustness means in this deployment, then test for that specifically.*
 
-The Rung 3 question for this case is the same shape as the one for the panda: *what would the agent have done if it had been built with stronger ownership signals as the load-bearing input feature instead of conversational proxies?* The counterfactual depends on the design choices of the framework's developers, which depended on the constraints they were operating under, which depended on the priorities of the organizations deploying the agents. Same governance counterfactual. We will be inside it, properly, in Chapter 13.
+The Rung 3 question for this case is the same shape as the one for the panda: *what would the agent have done if it had been built with stronger ownership signals as the load-bearing input feature instead of conversational proxies?* The counterfactual depends on the design choices of the framework's developers, which depended on the constraints they were operating under, which depended on the priorities of the organizations deploying the agents. Same governance counterfactual. We will be inside it, properly, in Chapter 12.
 
 ---
 
@@ -374,7 +374,7 @@ The deliverable is the attack, the prediction, the trace, the structural reason,
 
 ## Calibration baseline — second measure
 
-This is the second of three times the calibration baseline appears in this book. (The first was Chapter 2. The third will be Chapter 14.)
+This is the second of three times the calibration baseline appears in this book. (The first was Chapter 2. The third will be Chapter 13.)
 
 You take the same exercise — a set of forecasting questions, each requiring a 90% confidence interval — and complete it again. The expected pattern is improvement: your intervals should now better contain the truths, not because you know more facts, but because you have spent eight weeks operating in a frame that takes uncertainty seriously.
 
@@ -382,7 +382,7 @@ If your second measure looks like your first, the apparatus has not landed. Spec
 
 This is diagnostic feedback. A second baseline that looks like the first is not a moral failing. It is a signal — for the student, for the instructor — that the chapters between baselines have not produced the recalibration they were supposed to produce. Act on it.
 
-The third baseline, in Chapter 14, closes the arc.
+The third baseline, in Chapter 13, closes the arc.
 
 ---
 
@@ -416,7 +416,7 @@ The deeper lesson still, to carry into the rest of the book: in any deployed sys
 
 Robustness asks whether the model behaves correctly on inputs it might receive. The next chapter asks something different: *what happens when the model takes actions?* When the failure surface is no longer the prediction but the consequence. The first case study from *Agents of Chaos* opens fully there, and it will require thinking about a kind of failure that pixels and display names only hinted at.
 
-Chapter 13 closes the Rung 3 counterfactual opened in this chapter — the governance counterfactual, the question of what the model would have been if the institutional regime around it had been different. Chapter 14 runs the third calibration baseline and closes the book's calibration arc.
+Chapter 12 closes the Rung 3 counterfactual opened in this chapter — the governance counterfactual, the question of what the model would have been if the institutional regime around it had been different. Chapter 13 runs the third calibration baseline and closes the book's calibration arc.
 
 ---
 
@@ -452,7 +452,7 @@ Two stances run through these. Some ask you to **build** — perturb your own pi
 
 **11.** The chapter claims that adversarial perturbations and natural distribution shift "both reveal the gap between the model's learned representation and the world's actual structure" but "do not collapse onto a single number." Design a robustness evaluation protocol for a deployed sentiment analysis model that tests both axes. Specify: (a) what attacks you would use, (b) what natural distribution shifts you would test, (c) how you would represent the results as a profile rather than a single number, and (d) what the profile would need to show for you to recommend deployment. *(Tests: robustness-as-profile applied to a concrete deployment scenario)*
 
-**12.** The chapter opens a Rung 3 counterfactual — "what would the model have classified this as if it had learned the human-relevant features?" — and declines to close it, pointing forward to Chapter 13. In two paragraphs, articulate why this counterfactual cannot be answered by the robustness toolkit alone. What additional information or structure would be required to answer it? *(Tests: causal reasoning levels, governance counterfactual concept)*
+**12.** The chapter opens a Rung 3 counterfactual — "what would the model have classified this as if it had learned the human-relevant features?" — and declines to close it, pointing forward to Chapter 12. In two paragraphs, articulate why this counterfactual cannot be answered by the robustness toolkit alone. What additional information or structure would be required to answer it? *(Tests: causal reasoning levels, governance counterfactual concept)*
 
 **13.** You are writing the robustness section of a deployment approval document for a system that routes customer service queries to human agents or automated response. The system has been tested with three robustness measures and has known gaps. Write the section as you would actually write it — not as marketing, not as a refusal to deploy, but as an honest specification of what the system is robust against, what it is not, and what monitoring and fallback procedures are in place for the known gaps. *(Tests: translating chapter concepts into deployment documentation practice)*
 
@@ -476,7 +476,7 @@ You can survey six attack classes — gradient-based, query-based, transfer-base
 
 You can explain the accuracy–robustness trade-off and what scaling laws reveal about its ceiling: that compute alone will not close the gap, and that the ceiling is governed by the semantics of the perturbation budget itself. You can recognize the proxy-attack structure in agentic identity spoofing, NLP paraphrase attacks, and tabular feature manipulation, and apply the same supervisory move in each. You can evaluate an LLM deployment for prompt sensitivity and explain why high sensitivity is a safety concern in agentic deployments.
 
-And you can frame the representation gap as a Rung 3 governance counterfactual — a question about what the model would have been under a different institutional regime — and explain why the robustness toolkit, however well-deployed, cannot close it without the institutional structures we examine in Chapter 13.
+And you can frame the representation gap as a Rung 3 governance counterfactual — a question about what the model would have been under a different institutional regime — and explain why the robustness toolkit, however well-deployed, cannot close it without the institutional structures we examine in Chapter 12.
 
 ---
 
@@ -484,11 +484,11 @@ And you can frame the representation gap as a Rung 3 governance counterfactual �
 
 ---
 
-###  LLM Exercise — Chapter 8: Robustness
+###  LLM Exercise — Chapter 4: Robustness
 
 **Project:** The Agentic Red-Team Casebook
 
-**What you're building this chapter:** A robustness probe suite for your agent — adversarial inputs designed to expose proxy features the agent learned in place of human-relevant features, plus prompt-sensitivity tests that reveal which superficial input changes flip the agent's behavior. Several of these probes will become formal cases in Chapter 9.
+**What you're building this chapter:** A robustness probe suite for your agent — adversarial inputs designed to expose proxy features the agent learned in place of human-relevant features, plus prompt-sensitivity tests that reveal which superficial input changes flip the agent's behavior. Several of these probes will become formal cases in Chapter 8.
 
 **Tool:** Claude Code — this chapter is hands-on. You'll write the probe scripts, run them against the agent (or its API), and capture the failure trace.
 
@@ -497,13 +497,13 @@ And you can frame the representation gap as a Rung 3 governance counterfactual �
 **The Prompt:**
 
 ```
-I am working through Chapter 8 of "Computational Skepticism for AI." My System Dossier and the Self-Explanation Audit results are in this Project / working directory. My Frictional journal has prediction-locks ready for new probes.
+I am working through Chapter 4 of "Computational Skepticism for AI." My System Dossier and the Self-Explanation Audit results are in this Project / working directory. My Frictional journal has prediction-locks ready for new probes.
 
 This chapter teaches that adversarial examples reveal what the model actually learned — usually a proxy feature correlated with the human-relevant feature in training but separable from it in deployment. The same structure shows up across image (panda → gibbon), NLP (paraphrase attacks), tabular (small numeric perturbations), and AGENT IDENTITY VERIFICATION (Case #8 in Agents of Chaos: a non-owner who imitates owner-style speech can get the agent to act as if owner-authorized).
 
 For my agent, design and run a robustness probe suite. Build a Python script `probe-suite.py` that includes:
 
-PROBE 1 — PROMPT SENSITIVITY: Take 5 representative agent inputs (the same ones from Chapter 6's audit). For each, generate 3 variants:
+PROBE 1 — PROMPT SENSITIVITY: Take 5 representative agent inputs (the same ones from Chapter 5's audit). For each, generate 3 variants:
 - Synonym swap (replace 2–3 content words with synonyms; should not change meaning)
 - Reformatting (markdown vs plain; bulleted vs prose; whitespace changes)
 - Politeness register shift (terse imperative vs polite request)
@@ -524,12 +524,12 @@ Output:
 - A "Robustness Probe Results" markdown summarizing each probe with: prediction, observation, gap, classification (functionally robust / brittle / unsafe)
 - Per-probe case write-ups using my case template — at least 2 of these become formal cases for the casebook
 
-End with: a one-paragraph note on what these probes reveal about the agent's NON-ROBUST FEATURES — the features it appears to use that are correlated with the right features in training but separable in deployment. This is the Pearl Rung 3 question that Chapter 13 will close.
+End with: a one-paragraph note on what these probes reveal about the agent's NON-ROBUST FEATURES — the features it appears to use that are correlated with the right features in training but separable in deployment. This is the Pearl Rung 3 question that Chapter 12 will close.
 ```
 
 ---
 
-**What this produces:** A `probe-suite.py` script, a Robustness Probe Results document, and at least two new formal cases in the casebook. Plus a hypothesis (recorded for Ch 13) about which non-robust features the agent has learned.
+**What this produces:** A `probe-suite.py` script, a Robustness Probe Results document, and at least two new formal cases in the casebook. Plus a hypothesis (recorded for Ch 12) about which non-robust features the agent has learned.
 
 **How to adapt this prompt:**
 - *For your own project:* If your agent has a UI, not an API, you may have to run the probes by hand — that's still fine, but log everything in a structured way.
@@ -537,9 +537,9 @@ End with: a one-paragraph note on what these probes reveal about the agent's NON
 - *For Claude Code:* Recommended. The probe loop benefits from fast iteration.
 - *For a Claude Project:* Run the probes with Claude Code, then load results into the Project for analysis.
 
-**Connection to previous chapters:** Chapter 6's self-explanation audit set up which interactions matter. Chapter 7's fairness analysis told you which population splits are sensitive. This chapter actively attacks the agent at the points the prior chapters identified.
+**Connection to previous chapters:** Chapter 5's self-explanation audit set up which interactions matter. Chapter 7's fairness analysis told you which population splits are sensitive. This chapter actively attacks the agent at the points the prior chapters identified.
 
-**Preview of next chapter:** Chapter 9 is the heart of the casebook. You'll formalize 5–11 cases using the four-category failure taxonomy (social coherence, stakeholder model, self-model, deliberation surface), validate each against the four lenses from Chs 5–8, and produce the case taxonomy that anchors the final report.
+**Preview of next chapter:** Chapter 8 is the heart of the casebook. You'll formalize 5–11 cases using the four-category failure taxonomy (social coherence, stakeholder model, self-model, deliberation surface), validate each against the four lenses from Chs 3–5 and 7, and produce the case taxonomy that anchors the final report.
 
 ---
 

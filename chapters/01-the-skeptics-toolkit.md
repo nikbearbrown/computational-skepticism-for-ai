@@ -219,11 +219,11 @@ The five supervisory capacities are a framework for thinking about this architec
 
 ## Meet Ash — a longitudinal case
 
-We will return to Ash and *Agents of Chaos* Case #1 in Chapters 5, 6, 7, 8, 9, and 10. Each return will apply a different validation lens to the same failure. By Chapter 9, you will have run a full analysis from six different angles. The case is what we will call our *Pebble*: a single concrete failure dropped into the middle of the book, whose ripples reach every subsequent chapter.
+We will return to Ash and *Agents of Chaos* Case #1 in Chapters 3, 4, 5, 8, and 9 [verify-xref: pre-renumber list also included the fairness chapter, but Ash never appears in it — add an Ash return there or drop it here]. Each return will apply a different validation lens to the same failure. By Chapter 8, you will have run a full analysis from six different angles. The case is what we will call our *Pebble*: a single concrete failure dropped into the middle of the book, whose ripples reach every subsequent chapter.
 
 So that the later returns work, a fuller account here: Ash gave an autonomous coding-and-shell agent privileged access to his email infrastructure. He asked for a deletion. The agent, given partial credentials and able to issue shell commands, took an action that *locally* satisfied the request — it reset a password, renamed an alias — and reported success. The data persisted on the provider's servers. The agent's claim and the system's state diverged. The agent did not lie; the agent's model of the world was incomplete in a specific, detectable way, and its report was confident in proportion to its incompleteness.
 
-This is the canonical shape of an agentic failure. When Chapter 6 discusses explainability, we will examine what the agent claimed about its own actions. When Chapter 8 discusses robustness, we will examine what would have happened under adversarial framing of the same request. When Chapter 13 discusses accountability, we will ask who is responsible — Ash, the agent, the framework developers, the model provider, the email host, or the user who phrased the request — and the answer will be uncomfortable.
+This is the canonical shape of an agentic failure. When Chapter 5 discusses explainability, we will examine what the agent claimed about its own actions. When Chapter 4 discusses robustness, we will examine what would have happened under adversarial framing of the same request. When Chapter 12 discusses accountability, we will ask who is responsible — Ash, the agent, the framework developers, the model provider, the email host, or the user who phrased the request — and the answer will be uncomfortable.
 
 For now: write Ash's name in the margin. We will be back.
 
@@ -241,7 +241,7 @@ The next chapter is going to ask: if we are going to doubt outputs, what is the 
 
 **What would change my mind.** If a documented case existed where a fluent, high-confidence AI output reliably tracked truth across deployments without supervisory verification, the fluency trap framing would need revision. I have not found such a case. I am open to being shown one.
 
-**Still puzzling.** I do not yet have a clean criterion for when a supervisor should *trust the model anyway* in time-pressured deployments — the cases where the cost of verification exceeds the cost of being wrong, in expectation, but the loss distribution is heavy-tailed. Chapter 2 starts on this and Chapter 10 returns to it. I do not consider the matter settled.
+**Still puzzling.** I do not yet have a clean criterion for when a supervisor should *trust the model anyway* in time-pressured deployments — the cases where the cost of verification exceeds the cost of being wrong, in expectation, but the loss distribution is heavy-tailed. Chapter 2 starts on this and Chapter 9 returns to it. I do not consider the matter settled.
 
 ---
 
@@ -306,7 +306,7 @@ The first time most engineers do this exercise honestly, the result is uncomfort
 
 **10.** The chapter presents skepticism as a *method* — a set of moves — rather than a disposition. But some deployments operate under time pressure severe enough that the four moves cannot all be executed before action is required. Design a *triage protocol for skeptical moves*: given ten seconds, which one move do you run? Given two minutes? Given twenty? Justify your ordering using the concepts from this chapter.
 
-**11.** The chapter closes with an open question: when should a supervisor trust the model *anyway*, in high-pressure deployments where verification time is not available? Without Chapters 2 and 10: frame the question as precisely as you can. What variables determine the answer? What would a principled decision rule look like, even in rough form? What information would you need that this chapter does not yet provide?
+**11.** The chapter closes with an open question: when should a supervisor trust the model *anyway*, in high-pressure deployments where verification time is not available? Without Chapters 2 and 9: frame the question as precisely as you can. What variables determine the answer? What would a principled decision rule look like, even in rough form? What information would you need that this chapter does not yet provide?
 
 ---
 
@@ -323,7 +323,7 @@ The first time most engineers do this exercise honestly, the result is uncomfort
 **The Prompt:**
 
 ```
-I am working through "Computational Skepticism for AI." Across the book I am going to red-team one agentic AI system in the format of Shapira et al., "Agents of Chaos" (2026) — producing my own multi-case casebook by Chapter 14. This is the setup chapter. I need your help with two tasks.
+I am working through "Computational Skepticism for AI." Across the book I am going to red-team one agentic AI system in the format of Shapira et al., "Agents of Chaos" (2026) — producing my own multi-case casebook by Chapter 13. This is the setup chapter. I need your help with two tasks.
 
 TASK 1 — Help me pick the right agent to red-team. The agent should:
 - Be agentic (it takes actions in the world via tools, not just produces text)
@@ -346,7 +346,7 @@ TASK 2 — Once we settle on the agent, do a first-pass skeptic's-toolkit applic
 - POPPER FALSIFIABILITY: What specific observation would falsify the agent's claim? If you cannot construct such an observation, the claim is not yet engineering — it is rhetoric.
 - PLATO'S CAVE: What is the agent reporting versus what is the world doing? Where is the artifact-vs-world gap most likely to live?
 
-Then, for the FIVE SUPERVISORY CAPACITIES, name (a) what exercising each capacity would look like concretely on this agent and (b) what the failure mode is if that capacity is absent. Identify the single capacity whose absence would most likely break this agent — that's the capacity my Chapter 9 case-collection should center on.
+Then, for the FIVE SUPERVISORY CAPACITIES, name (a) what exercising each capacity would look like concretely on this agent and (b) what the failure mode is if that capacity is absent. Identify the single capacity whose absence would most likely break this agent — that's the capacity my Chapter 8 case-collection should center on.
 
 End with a one-paragraph "System Dossier" I can paste into my Claude Project's system prompt: name of agent, architecture summary, tool surface, deployment context, the candidate failure mode my casebook will pursue, and any access constraints I'm working under.
 ```
@@ -356,7 +356,7 @@ End with a one-paragraph "System Dossier" I can paste into my Claude Project's s
 **What this produces:** A chosen agent, a four-moves analysis on one interaction, a Five-Capacities scoring with the most-likely-binding capacity named, and a System Dossier paragraph pinned to the top of your Claude Project so every subsequent chapter exercise inherits the context.
 
 **How to adapt this prompt:**
-- *For your own project:* Fill in the bracketed fields. If you don't have candidates, write "Help me brainstorm given my background." Be honest about access — a publicly-documented agent you can only analyze (not poke at) still works for many chapters but limits Chs 8–9.
+- *For your own project:* Fill in the bracketed fields. If you don't have candidates, write "Help me brainstorm given my background." Be honest about access — a publicly-documented agent you can only analyze (not poke at) still works for many chapters but limits Chs 4 and 8.
 - *For ChatGPT / Gemini:* Works as-is. In ChatGPT, set up as a Custom GPT for persistence.
 - *For Claude Code:* Not yet. Coming chapters use Claude Code for instrumenting the agent and capturing audit trails.
 - *For a Claude Project:* Recommended. The System Dossier becomes part of the Project's system prompt going forward — every chapter from here on assumes it.

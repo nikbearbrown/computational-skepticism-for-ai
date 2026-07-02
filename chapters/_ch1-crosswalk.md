@@ -31,7 +31,7 @@ Order follows the original (`01-the-skeptics-toolkit.md`).
 | 19 | Fig 1.6 (fluency trap mechanism) | ✅ | caption only | Keep |
 | 20 | Skepticism as a team practice | ✅ | ✅ | Identical |
 | 21 | Fig 1.7 (workflow diagram) | ✅ | caption only | Keep |
-| 22 | **Meet Ash — a longitudinal case** (the "Pebble") | ✅ | ❌ | **Keep** — sets up the returns in Chs 5–10 |
+| 22 | **Meet Ash — a longitudinal case** (the "Pebble") | ✅ | ❌ | **Keep** — sets up the returns in Chs 3–9 |
 | 23 | The shape of the rest | ✅ | ❌ | Keep |
 | 24 | "What would change my mind" / "Still puzzling" | ✅ | ❌ | Keep — the intellectual-honesty coda |
 | 25 | Exercises (Glimmers, Warm-Up, Application, Synthesis, Challenge) | ✅ | ❌ | **Keep** — the pedagogical core |

@@ -1,5 +1,5 @@
-<!-- ROUGH MERGE 2026-07-02: woven from drafts/10-visualization-under-validation.md into original; scaffolding preserved. For human rewrite. Note: draft was numbered "Chapter 10"; original is Chapter 11 — kept original numbering/title throughout. -->
-# Chapter 11 — Visualization Under Validation: Honest, Misleading, and the Choices Between
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/10-visualization-under-validation.md into original; scaffolding preserved. For human rewrite. Note: draft was numbered "Chapter 10"; original is Chapter 11 — kept original numbering/title throughout. RENUMBERED 2026-07-02: file and H1 now Chapter 10 (13-chapter order per RENUMBERING.md). -->
+# Chapter 10 — Visualization Under Validation: Honest, Misleading, and the Choices Between
 
 ## TL;DR
 
@@ -25,7 +25,7 @@ By the end of this chapter, you will be able to:
 
 ## Prerequisites
 
-Chapters 2–10. Chapter 2's calibration material returns — calibration visualization is one of the cases examined. The validation methodology built across the book is what this chapter asks you to communicate faithfully.
+Chapters 2–9. Chapter 2's calibration material returns — calibration visualization is one of the cases examined. The validation methodology built across the book is what this chapter asks you to communicate faithfully.
 
 ---
 
@@ -378,7 +378,7 @@ The choices are normative. There is no neutral.
 
 The next chapter takes the same problem in writing. A dashboard tells a visual story. Validation findings also get communicated in writing, in proposals, in meetings, in conversations with people who will not look at any chart. There the question is harder, because there is no axis to truncate, no color to choose. How do you say what you don't know without losing the room? That is the next chapter's work.
 
-The living-deck format introduced here recurs in the research project throughout the course. Chapter 14 closes the calibration arc and the book's supervisory thread.
+The living-deck format introduced here recurs in the research project throughout the course. Chapter 13 closes the calibration arc and the book's supervisory thread.
 
 ---
 
@@ -438,7 +438,7 @@ The chapter's central claim: the dashboard is part of the validation. The design
 
 ---
 
-###  LLM Exercise — Chapter 11: Visualization Under Validation
+###  LLM Exercise — Chapter 10: Visualization Under Validation
 
 **Project:** The Agentic Red-Team Casebook
 
@@ -451,7 +451,7 @@ The chapter's central claim: the dashboard is part of the validation. The design
 **The Prompt:**
 
 ```
-I am working through Chapter 11 of "Computational Skepticism for AI." My casebook contains 5–11 failure cases with classifications and the failure-statistics table from Chapter 9.
+I am working through Chapter 10 of "Computational Skepticism for AI." My casebook contains 5–11 failure cases with classifications and the failure-statistics table from Chapter 8.
 
 This chapter teaches that a dashboard is an argument. The design choices are normative — choice of axis range, color, channel, ordering, what gets foregrounded vs sub-tabbed, what shows uncertainty vs hides it. The nine-item catalog of misleading choices includes truncated axes, dual-axis tricks, cherry-picked windows, area-instead-of-position encoding, color-as-judgment, etc. Aleatoric uncertainty (irreducible variability) and epistemic uncertainty (incomplete knowledge) require different visualization techniques.
 
@@ -462,7 +462,7 @@ Design choices:
 - Failure rate (cases per N tasks tested) shown on a position-encoded chart (bar or dot plot), with a y-axis starting at 0
 - Severity classification (fundamental vs contingent) shown alongside, not buried
 - Per-category breakdown (the four taxonomy categories) shown with consistent ordering
-- The two prediction-locks from Chapter 4 that resolved badly are visible — calibration of the casebook itself is on the dashboard
+- The two prediction-locks from Chapter 4 [verify-xref: Frictional Method chapter cut] that resolved badly are visible — calibration of the casebook itself is on the dashboard
 - Aleatoric uncertainty around each rate shown via confidence intervals (use Wilson or bootstrap CI for small N)
 - Epistemic uncertainty (sources of structural unknown — opacity of training data, untested deployment contexts) shown via a "what we cannot say" panel
 - Color used for category, not for judgment
@@ -498,9 +498,9 @@ Finally — the LIVING DECK move — add a provisionality note to Dashboard A. S
 - *For Claude Code:* Recommended for the matplotlib / plotly version. Claude Code can iterate on the design fast.
 - *For Cowork:* Save both dashboards plus the comparison note to the casebook folder.
 
-**Connection to previous chapters:** The Chapter 9 failure statistics are the data; the Chapter 7 fairness defense is one of the cells; the Chapter 8 robustness probe results are visible too. The dashboard is the casebook's findings made legible.
+**Connection to previous chapters:** The Chapter 8 failure statistics are the data; the Chapter 7 fairness defense is one of the cells; the Chapter 4 robustness probe results are visible too. The dashboard is the casebook's findings made legible.
 
-**Preview of next chapter:** Chapter 12 audits the casebook's WRITING — every claim against the verb taxonomy, every confidence number against actual calibration metrics computed on your prediction-locks. This is where the casebook's internal honesty is checked before it goes to peer critique.
+**Preview of next chapter:** Chapter 11 audits the casebook's WRITING — every claim against the verb taxonomy, every confidence number against actual calibration metrics computed on your prediction-locks. This is where the casebook's internal honesty is checked before it goes to peer critique.
 
 ---
 

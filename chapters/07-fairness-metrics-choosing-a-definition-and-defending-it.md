@@ -44,9 +44,9 @@ That is the whole shape of computational skepticism here: the machine can comput
 - Produce a defended metric choice for a specified deployment — the structured format the chapter defines
 - Name who should have decided — and why the engineer who "just optimizes" decided by default
 
-**Prerequisites:** Chapter 2's probability foundations and Chapter 3's data-provenance material are both relevant here. Chapter 2 gives you the probabilistic language the metrics require. Chapter 3 established why base-rate differences exist in real data and why they may not be correctable within the model. Chapter 6's treatment of Pearl's causal ladder is needed for the counterfactual fairness section. This chapter exercises two supervisory capacities in particular: **Problem Formulation** (deciding what the fairness mission is before the model sees it) and **Interpretive Judgment** (signing for a values claim the math cannot make).
+**Prerequisites:** Chapter 2's probability foundations and Chapter 3's data-provenance material are both relevant here. Chapter 2 gives you the probabilistic language the metrics require. Chapter 6 established why base-rate differences exist in real data and why they may not be correctable within the model. Chapter 6's treatment of Pearl's causal ladder is needed for the counterfactual fairness section. This chapter exercises two supervisory capacities in particular: **Problem Formulation** (deciding what the fairness mission is before the model sees it) and **Interpretive Judgment** (signing for a values claim the math cannot make).
 
-**Where this fits:** Chapters 5 and 6 audited data and model performance. This chapter asks a different question: not whether the model is accurate, but whether its errors and predictions are distributed equitably. The fairness question is not downstream of the accuracy question. It is structurally distinct from it.
+**Where this fits:** Chapters 3 and 5 audited data and model performance. This chapter asks a different question: not whether the model is accurate, but whether its errors and predictions are distributed equitably. The fairness question is not downstream of the accuracy question. It is structurally distinct from it.
 
 ---
 
@@ -147,7 +147,7 @@ I want you to sit with this for a moment. The three definitions all sound reason
 
 ## The COMPAS case — the theorem in public
 
-The most famous instance of this theorem playing out in public was the COMPAS case in 2016. We met it briefly in Chapter 3. Now we can see exactly what was happening.
+The most famous instance of this theorem playing out in public was the COMPAS case in 2016. We met it briefly in Chapter 6. Now we can see exactly what was happening.
 
 COMPAS — Correctional Offender Management Profiling for Alternative Sanctions — is a commercial risk-assessment tool used in some U.S. jurisdictions to estimate a defendant's likelihood of re-arrest. ProPublica analyzed its outputs in Broward County, Florida, and reported that the false-positive rate was substantially higher for Black defendants than for white defendants. Black defendants who did not go on to be re-arrested were misclassified as high-risk more often than white defendants who did not. This is a violation of equalized odds. (Angwin, Larson, Mattu, Kirchner, "Machine Bias," ProPublica, May 23, 2016; public data at github.com/propublica/compas-analysis.)
 
@@ -339,7 +339,7 @@ There are tools for adjusting models to satisfy fairness metrics. They generally
 
 *Post-processing* modifies the predictions after the fact — adjusting thresholds, calibrating per group. The advantage: simple, easy to explain. The disadvantage: explicit group-conditional thresholds may not be legally permissible in some jurisdictions, and the post-processing does not change the model — it changes the deployment.
 
-What this toolkit cannot do is resolve the impossibility theorem. It can let you choose which metric to satisfy, at the cost of others. It cannot give you all three. It also cannot address structural bias upstream of the data you are training on — Chapter 3's lesson, returning here with a specific application. And no item in the debiasing toolkit touches bias embedded in the model provider's upstream training data. The toolkit operates on the deploying engineer's data and model. The bias is not always there.
+What this toolkit cannot do is resolve the impossibility theorem. It can let you choose which metric to satisfy, at the cost of others. It cannot give you all three. It also cannot address structural bias upstream of the data you are training on — Chapter 6's lesson, returning here with a specific application. And no item in the debiasing toolkit touches bias embedded in the model provider's upstream training data. The toolkit operates on the deploying engineer's data and model. The bias is not always there.
 
 The toolkit is a way to implement a values choice. It does not absolve you of making the choice.
 
@@ -401,7 +401,7 @@ Group fairness metrics tell you whether aggregate error or outcome rates differ 
 
 And none of these metrics can tell you whether the prediction task is itself fair to formulate — a model that perfectly predicts re-arrest is doing well on re-arrest metrics, but re-arrest is not the construct society cares about, and the gap between re-arrest and "future criminal behavior" is upstream of any metric we can compute. They do not tell you whether affected populations consider the model's behavior fair — the metrics formalize specific senses of fair, and people may have other senses (procedural fairness, fairness of opportunity, fairness as participation in the design) that the metrics do not capture.
 
-These are limits on what fairness metrics can do, not failures of the metrics. The supervisory work continues past the metric, into the construct, the deployment, and the participation. We will revisit the construct gap in Chapter 14.
+These are limits on what fairness metrics can do, not failures of the metrics. The supervisory work continues past the metric, into the construct, the deployment, and the participation. We will revisit the construct gap in Chapter 13.
 
 ---
 
@@ -411,7 +411,7 @@ Three formally distinct group fairness metrics can be incompatible on the same d
 
 The defense is the deliverable, and the defense connects the chosen metric to the deployment, the cost-bearers, and the construct the deployment is supposed to serve. The toolkit lets you implement a choice. It does not make the choice for you. And someone always decides — the only question is whether they did it on the record.
 
-The Pebble makes a brief appearance in this chapter — *Agents of Chaos* Case #6, where the bias sits in the model provider's training rather than in the deploying engineer's pipeline. We return to that contrast in Chapter 13's accountability discussion: who is responsible when the bias is structurally upstream of everyone in the deployment chain?
+The Pebble makes a brief appearance in this chapter — *Agents of Chaos* Case #6, where the bias sits in the model provider's training rather than in the deploying engineer's pipeline. We return to that contrast in Chapter 12's accountability discussion: who is responsible when the bias is structurally upstream of everyone in the deployment chain?
 
 The next chapter takes a different cut at what the model knows. Fairness metrics ask whether the model treats different inputs equitably. Adversarial robustness asks something else: can a perturbation imperceptible to a human change the model's output entirely? And if so — what does that say about what the model has actually learned?
 
@@ -538,17 +538,17 @@ If the agent's decisions truly do not produce unequal effects across any meaning
 
 ---
 
-**What this produces:** A "Defended Fairness Choice" markdown file with population analysis, instantiated metrics, the impossibility instance worked on your agent, and a values-claim defense ready to face peer critique in Chapter 12.
+**What this produces:** A "Defended Fairness Choice" markdown file with population analysis, instantiated metrics, the impossibility instance worked on your agent, and a values-claim defense ready to face peer critique in Chapter 11.
 
 **How to adapt this prompt:**
 - *For your own project:* If your agent does not act on individuals, the developer/user/language axis is often the most defensible fairness scope. A coding agent that fails more on non-English specifications has a fairness story worth telling.
 - *For ChatGPT / Gemini:* Works as-is. Code Interpreter can compute the metrics if you upload a labeled outcome CSV.
 - *For Claude Code:* Recommended if you have evaluation data — write a script that computes all three metrics with bootstrap CIs across populations.
-- *For a Claude Project:* Save the document. Chapter 13's accountability map will name who should be reviewing this metric.
+- *For a Claude Project:* Save the document. Chapter 12's accountability map will name who should be reviewing this metric.
 
-**Connection to previous chapters:** Chapter 3's bias mechanisms and Chapter 6's language-game audit both feed into this chapter. The bias mechanisms tell you where unequal treatment originates; the language-game audit tells you whether the agent's self-explanations land differently in different audiences.
+**Connection to previous chapters:** Chapter 6's bias mechanisms and Chapter 5's language-game audit both feed into this chapter. The bias mechanisms tell you where unequal treatment originates; the language-game audit tells you whether the agent's self-explanations land differently in different audiences.
 
-**Preview of next chapter:** Chapter 8 turns the casebook adversarial. You'll design specific input perturbations that probe what your agent has actually learned versus what its developers think it learned — adversarial examples for the agent setting, including prompt-injection variants that exploit non-robust features in its instruction-following.
+**Preview of next chapter:** Chapter 4 turns the casebook adversarial. You'll design specific input perturbations that probe what your agent has actually learned versus what its developers think it learned — adversarial examples for the agent setting, including prompt-injection variants that exploit non-robust features in its instruction-following.
 
 ---
 
