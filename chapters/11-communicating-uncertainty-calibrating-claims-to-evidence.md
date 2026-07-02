@@ -109,7 +109,7 @@ The layered approach is harder to write than two separate documents. It is easie
 
 Layer 1 is not "dumbed down." Dumbing down is condescending and loses information. Layer 1 is a specific, careful, accurate summary in plain English. Plain English is *harder* to write than jargon — and here is why that matters for this chapter specifically: jargon lets you hide an un-calibrated verb behind a technical term. "The model achieves state-of-the-art calibration" hides the *conclude*-strength verb inside a phrase that sounds like measurement. Forced into plain English, the verb has nowhere to hide. The technical reader benefits from Layer 1 as much as the non-technical reader does — it forces the writer to articulate what the section is really doing, which is sometimes a useful discovery for the writer. The layered document also beats keeping two separate documents, because two documents drift, and every translation between them is a fresh chance to lose the nuance the calibration was protecting.
 
-![Layered document structure ](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-01.png)
+![Layered document structure ](../images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-01.png)
 *Figure 11.1 — Layered document structure *
 
 ---
@@ -140,7 +140,7 @@ where $\overline{y}$ is the base rate of positive outcomes, REL is the resolutio
 
 For example: a model with a low Brier score but poor resolution is one that is well-calibrated but predicts close to the base rate for every instance — it is honest about uncertainty but useless for triage. A model with high resolution but poor calibration is one that discriminates well but whose probabilities are misleading — it ranks cases correctly but the absolute numbers cannot be trusted.
 
-![The Brier score collapse hides which of the three components is driving the number. Always decompose.](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-02.png)
+![The Brier score collapse hides which of the three components is driving the number. Always decompose.](../images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-02.png)
 *Figure 11.2 — Brier score decomposition *
 
 ### Expected Calibration Error: binning the predictions
@@ -172,7 +172,7 @@ The shape of the deviation is diagnostic:
 - **Sigmoidal pattern**: overconfident at the extremes, underconfident in the middle. Common in gradient-boosted tree models.
 - **Well-calibrated in aggregate but locally miscalibrated**: the aggregate reliability diagram looks good, but specific subpopulations or confidence ranges show large deviations. This is the failure mode that aggregate metrics miss entirely.
 
-![The shape of the deviation from the diagonal tells you what kind of miscalibration you have. The aggregate ECE does not.](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-03.png)
+![The shape of the deviation from the diagonal tells you what kind of miscalibration you have. The aggregate ECE does not.](../images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-03.png)
 *Figure 11.3 — Four reliability diagrams in a 2×2 grid*
 
 ### Subgroup calibration: where aggregate metrics lie
@@ -218,7 +218,7 @@ The Platt scaling and isotonic regression alternatives offer more flexibility at
 
 None of these methods address distribution shift. When the deployment population differs from the calibration population — which is the normal situation for a model deployed across multiple sites, over time, or on a population with different demographics — post-hoc calibration on historical data is not a calibration guarantee for the current deployment.
 
-![Temperature scaling corrects the symptom. It does not transfer across distribution shift.](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-04.png)
+![Temperature scaling corrects the symptom. It does not transfer across distribution shift.](../images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-04.png)
 *Figure 11.4 — Temperature scaling effect diagram *
 
 ### From calibration metrics to trust claims
@@ -273,7 +273,7 @@ Distribution shift breaks the exchangeability assumption. When the deployment po
 
 The verb warranted by conformal coverage: *prove* — but only for the exchangeability-holding case. When deployment involves distribution shift, *show* is the strongest defensible verb, with the assumption explicitly documented. (Angelopoulos and Bates, 2021, is the accessible introduction; Vovk, Gammerman, and Shafer, 2005, is the foundation.)
 
-![Conformal prediction proves the guarantee holds under exchangeability. Distribution shift is not exchangeability.](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-05.png)
+![Conformal prediction proves the guarantee holds under exchangeability. Distribution shift is not exchangeability.](../images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-05.png)
 *Figure 11.5 — Conformal prediction mechanism *
 
 ### What calibration metrics cannot see
@@ -357,7 +357,7 @@ In practice, downgrading verbs in AI output is one of the highest-leverage editi
 
 One honest caveat, because "only the posture changes" is itself a slight over-claim: verbs carry action-warrant. Downgrading *conclude* to *suggest* can change a deployment decision, because someone reading *conclude* would ship and someone reading *suggest* would ask for another study. When the downgrade changes an action, that is not the taxonomy failing — that is the taxonomy earning its keep. The fluency trap was about to cost you a decision, and the verb caught it.
 
-![AI-generated paragraph ](images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-06.png)
+![AI-generated paragraph ](../images/11-communicating-uncertainty-calibrating-claims-to-evidence-fig-06.png)
 *Figure 11.6 — AI-generated paragraph *
 
 ---
@@ -558,73 +558,3 @@ Output:
 **Connection to previous chapters:** This chapter audits everything previous. The Frictional prediction-locks (Ch 4 [verify-xref: Frictional Method chapter cut]), the case files (Ch 8), the dashboards (Ch 10), and the fairness defense (Ch 7) all get verb-audited and calibration-checked.
 
 **Preview of next chapter:** Chapter 12 builds the responsibility-attribution map for the failures your casebook documents. Who is responsible — the agent's developers, the model provider, the deployer, the user? You'll work the same multi-party analysis that Chapter 12 demonstrates on the §16.5 case, but applied to YOUR cases.
-
----
-
-##  AI Wayback Machine
-The ideas in this chapter didn't appear from nowhere. **Florence Nightingale** spent the 1850s building — and the 1860s defending — the first sustained public-policy argument that combined explicit statistical evidence with deliberately legible visual communication. Her *coxcomb* polar-area diagrams of Crimean mortality were not decoration; they were the calibrated visual translation of an uncertain estimate into a claim a Parliament could read at the right level of confidence and act on. The chapter's argument — that communicating uncertainty honestly is itself a craft, distinct from running the analysis — is Nightingale's working method, applied to AI outputs whose audiences are usually less statistically literate than the Parliament she addressed.
-
-![Florence Nightingale, c. 1860s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/florence-nightingale.jpg)
-*Florence Nightingale, c. 1860s. AI-generated portrait based on a public domain photograph.*
-
-![Florence Nightingale](../images/florence-nightingale-38l.png)
-
-*Puppet Art by [Nik Bear Brown](https://www.nikbearbrown.com/).*
-
-**Run this:**
-
-```
-Who was Florence Nightingale, and how does her use of statistical visualization to communicate uncertain estimates to non-statistical audiences (Parliament, the War Office) connect to the craft of honestly communicating an AI system's confidence to a non-technical audience? Keep it to three paragraphs. End with the single most surprising thing about her career or ideas.
-```
-
-→ Search **"Florence Nightingale"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
-
-**Now make the prompt better.** Try one of these:
-
-- Ask it to explain why *visual* statistical communication can be either honest or misleading, in plain language
-- Ask it to compare Nightingale's coxcomb diagrams to the visualization choices in this chapter for an AI confidence interval
-- Add a constraint: "Answer as if you're writing the public-facing summary of a model's uncertainty for a non-technical executive"
-
-What changes? What gets better? What gets worse?
-
-## Prompts
-
-Use these prompts with Claude to generate interactive D3 v7 versions of the
-figures in this chapter. Each produces a standalone HTML file you can open
-in a browser and modify freely.
-
-**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
-your Claude project context before using these prompts. They define the stack,
-naming conventions, color system, and typography the figures use.
-
----
-
-### Figure 2 — The Brier score collapse hides which of the three components is driving...
-
-Create a standalone D3 v7 HTML figure for "The Brier score collapse hides which of the three components is driving...". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-02.html`
-
----
-
-### Figure 3 — The shape of the deviation from the diagonal tells you what kind of...
-
-Create a standalone D3 v7 HTML figure for "The shape of the deviation from the diagonal tells you what kind of...". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-03.html`
-
----
-
-### Figure 4 — Temperature scaling corrects the symptom
-
-Create a standalone D3 v7 HTML figure for "Temperature scaling corrects the symptom". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-04.html`
-
----
-
-### Figure 6 — AI-generated paragraph
-
-Create a standalone D3 v7 HTML figure for "AI-generated paragraph". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-06.html`

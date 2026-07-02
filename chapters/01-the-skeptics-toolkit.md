@@ -55,14 +55,14 @@ What makes the Cartesian move powerful is that it produces a *checklist*. When y
 
 The move earns its keep most sharply when a system reports success and means it — when nothing looks wrong at all. On August 1, 2012, Knight Capital deployed new trading software to eight servers. Seven took the update; one did not. On that eighth server, a reused flag bit reactivated "Power Peg," dead code from 2003 that had been disabled but never removed. From the deployment's point of view, everything succeeded: the code shipped, no errors were thrown, the dashboards were green. From the world's point of view, a repurposed flag was now driving an obsolete engine that fired millions of unwanted orders. In roughly forty-five minutes the system executed over four million trades across 154 stocks and lost about $440 million — more than the firm was worth — and Knight was absorbed by a competitor within months (SEC administrative proceeding, 2013). Ask the Cartesian question — *what would have to be true for "deployment succeeded" to be wrong about the running system?* — and it points straight at the untested eighth server and the un-removed flag. "The command returned success" and "the system is doing what we intend" are different claims. Radical doubt is the habit of never letting the first stand in for the second.
 
-![Cartesian doubt as an inspection protocol ](images/01-the-skeptics-toolkit-fig-01.png)
+![Cartesian doubt as an inspection protocol ](../images/01-the-skeptics-toolkit-fig-01.png)
 *Figure 1.1 — Cartesian doubt as an inspection protocol *
 
 **Hume** donates *the limit of induction*. Here is the thing about induction that I want you to feel in your bones, because most engineers have heard the words and not really felt the thing. The model has been right thousands of times. Each one of those correct predictions adds *zero logical guarantee* that the next prediction will be right. None. Zero. The reason induction works in practice is that the world is doing some of the work for you — the distribution is stable, the patterns persist — and the working is invisible until it stops working. When it stops working, the model is exactly as confident as it was the day before, and the confidence is now a lie.
 
 Nassim Taleb gives a version of this problem that I find harder to shake than the philosophical formulation. A turkey is fed every morning for a thousand days. Each morning of feeding increases the turkey's confidence that tomorrow will also involve feeding. By day nine hundred and ninety-nine, the turkey's model of the world assigns very high probability to a meal on day one thousand. On day one thousand, the farmer arrives with an axe.
 
-![The turkey problem as a confidence timeline ](images/01-the-skeptics-toolkit-fig-02.png)
+![The turkey problem as a confidence timeline ](../images/01-the-skeptics-toolkit-fig-02.png)
 *Figure 1.2 — The turkey problem as a confidence timeline *
 
 The problem is not that the turkey was foolish. The problem is that the turkey had genuinely good evidence, correctly processed, leading to a prediction that happened to be catastrophically wrong because the turkey's model had no representation of the causal structure underneath the pattern. The turkey knew the correlation. The turkey did not know the mechanism. When the mechanism changed — when the calendar flipped to late November — the correlation model had no way to notice.
@@ -96,7 +96,7 @@ The left column is compatible with any outcome. The right column specifies the c
 
 I want to be clear about something. You do not have to think Descartes was right about anything to use his move. You do not have to be a Humean or a Popperian. The moves are tools. A structural engineer does not have to believe in the metaphysics of steel to perform a load test on a beam. You perform the move. The move either reveals something or it does not. If it does, you have learned something about the system. If it does not, you have learned that this particular check came back clean. Either is useful.
 
-![The three moves as a portable checklist ](images/01-the-skeptics-toolkit-fig-03.png)
+![The three moves as a portable checklist ](../images/01-the-skeptics-toolkit-fig-03.png)
 *Figure 1.3 — The three moves as a portable checklist *
 
 ---
@@ -117,7 +117,7 @@ The triage system produced a score. The score was the artifact. The patient had 
 
 You can watch the gap between artifact and world open to its full width in a case that is fully documented. Early in the pandemic, dozens of models were published claiming to detect COVID-19 from chest X-rays at high accuracy. A team led by DeGrave took the strongest of them apart with saliency maps, image edits, and generative tests, and found the models were not reading lungs. They were keying on confounders that lived in the *datasets* rather than the *patients* — laterality markers, text tokens, patient positioning, the incidental tells of which hospital an image came from, which happened to correlate with COVID status because positive and negative cases were sourced from different places. The models "appear accurate but fail when tested in new hospitals" (DeGrave, Janizek & Lee, "AI for radiographic COVID-19 detection selects shortcuts over signal," *Nature Machine Intelligence*, 2021). Run the three questions: the artifact is a confident COVID-positive label; the world is the pathology in a patient's lungs; the relationship is that the model learned the label from a marker in the image's corner and never examined the lungs at all. The same anatomy underlies COMPAS's recidivism scores — the artifact is a number, the world is a person's future conduct, and the relationship is mediated by arrest data shaped by who gets policed (ProPublica, 2016).
 
-![Two-column split ](images/01-the-skeptics-toolkit-fig-04.png)
+![Two-column split ](../images/01-the-skeptics-toolkit-fig-04.png)
 *Figure 1.4 — Two-column split *
 
 ---
@@ -136,7 +136,7 @@ If you do not budget for verification, you will not get verification. The system
 
 Most of this book is about how to verify cheaply enough that verification scales. The answer is *never* "automate the verification" — because that is just another model, with the same problem, sitting one layer up. The answer is always: design the system so that the verification a human can perform tells you what you need to know.
 
-![Cost asymmetry bar chart ](images/01-the-skeptics-toolkit-fig-05.png)
+![Cost asymmetry bar chart ](../images/01-the-skeptics-toolkit-fig-05.png)
 *Figure 1.5 — Cost asymmetry bar chart *
 
 ---
@@ -189,7 +189,7 @@ This is not a flaw that will be fixed in the next model. It is a structural feat
 
 The Popperian move helps here. Before you read the output: specify what a wrong answer would look like. Not vaguely — specifically. "A wrong answer would assign low risk to a patient with this combination of presenting symptoms and demographic profile." Then read the output. The prior specification is your anchor. Without it, you are reading the output with no criterion except fluency, and fluency is the trap.
 
-![Fluency boosts wrong evaluations as readily as right ones. The shape of a sentence is not evidence about its truth.](images/01-the-skeptics-toolkit-fig-06.png)
+![Fluency boosts wrong evaluations as readily as right ones. The shape of a sentence is not evidence about its truth.](../images/01-the-skeptics-toolkit-fig-06.png)
 *Figure 1.6 — The fluency trap as a two-stage mechanism *
 
 ---
@@ -206,7 +206,7 @@ This is not a bureaucratic point. It is an architectural one. When you design a 
 
 The five supervisory capacities are a framework for thinking about this architecture. For each capacity, the design question is: where in the workflow is this capacity exercised? Who exercises it? What do they see, and when, that makes exercising it possible? If the answer to any of those questions is "nobody" or "we haven't thought about that," you have found an undefended gap. Undefended gaps are where the patients die.
 
-![Workflow diagram ](images/01-the-skeptics-toolkit-fig-07.png)
+![Workflow diagram ](../images/01-the-skeptics-toolkit-fig-07.png)
 *Figure 1.7 — Workflow diagram *
 
 ---
@@ -358,69 +358,3 @@ End with a one-paragraph "System Dossier" I can paste into my Claude Project's s
 **Connection to previous chapters:** This is the foundation. Skip it and the rest of the casebook has no anchor.
 
 **Preview of next chapter:** Chapter 2 takes your chosen agent and asks you to compute base rates and posterior probabilities for its claims — what is P(task actually completed | agent reports "task complete") given a realistic prior on agent reliability?
-
----
-
-##  AI Wayback Machine
-The ideas in this chapter didn't appear from nowhere. **Karl Popper** spent the 1930s working out which kinds of claims a scientific community can argue about productively and which it cannot — *demarcation* — and his answer (a claim is scientific only if it forbids some observation it could be checked against) is the spine of the toolkit you are about to use. The instruments in this chapter — falsifiability, prediction-lock before observation, the willingness to name what would change your mind — are Popper's instruments, applied to AI systems whose outputs the community has not yet learned to argue about productively.
-
-![Karl Popper, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/karl-popper.jpg)
-*Karl Popper, c. 1950s. AI-generated portrait based on a public domain photograph.*
-
-**Run this:**
-
-```
-Who was Karl Popper, and how does his demarcation criterion — that a scientific claim must forbid some observation that could refute it — connect to what a skeptic's toolkit for AI should actually contain? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
-```
-
-→ Search **"Karl Popper"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
-
-**Now make the prompt better.** Try one of these:
-
-- Ask it to explain *falsifiability* in plain language, as if you've never read philosophy of science
-- Ask it to compare Popper's demarcation move to the prediction-lock move this chapter teaches
-- Add a constraint: "Answer as if you're writing the rationale for the first move in a validator's toolkit"
-
-What changes? What gets better? What gets worse?
-
-## Prompts
-
-Use these prompts with Claude to generate interactive D3 v7 versions of the
-figures in this chapter. Each produces a standalone HTML file you can open
-in a browser and modify freely.
-
-**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
-your Claude project context before using these prompts. They define the stack,
-naming conventions, color system, and typography the figures use.
-
----
-
-### Figure 1 — Cartesian doubt as an inspection protocol
-
-Create a standalone D3 v7 HTML figure for "Cartesian doubt as an inspection protocol". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/01-the-skeptics-toolkit-fig-01.html`
-
----
-
-### Figure 2 — The turkey problem as a confidence timeline
-
-Create a standalone D3 v7 HTML figure for "The turkey problem as a confidence timeline". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/01-the-skeptics-toolkit-fig-02.html`
-
----
-
-### Figure 4 — Two-column split
-
-Create a standalone D3 v7 HTML figure for "Two-column split". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/01-the-skeptics-toolkit-fig-04.html`
-
----
-
-### Figure 5 — Cost asymmetry bar chart
-
-Create a standalone D3 v7 HTML figure for "Cost asymmetry bar chart". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/01-the-skeptics-toolkit-fig-05.html`

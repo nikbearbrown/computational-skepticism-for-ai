@@ -56,7 +56,7 @@ The ten bias mechanisms covered in this chapter are ten distinct ways of introdu
 
 Think of it this way, as a design-critic would: the newspaper meaning of "bias" was optimized for moral clarity at the expense of causal precision. The formal definition makes the opposite trade — it gives up the moral punch and buys you something you can act on. It tells you *where* to intervene.
 
-![More data narrows the scatter. It does not move the systematic offset.](images/06-bias-where-it-enters-and-who-is-responsible-fig-01.png)
+![More data narrows the scatter. It does not move the systematic offset.](../images/06-bias-where-it-enters-and-who-is-responsible-fig-01.png)
 *Figure 6.1 — Biased vs*
 
 ---
@@ -155,7 +155,7 @@ This type is structurally different from all the others, and understanding why i
 
 A hiring model trained on ten years of promotion records at a company that historically promoted men at higher rates in engineering roles is learning $P(Y_{\text{historical}} | \mathbf{x})$ rather than $P(Y_{\text{fair}} | \mathbf{x})$. The model is accurate on its training distribution. Its accuracy perpetuates the historical disparity. No data quality intervention helps, because the labels are accurately recorded. The bias is in what was recorded, not in how it was recorded.
 
-![Historical bias mechanism](images/06-bias-where-it-enters-and-who-is-responsible-fig-02.png)
+![Historical bias mechanism](../images/06-bias-where-it-enters-and-who-is-responsible-fig-02.png)
 *Figure 6.2 — Historical bias mechanism*
 
 The practical mitigations are: finding a less-biased proxy for the outcome; applying fairness constraints during training that penalize perpetuation of historical disparities; or using time-sensitive weighting to de-emphasize older records from periods with more discriminatory practice. None of these fully solve the problem. They reduce the leverage of the historical signal on current predictions.
@@ -168,7 +168,7 @@ Implicit bias is the ambient background from which several other types emerge. I
 
 The most tractable algorithmic intervention is demographic parity auditing after the model is built: test whether $P(\hat{Y}=1|A=0) \approx P(\hat{Y}=1|A=1)$ across protected groups. Disparities in this test are not proof of implicit bias — they might reflect real differences in outcome base rates — but they are a flag that requires investigation. The systemic interventions are diverse teams (homogeneous teams share the same blind spots), structured decision processes (structure reduces the surface area for implicit judgment), and continuous auditing.
 
-![Pipeline entry-point map for all ten bias types](images/06-bias-where-it-enters-and-who-is-responsible-fig-03.png)
+![Pipeline entry-point map for all ten bias types](../images/06-bias-where-it-enters-and-who-is-responsible-fig-03.png)
 *Figure 6.3 — Pipeline entry-point map for all ten bias types*
 
 ---
@@ -258,7 +258,7 @@ The general principle: when base rates differ across groups, you cannot simultan
 
 Which means the choice between fairness metrics is not a technical choice. It is a values claim. *Which kind of error are we less willing to make?* That question does not have a mathematical answer. It has a social answer, and the social answer depends on what the model is being used for, who bears the costs of each error type, and what the political economy of the deployment looks like. Engineers who treat this as a pure optimization problem are secretly making a values choice — the choice to optimize for whatever metric their loss function encodes — while appearing neutral.
 
-![Visual proof sketch of the fairness impossibility](images/06-bias-where-it-enters-and-who-is-responsible-fig-04.png)
+![Visual proof sketch of the fairness impossibility](../images/06-bias-where-it-enters-and-who-is-responsible-fig-04.png)
 *Figure 6.4 — Visual proof sketch of the fairness impossibility*
 
 *Figure 6.2 — The fairness impossibility.*
@@ -284,7 +284,7 @@ A note on a case I will *not* over-claim, because the fluency trap runs hardest 
 
 Now we need a tool. The tool is due to Judea Pearl, and it is, in my judgment, the single most useful conceptual instrument in this book. He calls it a ladder of causal reasoning, with three rungs. Chapter 4 sketched the whole ladder and opened the third rung from the robustness side; we are going to work the first two properly now.
 
-![Pearl's ladder of causal reasoning](images/06-bias-where-it-enters-and-who-is-responsible-fig-05.png)
+![Pearl's ladder of causal reasoning](../images/06-bias-where-it-enters-and-who-is-responsible-fig-05.png)
 *Figure 6.5 — Pearl's ladder of causal reasoning*
 
 *Figure 6.3 — Pearl's ladder of causal reasoning.*
@@ -322,7 +322,7 @@ Each team intervened. They intervened at different points in the causal chain fr
 
 But the doings had different leverage. Imagine the causal graph for how the bias appears in the deployed outcome. The protected attribute sits at the top. Below it are proxies — features in the data that correlate with the protected attribute. Below those, the features the model uses. Below those, the model's output. Below that, the deployment context — the reviewer, the threshold, the appeal process. Below that, the final outcome that lands on a real person's life.
 
-![Causal graph of a biased deployment pipeline](images/06-bias-where-it-enters-and-who-is-responsible-fig-06.png)
+![Causal graph of a biased deployment pipeline](../images/06-bias-where-it-enters-and-who-is-responsible-fig-06.png)
 *Figure 6.6 — Causal graph of a biased deployment pipeline*
 
 *Figure 6.4 — Causal graph of a biased deployment pipeline.*
@@ -342,7 +342,7 @@ The procedure for leverage analysis, in working form:
 3. For each candidate intervention point, ask: *which paths does this intervention block, and which paths does it leave open?*
 4. The highest-leverage intervention is the one that blocks the largest fraction of the bias-carrying paths, ideally without blocking paths the deployment requires for its core function.
 
-![Leverage analysis decision flowchart](images/06-bias-where-it-enters-and-who-is-responsible-fig-07.png)
+![Leverage analysis decision flowchart](../images/06-bias-where-it-enters-and-who-is-responsible-fig-07.png)
 *Figure 6.7 — Leverage analysis decision flowchart*
 
 Here is the classical move underneath the whole procedure, named explicitly because these moves earn their keep only when named: leverage analysis is Descartes' doubt turned on a pipeline. *What would have to be true for this bias to live here?* You suspend the tempting explanation — the model, the thing closest to your hands — and demand that each candidate location survive the question. The location that survives is where you intervene.
@@ -377,7 +377,7 @@ Now draw the causal graph. The bias-carrying path is not in the deploying organi
 
 We will return to this in Chapter 7, where the fairness-metric question makes the structural source visible from a different angle. For now, hold the case in mind: bias has a topology, and the topology can extend beyond the boundaries of the team responsible for the deployment. The leverage analysis procedure still applies. The answer it sometimes returns is "the highest-leverage point is outside your reach." That is useful to know before you spend six months optimizing the wrong thing.
 
-Which is the accountability move this chapter is really teaching. Assigning the owner of a bias is not assigning blame to a person; it is naming the party who *sits at the leverage point*. Sometimes that is you (you chose the sample). Sometimes it is the labeling team (they set the annotation manual). Sometimes it is the deployment owner (they built the review room). And sometimes it is the model provider (they trained the constraint in). The forensic skill is to trace the highest-leverage bias-carrying path to its source and name whoever controls that node — even when the honest answer is "not us." The leverage graph is a machine for un-diffusing responsibility: it points at a node, and a node has an owner. (You will see in the AI Wayback Machine below that this is Hannah Arendt's question, restated for a pipeline.)
+Which is the accountability move this chapter is really teaching. Assigning the owner of a bias is not assigning blame to a person; it is naming the party who *sits at the leverage point*. Sometimes that is you (you chose the sample). Sometimes it is the labeling team (they set the annotation manual). Sometimes it is the deployment owner (they built the review room). And sometimes it is the model provider (they trained the constraint in). The forensic skill is to trace the highest-leverage bias-carrying path to its source and name whoever controls that node — even when the honest answer is "not us." The leverage graph is a machine for un-diffusing responsibility: it points at a node, and a node has an owner. (This is Hannah Arendt's question — systemic harm as the output of diffused, role-bound responsibility — restated for a pipeline; her mini-bio is in the book's Wayback series.)
 
 ---
 
@@ -559,81 +559,3 @@ End with: a one-page "Bias & Leverage Brief" for my casebook. Include the DAG, t
 **Connection to previous chapters:** Chapter 1 named the supervisory capacity gap. Chapter 2 quantified the trust deficit. This chapter locates *where in the pipeline* the gap originates — which is what the rest of the validation toolkit (Chs 3–5 and 7–8) will probe.
 
 **Preview of next chapter:** Chapter 7 brings fairness into the casebook: you'll work through the impossibility theorem on YOUR agent and produce a defended fairness-metric choice with the values claim made explicit. (An earlier version of this preview pointed to the Frictional-journal setup — the prediction-lock log accompanying every red-team case — [verify-xref: Frictional Method chapter cut].)
-
----
-
-##  AI Wayback Machine
-The ideas in this chapter didn't appear from nowhere. **Hannah Arendt** spent the postwar decades arguing — most famously in *Eichmann in Jerusalem* (1963) — that systemic harm is rarely the work of monstrous individuals. It is the predictable output of a system whose roles, rules, and routines diffuse responsibility across so many actors that no single one feels accountable for the result. The chapter's question — *where bias enters and who is responsible* — is Arendt's question, restated for a pipeline whose participants include data brokers, annotators, modelers, deployers, and a model that is not, itself, a moral agent. The leverage graph in this chapter is a machine for *un-diffusing* that responsibility: it points at a node, and a node has an owner.
-
-![Hannah Arendt, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/hannah-arendt.jpg)
-*Hannah Arendt, c. 1950s. AI-generated portrait based on a public domain photograph.*
-
-![Hannah Arendt](../images/hannah-arendt-b1v.png)
-
-*Puppet Art by [Nik Bear Brown](https://www.nikbearbrown.com/).*
-
-**Run this:**
-
-```
-Who was Hannah Arendt, and how does her account of *the banality of evil* — that systemic harm is produced by the diffuse, role-bound action of many people none of whom would do it alone — connect to the question of where bias enters an AI pipeline and who bears responsibility for it? Keep it to three paragraphs. End with the single most surprising thing about her career or ideas.
-```
-
-→ Search **"Hannah Arendt"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
-
-**Now make the prompt better.** Try one of these:
-
-- Ask it to explain *the banality of evil* in plain language, as if you've never read postwar political theory
-- Ask it to compare Arendt's analysis of role-bound action to a multi-actor ML pipeline (data brokers, annotators, modelers, deployers)
-- Add a constraint: "Answer as if you're writing the accountability section of a model card"
-
-What changes? What gets better? What gets worse?
-
-## Prompts
-
-Use these prompts with Claude to generate interactive D3 v7 versions of the
-figures in this chapter. Each produces a standalone HTML file you can open
-in a browser and modify freely.
-
-**Prerequisites:** Load `brutalist/CLAUDE.md` and `brutalist/DESIGN.md` into
-your Claude project context before using these prompts. They define the stack,
-naming conventions, color system, and typography the figures use.
-
----
-
-### Figure 2 — Historical bias mechanism
-
-Create a standalone D3 v7 HTML figure for "Historical bias mechanism". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/03-bias-where-it-enters-and-who-is-responsible-fig-02.html`
-
----
-
-### Figure 3 — Pipeline entry-point map for all ten bias types
-
-Create a standalone D3 v7 HTML figure for "Pipeline entry-point map for all ten bias types". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/03-bias-where-it-enters-and-who-is-responsible-fig-03.html`
-
----
-
-### Figure 4 — Visual proof sketch of the fairness impossibility
-
-Create a standalone D3 v7 HTML figure for "Visual proof sketch of the fairness impossibility". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/03-bias-where-it-enters-and-who-is-responsible-fig-04.html`
-
----
-
-### Figure 5 — Pearl's ladder of causal reasoning
-
-Create a standalone D3 v7 HTML figure for "Pearl's ladder of causal reasoning". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/03-bias-where-it-enters-and-who-is-responsible-fig-05.html`
-
----
-
-### Figure 7 — Leverage analysis decision flowchart
-
-Create a standalone D3 v7 HTML figure for "Leverage analysis decision flowchart". Use a horizontal bar chart with 5 labeled categories and approximate values from 0 to 100. Marks: bars, direct labels, and concise value labels. Channels: category position, quantitative bar length, and color for the primary highlighted item only. Use a zero baseline. Include title, desc, role="img", aria-labelledby, ResizeObserver redraw, dark mode CSS variables, and reduced-motion safeguards. Deliver as one HTML file with inline CSS and the D3 7.9.0 CDN.
-
-> Reference implementation: `d3/03-bias-where-it-enters-and-who-is-responsible-fig-07.html`

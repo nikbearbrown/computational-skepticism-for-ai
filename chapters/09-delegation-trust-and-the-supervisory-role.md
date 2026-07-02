@@ -190,7 +190,7 @@ Now Gru has something to work with. Notice what the sentence encodes: the word *
 
 **Why this is a human step.** Gru asks the question, but the answer requires me. An AI could generate plausible-sounding sentences of this form. It cannot determine whether *claim-linked* is the right specification for my deployment — whether researchers using this tool need sentence-level citations or paragraph-level, whether the summary structure matches how researchers actually read papers in this domain, whether the word *factual assertion* is the right boundary for what gets cited. Those are domain judgments. They determine the correctness criteria for every subsequent step. The problem formulation is not a form to fill in. It is the most consequential decision in the project, and it is irreducibly mine.
 
-![The /v0 gate produces one sentence. That sentence is the engineering specification everything else is tested against.](images/09-delegation-trust-and-the-supervisory-role-fig-01.png)
+![The /v0 gate produces one sentence. That sentence is the engineering specification everything else is tested against.](../images/09-delegation-trust-and-the-supervisory-role-fig-01.png)
 *Figure 9.1 — Gru /v0 conversation flow *
 
 ### Step 2 — Intake with /v1
@@ -272,7 +272,7 @@ The administrative flow: I need a way to see which extractions are being flagged
 
 **Why the flow requires human judgment to write.** Step 5 and step 6 are the load-bearing human steps. The reason they are human steps cannot be determined by AI: it requires knowing that researchers cannot rely on AI to evaluate domain-specific methodological quality. A language model may correctly extract the claim "we used a random effects model" and produce a citation. It cannot flag that a random effects model is inappropriate for this study design — that judgment requires domain knowledge the model does not reliably have. That is why step 6 is a human step, and why the handoff condition for step 5 must specify what the researcher is checking, not just that checking occurred.
 
-![The flow shows where authority changes hands. Those transitions are where the delegation map must be tightest.](images/09-delegation-trust-and-the-supervisory-role-fig-02.png)
+![The flow shows where authority changes hands. Those transitions are where the delegation map must be tightest.](../images/09-delegation-trust-and-the-supervisory-role-fig-02.png)
 *Figure 9.2 — Happy path flow diagram for the Paper Summarizer*
 
 ### Step 5 — Generating the Boondoggle Score with /claude
@@ -490,7 +490,7 @@ Flag: No executive integration step is documented. If this system is used in a t
 
 ---
 
-![Three of six steps are irreducibly human. The AI does the pattern work. The human does the judgment work. The EI gap is the flag.](images/09-delegation-trust-and-the-supervisory-role-fig-03.png)
+![Three of six steps are irreducibly human. The AI does the pattern work. The human does the judgment work. The EI gap is the flag.](../images/09-delegation-trust-and-the-supervisory-role-fig-03.png)
 *Figure 9.3 — Boondoggle Score as a visual timeline *
 
 ### What the Boondoggle Score reveals
@@ -521,7 +521,7 @@ Now I want to be careful here, because this is the chapter that most preaches ag
 
 In the Paper Summarizer, the trust calibration question is specific and answerable directly from the audit trail: over the last fifty papers processed, how often did the researcher in Step 4 find a correction to make in a HIGH-confidence extraction? If the answer is "almost never," the HIGH threshold is probably well-tuned and the researcher can spot-check less aggressively. If the answer is "frequently," the researcher is undertrusting the threshold or the threshold is miscalibrated. The Step 4 disposition data — confirmed / corrected / marked unverifiable — is *right there* in the audit trail. It should be reviewed periodically. It almost never is. That gap — between having the monitoring data and looking at it — is, in my reading, the field's most easily closable failure.
 
-![Calibrated trust is a property of the deployment, not the model. It requires monitoring the audit trail, not just running the pipeline.](images/09-delegation-trust-and-the-supervisory-role-fig-04.png)
+![Calibrated trust is a property of the deployment, not the model. It requires monitoring the audit trail, not just running the pipeline.](../images/09-delegation-trust-and-the-supervisory-role-fig-04.png)
 *Figure 9.4 — Trust calibration visualization*
 
 ---
@@ -726,24 +726,3 @@ Plus a one-paragraph note on the deployment's TRUST CALIBRATION failure mode: is
 
 ---
 
-##  AI Wayback Machine
-The ideas in this chapter didn't appear from nowhere. **Donald Broadbent** ran the Applied Psychology Unit at Cambridge from 1958 to 1974 and produced the foundational work — *Perception and Communication* (1958), *Decision and Stress* (1971) — on how human attention degrades under monotony, low signal rate, and the structural conditions that supervisory roles tend to produce. The paradox of the well-running automated system is, in Broadbent's vocabulary, a vigilance problem: the rare event the supervisor is supposed to catch is rare specifically because the system runs well, and the supervisor's attentional capacity for that rare event has been quietly eroded by the monotony of the long stretches in between.
-
-![Donald Broadbent, c. 1960s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/donald-broadbent.jpg)
-*Donald Broadbent, c. 1960s. AI-generated portrait based on a public domain photograph.*
-
-**Run this:**
-
-```
-Who was Donald Broadbent, and how does his work on *vigilance and attention under low-signal conditions* connect to the supervisory role a person actually has when they're delegating to an AI tool that mostly works — and whose rare failures are the ones the supervisor is supposed to catch? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
-```
-
-→ Search **"Donald Broadbent"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
-
-**Now make the prompt better.** Try one of these:
-
-- Ask it to explain *vigilance decrement* in plain language, as if you've never read attention research
-- Ask it to compare Broadbent's filter model of attention to the supervisor of a 99.5%-correct AI system
-- Add a constraint: "Answer as if you're writing the staffing rationale for a human-in-the-loop deployment"
-
-What changes? What gets better? What gets worse?

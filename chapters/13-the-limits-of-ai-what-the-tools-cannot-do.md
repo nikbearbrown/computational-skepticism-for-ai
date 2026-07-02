@@ -217,7 +217,7 @@ AI systems do not bear this relationship to their outputs. They cannot be held r
 
 The chain of accountability in any AI-assisted validation workflow runs through the practitioners who apply the checking instruments: the practitioner who applies the verb taxonomy, the practitioner who reviews the chart for uncertainty suppression, the practitioner who signs off on the validation document. These moments are not checkboxes on a compliance form. They are the moments at which a human mind engages with the AI's output and takes on the obligation to be answerable for the judgment they make. If those moments are treated as mechanical, accountability disappears from the workflow — not into the AI, but into no one.
 
-![When the practitioner uses the verb taxonomy, the chart-review discipline, the peer critique protocol — they are not just checking AI output. They are taking on accountability for the judgment the output will support.](images/13-the-limits-of-ai-what-the-tools-cannot-do-fig-01.png)
+![When the practitioner uses the verb taxonomy, the chart-review discipline, the peer critique protocol — they are not just checking AI output. They are taking on accountability for the judgment the output will support.](../images/13-the-limits-of-ai-what-the-tools-cannot-do-fig-01.png)
 *Figure 13.1 — Accountability chain diagram*
 
 **The profile, applied to delegation.** The cognitive profile — great at retrieval/synthesis/generation under specification, weak at problem formulation/plausibility auditing/interpretive judgment, absent for accountability — translates directly into a delegation map.
@@ -254,7 +254,7 @@ Used well, AI is the most powerful cognitive tool humanity has built. Used as a 
 
 The capacities required to use AI well are precisely the capacities AI cannot replicate: problem formulation, plausibility auditing, interpretive judgment under stakes, and accountability for the consequences. These are not luxuries or checkboxes. They are the work. The tools in this book — the verb taxonomy, the chart-review discipline, the peer critique protocol, the prediction-lock, the delegation maps, the categorical-limit analysis — are all instruments for exercising these capacities more reliably in the presence of an extraordinarily fluent AI output stream that will, without intervention, produce fluent-sounding answers to questions it cannot answer, conclusions warranted by evidence it has not examined, and confident charts that hide the uncertainty they were supposed to show.
 
-![The extended mind has always had this structure: the tool extends a specific capacity; the mind supplies the judgment the tool cannot. AI is the most powerful entry in the series. Its power makes the confusion between extension and replacement more dangerous, not less.](images/13-the-limits-of-ai-what-the-tools-cannot-do-fig-02.png)
+![The extended mind has always had this structure: the tool extends a specific capacity; the mind supplies the judgment the tool cannot. AI is the most powerful entry in the series. Its power makes the confusion between extension and replacement more dangerous, not less.](../images/13-the-limits-of-ai-what-the-tools-cannot-do-fig-02.png)
 *Figure 13.2 — Extended mind catalog *
 
 *Figure 13.1 — The extended mind: the catalog named.*
@@ -488,24 +488,3 @@ End with the supervisor's claim, in your own voice (not generated): the casebook
 
 ---
 
-##  AI Wayback Machine
-The ideas in this chapter didn't appear from nowhere. **Alan Turing** named both the proof of fundamental limits and the test that has been most often used to argue past them. The 1936 paper *On Computable Numbers* established that some questions cannot be decided by any algorithmic procedure — there are problems no Turing machine can solve, regardless of speed. The 1950 paper *Computing Machinery and Intelligence* proposed the imitation game, which Turing offered as a *replacement* for the question *can machines think?* — a replacement specifically because Turing thought the original question was too vague to settle. The chapter's argument is in his lineage: there are limits the math forbids, and there are limits the test cannot detect, and the practitioner has to know the difference.
-
-![Alan Turing, c. 1940s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/alan-turing.jpg)
-*Alan Turing, c. 1940s. AI-generated portrait based on a public domain photograph.*
-
-**Run this:**
-
-```
-Who was Alan Turing, and how do his two contributions — the halting-problem proof in *On Computable Numbers* (1936) and the imitation game in *Computing Machinery and Intelligence* (1950) — together describe the limits of what AI tools cannot do, even when they appear to be doing it well? Keep it to three paragraphs. End with the single most surprising thing about his career or ideas.
-```
-
-→ Search **"Alan Turing"** on Wikipedia after you run this. See what the model got right, got wrong, or left out.
-
-**Now make the prompt better.** Try one of these:
-
-- Ask it to explain why *the halting problem* is a fundamental limit, in plain language, as if you've never seen a Turing machine
-- Ask it to compare a passing imitation-game performance to a system that is genuinely doing the task it appears to be doing
-- Add a constraint: "Answer as if you're writing the *out of scope* section for an AI tool's documentation"
-
-What changes? What gets better? What gets worse?
