@@ -29,14 +29,7 @@ There is a deeper reason this matters, and it is the reason this chapter sits at
 
 ---
 
-**What you will be able to do after this chapter:**
-
-- Construct a delegation map with testable handoff conditions for a multi-step pipeline
-- Apply the five Boondoggle questions to sort pipeline sub-tasks into delegation buckets
-- Identify which trust-calibration failure mode a deployment is in, given accept/override data
-- Operationalize each of the five supervisory capacities as a concrete pipeline job with a documented artifact
-- Use Gru to generate a Boondoggle Score for a real project and interpret what it reveals
-- Produce an AI Use Disclosure that functions as a supervisory log, not a compliance checkbox
+By the end of this chapter you should be able to construct a delegation map with testable handoff conditions for a multi-step pipeline, and to apply the five Boondoggle questions to sort pipeline sub-tasks into delegation buckets. You should be able to identify which trust-calibration failure mode a deployment is in, given accept/override data, and to operationalize each of the five supervisory capacities as a concrete pipeline job with a documented artifact. And you should be able to use Gru to generate a Boondoggle Score for a real project and interpret what it reveals, and to produce an AI Use Disclosure that functions as a supervisory log, not a compliance checkbox.
 
 **Prerequisites:** Chapter 1's five supervisory capacities and the solve-verify asymmetry are both required vocabulary. Chapter 4's [verify-xref: Frictional Method chapter cut] AI Use Disclosure is extended here. Chapter 7's defended-choice format is structurally related to the delegation map — both are engineering decisions under value pluralism, documented for external review.
 

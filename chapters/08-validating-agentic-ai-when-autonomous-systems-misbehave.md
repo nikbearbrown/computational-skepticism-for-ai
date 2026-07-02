@@ -16,15 +16,9 @@ Here is what is actually happening, stated as plainly as I can: the agent's comp
 
 This one case contains the entire architecture of what makes agentic validation different. By the end of this chapter, you will be able to read it — and the ten other cases documented in the same study — as a structured account of where validation failed, what lens would have caught it, and what intervention, before deployment, would have changed the outcome.
 
-**Learning objectives.** By the end of this chapter you should be able to:
+By the end of this chapter you should be able to distinguish agentic AI as a *consequence system* rather than a prediction system, and explain why that shift changes the validation surface categorically. You should be able to apply the four-category failure taxonomy — social coherence, stakeholder model, self-model, deliberation surface — to a documented agent failure and identify which category it primarily instantiates, and to apply the four validation lenses from Chapters 3–5 and 7 to an agent audit trail, specifying what each lens catches and what it leaves open. For systems where more than one agent is in play, you should be able to identify the three multi-agent failure modes — cascading hallucination, resource exhaustion, authority laundering — and explain why single-agent validation cannot detect them; and you should be able to distinguish fundamental from contingent failures and explain why that distinction determines the intervention.
 
-- Distinguish agentic AI as a *consequence system* rather than a prediction system, and explain why that shift changes the validation surface categorically
-- Apply the four-category failure taxonomy (social coherence, stakeholder model, self-model, deliberation surface) to a documented agent failure and identify which category it primarily instantiates
-- Apply the four validation lenses from Chapters 3–5 and 7 to an agent audit trail and specify what each lens catches and what it leaves open
-- Identify the three multi-agent failure modes (cascading hallucination, resource exhaustion, authority laundering) and explain why single-agent validation cannot detect them
-- Distinguish fundamental from contingent failures and explain why that distinction determines the intervention
-- Catch a false success report by checking world state independently of the agent's report, and write the stop condition
-- Maintain the boundary between validation and design in a validation deliverable — specifying monitoring, gating, and audit-trail requirements rather than proposing redesigns
+Two of those capabilities are the working skills the exercises will demand. You should be able to catch a false success report by checking world state independently of the agent's report, and write the stop condition. And you should be able to maintain the boundary between validation and design in a validation deliverable — specifying monitoring, gating, and audit-trail requirements rather than proposing redesigns.
 
 **Prerequisites.** Chapters 3–5 and 7 (the four validation lenses: data validation in Chapter 3, robustness in Chapter 4, explainability in Chapter 5, fairness in Chapter 7). Chapter 1 §5 (the Five Supervisory Capacities — reread it before this chapter if you haven't lately). The Ash case is introduced in Chapter 1; the *Agents of Chaos* study will be the primary empirical anchor for this chapter.
 

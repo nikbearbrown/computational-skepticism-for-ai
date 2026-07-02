@@ -3,34 +3,6 @@
 
 *The dashboard is an argument. The design choices are yours.*
 
-## Learning objectives
-
-By the end of this chapter, you will be able to:
-
-- Explain why visualization is an argument made through structural choices, not a transparent transmission of facts
-- Identify the nine misleading visualization choices in the catalog, distinguish honest from dishonest uses of each, and apply the catalog to audit your own dashboards
-- Use the perception hierarchy to choose the right visual channel for quantitative precision
-- Apply the FT question taxonomy to match chart type to the question being answered
-- Distinguish aleatoric from epistemic uncertainty and select an appropriate visualization technique for each
-- Design an uncertainty visualization that makes the uncertainty visually equal in weight to the central estimate
-- Build both an honest and a deliberately misleading version of a dashboard from the same data, and identify which design choices did the misleading work
-- Explain why a dashboard that visualizes findings unfaithfully is a validation failure at the output layer, not merely a communication problem
-- Apply the living-deck principle to communicate provisional analysis honestly
-
-## Prerequisites
-
-Chapters 2–9. Chapter 2's calibration material returns — calibration visualization is one of the cases examined. The validation methodology built across the book is what this chapter asks you to communicate faithfully.
-
----
-
-## Why this chapter
-
-Every prior chapter in this book has asked you to produce honest analysis. This chapter asks how you communicate it — and establishes that the communication is itself part of the validation. A dashboard that misrepresents valid findings is not a downstream problem. It is a validation failure at the output layer, and it is the supervisor's responsibility.
-
-An AI will draw the chart. It will pick a default axis, a default palette, a default aggregation — instantly, competently, and without any stake in whether the result is honest. The doubt is yours — the pairing Chapter 1 committed us to. This chapter exercises a specific pairing of the supervisory capacities: you get the machine to *build* the chart, and then you *audit* what it built before it ships, catching the misleading encoding you or the tool reached for by default. That pairing, applied at the output layer where a chart persuades before anyone checks it, is the skill this chapter trains.
-
----
-
 ## Two dashboards built from one CSV
 
 Here is an experiment you can run this afternoon. Take one CSV — a real validation result, byte-for-byte fixed — and hand it to two people. Tell the first one their job is to reassure a nervous deployment partner. Tell the second one their job is to get that partner to ask the right questions. Watch what comes back.
@@ -44,6 +16,18 @@ The second dashboard opens with a panel showing performance on the overall user 
 Same data. Same CSV. The first dashboard is misleading. The second is honest. And — here is the part you have to feel in your bones to understand the rest of this chapter — the deployment partner walks away from the two dashboards with two different beliefs about whether the system is safe. They will leave the first reassured. They will leave the second with questions. The questions are appropriate. The reassurance is not.
 
 Here is what I want you to be able to do by the end of this chapter: get an AI to chart your data, then *catch and fix your own misleading encoding* before it ships — and catch someone else's when a chart lands on your desk. I want to spend the rest of the chapter on what is happening between those two dashboards, because most engineers do not realize they are making this choice every time they build one.
+
+---
+
+## Why this chapter
+
+Every prior chapter in this book has asked you to produce honest analysis. This chapter asks how you communicate it — and establishes that the communication is itself part of the validation. A dashboard that misrepresents valid findings is not a downstream problem. It is a validation failure at the output layer, and it is the supervisor's responsibility.
+
+An AI will draw the chart. It will pick a default axis, a default palette, a default aggregation — instantly, competently, and without any stake in whether the result is honest. The doubt is yours — the pairing Chapter 1 committed us to. This chapter exercises a specific pairing of the supervisory capacities: you get the machine to *build* the chart, and then you *audit* what it built before it ships, catching the misleading encoding you or the tool reached for by default. That pairing, applied at the output layer where a chart persuades before anyone checks it, is the skill this chapter trains.
+
+By the end you should be able to explain why visualization is an argument made through structural choices, not a transparent transmission of facts — and, by the same token, why a dashboard that visualizes findings unfaithfully is a validation failure at the output layer, not merely a communication problem. You should be able to identify the nine misleading visualization choices in the catalog, distinguish honest from dishonest uses of each, and apply the catalog to audit your own dashboards; to use the perception hierarchy to choose the right visual channel for quantitative precision; and to apply the FT question taxonomy to match chart type to the question being answered. On uncertainty, you should be able to distinguish aleatoric from epistemic uncertainty, select an appropriate visualization technique for each, and design an uncertainty visualization that makes the uncertainty visually equal in weight to the central estimate. And you should be able to build both an honest and a deliberately misleading version of a dashboard from the same data, identify which design choices did the misleading work, and apply the living-deck principle to communicate provisional analysis honestly.
+
+**Prerequisites.** Chapters 2–9. Chapter 2's calibration material returns — calibration visualization is one of the cases examined. The validation methodology built across the book is what this chapter asks you to communicate faithfully.
 
 ---
 

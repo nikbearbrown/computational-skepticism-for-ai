@@ -45,14 +45,7 @@ The answer is cognitive. Specifically, it is about what kinds of cognitive work 
 
 ---
 
-**Learning objectives.** By the end of this chapter you should be able to:
-
-- Distribute responsibility across parties in an agentic-system failure using the chapter's method
-- Apply Kantian and utilitarian frameworks to produce a responsibility distribution for a specific case
-- Map the cognitive tiers of the *Irreducibly Human* taxonomy onto the five accountability requirements, explaining which tiers each requirement depends on
-- Explain why AI systems cannot close the accountability loop — not as an empirical observation but as a structural argument
-- Audit a deployment against the five accountability requirements and name the failure mode of each gap
-- Construct a governance counterfactual — Pearl's Rung 3 in its operational form — for a documented failure
+By the end of this chapter you should be able to distribute responsibility across parties in an agentic-system failure using the chapter's method, and to apply Kantian and utilitarian frameworks to produce a responsibility distribution for a specific case. You should be able to map the cognitive tiers of the *Irreducibly Human* taxonomy onto the five accountability requirements, explaining which tiers each requirement depends on, and to explain why AI systems cannot close the accountability loop — not as an empirical observation but as a structural argument. And you should be able to audit a deployment against the five accountability requirements and name the failure mode of each gap, and to construct a governance counterfactual — Pearl's Rung 3 in its operational form — for a documented failure.
 
 **Prerequisites.** Chapter 4's introduction of Pearl's Rung 3 — this chapter closes that arc. Chapter 8's audit trail material. Chapter 9's delegation map. Chapter 4's [verify-xref: Frictional Method chapter cut] AI Use Disclosure. The Ash case from Chapter 1. Familiarity with the Five Supervisory Capacities is assumed throughout.
 

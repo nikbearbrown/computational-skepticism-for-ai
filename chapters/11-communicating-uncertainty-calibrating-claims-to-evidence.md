@@ -22,15 +22,7 @@ The fix is a taxonomy. We are going to build it now.
 
 ---
 
-**Learning objectives.** By the end of this chapter you should be able to:
-
-- Apply the verb taxonomy to any claim in a technical document and identify whether the verb is warranted by the evidence
-- Use the verb taxonomy as a fluency-trap detector on AI-generated output
-- Structure a validation document in three audience layers — plain English summary, technical detail, reproducibility appendix — without losing critical nuance in translation
-- Name specific uncertainty in prose — distinguishing epistemic from aleatoric, quantifying where possible, avoiding throat-clearing hedges
-- Compute and interpret the core trust calibration metrics: Brier score, Expected Calibration Error, reliability diagrams, and the proper-scoring-rule family
-- Identify which trust calibration failure mode a deployment is exhibiting from its metric profile
-- Give and receive peer critique on the verb-evidence calibration of a peer's validation writing
+By the end of this chapter you should be able to apply the verb taxonomy to any claim in a technical document, identify whether the verb is warranted by the evidence, and use the same taxonomy as a fluency-trap detector on AI-generated output. You should be able to structure a validation document in three audience layers — plain English summary, technical detail, reproducibility appendix — without losing critical nuance in translation, and to name specific uncertainty in prose, distinguishing epistemic from aleatoric, quantifying where possible, and avoiding throat-clearing hedges. On the quantitative side, you should be able to compute and interpret the core trust calibration metrics — Brier score, Expected Calibration Error, reliability diagrams, and the proper-scoring-rule family — and identify which trust calibration failure mode a deployment is exhibiting from its metric profile. And you should be able to give and receive peer critique on the verb-evidence calibration of a peer's validation writing.
 
 **Prerequisites.** Chapter 10 (uncertainty visualization — this chapter is its paired textual counterpart). Chapter 4 [verify-xref: Frictional Method chapter cut] (the Frictional method and prediction-locking — peer critique is the same epistemic discipline applied collectively). Chapter 2 (probability and calibration foundations). No prerequisites beyond Chapter 2 for the metrics section.
 

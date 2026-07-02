@@ -4,32 +4,7 @@
 
 *The model is not fragile. The model is honest about what it learned.*
 
-## Learning objectives
-
-By the end of this chapter, you will be able to:
-
-- Distinguish between "the model is fragile" and "the model learned a proxy instead of the human-relevant feature," and explain why the distinction changes the engineering response
-- Explain the linearity hypothesis and boundary-tilting perspective as competing geometric accounts of why adversarial examples exist
-- Describe the structure of gradient-based, transfer, and patch attacks, and explain why each targets a different level of the model's learned representation
-- Identify the tools in the robustness toolkit, articulate the limit of each, and explain why robustness requires a portfolio rather than a single measure
-- Explain the accuracy–robustness trade-off and what scaling laws reveal about its limits
-- Recognize the same proxy-attack structure across different domains (image classification, NLP, tabular data, agentic identity verification)
-- Apply the concept of prompt sensitivity to LLM deployments and explain how it relates to the adversarial robustness framework
-- Frame the robustness gap as a Rung 3 counterfactual and explain why it cannot be closed by the engineering toolkit alone
-
-## Prerequisites
-
-Chapters 2–3 [verify-xref: Frictional Method chapter cut]. Chapter 2's distribution shift framing returns directly, and its calibration material is extended at the end. This chapter sketches Pearl's Ladder itself and opens its third rung; Chapter 6 returns to the ladder from the other side, working Rungs 1 and 2 in detail through the bias taxonomy. Chapters 5–7 are not assumed — Chapter 5 returns to the gap between the model's internal accounting and the world from the explanation side, and Chapter 7 picks up the fairness thread. Familiarity with basic gradient descent is helpful for understanding how adversarial perturbations are computed, but not required for the chapter's main arguments.
-
 ---
-
-## Why this chapter
-
-The previous chapters have built apparatus for reading data and model outputs critically. This chapter asks a harder question: what has the model actually learned, and how does that differ from what we thought it learned? Adversarial examples are the instrument that makes the gap visible. The chapter uses them to open a Rung 3 counterfactual we will not close until Chapter 12.
-
----
-
-## The panda becomes a gibbon
 
 I want to show you a picture, or rather, two pictures.
 
@@ -47,6 +22,16 @@ Now suppose someone hands you this same classifier with a benchmark score of 94%
 I want you to sit with this for a moment, because the natural reaction is the wrong reaction. The natural reaction is to think *the model is broken*, or *the model is brittle*, or *we need to add more training data*. None of those reactions is exactly wrong, but all of them miss the size of what just happened. What happened is that a system which the engineers thought was looking at images of pandas and identifying pandas turned out to be looking at *something else* — something which, on the training set, correlated very nicely with images of pandas, but which can be flipped to "gibbon" by a perturbation that leaves the panda completely untouched.
 
 The model and you were not making the same kind of judgment in the first place. You just thought you were.
+
+---
+
+## Why this chapter
+
+The previous chapters have built apparatus for reading data and model outputs critically. This chapter asks a harder question: what has the model actually learned, and how does that differ from what we thought it learned? Adversarial examples are the instrument that makes the gap visible. The chapter uses them to open a Rung 3 counterfactual we will not close until Chapter 12.
+
+By the end of this chapter you should be able to distinguish between "the model is fragile" and "the model learned a proxy instead of the human-relevant feature," and explain why that distinction changes the engineering response. You should be able to explain the linearity hypothesis and the boundary-tilting perspective as competing geometric accounts of why adversarial examples exist, and describe the structure of gradient-based, transfer, and patch attacks — including why each targets a different level of the model's learned representation. On the defensive side, you should be able to identify the tools in the robustness toolkit, articulate the limit of each, and explain why robustness requires a portfolio rather than a single measure; and to explain the accuracy–robustness trade-off and what scaling laws reveal about its limits. Finally, you should be able to recognize the same proxy-attack structure across different domains — image classification, NLP, tabular data, agentic identity verification — to apply the concept of prompt sensitivity to LLM deployments and explain how it relates to the adversarial robustness framework, and to frame the robustness gap as a Rung 3 counterfactual, explaining why it cannot be closed by the engineering toolkit alone.
+
+**Prerequisites.** Chapters 2–3 [verify-xref: Frictional Method chapter cut]. Chapter 2's distribution shift framing returns directly, and its calibration material is extended at the end. This chapter sketches Pearl's Ladder itself and opens its third rung; Chapter 6 returns to the ladder from the other side, working Rungs 1 and 2 in detail through the bias taxonomy. Chapters 5–7 are not assumed — Chapter 5 returns to the gap between the model's internal accounting and the world from the explanation side, and Chapter 7 picks up the fairness thread. Familiarity with basic gradient descent is helpful for understanding how adversarial perturbations are computed, but not required for the chapter's main arguments.
 
 ---
 

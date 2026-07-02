@@ -3,30 +3,6 @@
 
 *Three things capability scaling cannot fix, and what the supervisor does about them.*
 
-## Learning objectives
-
-By the end of this chapter, you will be able to:
-
-- Name the three categorical limits of AI systems — meaning, intentionality, and the data-world gap — and explain why capability scaling does not close them
-- State what Turing's argument actually claims and what it does not, and do the same for Searle's Chinese Room
-- Identify which deployments require skepticism as a safety mechanism versus skepticism as methodology, and specify the criteria that distinguish them
-- Design the five components of an engineering practice for high-stakes deployments where the categorical limits bite
-- Explain why the supervisor's authority to refuse deployment is the most important structural authority in the system
-- Compare AI's cognitive profile against the capacities documented in this book — identifying where AI is genuinely strong, where it is structurally weak, and where it is absent — and use that profile to determine appropriate delegation
-- Apply the full validation apparatus from across this book to a specific deployment and stake a position you can defend
-
-## Prerequisites
-
-The entire book. This chapter is the culmination. Chapter 2's calibration baseline runs here for the third and final time. Chapters 3, 4, and throughout — the three categorical limits are the structural statements of what those chapters were operational versions of. The extended-mind framing developed here is the leitmotif of the book, named explicitly for the first time.
-
----
-
-## Why this chapter
-
-Every prior chapter has built technical apparatus for validating AI systems. This chapter names the limits beyond which that apparatus cannot reach, specifies the engineering practices those limits demand, and asks you to use everything the book has given you on a specific case and stake a position you can defend.
-
----
-
 ## The model that passed every test and failed in deployment
 
 Here is the move I want you to start with, and it ends in a question no benchmark answers. Take any system you have validated in this book and ask your AI agent one thing: *"Is this system safe to deploy?"* You will get a fluent, well-organized, confident answer. It will weigh the considerations, cite the metrics, and arrive at a recommendation. Now ask yourself the question the AI cannot ask itself: *safe for whom, doing what, in which world?* The AI answered the question whose symbols it processed. You have to answer the question about the world the system enters. Those are not the same question, and the gap between them is the subject of this final chapter. Computational skepticism, all book long, has been AI's speed married to a doubt that stays irreducibly human — and this chapter bounds that doubt from the other side.
@@ -44,6 +20,16 @@ The post-mortem found something I want you to feel the strangeness of, because t
 The system passed every test the engineers designed. The engineers designed the wrong tests. The wrongness was not negligence. It was something deeper — a *categorical limit on what the system could be tested for*, given what the system was. The validator's job, looking back, was to recognize the limit and decide whether the deployment should proceed in its absence. The validator had not been trained for this recognition.
 
 That is the training this chapter is for.
+
+---
+
+## Why this chapter
+
+Every prior chapter has built technical apparatus for validating AI systems. This chapter names the limits beyond which that apparatus cannot reach, specifies the engineering practices those limits demand, and asks you to use everything the book has given you on a specific case and stake a position you can defend.
+
+By the end you should be able to name the three categorical limits of AI systems — meaning, intentionality, and the data-world gap — and explain why capability scaling does not close them; and to state what Turing's argument actually claims and what it does not, and do the same for Searle's Chinese Room. You should be able to identify which deployments require skepticism as a safety mechanism versus skepticism as methodology, specify the criteria that distinguish them, design the five components of an engineering practice for high-stakes deployments where the categorical limits bite, and explain why the supervisor's authority to refuse deployment is the most important structural authority in the system. You should be able to compare AI's cognitive profile against the capacities documented in this book — identifying where AI is genuinely strong, where it is structurally weak, and where it is absent — and use that profile to determine appropriate delegation. And, finally, you should be able to apply the full validation apparatus from across this book to a specific deployment and stake a position you can defend.
+
+**Prerequisites.** The entire book. This chapter is the culmination. Chapter 2's calibration baseline runs here for the third and final time. Chapters 3, 4, and throughout — the three categorical limits are the structural statements of what those chapters were operational versions of. The extended-mind framing developed here is the leitmotif of the book, named explicitly for the first time.
 
 ---
 

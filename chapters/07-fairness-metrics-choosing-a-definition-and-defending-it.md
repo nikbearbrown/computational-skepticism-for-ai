@@ -26,17 +26,9 @@ This is the pairing Chapter 1 committed us to — the machine's speed, your doub
 
 ---
 
-**What you will be able to do after this chapter:**
+By the end of this chapter you should be able to state the impossibility theorem precisely — which three properties cannot coexist, and under what condition — and to define demographic parity, equalized odds, and calibration parity in formal terms, naming the values claim each one embeds. You should be able to work through the arithmetic that shows why satisfying calibration parity forces a violation of equalized odds when base rates differ, and to read the COMPAS case as an instance of the theorem playing out with real consequences.
 
-- State the impossibility theorem precisely — what three properties cannot coexist, and under what condition
-- Define demographic parity, equalized odds, and calibration parity in formal terms and explain the values claim each embeds
-- Work through the arithmetic that shows why satisfying calibration parity forces a violation of equalized odds when base rates differ
-- Apply the COMPAS case as an instance of the theorem playing out with real consequences
-- State the $(D, d)$-Lipschitz condition for individual fairness and explain what it requires and why its central challenge is the choice of $d$
-- Derive the counterfactual fairness criterion and explain why it requires a causal model, not just data
-- Compute the Generalized Entropy Index and interpret its decomposition into within-group and between-group components
-- Produce a defended metric choice for a specified deployment — the structured format the chapter defines
-- Name who should have decided — and why the engineer who "just optimizes" decided by default
+Beyond the group metrics, you should be able to state the $(D, d)$-Lipschitz condition for individual fairness — explaining what it requires and why its central challenge is the choice of $d$ — to derive the counterfactual fairness criterion and explain why it requires a causal model rather than just data, and to compute the Generalized Entropy Index and interpret its decomposition into within-group and between-group components. And once the machinery is on the table, you should be able to produce a defended metric choice for a specified deployment, in the structured format the chapter defines, and to name who should have decided — and why the engineer who "just optimizes" decided by default.
 
 **Prerequisites:** Chapter 2's probability foundations and Chapter 3's data-provenance material are both relevant here. Chapter 2 gives you the probabilistic language the metrics require. Chapter 6 established why base-rate differences exist in real data and why they may not be correctable within the model. Chapter 6's treatment of Pearl's causal ladder is needed for the counterfactual fairness section. This chapter exercises two supervisory capacities in particular: **Problem Formulation** (deciding what the fairness mission is before the model sees it) and **Interpretive Judgment** (signing for a values claim the math cannot make).
 

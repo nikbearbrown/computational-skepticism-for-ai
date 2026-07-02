@@ -27,14 +27,7 @@ We have to talk about how this happens. We have to talk about it in particular c
 
 ---
 
-**Learning objectives.** By the end of this chapter you should be able to:
-
-- Distinguish explanation, transparency, and interpretability as separable properties, and identify which one a given claim or requirement is actually invoking
-- Derive the Shapley value formula from cooperative game theory first principles, and explain what the four axioms (Efficiency, Symmetry, Dummy, Additivity) guarantee
-- Describe what SHAP and LIME show and — critically — what they do not show, grounded in Pearl's Rung 1 limitation
-- Explain why counterfactual explanations engage Rung 2 and why that still doesn't close the gap between the model's world and the real world
-- Apply the language-game framework to a real explanation output and identify whether the explanation serves the audience's language game
-- Use the "audience question" as a supervisory check: who is reading this explanation, and what do the words mean in their game?
+By the end of this chapter you should be able to distinguish explanation, transparency, and interpretability as separable properties, and identify which one a given claim or requirement is actually invoking. You should be able to derive the Shapley value formula from cooperative game theory first principles and explain what its four axioms — Efficiency, Symmetry, Dummy, Additivity — guarantee; to describe what SHAP and LIME show and, critically, what they do not show, grounded in Pearl's Rung 1 limitation; and to explain why counterfactual explanations engage Rung 2 and why even that doesn't close the gap between the model's world and the real world. And you should be able to apply the language-game framework to a real explanation output, identify whether the explanation serves the audience's language game, and use the "audience question" as a supervisory check: who is reading this explanation, and what do the words mean in their game?
 
 **Prerequisites.** Chapters 1, 3, and 4. Chapter 1 introduces the Ash case — if you haven't read it, the section *Back to Ash* below recaps the setup. Chapter 4 sketches Pearl's Ladder (Rung 1 association, Rung 2 intervention, Rung 3 counterfactual); that sketch is all this chapter assumes. Chapter 6 returns to the ladder from the other side, working Rungs 1 and 2 in detail through the bias taxonomy.
 

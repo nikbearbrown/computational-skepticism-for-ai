@@ -3,21 +3,11 @@
 
 *Why your intuition forgets the prior, and what to do when it does.*
 
-## Learning objectives
+---
 
-By the end of this chapter, you will be able to:
+I asked a classifier to score a batch of records for me last week, and it handed back a column of probabilities. 0.94. 0.91. 0.88. Clean, sorted, ready to drop into a dashboard. It looked done. Here is what is actually happening: that column is a set of *degrees of belief the model holds*, formatted to look like *facts about the world*. The 0.94 does not announce whether 94 out of every 100 cases scored 0.94 actually turn out positive. It does not announce the base rate of the thing I am looking for. It does not announce whether the model was trained in a way that rewards saying 0.94 when it means 0.85. It just sits there, looking like a measurement.
 
-- Apply Bayes' theorem to calculate the actual probability of a rare event given a positive test result, and explain why the result differs from naive intuition
-- Use the total probability theorem to decompose complex probability calculations into tractable pieces
-- Apply the multiplication (chain) rule to compute joint probabilities across sequential events
-- Identify the base rate in a deployment scenario and explain how ignoring it produces systematically wrong conclusions
-- Distinguish between model accuracy and model calibration, and describe what a calibration curve reveals that accuracy metrics hide
-- Recognize the conditions under which the Central Limit Theorem does not apply, and identify when a deployment's loss distribution is likely to be heavy-tailed
-- Explain distribution shift as an instance of Hume's problem of induction, and name at least two mechanisms by which a model can become confidently wrong after deployment
-
-## Prerequisites
-
-Chapter 1 (AI systems and supervisory capacities). Familiarity with basic probability notation is helpful but not required — the notation is introduced from scratch. No calculus. Arithmetic and patience are the only tools you need for the calculations.
+That gap — between the confidence a system radiates and the confidence it has earned — is what this chapter is really about, and it is exactly where the pairing Chapter 1 committed us to does its work: the machine's speed, your doubt. The most pervasive failure in AI deployment is not that models are stupid. It is that confident numbers are not correct numbers, and almost nobody checks. The supervisory capacity this chapter trains hardest is **plausibility auditing** — the first of the five from Chapter 1, the capacity to hear the wrong note in a number *before* you can prove it wrong. And the wrong note here is almost always the same note: the model forgot the prior, or you did, or nobody checked whether 0.94 means what it says.
 
 ---
 
@@ -25,11 +15,11 @@ Chapter 1 (AI systems and supervisory capacities). Familiarity with basic probab
 
 The failures we examined in Chapter 1 were not, for the most part, failures of model competence. The models were doing what their training permitted. The failures were failures of interpretation — of engineers and operators reading model outputs through intuitions that were not built for the problem at hand.
 
-I asked a classifier to score a batch of records for me last week, and it handed back a column of probabilities. 0.94. 0.91. 0.88. Clean, sorted, ready to drop into a dashboard. It looked done. Here is what is actually happening: that column is a set of *degrees of belief the model holds*, formatted to look like *facts about the world*. The 0.94 does not announce whether 94 out of every 100 cases scored 0.94 actually turn out positive. It does not announce the base rate of the thing I am looking for. It does not announce whether the model was trained in a way that rewards saying 0.94 when it means 0.85. It just sits there, looking like a measurement.
-
-That gap — between the confidence a system radiates and the confidence it has earned — is what this chapter is really about, and it is exactly where the pairing Chapter 1 committed us to does its work: the machine's speed, your doubt. The most pervasive failure in AI deployment is not that models are stupid. It is that confident numbers are not correct numbers, and almost nobody checks. The supervisory capacity this chapter trains hardest is **plausibility auditing** — the first of the five from Chapter 1, the capacity to hear the wrong note in a number *before* you can prove it wrong. And the wrong note here is almost always the same note: the model forgot the prior, or you did, or nobody checked whether 0.94 means what it says.
-
 This chapter builds the apparatus for repairing those intuitions. We start from first principles: what probability actually is, and why the Boolean instinct — the one that got you this far in engineering — misleads you once you are working from a model rather than from the world directly. We do one calculation that will restructure how you read any uncertain output. We open one diagnostic that tells you whether a model's numbers mean what they appear to mean. We point at one structural worry that breaks every classical tool you have. We use all three on every subsequent chapter. And at the chapter's end you will do two things with the ideas, not one: **build** a pipeline that emits and calibrates its own confidence, and **audit** someone else's confident number against the base rate.
+
+So here is what you should be able to do by the end. You should be able to apply Bayes' theorem to calculate the actual probability of a rare event given a positive test result — and explain why that answer differs from naive intuition; to use the total probability theorem to decompose a complex probability calculation into tractable pieces, and the multiplication (chain) rule to compute joint probabilities across sequential events; and to identify the base rate in a deployment scenario and explain how ignoring it produces systematically wrong conclusions. You should be able to distinguish between model accuracy and model calibration, and describe what a calibration curve reveals that accuracy metrics hide. And you should be able to recognize the conditions under which the Central Limit Theorem does not apply, identify when a deployment's loss distribution is likely to be heavy-tailed, and explain distribution shift as an instance of Hume's problem of induction — naming at least two mechanisms by which a model can become confidently wrong after deployment.
+
+**Prerequisites.** Chapter 1 (AI systems and supervisory capacities). Familiarity with basic probability notation is helpful but not required — the notation is introduced from scratch. No calculus. Arithmetic and patience are the only tools you need for the calculations.
 
 ---
 

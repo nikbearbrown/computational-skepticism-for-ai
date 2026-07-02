@@ -22,12 +22,7 @@ Aggregate numbers are hard to feel, so for the rest of this chapter, hold one pa
 
 ---
 
-**What you will be able to do after this chapter:**
-
-- Apply four skeptical moves — Cartesian doubt, Humean induction limits, Popperian falsifiability, and the Plato's Cave move — to any AI output
-- Name and distinguish the Five Supervisory Capacities required to catch failures that metrics cannot see
-- Identify the Fluency Trap and interrupt it before it does epistemic work it should not do
-- Map any AI deployment failure to the supervisory capacity whose absence allowed it
+**What you will be able to do after this chapter:** By the end you should be able to take any AI output and apply four skeptical moves to it — Cartesian doubt, Humean induction limits, Popperian falsifiability, and the Plato's Cave move; to name and distinguish the Five Supervisory Capacities required to catch the failures that metrics cannot see; to identify the Fluency Trap and interrupt it before it does epistemic work it should not do; and to take any AI deployment failure and map it to the supervisory capacity whose absence allowed it.
 
 **Prerequisites:** Familiarity with the basics of supervised machine learning (training sets, validation sets, accuracy metrics) is helpful but not required. The conceptual tools in this chapter do not depend on any mathematics — those come in Chapter 2.
 
@@ -213,11 +208,11 @@ The five supervisory capacities are a framework for thinking about this architec
 
 ## Meet Ash — a longitudinal case
 
-We will return to Ash and *Agents of Chaos* Case #1 in Chapters 3, 4, 5, 8, and 9 [verify-xref: pre-renumber list also included the fairness chapter, but Ash never appears in it — add an Ash return there or drop it here]. Each return will apply a different validation lens to the same failure. By Chapter 8, you will have run a full analysis from six different angles. The case is what we will call our *Pebble*: a single concrete failure dropped into the middle of the book, whose ripples reach every subsequent chapter.
+We will return to Ash and *Agents of Chaos* Case #1 where the case earns real work: Chapter 5 examines what the agent claimed about its own actions — the case's longest treatment; Chapter 8, on validating agentic AI, is its home ground; Chapter 12 asks who is responsible for it — Ash, the agent, the framework developers, the model provider, the email host, or the user who phrased the request — and the answer will be uncomfortable. The chapters in between run on their own cases, and that is deliberate — each validation lens gets the failure that teaches it best. What does run through every chapter is the casebook you will build on an agent of your own choosing, in the LLM exercise that closes each chapter. That casebook is our *Pebble*: dropped in Chapter 1, and by the end of the book it will have been rippled through every lens the book teaches.
 
 So that the later returns work, a fuller account here: Ash gave an autonomous coding-and-shell agent privileged access to his email infrastructure. He asked for a deletion. The agent, given partial credentials and able to issue shell commands, took an action that *locally* satisfied the request — it reset a password, renamed an alias — and reported success. The data persisted on the provider's servers. The agent's claim and the system's state diverged. The agent did not lie; the agent's model of the world was incomplete in a specific, detectable way, and its report was confident in proportion to its incompleteness.
 
-This is the canonical shape of an agentic failure. When Chapter 5 discusses explainability, we will examine what the agent claimed about its own actions. When Chapter 4 discusses robustness, we will examine what would have happened under adversarial framing of the same request. When Chapter 12 discusses accountability, we will ask who is responsible — Ash, the agent, the framework developers, the model provider, the email host, or the user who phrased the request — and the answer will be uncomfortable.
+This is the canonical shape of an agentic failure.
 
 For now: write Ash's name in the margin. We will be back.
 

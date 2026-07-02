@@ -3,38 +3,7 @@
 
 *What the histograms can see, and the failures that live in everything else.*
 
-## Learning objectives
-
-By the end of this chapter, you will be able to:
-
-- Explain why procedural EDA is necessary but not sufficient for deployment-ready data validation, and describe what the interrogation approach adds
-- Execute the core procedural EDA workflow — distributions, missingness, correlations, outliers — and identify what each diagnostic does and does not reveal
-- Choose appropriate marks and channels when constructing or reading a data visualization, and explain why position outranks color for quantitative data
-- Identify at least six structural assumption categories that fail silently and are invisible to standard EDA
-- Apply the six-step epistemic-frame reconstruction procedure to a dataset you did not create, including the prediction-lock
-- Explain the access/boundary assumption and why the effective scope of a dataset is rarely identical to its schema
-- Identify which validation work to delegate to AI tools, which to verify before trusting, and which to not delegate at all
-- Trace a dataset failure backward to the structural assumption that produced it
-
-## Prerequisites
-
-Chapters 1–2 [verify-xref: Frictional Method chapter cut]. Chapter 6 (bias) now comes later in the book; Glimmer 3.1 points at the bias-as-hidden-failure pattern early, and Chapter 6 returns to it from the other side with the leverage analysis. Familiarity with basic SQL join semantics is helpful but not required. No programming language is assumed; code examples use Python/pandas idioms, but the concepts transfer directly.
-
 ---
-
-## Why this chapter
-
-We have spent two chapters building apparatus for reading model outputs critically. This chapter steps earlier in the pipeline. Before the model, there is data. Before the data, there are choices — about what to record, what to include, how to join, where to stop. Those choices are the epistemic frame of the dataset, and they are almost never written down.
-
-This is where computational skepticism does its most characteristic work — the pairing Chapter 1 committed us to: the machine's speed at producing plausible artifacts, your doubt about what they are evidence of. An AI can assemble the dataset, join the tables, draw every histogram, and write the "the data is clean" paragraph faster than you ever could. What it cannot supply is the doubt about what the histograms can't reach. That gap is yours, and it is the whole subject of this chapter.
-
-Two of the five supervisory capacities from Chapter 1 have to run at once through this material. **Problem Formulation** — deciding what this dataset is even supposed to represent before you look at it — and **Plausibility Auditing** — hearing the wrong note in a report that looks, by every visible measure, clean. The AI is superhuman at producing the plots. It cannot own either of those capacities for you.
-
-This chapter teaches you two things, and they map onto the build/audit pairing that recurs across the book. First: how to actually do EDA — the mechanics of the procedural pass, the visualizations that matter, the code patterns that produce them, and most importantly what each diagnostic does and does not reveal. This is the part you can, and should, delegate. Second: how to do the work that comes after EDA, the work that determines whether a deployment will fail in production for reasons invisible from inside the data. This is the part you keep. We cannot do the second without doing the first, so we start there.
-
----
-
-## The clean dataset that destroyed a deployment
 
 Start with the version of this you'll actually meet. You ask an AI to assemble a dataset for you: pull the customer records from the ticketing system, join them to the CRM on customer ID, drop the columns you don't need, hand me back one clean table. Thirty seconds later there it is — 79,400 rows, tidy dtypes, no obvious garbage. You ask for an exploratory pass: histograms, missing-value counts, a correlation heatmap, outlier flags. The AI writes the pandas, runs it, reports back. Distributions reasonable. Missingness near zero. No wild outliers. The report is, by every visible measure, clean.
 
@@ -62,6 +31,22 @@ This is the gap I want to spend this chapter on. EDA is not a procedure. Or rath
 Here is the classical move underneath the whole chapter, and I'll name it: it's **Plato's Cave**. A dataset is not the world. It is shadows on the wall — a projection cast by a particular recording instrument under particular conditions. Procedural EDA describes the shadows with great precision. It tells you nothing about the fire, the objects, or the wall. The interrogation is the work of turning around.
 
 So here is the move I am asking you to make. Treat every dataset as a recording made by a particular instrument under particular conditions. Then ask the questions you would ask of any recording. *What was recorded? What was not? Why? By whom? Under what assumptions about what was worth recording?*
+
+---
+
+## Why this chapter
+
+We have spent two chapters building apparatus for reading model outputs critically. This chapter steps earlier in the pipeline. Before the model, there is data. Before the data, there are choices — about what to record, what to include, how to join, where to stop. Those choices are the epistemic frame of the dataset, and they are almost never written down.
+
+This is where computational skepticism does its most characteristic work — the pairing Chapter 1 committed us to: the machine's speed at producing plausible artifacts, your doubt about what they are evidence of. An AI can assemble the dataset, join the tables, draw every histogram, and write the "the data is clean" paragraph faster than you ever could. What it cannot supply is the doubt about what the histograms can't reach. That gap is yours, and it is the whole subject of this chapter.
+
+Two of the five supervisory capacities from Chapter 1 have to run at once through this material. **Problem Formulation** — deciding what this dataset is even supposed to represent before you look at it — and **Plausibility Auditing** — hearing the wrong note in a report that looks, by every visible measure, clean. The AI is superhuman at producing the plots. It cannot own either of those capacities for you.
+
+This chapter teaches you two things, and they map onto the build/audit pairing that recurs across the book. First: how to actually do EDA — the mechanics of the procedural pass, the visualizations that matter, the code patterns that produce them, and most importantly what each diagnostic does and does not reveal. This is the part you can, and should, delegate. Second: how to do the work that comes after EDA, the work that determines whether a deployment will fail in production for reasons invisible from inside the data. This is the part you keep. We cannot do the second without doing the first, so we start there.
+
+So here is what you should be able to do by the end. You should be able to explain why procedural EDA is necessary but not sufficient for deployment-ready data validation, and describe what the interrogation approach adds; to execute the core procedural EDA workflow — distributions, missingness, correlations, outliers — and identify what each diagnostic does and does not reveal; and to choose appropriate marks and channels when constructing or reading a data visualization, including why position outranks color for quantitative data. You should be able to identify at least six structural assumption categories that fail silently and are invisible to standard EDA; to apply the six-step epistemic-frame reconstruction procedure to a dataset you did not create, including the prediction-lock; and to explain the access/boundary assumption and why the effective scope of a dataset is rarely identical to its schema. And you should be able to sort the validation work itself — which parts to delegate to AI tools, which to verify before trusting, and which to not delegate at all — and, when a dataset fails anyway, trace the failure backward to the structural assumption that produced it.
+
+**Prerequisites.** Chapters 1–2 [verify-xref: Frictional Method chapter cut]. Chapter 6 (bias) now comes later in the book; Glimmer 3.1 points at the bias-as-hidden-failure pattern early, and Chapter 6 returns to it from the other side with the leverage analysis. Familiarity with basic SQL join semantics is helpful but not required. No programming language is assumed; code examples use Python/pandas idioms, but the concepts transfer directly.
 
 ---
 

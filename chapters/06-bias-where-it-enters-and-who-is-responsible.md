@@ -19,16 +19,7 @@ This chapter is about that way of looking. By the end I want you to be able to l
 
 To get there, we need four things. We need a rigorous definition of what "bias" actually means — because the informal meaning is doing too much work and engineers who don't separate its meanings produce confused arguments. We need a detailed map of the ten distinct mechanisms through which bias enters a pipeline — because each one has a different causal structure and responds to different interventions. We need a way to think about what data actually is, which is not the same as what it appears to be. And we need a small piece of formal apparatus, due to Judea Pearl, that lets us see the difference between a system that *correlates* the bias and a system that *causes* it. With those four things in hand, the three teams stop being a puzzle.
 
-**Learning objectives.** By the end of this chapter you should be able to:
-
-- Define bias formally as a property of an estimator and explain why more data alone cannot correct a biased estimator
-- Identify which of the ten canonical bias types is operating in a described scenario, and explain the mechanism — not just the name
-- Distinguish dataset bias, label bias, and structural bias by identifying where in the pipeline each enters
-- Apply Pearl's Rungs 1 and 2 to a fairness claim and explain why Rung 1 metrics can't answer Rung 2 questions
-- Draw a causal graph for a deployed AI system and identify the highest-leverage intervention point
-- Read a dataset as an epistemic artifact — asking what it claims to represent, what it actually represents, and what it excludes
-- Explain, in plain language, why two contradictory fairness metrics can both be mathematically correct at the same time
-- Assign the accountable owner of a bias, including when the leverage sits upstream of your team entirely
+Concretely, by the end you should be able to define bias formally as a property of an estimator and explain why more data alone cannot correct a biased one; to identify which of the ten canonical bias types is operating in a described scenario and explain the mechanism, not just the name; and to distinguish dataset bias, label bias, and structural bias by identifying where in the pipeline each enters. On the causal side, you should be able to apply Pearl's Rungs 1 and 2 to a fairness claim and explain why Rung 1 metrics can't answer Rung 2 questions, and to draw a causal graph for a deployed AI system and identify the highest-leverage intervention point. And you should be able to read a dataset as an epistemic artifact — asking what it claims to represent, what it actually represents, and what it excludes — to explain, in plain language, why two contradictory fairness metrics can both be mathematically correct at the same time, and to assign the accountable owner of a bias, including when the leverage sits upstream of your team entirely.
 
 **Prerequisites.** Chapters 1 and 2 — the supervisory posture, the vocabulary of uncertainty, and the fluency trap. Chapter 4's opening of Pearl's Rung 3 is picked up here, but this chapter develops Rungs 1 and 2 from scratch, so nothing from that chapter is strictly required. You'll also need the basic idea that a model learns from data; nothing else is assumed.
 
