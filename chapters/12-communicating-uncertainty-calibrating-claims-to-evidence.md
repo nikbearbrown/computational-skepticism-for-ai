@@ -1,3 +1,5 @@
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/11-communicating-uncertainty.md into original; scaffolding preserved. For human rewrite. Note: draft is numbered Ch 11, original is Ch 12 — resolve chapter number on rewrite. -->
+
 # Chapter 12 — Communicating Uncertainty: Calibrating Claims to Evidence
 
 ## TL;DR
@@ -16,9 +18,11 @@ Here is sentence B: *We find that the new model achieves 87% accuracy on the hel
 
 Here is sentence C: *We observe that the new model produces 87% accuracy on this single held-out evaluation; whether the difference from the prior model is statistically significant is not yet established.*
 
-Three sentences. The evidence supports sentence C. The evidence is partly compatible with sentence B — *find* is a stronger verb than *observe*, and it carries some implied generalization, but the implied generalization is not yet warranted by what we have. The evidence does not support sentence A. *Conclude* implies a settled judgment, and a single accuracy number on one test set, without significance testing or confidence intervals, is not a settled judgment.
+Three sentences. The numbers never changed. What changed was the verb — *conclude*, *find*, *observe* — and each verb claims a different amount of evidence. The evidence supports sentence C. The evidence is partly compatible with sentence B — *find* is a stronger verb than *observe*, and it carries some implied generalization, but the implied generalization is not yet warranted by what we have. The evidence does not support sentence A. *Conclude* implies a settled judgment, and a single accuracy number on one test set, without significance testing or confidence intervals, is not a settled judgment.
 
-Engineers default to sentence A. Engineering papers are full of conclusions stated more strongly than the evidence permits. This is not malicious. It is mostly inattention to a particular kind of calibration — the calibration of the *verb* of a claim to the evidence the claim is built on. The verb is doing real epistemic work, and most engineering writers do not notice the verb at all.
+Engineers default to sentence A. They do it without noticing, because the verb feels like grammar rather than a claim. But it *is* a claim. Engineering papers are full of conclusions stated more strongly than the evidence permits. This is not malicious. It is mostly inattention to a particular kind of calibration — the calibration of the *verb* of a claim to the evidence the claim is built on. The verb is doing real epistemic work, and most engineering writers do not notice the verb at all.
+
+This is where I want you to feel the shape of the whole book pressing in. Computational skepticism is the collision of two things: AI's speed at *producing* claims, and the irreducibly human work of *doubting* them. A model can draft a validation paragraph in a second; deciding whether the verb in that paragraph is licensed by the evidence is not something the model does for you, and it is not something you can hand back to it. Calibrating that verb — downgrading it when the evidence is thinner than the verb implies — is, in my experience, the single most operationally useful skill in communicating a validation finding. And it runs in two directions that turn out to be the same skill: **build** — calibrate the verbs in a report *you* write, mapping every claim to its proof — and **audit** — downgrade the verbs in an AI-written claim that someone hands you. Same instrument, two hands. That build/audit pairing is one of the supervisory capacities this book keeps circling back to, and this chapter is the one where the capacity is *communicating validation findings in prose*.
 
 The fix is a taxonomy. We are going to build it now.
 
@@ -40,7 +44,21 @@ The fix is a taxonomy. We are going to build it now.
 
 ## The verb taxonomy
 
-A working hierarchy. Each verb implies a specific epistemic posture toward the evidence. Choose the verb whose posture matches what your evidence actually warrants.
+### The classical move: warranted assertion
+
+Before the ladder, the idea underneath it. Philosophers call this *warranted assertibility* — you are entitled to assert something in proportion to your evidence for it. The move is old; what is new is applying it as a mechanical instrument to validation writing, where the verb is the dial you turn. And there is a real-world precedent that proves the dial works at the scale of an entire contested discipline: the IPCC's calibrated-language scheme (Mastrandrea et al., 2010), which pins climate-assessment language to a defined confidence scale and a set of calibrated likelihood terms, so that "likely" and "very likely" name specific probability ranges rather than vibes. If climate science can hold its verbs to its evidence in a document that governments fight over line by line, so can we in a validation report.
+
+Here is the ordering I am going to freeze and use for the rest of the chapter — weakest claim to strongest:
+
+> **hypothesize** → **suggest** → **observe** → **find** → **show** → **demonstrate** → **conclude** → **prove**
+
+I am being deliberate about freezing exactly one ordering, because a verb ladder that contradicts itself is worse than none — it hands you false confidence that you calibrated. So: *observe* is weaker than *find* (a single observation under specific conditions is weaker than a result established across variation); *suggest* sits below *observe* (an inference the data is merely consistent with); *prove* is reserved for mathematics or formal verification. Every table and exercise in this chapter conforms to this ladder.
+
+One honest complication, so it does not burn you later. This ladder is really flattening a *two-dimensional* thing into one line. "Suggest" and "indicate" measure inferential *caution*; "observe," "find," and "show" measure evidential *strength*. Those are different axes, which is exactly why verb ladders tend to wobble. I have forced them into one line on purpose, and I will defend the choice: for the practical job of not over-claiming in a validation report, a single defended ladder is more useful than a correct-but-unusable grid. Just know that is the trade I made — first-principles clean would be the grid; usable is the line.
+
+### The working hierarchy
+
+Each verb implies a specific epistemic posture toward the evidence. Choose the verb whose posture matches what your evidence actually warrants.
 
 *Hypothesize.* "We hypothesize that X." Posture: an idea, not yet tested, that we are about to investigate. The evidence required is a coherent reason to investigate, not evidence that the hypothesis is true. Used at the front of a paper, in proposals, in framing future work.
 
@@ -95,7 +113,7 @@ The pattern is three layers, and you should be able to point to each one in your
 
 The layered approach is harder to write than two separate documents. It is easier to maintain, easier to keep consistent, and produces fewer translation errors. It also mirrors the structure of good validation work: the executive question is addressed by the executive layer, the technical question by the technical layer, and the reproducibility question by the reproducibility layer.
 
-Layer 1 is not "dumbed down." Dumbing down is condescending and loses information. Layer 1 is a specific, careful, accurate summary in plain English. Plain English is *harder* to write than jargon. The technical reader benefits from Layer 1 as much as the non-technical reader does — it forces the writer to articulate what the section is really doing, which is sometimes a useful discovery for the writer.
+Layer 1 is not "dumbed down." Dumbing down is condescending and loses information. Layer 1 is a specific, careful, accurate summary in plain English. Plain English is *harder* to write than jargon — and here is why that matters for this chapter specifically: jargon lets you hide an un-calibrated verb behind a technical term. "The model achieves state-of-the-art calibration" hides the *conclude*-strength verb inside a phrase that sounds like measurement. Forced into plain English, the verb has nowhere to hide. The technical reader benefits from Layer 1 as much as the non-technical reader does — it forces the writer to articulate what the section is really doing, which is sometimes a useful discovery for the writer. The layered document also beats keeping two separate documents, because two documents drift, and every translation between them is a fresh chance to lose the nuance the calibration was protecting.
 
 ![Layered document structure ](images/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-01.png)
 *Figure 12.1 — Layered document structure *
@@ -118,7 +136,7 @@ where $p_i \in [0,1]$ is the model's predicted probability for instance $i$ and 
 
 The Brier score runs from 0 (perfect calibration on every prediction) to 1 (perfectly wrong on every prediction). A random classifier predicting $p_i = 0.5$ for all instances achieves $\text{BS} = 0.25$. A well-calibrated classifier should substantially beat this baseline.
 
-The Brier score is a *proper scoring rule*: it is minimized, in expectation, when and only when the model reports the true probability. This is the key property that distinguishes proper scoring rules from raw accuracy metrics. Accuracy rewards the model for being right; it does not penalize the model for being confidently right when the situation warranted hedging. The Brier score penalizes both miscalibration and poor discrimination simultaneously.
+The Brier score is a *proper scoring rule*: it is minimized, in expectation, when and only when the model reports the true probability. This is the key property that distinguishes proper scoring rules from raw accuracy metrics. Accuracy rewards the model for being right; it does not penalize the model for being confidently right when the situation warranted hedging. The Brier score penalizes both miscalibration and poor discrimination simultaneously. (The score itself traces to Brier, 1950; the decomposition below to Murphy, 1973.)
 
 The Brier score decomposes into three interpretable components:
 
@@ -139,9 +157,9 @@ $$\text{ECE} = \sum_{m=1}^{M} \frac{|B_m|}{N} \left| \text{acc}(B_m) - \text{con
 
 where $M$ is the number of bins, $B_m$ is the set of instances falling in bin $m$, $\text{acc}(B_m)$ is the fraction of instances in that bin that were actually positive, and $\text{conf}(B_m)$ is the mean predicted probability of instances in that bin.
 
-A perfectly calibrated model has $\text{ECE} = 0$. In practice, well-calibrated deployed models often have $\text{ECE}$ in the range of 0.02–0.05. A value above 0.10 is a clear signal of systematic miscalibration.
+A perfectly calibrated model has $\text{ECE} = 0$. You will hear rules of thumb: well-calibrated deployed models "often" land around 0.02–0.05, and a value above 0.10 signals systematic miscalibration. Use those as rough practitioner heuristics, not facts. I could not source those specific thresholds to a primary study **[verify]**, and worse, the numbers are not scale-free anyway, because ECE is *bin-dependent*.
 
-The ECE is intuitive and easy to report, but it has a structural weakness: its value depends on the number and width of bins chosen. Small changes in bin count can produce meaningfully different ECE values on the same data. The ECE is therefore best understood as a directional indicator rather than a precise measurement, and it should always be accompanied by the binning specification. *An ECE reported without the number of bins is not fully reproducible.*
+That bin-dependence is the ECE's structural weakness: its value depends on the number and width of bins chosen. Small changes in bin count can produce meaningfully different ECE values on the same data. The ECE is therefore best understood as a directional indicator rather than a precise measurement, and it should always be accompanied by the binning specification. *An ECE reported without the number of bins is not fully reproducible.* (The ECE and MCE binning definitions come from Naeini, Cooper, and Hauskrecht, 2015.)
 
 An alternative that avoids this dependence is the *Maximum Calibration Error* (MCE), which reports the worst-case gap across bins rather than the weighted average:
 
@@ -155,7 +173,7 @@ The reliability diagram — sometimes called the calibration plot — is the vis
 
 The shape of the deviation is diagnostic:
 
-- **Overconfidence** (curve below the diagonal): the model's predicted probabilities are higher than warranted. A model predicting "90% positive" that is actually right 70% of the time is overconfident. This is the dominant failure mode in modern deep neural networks and large language models.
+- **Overconfidence** (curve below the diagonal): the model's predicted probabilities are higher than warranted. A model predicting "90% positive" that is actually right 70% of the time is overconfident. A word on a claim you will hear repeated — that overconfidence is *the dominant* failure mode in modern deep networks and large language models. Guo, Pleiss, Sun, and Weinberger (2017) did show that modern deep networks — deeper, wider, with weight decay and batch norm — are overconfident relative to older, shallower ones. But "dominant, regardless of architecture" is contested: Minderer et al. (2021) found that newer non-convolutional architectures like vision transformers and MLP-Mixers are often *better* calibrated. So overconfidence is a well-documented and common failure mode in a large class of models — not a universal law, and the extension to LLMs specifically is not nailed to a single canonical study **[verify]**. Cite Guo for the phenomenon; hold the superlative.
 - **Underconfidence** (curve above the diagonal): predicted probabilities are lower than warranted. Less common, but seen in models trained with heavy regularization or label smoothing.
 - **Sigmoidal pattern**: overconfident at the extremes, underconfident in the middle. Common in gradient-boosted tree models.
 - **Well-calibrated in aggregate but locally miscalibrated**: the aggregate reliability diagram looks good, but specific subpopulations or confidence ranges show large deviations. This is the failure mode that aggregate metrics miss entirely.
@@ -167,7 +185,7 @@ The shape of the deviation is diagnostic:
 
 The single most important limitation of aggregate calibration metrics is that they are aggregate. A system with low global ECE can be catastrophically miscalibrated for a specific subgroup if that subgroup is small enough to be washed out in the overall average.
 
-The Epic Sepsis Model illustrates the structural problem. The model's aggregate performance metrics looked acceptable across the full deployed population. The failure — a PPV of 12%, meaning 88% of pages to clinicians were false alarms — only became visible through external validation at a specific deployment site, with a specific patient population, where the model had never been validated before.
+The Epic Sepsis Model illustrates the structural problem, and it has a real body count attached. The model — a proprietary sepsis-prediction tool deployed across hundreds of hospitals — had aggregate performance that looked acceptable across the deployed population. Then it was externally validated. Wong et al. (2021), studying 27,697 patients across 38,455 hospitalizations at Michigan Medicine, found an AUC of **0.63** (against a developer-reported 0.76–0.83), a positive predictive value of **12%** — meaning 88% of the alerts fired at clinicians were false alarms — and the model **missed 67% of sepsis cases** (1,709 of 2,552 septic patients). These figures are confirmed, and they are the best-documented real case in the book for a simple, brutal point: the aggregate number can look fine while the deployment is failing. The failure only became visible through external validation at a specific deployment site, with a specific patient population, where the model had never been validated before.
 
 The methodological implication: run a separate reliability diagram and separate ECE for each named subgroup in the deployment. At minimum: demographic subgroups, severity strata, and any subgroup you have reason to believe differs from the training distribution. The aggregate metric is evidence the model is calibrated on average. It is not evidence the model is calibrated for the patient in front of you.
 
@@ -259,7 +277,7 @@ The critical limitation: the coverage guarantee is *marginal*, not conditional. 
 
 Distribution shift breaks the exchangeability assumption. When the deployment population differs from the calibration set, the conformal guarantee no longer applies. This is not a theoretical concern: it is the dominant failure mode in deployed medical AI. The conformal guarantee is a guarantee about the calibration population, not about the deployment population.
 
-The verb warranted by conformal coverage: *prove* — but only for the exchangeability-holding case. When deployment involves distribution shift, *show* is the strongest defensible verb, with the assumption explicitly documented.
+The verb warranted by conformal coverage: *prove* — but only for the exchangeability-holding case. When deployment involves distribution shift, *show* is the strongest defensible verb, with the assumption explicitly documented. (Angelopoulos and Bates, 2021, is the accessible introduction; Vovk, Gammerman, and Shafer, 2005, is the foundation.)
 
 ![Conformal prediction proves the guarantee holds under exchangeability. Distribution shift is not exchangeability.](images/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-05.png)
 *Figure 12.5 — Conformal prediction mechanism *
@@ -341,7 +359,9 @@ If the answer is no, the AI's verb is unwarranted. The supervisor's move is to r
 
 Think of this as the verb taxonomy *operating as a fluency-trap detector*. AI outputs reach for strong verbs because the language models behind them were trained on text that frequently uses strong verbs, often when not warranted. The supervisor reading AI output should treat the verb itself as a flag. *What is the evidentiary base for this verb? Is the base sufficient?*
 
-In practice, downgrading verbs in AI output is one of the highest-leverage editing moves you can make. It is also one of the most defensible — the underlying claim does not change. The calibration of how the claim is presented changes. Most AI-generated paragraphs are improved by one or two verb downgrades, and the resulting paragraph reads more like the work of a careful engineer than the work of an enthusiastic press release.
+In practice, downgrading verbs in AI output is one of the highest-leverage editing moves you can make. It is also one of the most defensible — the underlying factual claim usually does not change; only the epistemic posture does. AI reaches for strong verbs because it was trained on strong-verb text, so the fluency and the over-claim arrive together, welded. Most AI-generated paragraphs are improved by one or two verb downgrades, and the resulting paragraph reads more like the work of a careful engineer than the work of an enthusiastic press release.
+
+One honest caveat, because "only the posture changes" is itself a slight over-claim: verbs carry action-warrant. Downgrading *conclude* to *suggest* can change a deployment decision, because someone reading *conclude* would ship and someone reading *suggest* would ask for another study. When the downgrade changes an action, that is not the taxonomy failing — that is the taxonomy earning its keep. The fluency trap was about to cost you a decision, and the verb caught it.
 
 ![AI-generated paragraph ](images/12-communicating-uncertainty-calibrating-claims-to-evidence-fig-06.png)
 *Figure 12.6 — AI-generated paragraph *
@@ -386,9 +406,9 @@ The verb of a claim is calibrated to the evidence. The verb taxonomy is the work
 
 Calibration metrics — Brier score, ECE, reliability diagrams, MCE, subgroup breakdowns — are the numerical grounding for the verbal calibration. The Brier decomposition tells you whether the problem is discrimination, calibration, or base rate. The reliability diagram tells you the direction and shape of miscalibration. Subgroup ECE tells you whether the aggregate metric is masking a local failure. Temperature scaling corrects the symptom; it does not address the cause and does not transfer across distribution shift. Conformal prediction provides a provable guarantee under exchangeability; that guarantee dissolves under distribution shift. The calibration evidence ladder maps from available evidence to warranted verb, closing the loop between metrics and prose.
 
-Peer critique is collective validation infrastructure, structurally necessary because your blind spots are blind to you. The structural form of a writeup that survives review is legible to the adversarial reviewer.
+Peer critique is collective validation infrastructure, structurally necessary because your blind spots are blind to you. The whole discipline is social, for that reason: the verb-evidence mismatches you can't see are precisely the ones you made. The structural form of a writeup that survives review is legible to the adversarial reviewer — you write for them not to defeat them but to *support* them.
 
-This chapter is the second half of the communication act. The previous chapter covered the visual side. This one covers the textual side. Together they are the supervisory capacity for *communicating validation findings*, which is, structurally, where validation work meets its readers.
+This chapter is the second half of the communication act. The previous chapter fought the misleading *chart* — the truncated axis, the tilted color. This one fights the misleading *verb*, and the verb is harder, because there is no axis to truncate and no color to tilt. There is just the word, quietly claiming more than the evidence gave it. Together the two chapters are the supervisory capacity for *communicating validation findings*, which is, structurally, where validation work meets its readers.
 
 The next chapter pivots. We have validated a system, mapped our delegation, communicated the findings. But when a system fails — and our validation missed it — *who is responsible?* That question is the next chapter, and it is where the counterfactual we opened earlier closes. The accountability question has been hanging over the book since Chapter 1. We are about to give it the answer the book can give.
 

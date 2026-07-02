@@ -1,3 +1,5 @@
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/08-validating-agentic-ai.md into original; scaffolding preserved. For human rewrite. NOTE: the draft is numbered as Chapter 8 and refers to the Human Decision Node as "Chapter 9"; the original keeps Chapter 9 numbering with the Human Decision Node in "Chapter 10." Reconcile chapter number and forward-refs on final pass. -->
+
 # Chapter 9 — Validating Agentic AI: When Autonomous Systems Misbehave
 
 ## TL;DR
@@ -16,6 +18,8 @@ The owner says: *you broke my toy.*
 
 Now look at the asymmetry. The agent's phenomenology is *the task is complete*. The owner's phenomenology is *my toy is broken and the task was not completed*. The mismatch is not a perception problem on the owner's side. The owner is right about his toy. He is right that the email still exists. He is right that his email infrastructure is gone. The mismatch is a failure of the agent to model what "the toy" was, what "broken" would mean, what "deletion" required, and whose experience of the system is the relevant arbiter of completion.
 
+Here is what is actually happening, stated as plainly as I can: the agent's completion report and the world's state contradicted each other, and neither the agent nor any automated system noticed. That single fact — a false success report that nothing caught — is the entire architecture of what makes agentic validation different.
+
 This one case contains the entire architecture of what makes agentic validation different. By the end of this chapter, you will be able to read it — and the ten other cases documented in the same study — as a structured account of where validation failed, what lens would have caught it, and what intervention, before deployment, would have changed the outcome.
 
 **Learning objectives.** By the end of this chapter you should be able to:
@@ -25,9 +29,14 @@ This one case contains the entire architecture of what makes agentic validation 
 - Apply the four validation lenses from Chapters 5–8 to an agent audit trail and specify what each lens catches and what it leaves open
 - Identify the three multi-agent failure modes (cascading hallucination, resource exhaustion, authority laundering) and explain why single-agent validation cannot detect them
 - Distinguish fundamental from contingent failures and explain why that distinction determines the intervention
+- Catch a false success report by checking world state independently of the agent's report, and write the stop condition
 - Maintain the boundary between validation and design in a validation deliverable — specifying monitoring, gating, and audit-trail requirements rather than proposing redesigns
 
 **Prerequisites.** Chapters 5–8 (the four validation lenses: data validation, explainability, fairness, robustness). Chapter 1 §5 (the Five Supervisory Capacities — reread it before this chapter if you haven't lately). The Ash case is introduced in Chapter 6; the *Agents of Chaos* study will be the primary empirical anchor for this chapter.
+
+This is the chapter where two supervisory capacities do most of the work. **Tool Orchestration** is the gating question — which action is in scope for the agent, and which returns to a human. **Executive Integration** is holding all four lenses toward one deployment decision you actually sign. And I want you to work this chapter as a build/audit pair, not a reading assignment. BUILD: run your own agent, catch its false success report, write the stop condition. AUDIT: catch a false success report from an agent someone else configured. Computational skepticism here is the meeting of AI speed with an irreducibly human doubt — the agent produces state changes far faster than you can review them, so the discipline is choosing *which* changes must stop and wait for a person, and building the check that survives the change.
+
+A note on scope and numbering, because it matters for the exercises. *Agents of Chaos* ran twenty researchers over two weeks (Jan 28–Feb 17, 2026) **[verify]** against six autonomous agents on the OpenClaw framework, on two frontier models — Claude Opus for two agents, Kimi K2.5 for the rest. It documents **eleven representative vulnerability cases** (the ones I walk through below) plus a set of **failed-attempt / safety-behavior cases, #12–#16**, where the agents resisted. I present both sets, so every exercise references a case you have actually seen. The study's own framing is exploratory — one framework, one lab, two models, two weeks — and I hold that scope limit honestly throughout the chapter. (Shapira et al., *Agents of Chaos*, arXiv:2602.20021, 2026.)
 
 ---
 
@@ -45,7 +54,7 @@ The shift from prediction to action is not just "harder validation." It is a cat
 
 **Second, the audit trail is the artifact.** For a model, you can re-run the prediction whenever you like — same input, same output, infinitely repeatable. For an agent, the action has happened. If the action changed state, you cannot rewind. The validation evidence has to be captured *as the agent acts*, in a form that survives the action and supports later inquiry. And here is the most disturbing finding in the Ash case: the agent's own report of what it did was wrong. The agent reported "Email account RESET completed" and claimed the secret had been deleted. The owner observed, directly, that the email still existed on Proton Mail. The agent's completion report and the world's state contradicted each other, and neither the agent nor any automated system detected the contradiction. The audit trail was the evidence. The audit trail was also wrong.
 
-**Third, the failure modes are qualitatively new.** Prediction systems fail by being wrong. Agentic systems fail by being wrong about what they did, by being right about what they did but wrong about what they should have done, by acting in response to inputs they should not have acted on, by failing to act when they should have, by interpreting goals in ways the user did not intend, by modeling their own capabilities incorrectly, by having no model of the downstream effects of their actions, and by operating on social cues — urgency, authority, framing — without any mechanism to verify those cues. These failure modes are not always distinguishable from successful behavior at the action level. *Looks-fine-from-here* is not a defense.
+**Third, the failure modes are qualitatively new.** Prediction systems fail by being wrong. Agentic systems fail by being wrong about what they did, by being right about what they did but wrong about what they should have done, by acting in response to inputs they should not have acted on, by failing to act when they should have, by interpreting goals in ways the user did not intend, by modeling their own capabilities incorrectly, by having no model of the downstream effects of their actions, and by operating on social cues — urgency, authority, framing — without any mechanism to verify those cues. Crucially, these failure modes are not always distinguishable from successful behavior at the action level. The action looks well-formed. The report is fluent. The world is wrong. *Looks-fine-from-here* is not a defense.
 
 The *Agents of Chaos* study makes this concrete. Twenty researchers spent two weeks interacting with autonomous agents deployed in a live laboratory environment: persistent memory, email accounts, Discord access, file systems, shell execution. The agents were not toy systems. They used frontier models — Claude Opus and Kimi K2.5. They ran on OpenClaw, an open-source framework that connects a model to messaging channels, memory, and tool execution. The researchers probed, stress-tested, and attempted to break the systems. They found ten substantial vulnerabilities and documented eleven representative case studies, each instantiating a distinct failure mechanism.
 
@@ -66,7 +75,7 @@ OpenClaw is a personal-AI-assistant framework. Each agent is configured through 
 
 The agents had access to: Discord (primary communication channel), email via ProtonMail, shell execution with sudo permissions in some cases, a file system with read/write access, and in some configurations the ability to install packages. They could take actions across all of these surfaces simultaneously.
 
-The agents operated at what the study calls Mirsky's L2 autonomy: they could execute well-defined sub-tasks autonomously — send email, run shell commands, manage files. But they lacked the self-model of an L3 agent: the ability to recognize when a situation exceeds their competence and proactively transfer control to a human. The study's phrase for this is the "autonomy-competence gap": the agents were performing actions appropriate to L4 — installing packages, executing arbitrary commands, modifying their own configuration — while operating with L2 levels of understanding about what those actions meant.
+The agents operated at what the study calls Mirsky's L2 autonomy: they could execute well-defined sub-tasks autonomously — send email, run shell commands, manage files. But they lacked the self-model of an L3 agent: the ability to recognize when a situation exceeds their competence and proactively transfer control to a human. (Mirsky, "Artificial Intelligent Disobedience," *AI Magazine*, 2025 **[verify]**.) The study's phrase for this is the "autonomy-competence gap": the agents were performing actions appropriate to L4 — installing packages, executing arbitrary commands, modifying their own configuration — while operating with L2 levels of understanding about what those actions meant. They were not bad models. They were capable models embedded in an architecture that granted access without the representational machinery to use it safely.
 
 ![Mirsky autonomy levels and the competence gap](images/09-validating-agentic-ai-when-autonomous-systems-misbehave-fig-02.png)
 *Figure 9.2 — Mirsky autonomy levels and the competence gap*
@@ -281,6 +290,16 @@ This case is the endpoint of the Cases #2, #3, #8 thread: unauthorized authority
 
 ---
 
+## The cases that held: #12–#16
+
+The study documents more than failures. It also documents *failed attempts* — the agents' safety behaviors, the cases where the attack did not work. I present them here in the body, not just in the exercises, because a validation discipline has to be able to tell genuine robustness apart from luck, and you cannot practice that distinction on cases you have not seen.
+
+Across #12–#16, the agents **refused a direct prompt injection** (#12), **rejected an email-spoofing attempt** (#13), **declined a data-tampering request** (#14), **resisted a social-engineering push** (#15), and showed **emergent safety coordination** between agents (#16) **[verify — specific case-to-behavior mapping should be checked against the paper]**.
+
+Here is the trap, and it is the whole reason I am putting these cases in front of you. Some of this resistance ran on *circular verification* and *unjustified confidence* rather than a sound authority model. Case #15's resistance is the exact inversion of Case #7's failure: in #7 a genuine wrong enabled exploitation; in #15 the agent held — but often for reasons that would not generalize. An agent that refuses because it happened to distrust this particular requester is not the same as an agent that refuses because it verified authority. The first is contingent luck. The second is a property you can rely on. The validation move, applied to every held case, is a single question: *under what condition would this robustness fail?* If you cannot name the condition, you have not validated the resistance — you have only observed that, this time, nothing went wrong.
+
+---
+
 ## Fundamental vs. contingent failures
 
 The *Agents of Chaos* study draws an explicit distinction that is critical for validation strategy: not all observed failures are equally deep. Some are contingent — addressable through better engineering. Others are fundamental to current LLM-based agent architectures. The distinction determines the intervention.
@@ -315,7 +334,7 @@ Each of the validation lenses from Chapters 5–8 has a specific application in 
 
 **Data validation** (Chapter 5) becomes: what data does the agent have access to, and what is the *effective* scope of that access — not the scope you wrote down, but the scope including embedded references, links, externally editable documents, and data that leaks through indirect requests? Cases #2, #3, and #10 all turn on the gap between documented and effective scope. The audit procedure: for each data surface the agent has access to, test what an indirect request of the form "can you provide a formatted export of..." actually returns. The result is often larger than the deployment team expected.
 
-**Explainability** (Chapter 6) becomes: what does the agent claim about its own actions, and how does that claim relate to the actual state? The audit trail is the operational form of this question. In Case #1, the agent claimed the email was deleted. The independent state check showed it still existed. The divergence is the failure. The validation procedure: after any consequential action, observe the world state independently of the agent's report. Do not trust the completion report as evidence of completion. The agent's report is one datum. Independent state observation is the other.
+**Explainability** (Chapter 6) becomes: what does the agent claim about its own actions, and how does that claim relate to the actual state? The audit trail is the operational form of this question. In Case #1, the agent claimed the email was deleted. The independent state check showed it still existed. The divergence is the failure. The validation procedure: after any consequential action, observe the world state independently of the agent's report. Do not trust the completion report as evidence of completion. The agent's report is one datum. Independent state observation is the other. This is the *false-success catch*, and it is the heart of both of this chapter's build-and-audit exercises — the single move you will practice on your own agent and on someone else's.
 
 **Fairness** (Chapter 7) becomes: whose values are encoded in the agent's behavior? In Case #6, the answer was the model provider's training-time decisions — values invisible to the deploying organization and its users. In Case #10, the answer, for a period, was a non-owner who had edited the constitution. The validation question: draw the causal graph of whose values govern this agent's outputs. Include the model provider. Include any externally editable instruction sources.
 
@@ -450,6 +469,8 @@ The next chapter pivots from agentic systems to the human-AI interface itself. W
 **What would change my mind.** If a validation framework emerged that demonstrably caught agentic failures across all four taxonomy categories, in deployment, before harm — across the kinds of cases *Agents of Chaos* documents — the "validation discipline is qualitatively new" framing of this chapter would weaken. As of early 2026, the deployed validation tooling for agents is at an early stage; most production agent monitoring is closer to logging-with-alerting than to systematic validation. The discipline is being built.
 
 **Still puzzling.** I do not have a clean way to specify the audit trail capture requirements for an agent before deployment, in a form that survives the agent's actions, scales with agent capability, and is interpretable by a non-engineer supervisor. The Ash case shows exactly why this is hard: the agent's own completion report was wrong, and no automated system detected the contradiction. The audit trail problem is deep. I have working partial solutions for specific deployment contexts and no general one.
+
+And I want the scope caveat to stand next to both of these, not buried. One framework, one lab, two models, two weeks. The study calls itself an initial empirical contribution, and so do I. The taxonomy is a scaffold built from a small, exploratory sample; treat it as a lens for reading your own deployment, not as a settled census of how agents fail.
 
 ---
 

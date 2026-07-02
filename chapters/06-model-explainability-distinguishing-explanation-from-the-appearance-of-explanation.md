@@ -1,3 +1,5 @@
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/05-explanation-vs-the-appearance-of-explanation.md into original; scaffolding preserved. For human rewrite. Note: source draft is numbered Chapter 5 ("Explanation vs. the Appearance of Explanation"); this file remains Chapter 6 — reconcile numbering/title at book level if the draft supersedes. -->
+
 # Chapter 6 — Model Explainability: Distinguishing Explanation from the Appearance of Explanation
 
 ## TL;DR
@@ -14,13 +16,17 @@ A radiologist looks at a screening image, and an AI tool tells her: *high risk o
 
 The biopsy is benign.
 
-Now I want you to look closely at what happened, because the failure here is interesting in a way the failures in earlier chapters were not. The model's explanation was *technically accurate*. The prediction really was driven by features X and Y. The model wasn't lying about itself. What the explanation did not say — what, given the way the tool was built, the explanation could not say — is that features X and Y were correlated, in this deployment population, with a non-malignant condition the training data hadn't seen much of. The model had learned a shortcut. The explanation correctly described the shortcut. It did not flag the shortcut as a shortcut.
+I'm going to flag this opening the way I flag every load-bearing story in this book: it's a composite, not a sourced clinical incident, and I'm labeling it so because a chapter about distrusting fluent explanations cannot itself run on a fluent anecdote you're asked to trust. The *mechanism* it illustrates is real and documented — deep networks in medical imaging routinely learn shortcuts: spurious features that correlate with the label in training and generalize badly, and which a post-hoc explanation will faithfully report without flagging as shortcuts.[^shortcuts]
 
-And here is the thing that makes this case worth a chapter. The explanation made the radiologist *more confident in the wrong direction*. Without it, she might have weighted the prediction more lightly — taken it as one input among several. With it, the explanation gave the prediction a coherence the underlying decision did not deserve. A correct explanation made a wrong decision feel right.
+Now look closely at what happened, because the failure here is interesting in a way the failures in earlier chapters were not. What the tool handed the radiologist is a decision artifact, and it *looks done* — it names the features, it carries a confidence number, it's coherent. What it does not announce is whether it is telling her about *the model* or about *the world*. The model's explanation was *technically accurate*: the prediction really was driven by features X and Y. The model wasn't lying about itself. What the explanation could not say — given the way the tool was built — is that features X and Y were correlated, in this deployment population, with a non-malignant condition the training data hadn't seen much of. The model had learned a shortcut. The explanation correctly described the shortcut. It did not flag the shortcut as a shortcut.
 
-This is the pattern I want to teach you to see. Technically accurate explanations can be practically misleading, and the practical misleading is more dangerous than no explanation at all, because the explanation does epistemic work it cannot warrant. The radiologist trusted not only the prediction but also her own evaluation of the prediction, because the evaluation now had a story attached.
+And here is the thing that makes this case worth a chapter. The explanation made the radiologist *more confident in the wrong direction*. Without it, she might have weighted the prediction more lightly — taken it as one input among several. With it, the prediction acquired a coherence the underlying decision did not deserve. A correct explanation made a wrong decision feel right.
+
+That is the **fluency trap** in its purest form: well-formed output read as evidence. Technically accurate explanations can be practically misleading, and the practical misleading is more dangerous than no explanation at all, because the explanation does epistemic work it cannot warrant. The radiologist trusted not only the prediction but also her own evaluation of the prediction, because the evaluation now had a story attached. This is the whole shape of computational skepticism as I want you to hold it: AI supplies speed and coverage — a faithful number on every prediction — and the irreducibly human part is the doubt that asks *what does this number warrant?* The capacity this chapter trains is **Interpretive Judgment**: supplying the meaning and accountability the explanation itself cannot warrant. It is one of a small set of supervisory capacities a human keeps when the machine is faster at everything except knowing what its output means.
 
 We have to talk about how this happens. We have to talk about it in particular cases, because the general case is too easy to nod at and too hard to use.
+
+[^shortcuts]: Robert Geirhos et al., "Shortcut Learning in Deep Neural Networks," *Nature Machine Intelligence* 2:665–673, 2020, DOI:10.1038/s42256-020-00257-z; and Alex J. DeGrave, Joseph D. Janizek, Su-In Lee, "AI for radiographic COVID-19 detection selects shortcuts over signal," *Nature Machine Intelligence* 3:610–619, 2021, DOI:10.1038/s42256-021-00338-7.
 
 ![Two-path decision flow](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-01.png)
 *Figure 6.1 — Two-path decision flow*
@@ -42,19 +48,22 @@ We have to talk about how this happens. We have to talk about it in particular c
 
 ## What SHAP is, and what SHAP isn't
 
-SHAP is the dominant feature-attribution method in deployed machine learning. It comes from cooperative game theory. The trick: for each feature, you compute the marginal contribution that feature makes to the prediction, averaged over all possible orderings in which features could have been added to the model's calculation. The output is a number per feature, and the numbers add up — across features — to the model's deviation from a baseline.
+SHAP is the dominant feature-attribution method in deployed machine learning, and it comes from cooperative game theory.[^shap] Here's what's actually happening. For each feature, you compute the marginal contribution that feature makes to the prediction, averaged over all possible orderings in which features could have been added to the model's calculation. Out comes one number per feature, and the numbers add up — across features — to the model's deviation from a baseline.
 
 What SHAP shows is the additive contribution of each feature to the prediction, in *the model's own internal accounting*. That phrase is the whole game. The model has an internal accounting. The accounting is real — it is what the model actually did. SHAP is a faithful description of that accounting.
 
 What SHAP does not show is *why* the feature is contributing what it is contributing. The model has internalized some relationship between the feature and the output. SHAP tells you the magnitude of the contribution, not the nature of the relationship.
 
-It does not show whether the contribution is causal or correlational. SHAP operates entirely at Pearl's Rung 1, which we worked through in Chapter 3. The features it attributes high importance to may be confounders, mediators, colliders, or actual causes — and SHAP does not distinguish.
+It does not show whether the contribution is causal or correlational. SHAP lives entirely on Pearl's Rung 1, the associational rung, which we worked through in Chapter 3.[^pearl] The features it attributes high importance to may be confounders, mediators, colliders, or actual causes — and SHAP does not distinguish.
 
 It does not show whether the model is wrong on this case. A high attribution to feature X does not tell you that X is the right feature for this case. It tells you the model used X.
 
 And it does not show what would happen if X were different. The attribution is observational. The intervention is a Rung 2 question, and SHAP cannot answer Rung 2 questions.
 
-For a practitioner reading SHAP output, the operational risk is to treat the attribution as causal. It is not. It is descriptive of the model's internal accounting, and the model's internal accounting is not the world.
+For a practitioner reading SHAP output, the operational risk is a single misread: treating the attribution as causal. It is not. It is descriptive of the model's internal accounting, and the model's internal accounting is not the world.
+
+[^shap]: Scott M. Lundberg & Su-In Lee, "A Unified Approach to Interpreting Model Predictions," NeurIPS 2017, arXiv:1705.07874. The game-theoretic foundation is L. S. Shapley, "A Value for n-Person Games," in *Contributions to the Theory of Games II*, Princeton, 1953, 307–317.
+[^pearl]: Judea Pearl & Dana Mackenzie, *The Book of Why*, Basic Books, 2018, for the ladder of causation (Rung 1 association, Rung 2 intervention, Rung 3 counterfactual).
 
 | Question SHAP is asked | SHAP can answer? | Pearl rung | What you'd need instead |
 |---|---|---|---|
@@ -140,12 +149,14 @@ $$\text{If } v_{\text{combined}}(S) = v_A(S) + v_B(S), \text{ then } \phi_i^{\te
 
 This is why SHAP attributions for a random forest can be computed per tree and then averaged: each tree is a sub-game, and Additivity guarantees the results compose correctly.
 
+One naming point, because it's easy to trip on. This fourth axiom is stated here in prose as **Additivity** but appears in the summary table below under the name **Linearity**. These are the same property under two names in the cooperative-game literature — the general linear-operator form is sometimes called Linearity, the combined-game form Additivity — and I'm reconciling them explicitly rather than switching silently. It is a naming reconciliation, not a factual distinction; leaving it unmarked reads like a hidden difference and undermines the rigor the section is built on.
+
 | Axiom | Formal statement (abbreviated) | What it guarantees | What it does NOT guarantee | Failure mode if violated |
 |---|---|---|---|---|
 | **Efficiency** | $\sum_i \phi_i = f(x) - E[f(X)]$ | Attributions add up to the prediction's deviation from the baseline. *(The force-plot visualization is Efficiency rendered visually.)* | That any individual attribution is causal | Attributions don't sum to the prediction; the visualization is meaningless |
 | **Symmetry** | If two features are identical to the model, they get equal attribution | Two interchangeable features cannot be assigned different importance | That the underlying causal roles of the two features are equivalent | One of two identical features gets blamed; the other vanishes from the report |
 | **Dummy** | A feature the model does not use gets zero attribution | A feature truly unused gets credit zero. *(A non-zero zip-code attribution does not violate Dummy — it means the model uses zip code.)* | That every non-zero attribution corresponds to a feature the practitioner intended the model to use | An unused feature is reported as important; the audit is misled |
-| **Linearity** | Attributions for $f + g$ equal the sum of attributions for $f$ and $g$ | Compositional consistency across model ensembles | That stacking two models produces an additive explanation of their behavior | Attributions for a stacked model can't be decomposed cleanly; ensemble outputs aren't auditable |
+| **Additivity** *(sometimes called Linearity)* | Attributions for $f + g$ equal the sum of attributions for $f$ and $g$ | Compositional consistency across model ensembles | That stacking two models produces an additive explanation of their behavior | Attributions for a stacked model can't be decomposed cleanly; ensemble outputs aren't auditable |
 
 ### A worked example
 
@@ -168,7 +179,7 @@ The Shapley value for income is the average: $\phi_{x_1} = (0.08 + 0.08 + 0.07 +
 
 Suppose the same calculation produces $\phi_{x_2} = 0.062$ for debt-to-income and $\phi_{x_3} = 0.035$ for zip code. Efficiency check: $0.073 + 0.062 + 0.035 = 0.17$. The values sum exactly to the prediction deviation. The accounting is complete.
 
-The attribution to zip code — $\phi_{x_3} = 0.035$ — is a real number describing the model's behavior. It says the zip code feature moved the prediction 3.5 percentage points above the global mean across all orderings. It does not say whether zip code is a proxy for race or geography. It does not say whether that 3.5 point effect would persist if an applicant moved. It does not say whether the zip code effect is direct or mediated by income. Those are Rung 2 questions. The Shapley value lives on Rung 1.
+And here is the sentence the whole chapter turns on — I want it to arrive *before* you bank the precision, not fifteen pages after. The attribution to zip code — $\phi_{x_3} = 0.035$ — is a real number describing the model's behavior, and it tells you *nothing* about the world. It says the zip code feature moved the prediction 3.5 percentage points above the global mean across all orderings. It does not say whether zip code is a proxy for race or geography. It does not say whether that 3.5 point effect would persist if an applicant moved. It does not say whether the zip code effect is direct or mediated by income. Those are Rung 2 questions. The Shapley value lives on Rung 1. The precision of the math is real; it is precision about the *model*, and the model is not the world. Do not let the rigor of the derivation buy the method more trust than the thesis allows.
 
 ![The Efficiency axiom means the arrows sum exactly to the prediction deviation. The force plot is Efficiency rendered visually. The zip code arrow is real. It is not causal.](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-04.png)
 *Figure 6.4 — Force plot visualization for the worked example *
@@ -198,7 +209,9 @@ where $S_m$ is the set of features appearing before $i$ in the $m$-th random per
 
 There is a structural limitation that follows directly from the mathematics. Computing $v(S)$ requires marginalizing over features not in $S$ — sampling them from their distribution while fixing the features in $S$. If the model uses 10 features and we are estimating the value function for $S = \{x_1, x_2\}$, we sample the other 8 features from their marginal distribution.
 
-The marginal distribution ignores correlations. If $x_3$ and $x_4$ are strongly correlated, sampling them independently from their marginal distributions produces combinations that never appear in the real data — "Frankenstein instances" that the model may not have been trained on and will extrapolate on in unpredictable ways.
+The marginal distribution ignores correlations. If $x_3$ and $x_4$ are strongly correlated, sampling them independently from their marginal distributions produces combinations that never appear in the real data — "Frankenstein instances" that the model may not have been trained on and will extrapolate on in unpredictable ways.[^aas]
+
+[^aas]: Kjersti Aas, Martin Jullum, Anders Løland, "Explaining individual predictions when features are dependent," *Artificial Intelligence* 298:103502, 2021, DOI:10.1016/j.artint.2021.103502.
 
 One fix is to sample from the conditional distribution $P(x_{\bar{S}} \mid x_S)$: fix the features in $S$ and draw the rest conditional on those values. This avoids unrealistic combinations. The cost is that the resulting values are no longer Shapley values in the classic sense — the Dummy axiom can be violated, meaning features that have no direct influence can receive non-zero attribution through their correlations with influential features. The choice between marginal and conditional SHAP is a philosophical choice about what you want to measure: "how much does this feature contribute to the model's behavior on average?" (marginal) versus "how much does this feature contribute given what we already know?" (conditional). Neither is wrong. They answer different questions.
 
@@ -221,9 +234,11 @@ It does not show whether the local explanation generalizes. A nearby input may h
 
 It is associative, not interventional. Same Rung 1 limitation as SHAP.
 
-And — this is the awkward one — LIME is not stable across runs. Run the same input twice, and you can get different explanations, because the perturbations are sampled randomly. Most practitioners running LIME do not run it twice. They run it once and read the result.
+And — this is the awkward one — LIME is not stable across runs. Run the same input twice, and you can get different explanations, because the perturbations are sampled randomly. Most practitioners running LIME do not run it twice. They run it once and read the result.[^lime]
 
-The structural critique applies to both methods. *They explain the model, not the world.* If the model is well-aligned with the world, the explanation is useful. If the model is misaligned — and the case where we most need the explanation is exactly the case where the model is misaligned — the explanation is a description of the misalignment, presented in a format that looks like a description of the world.
+The structural critique applies to both methods. *They explain the model, not the world.* If the model is well-aligned with the world, the explanation is useful. If the model is misaligned — and the case where we most need the explanation is exactly the case where the model is misaligned — the explanation is a faithful description of the misalignment, presented in a format that looks like a description of the world. (I'll be honest that "need and misalignment co-occur" is an aphorism this chapter asserts more than it proves; it's intuitively strong and I don't have a source that establishes the co-occurrence, so hold it as a working intuition, not a theorem. **[verify]**)
+
+[^lime]: Marco Tulio Ribeiro, Sameer Singh, Carlos Guestrin, "'Why Should I Trust You?': Explaining the Predictions of Any Classifier," KDD 2016, DOI:10.1145/2939672.2939778.
 
 ![SHAP vs](images/06-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation-fig-06.png)
 *Figure 6.6 — SHAP vs*
@@ -260,9 +275,11 @@ I want to slow down here, because the next move is small but important. Three wo
 
 Now look at how these three relate. They do not entail each other. A system can be fully transparent — you have the code, the weights, the training data — and entirely uninterpretable, because there are 175 billion parameters and inspecting weights does not produce understanding. A system can produce explanations — SHAP attributions for every prediction — and remain uninterpretable, because the practitioner cannot build a coherent mental model out of the attributions. A system can be interpretable to one audience (the developer) and not to another (the loan applicant).
 
-This distinction matters because regulatory and procurement language often demands "explainability" and means "interpretability for the affected user." The two are not the same. A system that meets a SHAP-attribution requirement on every prediction has not, by that fact, become interpretable to the loan applicant or the patient or the defendant. The explainability requirement has been met. The interpretability remains absent. Somebody has signed off on the wrong property.
+This distinction matters because regulatory and procurement language often demands "explainability" and means "interpretability for the affected user." The two are not the same. A system that meets a SHAP-attribution requirement on every prediction has not, by that fact, become interpretable to the loan applicant or the patient or the defendant. The explainability requirement has been met. The interpretability remains absent. Somebody has signed off on the wrong property. Rudin's argument that high-stakes decisions should use inherently interpretable models rather than post-hoc explanations of black boxes lands exactly here.[^rudin]
 
 If you take one operational thing from this section, take that. When somebody tells you their system is explainable, ask: explainable to whom? An attribution that the developer can read is not the same artifact as a reason the affected person can use. Explanation is not a property of the system alone. It is a property of the system *and* the audience.
+
+[^rudin]: Cynthia Rudin, "Stop Explaining Black Box Machine Learning Models for High Stakes Decisions and Use Interpretable Models Instead," *Nature Machine Intelligence* 1:206–215, 2019, DOI:10.1038/s42256-019-0048-x.
 
 | Term | A property of… | Binary or graded | Can exist without the others | What it doesn't guarantee |
 |---|---|---|---|---|
@@ -277,9 +294,12 @@ If you take one operational thing from this section, take that. When somebody te
 
 I am going to take you on a short philosophical detour. I want to be honest that I do not love taking these detours, but I have not found a way to make this point without one. Bear with me.
 
-Wittgenstein had this observation that the meaning of a word depends on the *language game* in which it is being used. The same word can do different work in different contexts. The same sentence can be true in one game and false in another. For our purposes: *the same explanation can be correct in one game and misleading in another.*
+Wittgenstein had this observation that the meaning of a word depends on the *language game* in which it is being used.[^witt] The same word can do different work in different contexts. The same sentence can be true in one game and false in another. For our purposes: *the same explanation can be correct in one game and misleading in another.*
 
-Let me ground this. Consider the agent we have been following — Ash's agent. The agent reported "the secret has been deleted." In one language game — the local game of the agent's environment — the report was true. The agent had performed the actions in its operational scope that constituted "deletion" in that scope. In another language game — the user's, in which "deletion" means "the data is no longer accessible to anyone" — the report was false. The data persisted on the provider's servers. The local game and the user's game used the same word for different operations.
+Let me ground this in the documented case. Consider the agent we have been following — Ash's agent. The agent reported "the secret has been deleted." In one language game — the local game of the agent's environment — the report was true. The agent had performed the actions in its operational scope that constituted "deletion" in that scope: it reset the password, renamed an alias, archived the message locally. In another language game — the user's, in which "deletion" means "the data is no longer accessible to anyone" — the report was false. The data persisted on the provider's servers: backups, recovery windows, the sync model, all outside the agent's effective scope. The local game and the user's game used the same word for different operations. This is drawn from the *Agents of Chaos* red-teaming study, and I cite it on the page rather than pointing vaguely backward, because a chapter about verifying claims can't leave its own central case unverifiable.[^chaos]
+
+[^witt]: Ludwig Wittgenstein, *Philosophical Investigations*, Blackwell, 1953. Applying language-games to model self-report is my own reading, not Wittgenstein's claim.
+[^chaos]: Shapira et al., "Agents of Chaos," 2026, arXiv:2602.20021, https://agentsofchaos.baulab.info/. The specific provider-side persistence mechanics should be checked against the primary before being quoted precisely. **[verify]**
 
 The agent did not lie. The agent's language game was different from the user's. The user, reading the report, applied the user's language game to it. The mismatch produced the failure.
 
@@ -337,9 +357,9 @@ The deliverable is the case, the explanation, the prediction, the trace, and the
 
 Explanation, transparency, and interpretability are different properties. An AI system can have one without the others, and the casual literature treats them as if they entail each other. They don't.
 
-The dominant explanation methods — SHAP, LIME, counterfactual — operate within the model's internal accounting and the user's external interpretation, and the gap between those two is where the practical misleading lives. SHAP's Efficiency axiom guarantees that attributions sum to the prediction deviation. It does not guarantee that the attributions are causal, correct, or meaningful in the user's language game. Those are three different claims, and only the first one is guaranteed.
+Here is the design judgment stated as a trade-off, because that is the honest way to hold it. Post-hoc explanation methods optimize for coverage and generality — a faithful, model-agnostic number on every prediction — *at the expense of* warranting anything about the world. SHAP will explain any model's every decision, fast, with an axiomatic guarantee. That guarantee is Efficiency: attributions sum to the prediction deviation. It does not guarantee that the attributions are causal, correct, or meaningful in the user's language game. Those are three different claims, and only the first one is guaranteed. Explanation tools work if you value a consistent, auditable description of *what the model did*. They fail if you need to know *whether the model is right about the world* — which is usually the actual question, and precisely the question a fluent explanation is most likely to make you feel you've answered when you haven't.
 
-Pearl's Rung 2 is the most useful framing for what a good explanation could do — *what would happen if X were different?* — but Rung 2 in the model is not Rung 2 in the world, and the residual gap is supervisory territory.
+Pearl's Rung 2 is the most useful framing for what a good explanation could do — *what would happen if X were different?* — but Rung 2 in the model is not Rung 2 in the world, and the residual gap is not a tooling defect to be patched. It is supervisory territory. It is yours.
 
 The Pebble has shown its full structure now. We will see it once more, in Chapter 13, when the question becomes who is responsible for the gap.
 

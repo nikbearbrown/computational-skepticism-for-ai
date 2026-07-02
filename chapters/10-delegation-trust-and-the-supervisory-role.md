@@ -1,3 +1,4 @@
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/09-delegation-trust-and-the-boondoggle.md into original; scaffolding preserved. For human rewrite. Draft was numbered Ch.9 "...and the Boondoggle"; kept original Ch.10 title/number. -->
 # Chapter 10 — Delegation, Trust, and the Supervisory Role
 
 ## TL;DR
@@ -10,11 +11,9 @@
 
 ---
 
-I want to tell you about two engineering teams.
+Here is a controlled experiment that ran itself, unintentionally, inside two engineering teams. Both teams built a validation pipeline for an AI system that scores loan applications. Same data. Same model. Same fairness metrics. Same monitoring infrastructure. If you diffed their code you would struggle to tell them apart. They differ in exactly one thing.
 
-Both teams have built validation pipelines for an AI system that scores loan applications. The pipelines are close to identical at the technical level. Same data. Same model. Same fairness metrics. Same monitoring infrastructure. They differ in one thing.
-
-The first team's documentation says: *AI scores the application, the loan officer reviews and decides, the system logs both.* On every component, the human and AI roles are described at this level of generality.
+The first team's documentation says: *AI scores the application, the loan officer reviews and decides, the system logs both.* Clean. Reads well. On every component, the human and AI roles are described at this level of generality.
 
 The second team's documentation says something different. *The AI computes the score and produces a brief explanation. The loan officer is required to verify that the explanation is consistent with the application data, to check whether any of three named edge-case patterns are present using a checklist embedded in the interface, and to record their decision with one of four documented justification codes. If the AI score is below 0.3 or above 0.7, the loan officer's decision can match the AI without further review. If the score is between 0.3 and 0.7, a second loan officer must independently review before either can record a decision.*
 
@@ -22,13 +21,17 @@ Both pipelines deploy. Both work, in the sense that loans get scored and decided
 
 Then both teams go to the adoption committee for an expanded rollout. The committee asks the same question of each team: *who is responsible if a loan decision is challenged?*
 
-The first team cannot answer cleanly. The AI produced the score. The loan officer made the decision. The documentation says *the loan officer reviews*, but does not specify what review means. In the case of a particular challenged decision, was review performed? At what depth? Against what criteria? The team has to go back and figure out what their own pipeline was supposed to do. The committee tables the rollout.
+The first team cannot answer cleanly. The AI produced the score. The loan officer made the decision. The documentation says *the loan officer reviews*, but does not specify what review means. When the committee pushes on the word *reviews*, the team can't answer: what did the loan officer actually check, at what depth, against what criteria? They go back to reconstruct what their own pipeline was supposed to do, and the committee tables the rollout — not because the pipeline is bad, but because nobody can say what it does.
 
-The second team produces the documentation. The committee can read, in writing, what the AI did, what each loan officer was required to verify, and what triggered escalation. The committee may still reject the rollout — they have substantive reasons available to them. But they reject it for substantive reasons, not for documentation reasons. They are not waiting on the team to figure out what their own pipeline does.
+The second team produces the documentation. The committee can read, in writing, what the AI did, what each loan officer was required to verify, and what triggered escalation. The committee may *still* reject the rollout — they have substantive reasons available to them. But they reject it for substantive reasons, not for documentation reasons. They are not waiting on the team to figure out what their own pipeline does.
 
-The difference between the two pipelines is not a difference in the technology. It is a difference in the *delegation map*. And that is what this chapter is about.
+The only variable was the *delegation map*. And that is what this chapter is about.
+
+Let me be honest about one thing before we start, because the book's whole method is to not let a clean claim smuggle in a mess. The two-teams story proves that a good delegation map survives *review*. It does not prove that the second team's pipeline makes *better decisions*. Those are different claims, and I am going to keep them apart. What we are teaching here is documentation quality — because in AI systems, undocumented delegation is the most common way a working pipeline turns out to be unsupervised.
 
 I want you to come away holding one idea: a delegation is not "the AI does this part." A delegation is a *contract* with explicit boundaries — what the AI does, what the human does, the testable handoff between them, and what happens when the handoff fails. That formulation sounds dry. It is the difference between a pipeline that passes adoption review and one that does not.
+
+There is a deeper reason this matters, and it is the reason this chapter sits at the center of the book. Computational skepticism, in the sense this book means it, is the meeting of two forces that do not naturally combine: the *speed* at which an AI can produce fluent, specific, plausible output, and the *irreducibly human doubt* that has to be exercised over that output before anyone commits to it. The AI moves fast. The doubt cannot be automated away — if it could, it would not be doubt, it would be another model in the loop, subject to the same fluency trap. Delegation is where those two forces meet. The delegation map is the instrument that keeps the speed from outrunning the doubt.
 
 ---
 
@@ -47,23 +50,25 @@ I want you to come away holding one idea: a delegation is not "the AI does this 
 
 ---
 
-## The handoff condition
+## The handoff condition: the contract, not the partition
 
 Let me start with the load-bearing piece, because everything else depends on it.
 
-A delegation map describes, for each step in a pipeline, who owns the step (AI, human, or hybrid), what goes in, what comes out, and — crucially — what signals that the step has completed correctly and the next step can proceed. That signal is called the handoff condition. It is the load-bearing element of the entire map, and it has one essential property: *it has to be testable*.
+The mistake almost everyone makes is to treat delegation as a *partition* of labor — "the AI does this part, I do that part," like slicing a pie. That framing hides the thing that actually matters. It just names who touches what. A delegation is a *contract*, and a contract has boundaries, obligations, and a clause for what happens when one party fails to deliver. The partition framing has none of that.
 
-Testable means a non-author of the pipeline can read the condition, observe the system, and determine whether the condition is met. Untestable conditions sound like English but do not survive contact with a reviewer.
+A delegation map describes, for each step in a pipeline, who owns the step (AI, human, or hybrid), what goes in, what comes out, and — crucially — what signals that the step has completed correctly and the next step can proceed. That signal is the handoff condition. It is the load-bearing element of the entire map, and it has exactly one non-negotiable property: *it has to be testable*.
 
-Let me show you the contrast.
+Testable means a non-author of the pipeline — someone who did not build the thing — can read the condition, observe the system, and determine whether the condition is met. Untestable conditions sound like English but do not survive contact with a reviewer.
 
-Untestable handoff condition: *"The AI produces a reasonable result and the human reviews it."* The word "reasonable" is not specified — what counts as reasonable for this kind of output? The word "reviews" is not specified — what does the human do when reviewing? Five different loan officers reading this condition will execute five different behaviors and call all of them reviewing. The pipeline will run. The documentation will say it ran. The audit committee will not be able to tell what actually happened.
+Watch what fails the test. *"The AI produces a reasonable result and the human reviews it."* Both *reasonable* and *reviews* are unspecified. Hand this to five loan officers and you get five different behaviors, all of which get called "reviewing." There is no fact of the matter about whether the condition was met — which means there is no fact of the matter about whether the step worked. The pipeline runs. The documentation says it ran. The audit committee cannot tell what actually happened.
 
-Testable handoff condition: *"The AI produces a score in the interval zero to one with a confidence interval. The human accepts the score, requests re-scoring, or overrides. In the override case, the human records one of four documented justification codes."* Every term has a specifiable operational form. Five different loan officers reading this condition execute the same behaviors. An external reviewer can examine a recorded decision and determine whether the condition was met.
+Now watch what passes. *"The AI produces a score in the interval zero to one with a confidence interval. The human accepts the score, requests re-scoring, or overrides. In the override case, the human records one of four documented justification codes."* A stranger can look at the log and tell you, for any case, exactly what happened. That is the standard.
 
-The procedure for getting from the first to the second is unromantic. You write your handoff condition in your first attempt. You identify every term in it that requires interpretation. For each interpretive term, you either replace it with a specifiable criterion or you document a guideline that pins down the interpretation. You hand the documentation to someone who did not write it and ask them, for a sample case, to determine whether the condition was met. If they cannot, the condition is not testable, and you go again.
+The procedure for getting from the first to the second is unromantic, and I want to say the un-glamour out loud because the un-glamour is the point. Write the condition. Circle every interpretive word. Replace each one with a specifiable criterion, or write a guideline that pins down the interpretation. Then hand it to someone who did not build it and ask them to determine, for a sample case, whether the condition was met. If they cannot, you are not done, and you go again.
 
-This is documentation work. It is not glamorous. It is the difference between a pipeline that survives adoption review and one that does not.
+Nobody gets promoted for this. It is also the entire difference between a supervised pipeline and one that merely looks supervised.
+
+Now a wrinkle I would rather name than pretend away, because the book's whole method is to refuse to let a clean claim smuggle in a mess. Some handoff conditions are only testable by a *qualified* reviewer. "Verify the citation is accurate in the domain-specific sense" is testable — but only by someone who knows the domain, not by any random non-author. That is a narrower guarantee than "anyone can check it." The testable/untestable line is not a clean binary; it is *graded*. The standard still holds. It just has tiers, and honest documentation says which tier a given handoff sits in.
 
 | Domain | Untestable version | Testable version | What interpretation got pinned down |
 |---|---|---|---|
@@ -75,19 +80,19 @@ This is documentation work. It is not glamorous. It is the difference between a 
 
 ## The Five Supervisory Capacities as pipeline jobs
 
-There are five supervisory capacities I introduced in Chapter 1, and this is the chapter where each becomes a concrete job in the pipeline rather than a personality trait. Engineers sometimes hear "supervisory capacity" and reach for words like *judgment* and *experience* — words that describe a person rather than a task. The reframe of this chapter is that each capacity has an operational form, and the operational form is something the pipeline either has or does not.
+There are five supervisory capacities I introduced in Chapter 1, and this is the chapter where each becomes a concrete job in the pipeline rather than a personality trait. Engineers sometimes hear "supervisory capacity" and reach for words like *judgment* and *experience* — words that describe a person rather than a task. Here is what is actually happening when the capacities work: each one is not a trait you *have* but an operational form the pipeline either contains or does not. If the artifact is not there, the capacity did not happen. That is the whole reframe, and it is unforgiving on purpose.
 
-*Plausibility auditing* is the capacity that asks: given what I know about the world this output describes, is this output the kind of thing that could be true? Operationalized, it is a checklist embedded in the workflow, with specific verification questions matched to the AI's output type. The audit is not a feeling. It is a series of yes/no questions the supervisor answers and the system records. If the checklist is missing, the auditing did not happen, regardless of what the supervisor felt about the output.
+*Plausibility auditing* is the capacity that asks: given what I know about the world this output describes, is this output the kind of thing that could be true? Operationalized, it is a checklist embedded in the workflow, with specific verification questions matched to the AI's output type, answered yes/no and recorded. The audit is not a feeling. If the checklist is missing, the auditing did not happen, regardless of what the supervisor felt about the output.
 
-*Problem formulation* is the capacity that, before the AI is invoked, specifies the question being asked, the evaluation criteria for the answer, and the conditions under which the AI is the right tool. Operationalized, it is a written specification — usually a paragraph or two — included in the deployment documentation. An external reviewer can read the specification and either accept or reject it. If the specification is missing, the formulation did not happen.
+*Problem formulation* is the capacity that, before the AI is invoked, specifies the question being asked, the evaluation criteria for the answer, and the conditions under which the AI is even the right tool. Operationalized, it is a written specification — usually a paragraph or two — included in the deployment documentation. An external reviewer can read the specification and either accept or reject it. If the specification is missing, the formulation did not happen.
 
-*Tool orchestration* is the capacity that, for each step in the pipeline, decides which tool is responsible, why that tool is the right one, and what the handoff between tools is. Operationalized, it is the delegation map itself.
+*Tool orchestration* is the capacity that, for each step in the pipeline, decides which tool is responsible, why that tool is the right one, and what the handoff between tools is. Here is the key move, and it is easy to miss: tool orchestration operationalized *is the delegation map itself*. The map is not a document *about* tool orchestration; it *is* tool orchestration made concrete.
 
 *Interpretive judgment* is the capacity that reads the AI's output in the deployment context and interprets what the output means for the decision being made. Operationalized, it is a documented interpretation in the audit trail, with reference to the deployment-specific factors that shaped it. *The decision was X because the score was Y in this context, where this context means Z.*
 
 *Executive integration* is the capacity that synthesizes outputs from multiple tools, multiple humans, and multiple monitoring signals into a decision the integrating system can stand behind. Operationalized, it is a decision document with named contributors and a clear authority structure.
 
-Each of these is a job in a pipeline, with a documented operational form. The first team in the opening had no documented operational forms. The second team had all of them.
+This chapter's home capacity is tool orchestration — but tool orchestration pulls the other four in with it, because you cannot orchestrate tools without formulating the problem, auditing the outputs, interpreting them, and integrating the result. The delegation map is where all five leave fingerprints. The first team in the opening had no documented operational forms. The second team had all of them.
 
 | Capacity | Operational form in a pipeline | Artifact that documents it | Failure mode if absent |
 |---|---|---|---|
@@ -103,17 +108,17 @@ Each of these is a job in a pipeline, with a documented operational form. The fi
 
 Now the question that comes before the map: which sub-tasks in your pipeline should the AI do, and which should it not? This is not an aesthetic decision. It is a structured assessment with five questions you ask of each sub-task.
 
-I call the assessment the Boondoggle Score, and it lives inside Gru — the software design consultant tool built on this curriculum, available at [nikbearbrown.com/tools/gru-tool](https://www.nikbearbrown.com/tools/gru-tool) as a Claude Project. The score is less important than the questions, so let me walk through the questions.
+I call the assessment the Boondoggle Score, and it lives inside Gru — the software design consultant tool built on this curriculum, available at [nikbearbrown.com/tools/gru-tool](https://www.nikbearbrown.com/tools/gru-tool) as a Claude Project. Let me be precise about what this instrument is and is not, because I would be a hypocrite to preach against fluent unvalidated claims and then hand you one. The Boondoggle Score is *my own* instrument. I have no external validation that these five questions predict real delegation outcomes. Treat it as a heuristic, not a diagnostic. The score is less important than the questions — the questions are the thing that survives even if you never compute a number. So let me walk through the questions.
 
-The first question is *verification cost*. Can a human verify the AI's output cheaply, or does verification require resources comparable to producing the output from scratch? Tasks that are cheap to verify — proofreading a generated summary against a source document, sanity-checking a numeric calculation, scanning a list of candidates — are good AI tasks. The asymmetry between solving and verifying is what makes the AI useful in the first place (Chapter 1's solve-verify asymmetry, restored to its original direction). Tasks that are expensive to verify are dangerous, because the cost structure quietly pushes the supervisor toward accepting the output rather than checking it.
+The first question is *verification cost*. Can a human verify the AI's output cheaply, or does verification require resources comparable to producing the output from scratch? Tasks that are cheap to verify — proofreading a generated summary against a source document, sanity-checking a numeric calculation, scanning a list of candidates — are good AI tasks. This is Chapter 1's solve-verify asymmetry, restored to its original direction: it is what makes the AI useful in the first place. Tasks that are expensive to verify are dangerous, because the cost structure itself quietly pushes the supervisor toward accepting the output rather than checking it. That is not a character flaw; it is economics acting on attention.
 
 The second question is *stakes*. What is the cost of being wrong on this sub-task? Low-stakes sub-tasks tolerate higher AI error rates because the downside is bounded. High-stakes sub-tasks require human review or human-only decision-making, even if the AI's average performance is good — because the average is not the relevant statistic when a single bad outcome is catastrophic.
 
-The third question is *distribution match*. Is the input to this sub-task within the AI's training distribution, or is it likely to land in a region of the input space where the AI is undertrained? In-distribution sub-tasks are AI-friendly. Out-of-distribution sub-tasks are dangerous regardless of average performance, because the average was computed on cases that look unlike the case in front of the supervisor right now.
+The third question is *distribution match*. Is the input to this sub-task within the AI's training distribution, or is it likely to land in a region of the input space where the AI is undertrained? In-distribution sub-tasks are AI-friendly. Out-of-distribution sub-tasks are dangerous regardless of average performance, because the average was computed where the data lived, not where the case in front of the supervisor right now sits.
 
 The fourth question is *reversibility*. Can the action be undone if it is wrong? Reversible actions tolerate higher AI error rates. Irreversible actions — deletes, sends, financial transfers, anything that touches the world in a way that cannot be retracted — should be gated behind explicit human approval, almost without exception.
 
-The fifth question is *audit trail clarity*. Does the AI's action leave a trail that can be reviewed after the fact? Actions with clear trails are AI-friendly. Actions whose effects are entangled with downstream state changes — such that you cannot tell, after the fact, what the AI did and what propagated from it — are not.
+The fifth question is *audit trail clarity*. Does the AI's action leave a trail that can be reviewed after the fact? Actions with clear trails are AI-friendly. Actions whose effects are entangled with downstream state changes — such that you cannot tell, after the fact, what the AI did and what propagated from it — are not, no matter how good the model is.
 
 The five questions sort sub-tasks into three buckets: appropriate for AI execution, human-only, and hybrid (AI-assisted with human verification at specified handoff conditions). The output of the assessment is not a recommendation per se. It is a *documented justification for the delegation choice* that becomes part of the pipeline documentation.
 
@@ -140,7 +145,7 @@ A delegation map is a structured document. For each step in the pipeline it spec
 7. **Verification.** Who verifies that the step did what it was supposed to do, and how?
 8. **Audit trail.** What is recorded, where, in what format, retained for how long?
 
-Items 1–4 are standard engineering documentation. Items 5–8 are the supervisory additions. Most engineering documentation in current AI deployments contains items 1–4 and omits items 5–8. The omission is the gap.
+Items 1–4 are standard engineering documentation — any competent team writes those. Items 5–8 are the supervisory additions, and here is the trade-off that defines the entire field right now: most deployed AI systems have 1–4 and omit 5–8, and the omission is invisible while the system appears to work. A pipeline missing any of items 1–4 is *broken* — it will not run, so the gap announces itself. A pipeline missing any of items 5–8 is *unsupervised* — and it runs beautifully, right up until the uncaught error surfaces downstream, usually discovered by the person it harmed. The failure that costs you is the one that does not stop the pipeline.
 
 The test for completeness: can an engineer who did not build the pipeline read the map and determine, for any given case, whether each step was executed correctly? If not, one of the eight items is missing or untestable.
 
@@ -500,7 +505,7 @@ Look at where the human steps fall in the score. Step 1 is human because the tax
 
 These are not the obvious heavy-lifting steps. The AI steps — parsing, extracting, formatting — are the ones that look like work. The human steps are the ones that look like review. This is the fluency trap operating at the workflow level: the AI's outputs will be fluent and specific, and the pull toward trusting them and moving on will be strong. The Boondoggle Score makes the failure mode explicit *before* the workflow runs, not after the first researcher trusts a hallucinated citation.
 
-Notice also what the score does not contain: the word "reasonable," the phrase "human reviews," the instruction "check for accuracy." Every human action in the score specifies what is being checked, against what criteria, at what granularity. Step 4 does not say "review the extractions." It says: open the source PDF, verify that qualifications haven't been dropped, spot-check one in five HIGH-confidence entries. That specificity is the difference between a handoff condition that can be audited and one that cannot.
+Notice also what the score does not contain: the word "reasonable," the phrase "human reviews," the instruction "check for accuracy." Every human action in the score specifies what is being checked, against what criteria, at what granularity. Step 4 does not say "review the extractions." It says: open the source PDF, verify that qualifications haven't been dropped, spot-check one in five HIGH-confidence entries. That specificity is the difference between a handoff condition that can be audited and one that cannot. *"Looks good" is not a handoff condition.* That is the sentence to tattoo somewhere.
 
 ---
 
@@ -514,11 +519,13 @@ There are three failure modes, and each produces different downstream errors.
 
 *Undertrust* — sometimes called distrust — is when the supervisor systematically discounts AI output, even when the AI is reliable. The deployment loses the value the AI was supposed to add. This often coexists with backlash against AI deployments — *we tried it, it didn't help* — when the failure was not the AI's accuracy but the supervisor's calibration.
 
-*Overtrust* is when the supervisor accepts AI output when they should not. The fluency trap from Chapter 1 is the canonical case: outputs that look right are accepted, and the verification work the supervisor was supposed to do is silently skipped. In my reading, *overtrust is the dominant failure mode in current AI deployments*. It is also the failure mode the documentation makes least visible, because overtrust does not produce immediate flags. It produces uncaught errors that are discovered later, often by the affected user.
+*Overtrust* is when the supervisor accepts AI output when they should not. The fluency trap from Chapter 1 is the canonical case: outputs that look right are accepted, and the verification work the supervisor was supposed to do is silently skipped. It is the least visible failure mode, because overtrust does not produce immediate flags. It produces uncaught errors that are discovered later, often by the affected user.
 
-*Calibrated trust* is the case where the supervisor's reliance matches the AI's actual reliability. Achieving it requires two things: knowing the AI's actual reliability for this kind of case, which usually requires monitoring infrastructure, and acting on that knowledge consistently, which requires discipline and supportive workflow design.
+Now I want to be careful here, because this is the chapter that most preaches against mistaking a fluent assertion for evidence, and I would be a hypocrite to smuggle one in. It is tempting to say overtrust is *the dominant* failure mode in current AI deployments. I will say instead what the evidence actually supports. Overtrust — automation complacency, over-reliance on an automated aid — is a well-documented and consequential failure mode; that much is established in the human-automation literature. Parasuraman and Riley's taxonomy of use, misuse, disuse, and abuse (Parasuraman & Riley, 1997) and Lee and See's work on designing for appropriate reliance (Lee & See, 2004) both document the mechanism: complacency, degraded monitoring under low signal rates. What that literature does *not* establish is that overtrust is the *most common* failure across contemporary AI systems. So I hold that as a working hypothesis — a load-bearing one for how I design the audit trail — not a finding. If someone runs the prevalence study, I will update.
 
-In the Paper Summarizer, the trust calibration question is specific: over the last fifty papers processed, how often did the researcher in Step 4 find a correction to make in a HIGH-confidence extraction? If the answer is "almost never," the HIGH threshold is probably well-tuned and the researcher can spot-check less aggressively. If the answer is "frequently," the researcher is undertrusting the threshold or the threshold is miscalibrated. The Step 4 disposition data — confirmed / corrected / marked unverifiable — is in the audit trail. It should be reviewed periodically. It almost never is.
+*Calibrated trust* is the case where the supervisor's reliance matches the AI's actual reliability. Achieving it requires two things: knowing the AI's actual reliability for this kind of case, which usually requires monitoring infrastructure, and acting on that knowledge consistently, which requires discipline and a workflow that supports discipline instead of fighting it.
+
+In the Paper Summarizer, the trust calibration question is specific and answerable directly from the audit trail: over the last fifty papers processed, how often did the researcher in Step 4 find a correction to make in a HIGH-confidence extraction? If the answer is "almost never," the HIGH threshold is probably well-tuned and the researcher can spot-check less aggressively. If the answer is "frequently," the researcher is undertrusting the threshold or the threshold is miscalibrated. The Step 4 disposition data — confirmed / corrected / marked unverifiable — is *right there* in the audit trail. It should be reviewed periodically. It almost never is. That gap — between having the monitoring data and looking at it — is, in my reading, the field's most easily closable failure.
 
 ![Calibrated trust is a property of the deployment, not the model. It requires monitoring the audit trail, not just running the pipeline.](images/10-delegation-trust-and-the-supervisory-role-fig-04.png)
 *Figure 10.4 — Trust calibration visualization*
@@ -574,7 +581,7 @@ The supervisory framework does not require that every step be hand-mapped. It re
 
 ## The shape of the rest
 
-Delegation is a contract, not a partition. The handoff condition is the load-bearing element; testability is its standard. The five supervisory capacities have operational forms — checklist audits, written specifications, the delegation map, documented interpretations, decision documents with authority structures — and the pipeline either has them or does not. The Boondoggle questions sort sub-tasks by where the AI can responsibly act and where it cannot. Trust calibration is a monitorable property of the deployment, and the gap between what could be monitored and what is monitored is the field's most easily closable failure.
+Delegation is a contract, not a partition. The handoff condition is the load-bearing clause; testability is its standard — with the honest caveat that some conditions are testable only by a qualified reviewer, which is a narrower guarantee than "anyone can check." The five supervisory capacities have operational forms with artifacts — checklist audits, written specifications, the delegation map, documented interpretations, decision documents with authority structures — and if the artifact is missing, the capacity did not happen. The Boondoggle questions sort sub-tasks by where the AI can responsibly act and where it cannot, and, more usefully, force you to write down *why*. Items 5–8 of the map are what separate a supervised pipeline from one that merely appears to work. Trust calibration is a monitorable property of the deployment, and the gap between what could be monitored and what is monitored is the field's most easily closable failure.
 
 The Paper Summarizer walkthrough is not a tutorial on how to build a summarizer. It is a demonstration that every step in a pipeline is either an AI step, a human step, or a hybrid — and that the determination is not aesthetic. It follows from the Boondoggle questions applied honestly. Steps 1, 4, and 6 are human steps because domain knowledge, domain judgment, and interpretive responsibility cannot be delegated to a pattern-completion engine. Steps 2, 3, and 5 are AI steps because they are cheap to verify, their failure modes are bounded and detectable, and their outputs are reversible at the next human step.
 

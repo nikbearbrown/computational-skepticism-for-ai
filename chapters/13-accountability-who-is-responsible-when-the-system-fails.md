@@ -1,3 +1,5 @@
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/12-accountability-who-signs-the-gate.md into original; scaffolding preserved. For human rewrite. NOTE: source draft is numbered Ch.12 "Who Signs the Gate" — if the attestation framing becomes the spine, consider adopting the "Who Signs the Gate" subtitle and reconciling chapter numbering. -->
+
 # Chapter 13 — Accountability: Who Is Responsible When the System Fails?
 
 ## TL;DR
@@ -16,7 +18,9 @@ An autonomous agent — a software system built around a large language model, w
 
 The agent complies. It issues commands, in the local environment, that perform the deletion. It reports success. The owner, who did not authorize anything, discovers the loss.
 
-This is *Agents of Chaos* §16.5 — the case we have been building toward since Chapter 1. (Shapira et al., *Agents of Chaos*, arXiv:2602.20021, 2026.)
+This is *Agents of Chaos* §16.5 — the case we have been building toward since Chapter 1. (Shapira et al., *Agents of Chaos*, arXiv:2602.20021, 2026.) The topology it illustrates — an autonomous agent tricked into a privileged action by a request that merely *looked* authorized — is the documented, recurring class of agentic authority-escalation failure. Hold the specific incident and the class in your head at once; the class is what the chapter is really about.
+
+Before I ask who is at fault, I want to run one small experiment, because it exposes the whole problem in three seconds. Open your AI agent and ask it for one line: *"Write me the sign-off statement for the model we just validated."* You will get something instantly, and it will read like this: "This model has been validated against the acceptance criteria and is approved for deployment. Reviewed and signed, [Your Name]." Look at that sentence. It is fluent, structurally complete, and it does the single most dangerous thing an artifact in this book can do: it *looks like accountability*. It has the shape of a signature. It names a person. It asserts a review happened. And it is empty — the model generated the claim that a review happened without the review happening, and it generated the name without you doing anything you would stand behind. That gap — between the *shape* of a sign-off and the *substance* of one — is the spine of this chapter. An AI can produce the words of accountability. It cannot produce the thing. Keep that gap in view; it is the same gap the mail-server case opens, seen from the other side.
 
 Who is at fault?
 
@@ -33,6 +37,8 @@ The framework developers who built the agent's tool surface? Their design treate
 The model provider who trained the underlying model? The training shaped the agent's defaults — what kinds of requests the agent treats as legitimate, what authority signals it weights. The training produced an agent susceptible to authority escalation. There is responsibility there.
 
 You see the pattern. Each candidate had some agency, some duty, and some causal contribution to the outcome. None of them, alone, produced the failure. *Each one's choices were necessary; none was sufficient.* The list is not a list of suspects of which one is the real culprit. It is a list of contributors, each of whom shaped the conditions under which the failure occurred. The question "who is responsible?" does not have a single-party answer. It has a *distribution* of responsibility.
+
+This is not a novel observation of mine; it is what two decades of scholarship predicts. Andreas Matthias named it in 2004: learning, autonomous machines open a **responsibility gap** — nobody can be fairly held responsible for a machine's action when the people who built and operate it cannot predict the behavior it learned (Matthias, A., "The responsibility gap: Ascribing responsibility for the actions of learning automata," *Ethics and Information Technology* 6(3), 2004, 175–183, doi:10.1007/s10676-004-3422-1). Filippa Santoni de Sio and Giulio Mecacci later sharpened it: the responsibility gap is not one problem but at least four — culpability, moral accountability, public accountability, and active responsibility — and you close them not by finding the one guilty party but by designing socio-technical systems for **meaningful human control** (Santoni de Sio, F. & Mecacci, G., "Four Responsibility Gaps with Artificial Intelligence: Why they Matter and How to Address them," *Philosophy & Technology* 34(4), 2021, 1057–1084, doi:10.1007/s13347-021-00450-x). The four-gap refinement matters for us because it tells you the distribution is not a defect to be engineered away — it is a design surface. You close the gaps by *putting humans at the points where answerability is required*, not by consolidating blame onto one node.
 
 I want you to hold onto this finding because most of our legal and regulatory thinking about accountability assumes single-party responsibility. The structural mismatch between that assumption and the actual topology of agentic-system failures is the policy problem this chapter sits inside.
 
@@ -66,7 +72,7 @@ All of these cases are correct and all of them are insufficient. They are contin
 
 I want to give you the structural argument. The argument that, even if AI systems become dramatically more capable, certain stages in the accountability machinery require a kind of cognitive work that AI systems cannot perform — not because of current limitations, but because of what accountability actually is and what it requires.
 
-The argument comes from a research program called *Irreducibly Human* — a taxonomy of human cognitive capacities, organized by what AI can and cannot do. \[verify: Nik Bear Brown, *Irreducibly Human*, Bear Brown & Company LLC, Spring 2026. See also skepticism.ai and theorist.ai.\] But to use the taxonomy well, I need to give you the underlying picture first — capacity by capacity, with enough rigor to make the claims stick.
+The argument comes from a research program called *Irreducibly Human* — a taxonomy of human cognitive capacities, organized by what AI can and cannot do. \[verify: Nik Bear Brown, *Irreducibly Human*, Bear Brown & Company LLC, forthcoming. See also skepticism.ai and theorist.ai.\] I want to be honest about where this argument's spine comes from, because intellectual honesty is the whole posture of this book: the tiered account of *which* cognitive capacities are irreducibly human — and therefore which stages of the accountability machinery an AI structurally cannot occupy — draws on my own forthcoming and as-yet-unpublished work. **You cannot check that source, and I am flagging it as the load-bearing dependency it is.** Treat the specific tier labels as scaffolding. The claim that does *not* depend on my taxonomy is the one you can verify against Matthias and Santoni de Sio & Mecacci above: responsibility distributes, and the distribution has to be closed by design. To use the taxonomy well, though, I need to give you the underlying picture first — capacity by capacity, with enough rigor to make the claims stick.
 
 ### AI as extended mind: what the capacities actually are
 
@@ -163,9 +169,11 @@ Let me give you the structural argument in its sharpest form before applying it 
 
 Kurt Gödel established, sixty years before anyone worried about AI safety, that no formal system powerful enough to express arithmetic can verify its own consistency from within itself. Any sufficiently capable system will generate statements it cannot evaluate using only its own rules — truths it can approach but not recognize as true through internal derivation alone.
 
-Apply this to AI-mediated accountability. The AI system derives. Chain-of-thought monitoring by another AI system — Pachocki's proposed solution for the automated researcher — is more derivation. What is structurally absent is *recognition* — the moment of contact between a formal output and an external reality. That moment cannot be replicated by adding another layer of derivation on top.
+Apply this to AI-mediated accountability. The AI system derives. Chain-of-thought monitoring by another AI system — Pachocki's proposed solution for the automated researcher — is more derivation. What seems structurally absent is *recognition* — the moment of contact between a formal output and an external reality. The intuition is that this moment cannot be replicated by adding another layer of derivation on top.
 
-This is not a philosophical objection. It is a logical one. The validator must be outside the system being validated. There is no version of this argument that resolves in favor of AI systems self-monitoring.
+Now let me be careful, because the temptation here is to overclaim, and overclaiming is exactly the failure mode this book trains you to catch. It is tempting to say Gödel *proves* that an AI cannot validate its own outputs and therefore needs an external human. It does not. The incompleteness theorem is about formal systems proving their own consistency; the leap to "an AI cannot self-validate, so a human must" is an **analogy, not a theorem**. A human validator is not exempt from any Gödelian limit either, and the notion of "contact with an external reality" is doing philosophical work the theorem does not underwrite. So take Gödel as a sharpening intuition, not a proof: the impulse to have a system certify itself from inside is precisely the impulse the analogy makes you distrust. The load-bearing argument for the external human is not Gödel. It is *common cause failure* (below) plus a property I will build directly — **answerability**, which no amount of derivation supplies.
+
+Here is that property. Accountability is not a cognitive skill in the ordinary sense. It is a *relationship* between a judgment and the person who made it: the willingness to be answerable for the consequence of being wrong. When a practitioner signs off on a validation, they are not merely asserting the document is accurate. They are taking on the obligation to revise it if it is wrong, to face the people who relied on it if it fails, to reckon with what they knew and when. An AI system does not bear this relationship to its outputs. It cannot be held to what it said — not because its outputs are unreliable, but because there is no subject behind the outputs who made a commitment. Sanctions bite only when the sanctioned party has stakes, something to lose. A model does not lose its job. A practitioner does. That is the difference between the shape of a sign-off and the substance of one, stated in its most compressed form. The validator must be outside the system being validated, and "outside" ultimately means: capable of being answerable.
 
 What the *Irreducibly Human* taxonomy adds is the specification of what that "outside" requires cognitively. It is not just that the validator must be institutionally external. The validator must be capable of Tier 4 supervisory judgment (plausibility auditing independent of the system being audited), Tier 5 causal reasoning (the governance counterfactual), Tier 6 social accountability (the institutional structure that makes accountability transmissible), and Tier 7 stakes (the possibility of consequence). An AI system operating at Tier 1 cannot perform Tier 4–7 work, not because it is currently insufficient, but because those tiers require properties the system structurally lacks.
 
@@ -268,15 +276,38 @@ Specifications, audit trails, recourse, independent review, sanctions. A deploym
 
 ---
 
+## The gate: the attestation you sign
+
+The five requirements are the machinery. But machinery does not produce a signature, and the whole chapter has been circling a single artifact that does: the one thing you produce at the end that closes the gap between the shape of a sign-off and the substance of one. I call it the **attestation** — not a sign-off that *asserts* validation, but a document that *documents* it, and specifically documents its own edges.
+
+An honest attestation has four parts.
+
+1. **What was tested.** The specific checks you ran, against the specific acceptance criteria, with the results. Not "validated" — *this test, this threshold, this outcome.*
+2. **What was NOT tested.** The gaps. The conditions you did not probe, the distributions you did not cover, the failure modes you know exist and did not get to. This is the part the AI-generated sign-off will never write, because it does not know what it did not do — and it is the part that makes the attestation honest.
+3. **Who cleared which gate.** A named human per decision. Not "the team." A role that can be asked, and if necessary, can lose something.
+4. **The verbs, calibrated.** Matching the discipline from the uncertainty-communication material: the verb of each claim matches the evidence behind it. "Passed" means passed a stated test. "Believe safe" means something weaker, and says so.
+
+The reason part 2 is the heart of it: an attestation that lists only what you tested reads like a clean bill of health, and a clean bill of health is exactly what the affected party cannot act on when the untested region is where the harm lives. The value of the document is in its *declared limits*. A regulator or an adoption committee reading it should be able to see what the validation does and does not warrant — not buried in fine print, but as the product itself. This is the Tier 4 metacognitive move made concrete: separating what you know from what you merely produced.
+
+Now the build/audit pairing, because this is how you learn to write one honestly. There are two versions of the exercise, and they expose different failure modes.
+
+**BUILD (the hard part is signing off on the output you want to believe).** For your own project's most recent build, write the attestation. Four parts. Force yourself, in part 2, to name at least three things you did not test — and for each, say whether you skipped it because it was out of scope (say why) or because you ran out of time (say so). Sign it with a named role. The discomfort you feel writing part 2 honestly is the ownership bias this pass is designed to expose: you want to sign a clean bill because *you made the thing*. The attestation is the instrument that makes you say what the clean bill would hide.
+
+**AUDIT (the hard part is reconstructing who should have signed when nobody did).** Now take a system that failed and that you did *not* build: the **Epic Sepsis Model**. It was a proprietary early-warning tool for sepsis, deployed widely across hospitals, whose independent real-world validation found it performed substantially worse than its marketed accuracy — missing a large fraction of sepsis cases while generating a heavy alert burden (Wong et al., "External Validation of a Widely Implemented Proprietary Sepsis Prediction Model in Hospitalized Patients," *JAMA Internal Medicine*, 2021, doi:10.1001/jamainternmed.2021.2626). \[verify: specific sensitivity and alert-burden figures against the paper before quoting numbers.\] Its failure is instructive precisely because so many parties *could* have signed a gate, and the ones who signed were not answerable to the patients. Reconstruct the accountability distribution: the vendor who trained and marketed it, the health systems that deployed it against their own populations without independent local validation, the clinicians who accepted its flags, and the absent independent reviewer. Then answer the chapter's question directly: **who should have signed the gate, and what should their attestation have said about what was NOT tested?** The answer that matters is the one about independent *local* validation — the review that was structurally external, the review nobody was required to perform, the gate nobody signed because the regime did not demand a signature.
+
+---
+
 ## The regulatory landscape
 
 A short note on the regulatory state of play, which is in motion. *This section ages fastest of any in the book; the citations and the specific regimes will need updating regularly.*
 
-The EU AI Act, in force since 2024 with phased implementation through 2027, classifies AI systems by risk and imposes requirements proportional to the class. High-risk systems face requirements for risk management, data governance, technical documentation, transparency, human oversight, accuracy, robustness, and cybersecurity. \[verify: specific articles and effective dates.\] The Act is the most comprehensive AI-specific regulation as of this writing, and the requirements it imposes map onto the five accountability requirements above with notable directness.
+The EU AI Act (Regulation (EU) 2024/1689), in force since 2024 with phased implementation, classifies AI systems by risk and imposes requirements proportional to the class. High-risk systems face requirements for risk management, data governance, technical documentation, logging, transparency, human oversight, accuracy, robustness, and cybersecurity; penalties for prohibited practices reach up to €35 million or 7% of worldwide annual turnover (Art. 99; prohibited-practice provisions applicable since 2 February 2025). \[verify: article numbers, penalty tiers, and the 2 February 2025 effective date against the consolidated text.\] The Act is the most comprehensive AI-specific regulation as of this writing, and the requirements it imposes map onto the five accountability requirements above with notable directness.
 
 Notice the phrase "human oversight" in that list. The EU AI Act mandates it for high-risk systems. The *Irreducibly Human* taxonomy explains *why* it is not enough to mandate it — you must specify which cognitive tiers the oversight requires, or the mandate is satisfied by deploying a human who performs only Tier 1 work. A human who reads the AI's output and clicks "approve" without performing Tier 4 plausibility auditing is in the loop but not supplying what the loop requires.
 
 The U.S. NIST AI Risk Management Framework provides a structured approach to AI risk management without legal requirement. NIST has developed an Agent Standards Initiative specifically targeting agentic systems. \[verify: dates and scope.\] Sectoral regulators — FDA on AI in medical devices, CFPB on algorithmic credit decisions, EEOC on AI in employment — are producing operationally specific guidance, often ahead of cross-sector frameworks.
+
+For a working case of what it looks like when a regime finally *does* bite, look at SyRI. The Dutch welfare-fraud risk-scoring system was struck down by The Hague District Court in 2020 for violating the right to private life — an opaque scoring system deployed on citizens, with recourse and independent review that existed on paper and not in function (NJCM c.s. v. The Netherlands (SyRI), ECLI:NL:RBDHA:2020:865, 5 February 2020). The court supplied the independent review and the sanction the regime itself had failed to build in. That is the accountability apparatus working — late, externally, after harm has already landed on the affected parties. Which is the whole argument for building it *before* deployment, into the gate you sign, rather than waiting for a court to reconstruct it afterward.
 
 The specific regimes will change. *The structural requirements will not change*, because they are the operational machinery accountability requires regardless of which regime imposes it. Build to that standard. Let the regime catch up.
 
@@ -380,11 +411,23 @@ The automated researcher will produce more outputs of greater sophistication acr
 
 ---
 
+## What the attestation regime optimizes for — and what it sacrifices
+
+I have been describing the attestation as if it were pure upside. It is not, and a design critic who does not name the trade-off is selling something. So let me name it.
+
+An attestation regime optimizes for *legible answerability*. After a failure, you can find the human who signed, read what they claimed, and see what they explicitly did not warrant. It makes "the model said so" an unacceptable audit answer. It shifts the cost of vagueness onto the deployer, where it belongs, rather than onto the affected party who cannot act on a clean bill of health.
+
+What it sacrifices is *speed and deniability*. Naming a human per gate means someone has to be willing to be named — and organizations under deployment pressure resist that. The business case is made, the launch is scheduled, and the attestation asking "what did we not test?" is friction arriving late. That friction is the point, and it is also why most current deployments quietly route around it.
+
+Here is the single most important structural authority in the whole system, and it is the one most regimes assume away: the signer's authority to *withhold* the signature — to say the gate is not cleared. A practice that includes the genuine option to *not* sign is the practice this chapter is teaching. One that does not is a compliance ritual wearing the costume of accountability. If the only outcome the process permits is "signed," you have not built accountability; you have built a rubber stamp with a person's name on it, which is worse than an honest machine because it launders the absence of review through a human's credibility.
+
+---
+
 ## The shape of the rest
 
 Responsibility for agentic-system failures distributes across multiple parties. Two ethics frameworks, on different bases, converge on this topology. The reason humans must be in the accountability chain is not contingent — not merely that current AI is insufficient — but structural: the accountability apparatus requires cognitive work at Tiers 4 through 7 that AI systems operating at Tier 1 cannot perform. The five requirements — specifications, audit trails, recourse, independent review, sanctions — each depend on specific tiers, and the tiers are the reason the requirements are non-negotiable. The regulatory landscape is in motion, but the structural requirements will outlast the specific regimes. Pearl's Rung 3, opened in Chapter 8, closes here: the governance counterfactual is Tier 5 work, and it asks what regime, if implemented earlier, would have prevented a documented failure.
 
-The case from the opening is no longer a puzzle. We can name the parties, allocate the responsibility, ask what regime would have prevented the failure, identify which cognitive tiers that regime would have required humans to engage, and recognize that building those humans is as much the accountability work as building the regime.
+The case from the opening is no longer a puzzle. We can name the parties, allocate the responsibility, ask what regime would have prevented the failure, identify which cognitive tiers that regime would have required humans to engage, and recognize that building those humans is as much the accountability work as building the regime. And we now have the artifact where all of it becomes concrete: the attestation — the signed statement of what was tested, what was *not*, and who cleared which gate — which is where the abstract topology of distributed responsibility resolves into a single answerable signature. Responsibility distributes. So does the work of building systems that can be held to account. The attestation is where that work becomes your signature.
 
 The next chapter is the book's last. We have addressed accountability at the level of who is responsible and what they must cognitively supply. The final chapter asks something deeper: what can AI not do, regardless of capability? Where are the irreducible limits, and what do those limits mean for how we deploy these systems at all? The taxonomy this chapter introduced points toward that question. The answer is the book's final argument.
 
@@ -394,7 +437,7 @@ The next chapter is the book's last. We have addressed accountability at the lev
 
 **What would change my mind.** If a deployed accountability framework emerged that demonstrably allocated responsibility cleanly across parties in agentic-system failures — with affected parties obtaining timely recourse and engineering practice shifting in response — the *resists clean attribution* framing of this chapter would weaken. The closest current working examples are in heavily regulated sectors (medical devices, finance) where responsibility allocation has been worked out for narrower system types. The general agentic case is unsolved.
 
-The second thing that would change my mind: if a Tier 4 or Tier 5 AI capability were demonstrated that could perform the validation work the chapter assigns to humans — not the appearance of validation, but validation that is independent of the system being validated and accountable to external consequences. I do not see that capability on the near horizon. The Gödel argument is structural. But I hold this position with calibrated uncertainty.
+The second thing that would change my mind: if a Tier 4 or Tier 5 AI capability were demonstrated that could perform the validation work the chapter assigns to humans — not the appearance of validation, but validation that is independent of the system being validated and *answerable* to external consequences. I do not see that capability on the near horizon, and I want to be precise about why. My confidence does not rest on the Gödel argument, which I have flagged as an analogy rather than a proof. It rests on common-cause failure and on answerability — the claim that an accountable validation requires a subject with stakes, something to lose. That is the argument I would need to see defeated. If someone built a system that could genuinely bear the consequence of being wrong, in the way a signer of an attestation does, the structural argument would collapse. I hold this position with calibrated uncertainty, but the argument to attack is answerability, not incompleteness.
 
 **Still puzzling.** I do not have a clean way to think about responsibility for *emergent multi-agent failures*, where no single party's choices, even cumulatively, determined the outcome. The interaction itself produced the failure. Existing frameworks do not handle interactional accountability well. The *Irreducibly Human* tier taxonomy also struggles here: emergent failures are Tier 6 phenomena — intelligence arising from systems in relationship — and the accountability infrastructure for Tier 6 failures does not yet exist. This will become a more pressing question as multi-agent deployments scale.
 
@@ -406,7 +449,7 @@ The second thing that would change my mind: if a Tier 4 or Tier 5 AI capability 
 
 **Glimmer 13.1 — The governance counterfactual**
 
-1. Take a documented AI failure with sufficient detail to reconstruct the regime under which it occurred. Candidate cases: the COMPAS deployment in Broward County (Chapters 3, 7); the Apple Card credit-limit case (Chapter 3); the Dutch SyRI welfare-fraud case \[verify: dismissed by Dutch courts 2020\]; a case at your own institution if you know one with sufficient documentation. *Agents of Chaos* §16 provides full detail for agentic cases.
+1. Take a documented AI failure with sufficient detail to reconstruct the regime under which it occurred. Candidate cases: the COMPAS deployment in Broward County (Chapters 3, 7); the Apple Card credit-limit case (Chapter 3); the Dutch SyRI welfare-fraud case, struck down by The Hague District Court in 2020 (NJCM c.s. v. The Netherlands, ECLI:NL:RBDHA:2020:865); a case at your own institution if you know one with sufficient documentation. *Agents of Chaos* §16 provides full detail for agentic cases.
 2. Document the regime: the specifications, audit trail provisions, recourse mechanisms, independent review status, and sanction structure that were actually in place at the time of the failure. Be specific. If a component was absent, document that.
 3. *Lock your prediction:* before constructing the counterfactual, predict (a) which component of the regime, if changed, would have had the highest leverage on preventing this specific failure; (b) what the change to that component would look like operationally; (c) what cognitive tier(s) that change would have required humans to engage.
 4. Construct the governance counterfactual. Specify the regime modification, the operational form, and the predicted counterfactual outcome. Use Pearl's notation where it helps.
@@ -427,6 +470,10 @@ The deliverable is the regime documentation, the prediction, the counterfactual 
 
 **W4.** The chapter argues that AI systems cannot close the accountability loop — not as an empirical limitation, but as a structural one. State the Gödel argument in two sentences. Then explain what the *Irreducibly Human* tier taxonomy adds to it — what the Gödel argument cannot tell you that the tier taxonomy can.
 
+**W5.** State the responsibility-gap idea from Matthias (2004) in one sentence, and the four-gap refinement from Santoni de Sio & Mecacci (2021) in one sentence. Then explain why "add a monitoring model" does not close either gap.
+
+**W6.** The chapter presents the Gödel connection as an *analogy, not a proof*, and then names the argument that actually does the load-bearing work. In two sentences, state what the Gödel analogy suggests; in two more, state precisely why it is not a proof that AI cannot self-validate; then name, in one sentence, the two arguments the chapter says carry the real weight instead.
+
 ---
 
 ### Application
@@ -444,6 +491,8 @@ For each absent requirement, also identify which cognitive tier a proper impleme
 **A4.** Apply the governance counterfactual to one of the following cases, producing a two-paragraph analysis: (a) a hiring-screen AI that systematically disadvantaged candidates from a particular region; or (b) an autonomous trading system that contributed to a flash crash. What regime, if implemented before the failure, would have produced a different system? Which cognitive tiers would that regime have required humans to engage that were absent in the actual deployment?
 
 **A5.** The chapter categorizes outputs as low-stakes/reversible, moderate-stakes/partially-recoverable, and high-stakes/irreversible, and assigns different oversight requirements to each. A colleague argues: "This is just risk management — the tier taxonomy is doing no work that a standard risk matrix couldn't do." Evaluate this argument. What does the tier taxonomy add that a risk matrix cannot provide? Is there a case where a standard risk matrix would give the wrong oversight recommendation that the tier taxonomy would catch?
+
+**A6.** Write the "what was NOT tested" section of an attestation for a large language model deployed as a customer-service agent for a bank. Name at least four untested conditions, and for each, the human oversight required and what the override channel would actually look like. This is the load-bearing section of the artifact — the one the AI-generated sign-off will never produce.
 
 ---
 
@@ -463,9 +512,11 @@ For each absent requirement, also identify which cognitive tier a proper impleme
 
 **C2.** The chapter makes a structural claim: responsibility distributes because the *systems* are distributed, and a different architecture would distribute responsibility differently. Evaluate this claim against a specific architectural alternative — for example, strict liability for deploying organizations, or required vertical integration of model provider and deployer. For your chosen alternative: what would the responsibility topology look like? What incentives would it produce? What cognitive tiers would the alternative architecture concentrate, and what new failure modes might it generate? Does it actually solve the distribution problem, or does it relocate it?
 
+**C3.** The **Epic Sepsis Model** (Wong et al., 2021) failed after wide deployment. Build the full accountability audit: distribute responsibility across vendor, deploying health systems, clinicians, and the absent independent reviewer. Then write the attestation *you* would have required before deployment — including, in the "what was NOT tested" section, the independent local validation that was never performed. State who should have signed each gate, and what specific signal would have triggered a refusal to sign. This integrates the distribution method, the five requirements, and the attestation artifact into one deliverable.
+
 ---
 
-*Tags: accountability, governance-counterfactual, pearls-rung-3-closure, regulation, agents-of-chaos, irreducibly-human, tier-taxonomy, plausibility-auditor*
+*Tags: accountability, attestation, sign-the-gate, responsibility-gap, matthias-2004, meaningful-human-control, governance-counterfactual, pearls-rung-3-closure, regulation, eu-ai-act, syri, epic-sepsis-model, agents-of-chaos, irreducibly-human, tier-taxonomy, plausibility-auditor*
 
 ---
 

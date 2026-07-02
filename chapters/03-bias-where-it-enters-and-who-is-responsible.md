@@ -1,3 +1,4 @@
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/06-bias-where-it-enters-and-whos-responsible.md into original; scaffolding preserved. For human rewrite. Renumber/retitle implication: draft was numbered "Chapter 6 — Bias: Where It Enters, Who's Responsible"; original is Chapter 3. Kept original numbering/title. Draft's BUILD/AUDIT exercise pairing folded in ALONGSIDE the original Glimmers/Warm-Up/Application/Synthesis/Challenge set, not replacing it — human may want to reconcile the two exercise systems. -->
 # Chapter 3 — Bias: Where It Enters and Who Is Responsible
 
 ## TL;DR
@@ -6,9 +7,9 @@
 - The chapter moves through What "bias" actually means, Ten mechanisms, distinguished, Selection bias, Confirmation bias, and related ideas.
 - Read it for the main argument, the vocabulary it introduces, and the practical judgment it asks you to develop.
 
-*Doing the Fix the Model Alone Cannot Do.*
+*Doing the Fix the Model Alone Cannot Do. The fix with the most leverage is almost never the one closest to your hands.*
 
-I want to tell you about three engineering teams.
+I want to tell you about three engineering teams. Let me label this parable as constructed — it is a composite built to isolate a real pattern, not a case I am reporting from a filing. But the pattern is exactly what happens, over and over, in real bias-mitigation work.
 
 They were each given the same case. A deployed AI system was producing biased outcomes — well-documented, reproducible, the kind of thing that gets written up in the technical press and then again in the trade press and then again in a regulatory filing. The teams' job was the same: fix it.
 
@@ -18,7 +19,7 @@ The second team rewrote the dataset. They identified which subgroup had been und
 
 The third team did not touch the model and did not touch the data. They looked at the *room the model had been deployed into*. The model's outputs were being read by a human reviewer, and the reviewer's downstream decisions had their own systematic patterns — patterns the model was implicitly amplifying. The third team changed the review process. They didn't change the model at all. The disparity dropped by an order of magnitude.
 
-Same problem. Three honest engineering efforts. Three different theories of where the bias actually lived. Two of those theories were wrong, and they were wrong in a way that no amount of careful work could fix from inside the theory. The third was right, and the rightness was not an accident. It came from a particular way of looking at the problem that the first two teams had not used.
+Same problem. Three honest engineering efforts. Three different theories of where the bias actually lived. Here is the thing I want to be precise about, because it is easy to tell this story wrong: Teams One and Two were not *wrong*. They produced real, small reductions. But they were **low-leverage** — correct interventions on a real path that happened to carry little of the bias. The third was high-leverage, and the rightness was not an accident. It came from a particular way of looking at the problem that the first two teams had not used.
 
 This chapter is about that way of looking. By the end I want you to be able to look at any biased AI system and ask, *before* you start fixing anything: where does this bias live, and which intervention has the most leverage on it? The answer is rarely where the temptation pulls you. The temptation is to fix the thing closest to your hands. The leverage is somewhere else.
 
@@ -33,8 +34,11 @@ To get there, we need four things. We need a rigorous definition of what "bias" 
 - Draw a causal graph for a deployed AI system and identify the highest-leverage intervention point
 - Read a dataset as an epistemic artifact — asking what it claims to represent, what it actually represents, and what it excludes
 - Explain, in plain language, why two contradictory fairness metrics can both be mathematically correct at the same time
+- Assign the accountable owner of a bias, including when the leverage sits upstream of your team entirely
 
-**Prerequisites.** Chapters 1 and 2 — the supervisory posture and the vocabulary of uncertainty. You'll also need the basic idea that a model learns from data; nothing else is assumed.
+**Prerequisites.** Chapters 1 and 2 — the supervisory posture, the vocabulary of uncertainty, and the fluency trap. You'll also need the basic idea that a model learns from data; nothing else is assumed.
+
+**Why this chapter uses the capacity twice.** This chapter exercises one supervisory capacity — supplying the meaning and the accountability the model cannot — and it does so in two passes. A **BUILD** pass, where you conduct a persona/data build and hunt for where *you* let bias in (the hard part is not believing your own fluent output). And an **AUDIT** pass, where a deployed system lands on your desk and you trace where the bias entered and assign the owner (the hard part is reconstructing a process you never saw). Computational skepticism, at bottom, is the pairing of the machine's speed with a doubt that stays irreducibly human: the model builds fast, and you supply the suspicion.
 
 Let me start with a definition.
 
@@ -50,11 +54,13 @@ Write it formally. Suppose the true quantity is $\theta$ — the real underlying
 
 $$\text{Bias}(\hat{\theta}) = E[\hat{\theta}] - \theta$$
 
-If this quantity is zero, the estimator is unbiased — it might be wrong on any given dataset, but it is not *systematically* wrong. If it is nonzero, the estimator is biased: systematically off in one direction. And here is the consequence that matters most for practical engineering: *collecting more data will not fix a biased estimator*. A biased estimator converges, with more data, to the wrong answer — with increasing confidence.
+If this quantity is zero, the estimator is unbiased — it might be wrong on any given dataset, but it is not *systematically* wrong. If it is nonzero, the estimator is biased: systematically off in one direction. And here is the consequence that matters most for practical engineering: *collecting more data will not fix a biased estimator*. A biased estimator converges, with more data, to the wrong answer — with increasing confidence. More data narrows the scatter. It does not move the systematic offset.
 
-This is not a theoretical concern. It is precisely what happened in the 1936 Literary Digest presidential poll, which predicted a Landon landslide from 2.4 million responses — while Roosevelt won by a landslide. The sample was enormous. The bias was structural. More data made the wrong answer more confidently wrong.
+This is not a theoretical concern. It is precisely what happened in the 1936 Literary Digest presidential poll, which predicted a Landon landslide from 2.4 million responses — while Roosevelt won by a landslide. The sample was enormous. The frame was skewed — telephone owners, car owners, magazine subscribers, in the depths of the Depression — and non-response compounded it. More data made the wrong answer more confidently wrong. Gallup, by contrast, called the race right with a far smaller but better-drawn sample of roughly 50,000 respondents. **[verify: Gallup's ~50,000 sample size]** (Squire, "Why the 1936 *Literary Digest* Poll Failed," *Public Opinion Quarterly* 52(1):125–133, 1988.)
 
 The ten bias mechanisms covered in this chapter are ten distinct ways of introducing a nonzero value into the expression $E[\hat{\theta}] - \theta$. Each has a different causal structure, and the fix for each is different. Confusing them leads engineers to apply the right intervention at the wrong leverage point — which is exactly what Teams One and Two did.
+
+Think of it this way, as a design-critic would: the newspaper meaning of "bias" was optimized for moral clarity at the expense of causal precision. The formal definition makes the opposite trade — it gives up the moral punch and buys you something you can act on. It tells you *where* to intervene.
 
 ![More data narrows the scatter. It does not move the systematic offset.](images/03-bias-where-it-enters-and-who-is-responsible-fig-01.png)
 *Figure 3.1 — Biased vs*
@@ -62,6 +68,8 @@ The ten bias mechanisms covered in this chapter are ten distinct ways of introdu
 ---
 
 ## Ten mechanisms, distinguished
+
+A bookkeeping note before I list them, because a book about reading a dataset like a historian cannot have a counting error in its own taxonomy. The ten below are the *entry-point* mechanisms — ten places where $E[\hat{\theta}] \neq \theta$ can be born. Later I'll show a *compound* table with pairs like "Aggregation × Subgroup-mask" and "Linkage × Re-identification." Those are not an eleventh and twelfth mechanism. They are *derived interactions* — named patterns that arise when two of the ten (or two structural effects downstream of the ten) act together. When you see them, read them as compounds, not as new primitives. The ten are the alphabet; the compound table is a short list of common words.
 
 ### Selection bias
 
@@ -194,7 +202,7 @@ And sometimes — the hardest case — the data is fine, the labels are fine, th
 
 *Figure 3.1 — Three types of bias, their mechanisms, and what fixes each.*
 
-I want you to feel the difference between these three. Dataset bias is a sampling problem. Label bias is a measurement problem. Structural bias is a question about the world the model lives in. They live at different points in the chain from "world" to "decision," and they respond to interventions at different points. If you have structural bias and you treat it as a dataset problem, you will spend a lot of effort and not move the disparity at all. This happens constantly. It is the most common failure in this whole field.
+I want you to feel the difference between these three. Dataset bias is a sampling problem. Label bias is a measurement problem. Structural bias is a question about the world the model lives in. They live at different points in the chain from "world" to "decision," and they respond to interventions at different points. If you have structural bias and you treat it as a dataset problem, you will spend a quarter and move the disparity zero. This happens constantly. It is the most common failure in this whole field.
 
 So before we touch any tool, we have to do diagnostic work. *Which kind of bias do we actually have, and which mechanism is producing it?* The answer requires looking past the model and past the data and into the social process that generated both.
 
@@ -224,7 +232,7 @@ This is why the leverage analysis procedure in the later section asks you to dra
 | Linkage × Re-identification | **amplifying** | Joining two anonymous tables reveals identity through unique field combinations |
 | All other pairs | **independent / unknown** | No documented compound pattern; check each in isolation |
 
-*If one bias type is confirmed in your pipeline, check the row pairs marked* amplifying *first.*
+*If one bias type is confirmed in your pipeline, check the row pairs marked* amplifying *first. These are derived interactions of the ten mechanisms, not new primitives.*
 
 ---
 
@@ -234,17 +242,23 @@ Now let me say something about what data is.
 
 A dataset is not the world. I want you to feel how strong that statement is. A dataset is a *recording* of a slice of the world, made by particular people at a particular time using particular instruments for particular purposes. Everything in that sentence — *particular people, particular time, particular instruments, particular purposes* — leaves a fingerprint on the data. To use a dataset responsibly, you have to read it the way a historian reads an archive. What was collected? What was excluded? Who decided? Why?
 
-Take the COMPAS recidivism data, a well-known case from Broward County, Florida, around 2013 and 2014. ProPublica, in 2016, published an analysis showing that a commercial risk-assessment tool used by courts in that jurisdiction made errors that fell unevenly across racial lines. \[verify: Angwin et al., ProPublica 2016, "Machine Bias."\] Black defendants who did not go on to re-offend were misclassified as high-risk more often than white defendants who did not go on to re-offend. White defendants who *did* re-offend were misclassified as low-risk more often than Black defendants who did. The error pattern was systematic, not noise.
+Take the COMPAS recidivism data, a well-known case from Broward County, Florida, around 2013 and 2014. ProPublica, in 2016, published an analysis showing that a commercial risk-assessment tool used by courts in that jurisdiction made errors that fell unevenly across racial lines. (Angwin, Larson, Mattu, Kirchner, "Machine Bias," ProPublica, May 23, 2016.) Black defendants who did not go on to re-offend were misclassified as high-risk more often than white defendants who did not go on to re-offend. White defendants who *did* re-offend were misclassified as low-risk more often than Black defendants who did. The error pattern was systematic, not noise.
 
-The makers of the tool responded with a different analysis. *Within each risk score bucket*, they said, the actual rate of re-offense was about the same across groups. By that measure — calibration parity — the tool was fair.
+The makers of the tool — Northpointe — responded with a different analysis. *Within each risk score bucket*, they said, the actual rate of re-offense was about the same across groups. By that measure — calibration parity — the tool was fair.
 
 Both analyses were correct. They were measuring different things.
 
-It turns out that when the underlying base rates differ across groups, you cannot simultaneously have equal error rates and equal calibration. The two definitions of fairness are *mathematically incompatible* under that condition. Here is why.
+It turns out that when the underlying base rates differ across groups, you cannot simultaneously have equal error rates and equal calibration. The two definitions of fairness are *mathematically incompatible* under that condition. I told you this is a theorem, and a book that insists on rigor cannot just assert one, so here is the argument. The full proof is Chapter 7's job. (Chouldechova 2017; Kleinberg, Mullainathan, Raghavan 2016.)
 
-Suppose Group 1 has a true recidivism rate of 30% and Group 2 has a true recidivism rate of 50%. A perfectly calibrated model assigns risk scores that reflect these true rates. The calibration holds for both groups — a score of 50 means 50% actual recidivism, a score of 30 means 30% actual recidivism.
+Start with the plain-language version. Suppose Group 1 has a true recidivism rate of 30% and Group 2 has a true recidivism rate of 50%. A perfectly calibrated model assigns risk scores that reflect these true rates. The calibration holds for both groups — a score of 50 means 50% actual recidivism, a score of 30 means 30% actual recidivism.
 
 Now examine the error rates. For the model to have equal false positive rates — to label non-reoffenders as high-risk at equal rates across both groups — it would need to draw the threshold in a different place for each group. But drawing the threshold in a different place means treating the two groups differently based on group membership. Which violates another definition of fairness.
+
+Here is the same thing algebraically. For a calibrated score, positive predictive value $v$ relates to base rate $p$, true-positive rate $t$, and false-positive rate $f$ by
+
+$$\frac{v}{1-v} = \frac{p}{1-p}\cdot\frac{t}{f}.$$
+
+Hold PPV $v$ equal across two groups with base rates $p_a \neq p_b$. Then the ratio $t/f$ *must* differ between groups. But equalized error rates demand $t_a = t_b$ and $f_a = f_b$, which forces $t_a/f_a = t_b/f_b$. Both cannot hold unless $p_a = p_b$ or prediction is perfect ($t=1, f=0$).
 
 The general principle: when base rates differ across groups, you cannot simultaneously satisfy calibration parity, equal false positive rates, and equal false negative rates. Pick any two; the third is forced into violation. The contrapositive is useful: if base rates are not equal, calibration and equal error rates cannot coexist. This is not a data quality problem. It is a theorem.
 
@@ -258,6 +272,8 @@ Which means the choice between fairness metrics is not a technical choice. It is
 But there is something even deeper in the COMPAS case. The data being analyzed was not "did this person commit another crime." It was "was this person re-arrested." Those are not the same. Re-arrest is a function of crime *and* policing. If policing is unevenly distributed across populations, then re-arrest is an uneven measurement of crime. And every model trained on that data inherits the unevenness. This is historical bias and label bias operating simultaneously — the labels accurately record re-arrest, which is itself a biased measurement of the underlying variable the model is supposed to predict.
 
 This is what I mean by reading the dataset like a historian. The deepest dataset bugs are not data-quality issues in the QA sense. They are mismatches between what the data is and what the modeler thinks it is. The modeler thinks they are predicting recidivism. They are actually predicting re-arrest given recidivism given policing given everything that shapes both. A model trained on that data, deployed without that frame, makes the unevenness invisible by laundering it through an algorithm.
+
+A note on a case I will *not* over-claim, because the fluency trap runs hardest on the cases that flatter your thesis. The Apple Card credit-limit controversy (2019) is often cited as a bias case. It is more accurately a *contested allegation*: the New York Department of Financial Services investigated Goldman Sachs and reported that it did not find unlawful disparate impact by sex — applicants with similar credit characteristics generally had similar outcomes — faulting transparency and customer service instead. **[verify: NY DFS finding on Goldman Sachs / Apple Card, no unlawful disparate impact by sex]** Cite it as an example of how a bias claim gets *adjudicated*, not as a proven disparity. Getting this right *is* the skepticism the book is trying to teach.
 
 | Fairness criterion | Formal definition | What it requires |
 |---|---|---|
@@ -335,6 +351,8 @@ The procedure for leverage analysis, in working form:
 ![Leverage analysis decision flowchart](images/03-bias-where-it-enters-and-who-is-responsible-fig-07.png)
 *Figure 3.7 — Leverage analysis decision flowchart*
 
+Here is the classical move underneath the whole procedure, named explicitly because these moves earn their keep only when named: leverage analysis is Descartes' doubt turned on a pipeline. *What would have to be true for this bias to live here?* You suspend the tempting explanation — the model, the thing closest to your hands — and demand that each candidate location survive the question. The location that survives is where you intervene.
+
 This procedure is unromantic. It is also the difference between bias mitigation that works and bias mitigation that produces conference papers and persistent disparities.
 
 Most algorithmic interventions block one path — the one running through the model's parameters — and leave the proxy paths and the deployment-context paths fully open. This is why "more data" and "better algorithms" so often fail to move structural bias. The model was never the highest-leverage point.
@@ -353,11 +371,11 @@ The supervisory capacity for *problem formulation* — Chapter 1's vocabulary �
 
 ---
 
-## A limit case: when the leverage is upstream of your pipeline
+## A limit case: when the leverage is upstream of your pipeline — and who owns it then
 
-One more case worth holding in mind, because it is the limit case of everything this chapter has covered.
+One more case worth holding in mind, because it is the limit case of everything this chapter has covered, and it is where accountability gets sharp.
 
-The *Agents of Chaos* paper documents a scenario in Case #6 — *Agents Reflect Provider Values* — that is one of the cleanest examples of structural bias I have encountered. (Shapira et al., *Agents of Chaos*, arXiv:2602.20021, 2026.)
+The *Agents of Chaos* paper documents a scenario in Case #6 — *Agents Reflect Provider Values* — that is one of the cleanest examples of structural bias I have encountered: an agent whose behavior on contested questions silently reflected its *model provider's* training-time choices. **[verify: the specific detail that the agent was Kimi-K2.5-backed and truncated responses on politically sensitive topics with an "unknown error"]** (Shapira et al., *Agents of Chaos*, arXiv:2602.20021, 2026.)
 
 The setup: an agent is deployed by an organization using one model provider. The agent's behavior on contested questions reflects, in subtle and consistent ways, the provider's training-time choices about what counts as appropriate output. The deploying organization did not make those choices. Their users have no visibility into them.
 
@@ -365,13 +383,15 @@ Now draw the causal graph. The bias-carrying path is not in the deploying organi
 
 We will return to this in Chapter 7, where the fairness-metric question makes the structural source visible from a different angle. For now, hold the case in mind: bias has a topology, and the topology can extend beyond the boundaries of the team responsible for the deployment. The leverage analysis procedure still applies. The answer it sometimes returns is "the highest-leverage point is outside your reach." That is useful to know before you spend six months optimizing the wrong thing.
 
+Which is the accountability move this chapter is really teaching. Assigning the owner of a bias is not assigning blame to a person; it is naming the party who *sits at the leverage point*. Sometimes that is you (you chose the sample). Sometimes it is the labeling team (they set the annotation manual). Sometimes it is the deployment owner (they built the review room). And sometimes it is the model provider (they trained the constraint in). The forensic skill is to trace the highest-leverage bias-carrying path to its source and name whoever controls that node — even when the honest answer is "not us." The leverage graph is a machine for un-diffusing responsibility: it points at a node, and a node has an owner. (You will see in the AI Wayback Machine below that this is Hannah Arendt's question, restated for a pipeline.)
+
 ---
 
 ## What would change my mind — and what I am still puzzling about
 
 I want to say where I am uncertain, because intellectual honesty is part of the epistemic standard this book is trying to teach.
 
-**What would change my mind.** If a debiasing algorithm were demonstrated to robustly remove structural bias without intervention on the deployment context — across multiple domains and base-rate regimes — the leverage analysis framing in this chapter would need revision. I am not aware of such a demonstration. The literature I have surveyed (e.g., Hardt et al. 2016 on equal opportunity; Madras et al. 2018 on adversarial methods) supports leverage-dependent conclusions. \[verify these references against the most current survey.\] But the literature is not finished, and I have no reason to think the framing here is the last word.
+**What would change my mind.** If a debiasing algorithm were demonstrated to robustly remove structural bias without intervention on the deployment context — across multiple domains and base-rate regimes — the leverage analysis framing in this chapter would need revision. I am not aware of such a demonstration. The literature I have surveyed (Hardt, Price, Srebro 2016 on equalized odds / equal opportunity; Madras, Creager, Pitassi, Zemel 2018 on adversarial fair representations) supports leverage-dependent conclusions. \[verify these references against the most current survey.\] But the literature is not finished, and I have no reason to think the framing here is the last word.
 
 **Still puzzling.** I do not have a clean diagnostic for distinguishing dataset bias from label bias when the only data you have access to is the labeled training set. The two are causally distinct but observationally close. In practice, the diagnosis depends on access to the labeling process, which is often controlled by other teams or other organizations. I do not know how to do this well in the typical deployed setting. The challenge problem at the end of this chapter asks you to take a shot at it.
 
@@ -381,7 +401,7 @@ I want to say where I am uncertain, because intellectual honesty is part of the 
 
 Bias is not one thing. It is a family of phenomena that enter at different points in an AI pipeline and respond to different interventions. The map of where the bias is and where the leverage is requires a causal-reasoning apparatus, and that apparatus is Pearl's Ladder. We have introduced the first two rungs. Rung 3 — counterfactual reasoning — opens in Chapter 8 and closes in Chapter 13. The arc is the most distinctive pedagogical move in the book.
 
-The chapter's working tools: a formal definition of bias as a property of estimators; ten distinct mechanisms by which $E[\hat{\theta}] \neq \theta$ can enter a pipeline; three structural categories that map those mechanisms to intervention logic; the epistemic-frame move (what is the data, what does it claim, what does it exclude); the fairness impossibility as a theorem rather than a controversy; Pearl's Rungs 1 and 2; and the leverage analysis procedure. You will use all of them.
+The chapter's working tools: a formal definition of bias as a property of estimators; ten distinct mechanisms by which $E[\hat{\theta}] \neq \theta$ can enter a pipeline; three structural categories that map those mechanisms to intervention logic; the epistemic-frame move (what is the data, what does it claim, what does it exclude); the fairness impossibility as a theorem rather than a controversy; Pearl's Rungs 1 and 2; the leverage analysis procedure; and the accountability move that traces the highest-leverage path to the node — and the owner — that controls it. You will use all of them.
 
 The next chapter shifts again. We have introduced a posture, a vocabulary, and an apparatus. What we do not yet have is *evidence that any particular student has done the work*. In an era when AI can generate any artifact — a chapter like this one, a project, a defense — the artifact alone does not show that anyone understood it. The next chapter is the apparatus for checking that.
 
@@ -403,6 +423,32 @@ The deliverable is the graph, the mechanism identification, the prediction, and 
 ---
 
 ## Exercises
+
+The exercises come in two systems. The **BUILD / AUDIT** pair below runs the chapter's one supervisory capacity twice — once on work you generate yourself, once on a deployed system you inherit. The graduated **Warm-up → Challenge** set that follows drills the individual tools. Do the BUILD/AUDIT pair for the integrated skill; do the graduated set for coverage.
+
+### BUILD — conduct your own persona/data build, and find where you let bias in
+
+**B1.** Ask an AI to assemble a small labeled dataset or a set of user personas for a system you are actually building (or a plausible one). Get it in seconds — that fluency is the trap. Now name, in writing, *why you want to believe it*: what about ownership makes this dataset feel clean to you?
+
+*Tests: interpretive judgment, the fluency trap on your own output. Difficulty: low.*
+
+**B2.** Walk your build against the ten mechanisms. For each, ask honestly: could it be operating here, and at which pipeline stage does it enter? Do not force all ten to apply. End with the top three ranked by expected harm, and for each classify it dataset / label / structural.
+
+*Tests: mechanism identification, the three-flavor mapping. Difficulty: medium.*
+
+**B3.** Draw the causal graph of your build from world to the decision your system feeds, then run the four-step leverage analysis. Name the single highest-leverage intervention — and be explicit about whether it lives in your house or someone else's.
+
+*Tests: causal graph construction, leverage analysis, interpretive judgment. Difficulty: medium.*
+
+### AUDIT — trace where bias entered a deployed system, and assign the owner
+
+**AU1.** Pick a documented case — COMPAS (Angwin et al. 2016), the Amazon résumé screener (Dastin, Reuters 2018), or the health-cost-proxy algorithm (Obermeyer, Powers, Vogeli, Mullainathan, *Science* 2019). \[verify all citations.\] Read the primary source, not the summary. Draw the causal graph. Before reading the post-mortem, lock a prediction: which mechanisms are active, and the highest-leverage intervention for each.
+
+*Tests: dataset-as-artifact reading, falsifiable prediction. Difficulty: medium.*
+
+**AU2.** For your audited case, trace the highest-leverage bias-carrying path to its source node and name the accountable owner — the party who sits at that node. If the leverage is upstream of the deploying team (as in *Agents of Chaos* Case #6), say so explicitly and name whose reach it is in.
+
+*Tests: accountability assignment, upstream-leverage recognition. Difficulty: medium.*
 
 ### Warm-up
 
@@ -529,7 +575,7 @@ End with: a one-page "Bias & Leverage Brief" for my casebook. Include the DAG, t
 ---
 
 ##  AI Wayback Machine
-The ideas in this chapter didn't appear from nowhere. **Hannah Arendt** spent the postwar decades arguing — most famously in *Eichmann in Jerusalem* (1963) — that systemic harm is rarely the work of monstrous individuals. It is the predictable output of a system whose roles, rules, and routines diffuse responsibility across so many actors that no single one feels accountable for the result. The chapter's question — *where bias enters and who is responsible* — is Arendt's question, restated for a pipeline whose participants include data brokers, annotators, modelers, deployers, and a model that is not, itself, a moral agent.
+The ideas in this chapter didn't appear from nowhere. **Hannah Arendt** spent the postwar decades arguing — most famously in *Eichmann in Jerusalem* (1963) — that systemic harm is rarely the work of monstrous individuals. It is the predictable output of a system whose roles, rules, and routines diffuse responsibility across so many actors that no single one feels accountable for the result. The chapter's question — *where bias enters and who is responsible* — is Arendt's question, restated for a pipeline whose participants include data brokers, annotators, modelers, deployers, and a model that is not, itself, a moral agent. The leverage graph in this chapter is a machine for *un-diffusing* that responsibility: it points at a node, and a node has an owner.
 
 ![Hannah Arendt, c. 1950s. AI-generated portrait based on a public domain photograph (Wikimedia Commons).](images/hannah-arendt.jpg)
 *Hannah Arendt, c. 1950s. AI-generated portrait based on a public domain photograph.*

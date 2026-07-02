@@ -1,3 +1,4 @@
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/03-data-validation.md into original; scaffolding preserved. For human rewrite. Draft was numbered "Chapter 3" — kept original Chapter 5 numbering/title; no renumber implied. -->
 # Chapter 5 — Data Validation: Reconstructing the Epistemic Frame Behind a Dataset
 
 ## TL;DR
@@ -31,21 +32,29 @@ Chapters 2–4. Chapter 3 (bias) is directly referenced — the bias-as-hidden-f
 
 We have spent several chapters building apparatus for reading model outputs critically. This chapter steps earlier in the pipeline. Before the model, there is data. Before the data, there are choices — about what to record, what to include, how to join, where to stop. Those choices are the epistemic frame of the dataset, and they are almost never written down.
 
-This chapter teaches you two things. First: how to actually do EDA — the mechanics of the procedural pass, the visualizations that matter, the code patterns that produce them, and most importantly what each diagnostic does and does not reveal. Second: how to do the work that comes after EDA, the work that determines whether a deployment will fail in production for reasons invisible from inside the data. We cannot do the second without doing the first, so we start there.
+This is where computational skepticism does its most characteristic work, and it is worth naming the shape of that work directly. Computational skepticism is the pairing of AI's speed at producing plausible artifacts with an irreducibly human doubt about what those artifacts are evidence of. An AI can assemble the dataset, join the tables, draw every histogram, and write the "the data is clean" paragraph faster than you ever could. What it cannot supply is the doubt about what the histograms can't reach. That gap is yours, and it is the whole subject of this chapter.
+
+Two of the five supervisory capacities have to run at once through this material. **Problem Formulation** — deciding what this dataset is even supposed to represent before you look at it — and **Plausibility Auditing** — hearing the wrong note in a report that looks, by every visible measure, clean. The AI is superhuman at producing the plots. It cannot own either of those capacities for you.
+
+This chapter teaches you two things, and they map onto the build/audit pairing that recurs across the book. First: how to actually do EDA — the mechanics of the procedural pass, the visualizations that matter, the code patterns that produce them, and most importantly what each diagnostic does and does not reveal. This is the part you can, and should, delegate. Second: how to do the work that comes after EDA, the work that determines whether a deployment will fail in production for reasons invisible from inside the data. This is the part you keep. We cannot do the second without doing the first, so we start there.
 
 ---
 
 ## The clean dataset that destroyed a deployment
 
-I want to tell you about a dataset that destroyed a deployment.
+Start with the version of this you'll actually meet. You ask an AI to assemble a dataset for you: pull the customer records from the ticketing system, join them to the CRM on customer ID, drop the columns you don't need, hand me back one clean table. Thirty seconds later there it is — 79,400 rows, tidy dtypes, no obvious garbage. You ask for an exploratory pass: histograms, missing-value counts, a correlation heatmap, outlier flags. The AI writes the pandas, runs it, reports back. Distributions reasonable. Missingness near zero. No wild outliers. The report is, by every visible measure, clean.
+
+Here is what is actually happening. You are holding an artifact that has already made a dozen decisions on your behalf, and the validation pass you just ran was structurally incapable of seeing most of them. The join dropped rows. The dtypes were inferred, not verified. One of those "clean" columns is somebody else's model output wearing the costume of raw data. And the row count — 79,400 — is not a fact about the world. It is the *residue* of a process, and nobody wrote down what N was supposed to be.
+
+I want to tell you about a dataset that destroyed a deployment. I'll flag it up front as a composite — built from silent-join pathologies I've watched play out more than once, not a single sourced incident — because a book about distrusting fluent, plausible stories cannot open with a fluent, plausible story it asks you to swallow whole. Treat it as an illustration of a mechanism, not a cited case. **[verify]** (attribution of the case as composite is an authorial choice, not a factual claim to source)
 
 The team that built the deployment didn't know the dataset destroyed it. They thought the model destroyed it. They retrained, tuned, regularized, tried different architectures. The deployment kept failing. The failures were soft — not crashes, not errors — just outputs that, in production, kept correlating with patterns nobody had designed for. The senior engineers got pulled in. They reread the original exploratory data analysis. The analysis still looked clean. No missing values to speak of. Distributions reasonable. No outliers. Nothing in the dataset, looked at by itself, explained the failure.
 
-The failure was not in what the EDA looked at. The failure was in what the EDA didn't look at.
+The failure was not in what the EDA looked at. The failure was in what the EDA *could not* look at.
 
 The dataset had been assembled from three source systems by joining them on a shared identifier. The join had a four-percent drop rate — rows that didn't match across all three sources got silently excluded. Four percent doesn't sound like a lot, and if it had been spread evenly across the population, it wouldn't have been. But it wasn't spread evenly. One specific subpopulation had inconsistent identifier formatting in one of the three source systems — a field entered slightly differently by the people who originally maintained that system years ago. Those rows disproportionately failed the join. They never made it into the merged dataset. The training set was systematically missing them. The model, trained on what was present, performed beautifully on what was present. Deployed against the full population, it performed predictably worse on the subpopulation it had never seen.
 
-The EDA report had every plot it was supposed to have. The histograms were drawn. The summary statistics were tabulated. The missing-values check ran clean — because the rows that had failed the join were not "missing" in any sense the EDA could see. They simply weren't there. You cannot compute the missingness of rows that never existed.
+The EDA report had every plot it was supposed to have. The histograms were drawn. The summary statistics were tabulated. The missing-values check ran clean — of course it did — because the rows that had failed the join were not "missing" in any sense the EDA could register. They simply weren't there. You cannot compute the missingness of rows that never existed. That single sentence is the crack in procedural EDA that this chapter widens into a doctrine.
 
 ![Diagram](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-01.png)
 *Figure 5.1 — Diagram*
@@ -56,7 +65,9 @@ That single question, taken seriously, would have surfaced this entire failure m
 
 This is the gap I want to spend this chapter on. EDA is not a procedure. Or rather: EDA includes a procedure, and the procedure is fine, and you should run it. But the procedure is not the *work*. The work is interrogation. The dataset is being interviewed by a skeptical reader who wants to know what the recording instrument was, who deployed it, what it could see and what it couldn't see, and what choices were made before any data was written down.
 
-Here is the move I am asking you to make. Treat every dataset as a recording made by a particular instrument under particular conditions. Then ask the questions you would ask of any recording. *What was recorded? What was not? Why? By whom? Under what assumptions about what was worth recording?*
+Here is the classical move underneath the whole chapter, and I'll name it: it's **Plato's Cave**. A dataset is not the world. It is shadows on the wall — a projection cast by a particular recording instrument under particular conditions. Procedural EDA describes the shadows with great precision. It tells you nothing about the fire, the objects, or the wall. The interrogation is the work of turning around.
+
+So here is the move I am asking you to make. Treat every dataset as a recording made by a particular instrument under particular conditions. Then ask the questions you would ask of any recording. *What was recorded? What was not? Why? By whom? Under what assumptions about what was worth recording?*
 
 ---
 
@@ -126,13 +137,15 @@ What you are looking for: spikes at round numbers (often imputed defaults); impo
 
 ### Step 3 — Examine missingness
 
-Missing data is not a single thing. There are (at minimum) three structurally different reasons a value can be missing:
+Missing data is not a single thing. The correct frame here is Rubin's 1976 taxonomy, and it is worth stating precisely.[^rubin] There are three structurally different reasons a value can be missing:
 
 **Missing completely at random (MCAR):** The probability of a value being missing is independent of both the observed and unobserved data. A sensor failure that randomly drops readings. Safe to impute; unlikely to introduce bias.
 
 **Missing at random (MAR):** The probability of being missing depends on other observed variables, but not on the missing value itself. Younger respondents in a survey skip the income question at higher rates. Conditional on age, the missingness is random. More complex to handle, but manageable.
 
-**Missing not at random (MNAR):** The probability of being missing depends on the value itself. High earners are less likely to report their income. Sick patients leave a study before the final measurement. MNAR is the hard case — standard imputation produces biased estimates, and the bias is exactly in the direction you cannot measure. Standard EDA does not detect MNAR; you detect it by thinking carefully about who would not report this value and why.
+**Missing not at random (MNAR):** The probability of being missing depends on the value itself. High earners are less likely to report their income. Sick patients leave a study before the final measurement. MNAR is the hard case — standard imputation produces biased estimates, and the bias is exactly in the direction you cannot measure. Standard EDA does not detect MNAR; you detect it by reasoning about who would not report this value, and why. Seeing the co-missing pattern in a `missingno` matrix is not the same as knowing the mechanism.
+
+[^rubin]: Donald B. Rubin, "Inference and Missing Data," *Biometrika* 63(3):581–592, 1976, DOI:10.1093/biomet/63.3.581. Rubin introduced "Missing at Random"; the now-standard MCAR/MAR/MNAR labels were consolidated in Little & Rubin, *Statistical Analysis with Missing Data* (Wiley, 1987).
 
 To compute missingness by column and produce a sortable summary:
 
@@ -221,9 +234,12 @@ A **channel** is a visual property that encodes information about marks. Positio
 
 ### Why some channels are stronger than others
 
-Not all channels are equal. Position is the most powerful channel for encoding quantitative data — human perception of position along a common scale is extremely accurate. Length is the next most powerful, which is why bar charts (where length encodes value) work well for comparing quantities. Area and color intensity are weaker: we perceive them inaccurately, especially when comparing non-adjacent elements.
+Not all channels are equal, and this is empirically established, not a matter of taste. Cleveland and McGill's 1984 study ranked the accuracy with which people read elementary perceptual tasks: position along a common scale is read most accurately, then length, then angle and area, with color intensity well down the list.[^cm] Position is therefore the most powerful channel for encoding quantitative data — human perception of position along a common scale is extremely accurate. Length is next, which is why bar charts (where length encodes value) work well for comparing quantities. Area and color intensity are weaker: we perceive them inaccurately, especially when comparing non-adjacent elements.
 
-Stevens' psychophysical power law gives us a framework for why. For length, perceived magnitude tracks physical magnitude almost exactly — your eye correctly judges that one bar is twice as long as another. For area, perceived magnitude is systematically compressed — you underestimate how much larger a big circle is compared to a small one. This is why pie charts and bubble charts require more cognitive effort than bar charts to read accurately: they rely on area rather than position or length.
+Stevens' psychophysical power law gives us a mood for why.[^stevens] For length, perceived magnitude tracks physical magnitude almost exactly — your eye correctly judges that one bar is twice as long as another. For area, perceived magnitude is systematically compressed — you underestimate how much larger a big circle is compared to a small one. This is why pie charts and bubble charts require more cognitive effort than bar charts to read accurately: they rely on area rather than position or length. I want to be careful, though: Stevens is about sensory magnitude estimation, and using it as the *theoretical basis* for chart-channel ranking is a rhetorical bridge, not a direct finding. Cleveland and McGill is the load-bearing citation for graphical perception. Stevens supports the mood, not the ranking.
+
+[^cm]: William S. Cleveland & Robert McGill, "Graphical Perception: Theory, Experimentation, and Application to the Development of Graphical Methods," *Journal of the American Statistical Association* 79(387):531–554, 1984, DOI:10.1080/01621459.1984.10478080.
+[^stevens]: S. S. Stevens, "On the Psychophysical Law," *Psychological Review* 64(3):153–181, 1957, DOI:10.1037/h0046162.
 
 ![Channel effectiveness hierarchy, based on Cleveland & McGill's landmark perceptual studies. Encode the variable that matters most with the channel people read most accurately.](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-07.png)
 *Figure 5.7 — Two-column ranked list *
@@ -282,13 +298,19 @@ There is the **sampling assumption**. Was this sample drawn from the population 
 
 There is the **time-window assumption**. What time period does the data cover? Is the deployment going to run in the same period? Almost never. AI deployments routinely train on historical data and deploy in a present that has shifted. The shift can be invisible if you're not watching for it.
 
-There is the **label assumption**. What does the label actually measure? Re-arrest is not crime. A click is not interest. Survival is not health. Engagement is not value. The label and the construct you actually care about are usually different things, connected by a chain of operational decisions that somebody made long ago and didn't write down.
+There is the **label assumption**. What does the label actually measure? Re-arrest is not crime. A click is not interest. Survival is not health. Engagement is not value. The label and the construct you actually care about are usually different things, connected by a chain of operational decisions that somebody made long ago and didn't write down. This is Hume's induction problem in work clothes — you are inferring the construct from a proxy that happened to correlate in the recorded past, and the correlation carries no guarantee forward.
 
 There is the **missing-data assumption**. Why is a value missing? Was it not recorded? Did it fail a join? The textbook hard case is *missing not at random* — where the reason a value is missing is correlated with the value itself. This is exactly the case standard EDA does not detect, because the procedural tools assume the missingness and the data are independent.
 
-There is the **feature-engineering assumption**. The column called `customer_lifetime_value` is somebody's calculation. The calculation has parameters chosen by a human who is probably no longer at the company. You inherit the column and treat it like data, but it is not data. It is *somebody's model*, baked into your input layer.
+There is the **feature-engineering assumption**. The column called `customer_lifetime_value` is not a measurement, it is a calculation. The calculation has parameters chosen by a human who is probably no longer at the company. You inherit the column and treat it like data, but it is not data. It is *somebody's model*, baked into your input layer — and when their assumptions break, so do yours.
+
+There is the **sampling assumption** in its sharpest form: your sample is *available* data, which means it skews toward the easy-to-reach end of every distribution it was drawn from. You train on the convenience sample and deploy against the world, and the world is wider.
 
 There is the **schema-and-provenance assumption**. What was the source schema? What got renamed, recast, truncated, or merged in the pipeline that produced this dataset? Schema documentation, where it exists, is often out of date — written when the pipeline was built and never updated as the pipeline evolved.
+
+The instrument that turns "interrogate the frame" into something operational already exists: Gebru and colleagues' *Datasheets for Datasets* proposes 57 questions across motivation, composition, collection, preprocessing, uses, distribution, and maintenance.[^datasheets] If you want a checklist rather than a doctrine, that is the one to reach for.
+
+[^datasheets]: Timnit Gebru, Jamie Morgenstern, Briana Vecchione, Jennifer Wortman Vaughan, Hanna Wallach, Hal Daumé III, Kate Crawford, "Datasheets for Datasets," *Communications of the ACM* 64(12):86–92, 2021, DOI:10.1145/3458723 (preprint arXiv:1803.09010, 2018).
 
 And then there is the assumption that connects all the others and breaks deployments most strangely: the **access assumption**.
 
@@ -300,9 +322,13 @@ I want to tell you a story about an agent.
 
 An autonomous agent is deployed in an environment. The environment contains a corpus of email messages. The agent is instructed to perform a task that involves reading the email corpus to answer a query. The deploying team has thought carefully about the corpus. They have set up access controls. They have decided what data the agent should see. They have, they believe, drawn the boundary of the agent's data world, and the boundary is the corpus.
 
-The agent runs. The agent answers the query. The answer contains, surfaced from the bodies of the messages, things the team did not authorize the agent to surface — phone numbers, addresses, fragments of credit-card numbers, references to internal documents that aren't in the corpus, conversation history that includes parties who never consented to be part of any of this in the first place.
+The agent runs. The agent answers the query. The answer contains, surfaced from the bodies of the messages, things the team did not authorize the agent to surface — phone numbers, addresses, fragments of credit-card numbers, references to internal documents that aren't in the corpus, conversation history that includes parties who never consented to be part of any of this in the first place. No access control was violated. This is a documented pattern: it echoes the "Ash" agent case from the *Agents of Chaos* live red-teaming study, which is where I'd send you for the real mechanics.[^chaos]
 
-This is not a model failure. This is a data-validation failure. The team thought they were validating *the corpus*. What they should have been validating was *the corpus and everything the corpus's contents reference*. Email messages, like almost all naturally occurring data, are not bounded by their schema. They contain, embedded in their content, references to data outside the schema. The boundary of the dataset is not the schema. The boundary is the schema *plus everything its contents touch*.
+This is not a model failure. This is a data-validation failure. The team thought they were validating *the corpus*. What they should have been validating was *the corpus and everything the corpus's contents reference*. Reference-rich data — email, documents, chat logs — carries pointers, embedded in its content, to data outside its own schema. The boundary of the dataset is not the schema. The boundary is the schema *plus everything its contents touch*.
+
+I want to bound this claim honestly, because it is easy to overreach. It is true of reference-rich data, and it is *not* obviously true of a self-contained table of temperature readings, which doesn't point beyond itself the way an email does. Treat "data isn't bounded by its schema" as a property of a spectrum — sharpest at the email end, near-absent at the sensor-log end — not a universal law.
+
+[^chaos]: Shapira et al., "Agents of Chaos," 2026, arXiv:2602.20021, https://agentsofchaos.baulab.info/. Chapter 9 returns to this from the agent-validation side.
 
 ![The access boundary is not the schema. Naturally occurring data always references the world outside itself. Validating only what is formally in scope means the agent was given access to far more than the team intended — and no access control was violated.](images/05-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-09.png)
 *Figure 5.9 — Concentric boundary diagram*
@@ -326,7 +352,7 @@ If you take what I have argued seriously, the procedure for validation changes. 
 
 **Step 4 — Ask what is not in the data.** Look for dropped rows in any join or merge. Look for fields documented but absent. Look for populations the documentation suggests should be present but aren't. Look for time periods with suspiciously few records.
 
-**Step 5 — Trace at least one row, end to end.** Pick one at random. Follow its values back to the source systems. Document what you find. Doing this once, on a real dataset, is an education that survives the rest of your career — because almost every dataset you trace this way will turn up at least one surprise.
+**Step 5 — Trace at least one row, end to end — *where you have source-system access.*** Pick one at random. Follow its values back to the source systems. Document what you find. Doing this once, on a real dataset, is an education that survives the rest of your career — because almost every dataset you trace this way will turn up at least one surprise. The honest caveat: for inherited, third-party, or foundation-model data the source systems are unreachable, and then this step becomes "document the opacity," which is itself a finding.
 
 **Step 6 — Write the epistemic frame and compare to your prediction.** Write the frame as you now understand it — what the dataset actually represents, what is excluded, where the boundary truly lives. Then compare to your Step 1 prediction. The gap between what you thought before and what you found is the learning. Without the prediction-lock at the start, the gap doesn't exist; you only ever see what you finally arrived at, which feels obvious in retrospect, and you don't notice you've learned anything.
 
@@ -344,7 +370,9 @@ Now, you may be wondering: can I have an AI do some of this? You can, and you sh
 
 **Do not delegate at all:** the epistemic-frame reconstruction. The AI will produce a fluent reconstruction based on the documentation it can read, which is the same documentation you started with. It will sound thoughtful. It will look complete. But it cannot trace a row to its source system. It cannot identify what is missing because of a join issue you have not yet surfaced. The frame reconstruction is a trace of *your* engagement with the dataset. Delegating it produces a clean document that contains no information.
 
-The procedural work is evidence of competence. The interrogation is evidence of understanding. The two are not the same, and only one of them is what makes the deployment safe.
+This is the **solve–verify asymmetry** made into a tool. The AI solves — generates the plots, the stats, the fluent prose — faster than you ever could. What stays human is verifying what those artifacts are evidence *of*. The procedural work is evidence of competence. The interrogation is evidence of understanding. The two are not the same, and only one of them is what makes the deployment safe.
+
+The interesting trade-off in this whole discipline: procedural EDA optimizes for speed and coverage of visible pathologies; frame reconstruction optimizes for catching the invisible structural failures that actually break deployments. You need both, and the mistake — the one that has done real harm — is running the fast one, seeing it come back clean, and concluding the data is clean, when what you actually have is a dataset clean *of the things histograms can see.*
 
 | Category | What belongs here | Why |
 |---|---|---|

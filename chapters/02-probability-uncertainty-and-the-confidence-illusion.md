@@ -1,3 +1,4 @@
+<!-- ROUGH MERGE 2026-07-02: woven from drafts/02-the-confidence-illusion.md into original; scaffolding preserved. For human rewrite. Note: the new draft carries an alternate short title "The Confidence Illusion" and foregrounds the supervisory capacity "plausibility auditing [PA]"; not acted on — original title/numbering retained. -->
 # Chapter 2 — Probability, Uncertainty, and the Confidence Illusion
 
 ## TL;DR
@@ -30,7 +31,11 @@ Chapter 1 (AI systems and supervisory capacities). Familiarity with basic probab
 
 The failures we examined in Chapter 1 were not, for the most part, failures of model competence. The models were doing what their training permitted. The failures were failures of interpretation — of engineers and operators reading model outputs through intuitions that were not built for the problem at hand.
 
-This chapter builds the apparatus for repairing those intuitions. We start from first principles: what probability actually is, and why the Boolean instinct — the one that got you this far in engineering — misleads you once you are working from a model rather than from the world directly. We do one calculation that will restructure how you read any uncertain output. We open one diagnostic that tells you whether a model's numbers mean what they appear to mean. We point at one structural worry that breaks every classical tool you have. We use all three on every subsequent chapter.
+I asked a classifier to score a batch of records for me last week, and it handed back a column of probabilities. 0.94. 0.91. 0.88. Clean, sorted, ready to drop into a dashboard. It looked done. Here is what is actually happening: that column is a set of *degrees of belief the model holds*, formatted to look like *facts about the world*. The 0.94 does not announce whether 94 out of every 100 cases scored 0.94 actually turn out positive. It does not announce the base rate of the thing I am looking for. It does not announce whether the model was trained in a way that rewards saying 0.94 when it means 0.85. It just sits there, looking like a measurement.
+
+That gap — between the confidence a system radiates and the confidence it has earned — is what this chapter is really about. Computational skepticism, the whole project of this book, lives exactly in that gap: the machine supplies superhuman speed and scale, and you supply the irreducibly human doubt that the numbers deserve. The most pervasive failure in AI deployment is not that models are stupid. It is that confident numbers are not correct numbers, and almost nobody checks. The supervisory capacity this chapter trains hardest is what I will call **plausibility auditing** — the capacity to hear the wrong note in a number *before* you can prove it wrong. And the wrong note here is almost always the same note: the model forgot the prior, or you did, or nobody checked whether 0.94 means what it says.
+
+This chapter builds the apparatus for repairing those intuitions. We start from first principles: what probability actually is, and why the Boolean instinct — the one that got you this far in engineering — misleads you once you are working from a model rather than from the world directly. We do one calculation that will restructure how you read any uncertain output. We open one diagnostic that tells you whether a model's numbers mean what they appear to mean. We point at one structural worry that breaks every classical tool you have. We use all three on every subsequent chapter. And at the chapter's end you will do two things with the ideas, not one: **build** a pipeline that emits and calibrates its own confidence, and **audit** someone else's confident number against the base rate. Building and auditing are the same skill facing two directions.
 
 ---
 
@@ -254,15 +259,17 @@ Now: how confident are you that this patient has the disease?
 
 Stop. Don't read on yet. Pick a number. Say it out loud if you have to. Lock it in. The whole point of what follows is wrecked if you peek without committing.
 
-I have put this question to a lot of engineers, smart ones, and almost everybody answers somewhere above ninety percent. Some hedge — "maybe ninety-five." A few brave souls go to seventy. Almost nobody goes lower. The reasoning sounds airtight: the test is ninety-nine percent accurate, the test came back positive, therefore the patient probably has the disease. What could be more obvious?
+I have put this question to a lot of engineers, smart ones, and almost everybody answers somewhere above ninety percent. Some hedge — "maybe ninety-five." A few brave souls go to seventy. Almost nobody goes lower. The reasoning sounds airtight: the test is ninety-nine percent accurate, the test came back positive, therefore the patient probably has the disease. What could be more obvious? And this is not a failing of amateurs. It is exactly the result the classic study found: Casscells, Schoenberger, and Graboys put a 1-in-1,000 version of this question to sixty Harvard house officers, students, and attendings, and most answered around 95% — off by roughly the same two orders of magnitude I am about to walk you through (Casscells, Schoenberger, and Graboys, "Interpretation by Physicians of Clinical Laboratory Results," *New England Journal of Medicine* 299, no. 18, 1978).
 
 The actual answer is about one percent.
 
-I want to walk you through why, and I want to do it using the total probability theorem you just learned. Imagine ten thousand people taking the test. One of them, on average, actually has the disease — that is the base rate, one in ten thousand. The test, which is 99% accurate in the sense that it correctly identifies people who are sick, catches that person. Call it one true positive.
+I want to walk you through why, and I want to do it by counting bodies before any formula — then confirm it with the total probability theorem you just learned. Imagine ten thousand people taking the test. One of them, on average, actually has the disease — that is the base rate, one in ten thousand. The test, which is 99% accurate in the sense that it correctly identifies people who are sick, catches that person. Call it one true positive.
 
 The other 9,999 do not have the disease. "Ninety-nine percent accurate" also means the test correctly returns negative on 99% of healthy people. The other 1% — that is 0.01 times 9,999, about 100 people — get a false positive.
 
 So we have: one true positive, and about one hundred false positives. One hundred and one positive results in total. If you pull a positive result out of that pool, the chance it came from someone who is actually sick is $\frac{1}{101}$, about one percent.
+
+A precision note, since this chapter's whole brand is precision about numbers: "99% accurate" is doing double duty above. I used it as both the true-positive rate and the true-negative rate. Those are two different numbers — *sensitivity* and *specificity* — and a real test has two, not one. The loose shortcut is standard in textbooks, and I keep it here because it makes the counting clean, but I am flagging it because a sharp reader should catch a book that warns against decorative numbers using one of its own.
 
 ![Most positive results come from the large healthy population, not the tiny sick one. Even an excellent test produces mostly false positives when the base rate is low.](images/02-probability-uncertainty-and-the-confidence-illusion-fig-05.png)
 *Figure 2.5 — Population grid of 10,000 dots arranged as a*
@@ -272,6 +279,8 @@ Now, isn't that something? The test is doing exactly what its specification said
 What went wrong? You were computing the right answer to a different question. You were computing *given the disease, how often does the test get it right?* That is ninety-nine percent. But the question you needed was *given a positive test, how often is the disease there?* Those are not the same question. You cannot get from one to the other without one extra ingredient: the prior probability of disease in the population — the base rate.
 
 Your intuition forgot the prior. Almost all intuition, in my experience, forgets the prior. We are built to judge evidence by its own face value, not by adjusting it against the background rate of what we are looking for. In a world where diseases were common, that intuition would serve us better. In a world of rare events and large-scale automated detection systems, it kills us.
+
+This is the plausibility-auditing muscle in its purest form: the audit on a confident number *is* the base-rate check. Before you trust a flag, ask what fraction of the flagged population is actually real. It is also a Humean point wearing engineering clothes — the confident number is a claim about the future dressed up as a fact about the present, and the base rate is the piece of the past you needed to weigh it. You will do this move by reflex by the end of the book.
 
 ---
 
@@ -345,6 +354,8 @@ Whenever the positive class is rare, even an excellent detector produces mostly 
 
 What happens in practice when you build a system like this and deploy it? The analysts or on-call engineers get a flood of alarms. They check the first few. False. They check the next few. False again. Within a week or two they learn, in their bones, that the alarms do not mean anything. They start ignoring them. They miss the real one when it comes. Not because they are careless. Because the system's signal-to-noise ratio was too low, by a structural mathematical fact that nobody warned them about during design.
 
+The Epic Sepsis Model from Chapter 1 is this structure caught in the act: an external validation found it flagged a large fraction of hospitalized patients as at-risk while sepsis is far rarer than the alert rate, so most of those alerts were false — exactly the base-rate arithmetic above, at hospital scale, generating the alert fatigue clinicians reported. [verify: confirm the specific alert-rate and sensitivity figures and the Wong et al. 2021 *JAMA Internal Medicine* external-validation citation before publication.]
+
 This is why we started with base rates. Not because the math is hard. Because forgetting the prior is the single most common mistake in interpreting probabilistic system outputs, and the consequences are not theoretical.
 
 | Domain | What is rare | Typical base rate | Consequence of ignoring the prior |
@@ -404,24 +415,34 @@ You can see this in a picture. Put the model's stated probability on the horizon
 ![The well-calibrated region (left portion) is where the model's stated confidence is informative. The overconfident tail (right portion) is where it lies.](images/02-probability-uncertainty-and-the-confidence-illusion-fig-08.png)
 *Figure 2.8 — Calibration curve *
 
-Here is a pattern that turns up everywhere in modern deep learning. The model is reasonably calibrated in the middle of its range — when it says "sixty percent" it is about right. But at the extremes, especially toward the high end, it is badly overconfident. It says "ninety-nine percent" when it should be saying "eighty-five." The mathematics of how these models are trained — the use of softmax outputs and certain loss functions — actively rewards extreme confidence even when the underlying decision is not really that confident. [Verify: Guo et al. 2017, *On Calibration of Modern Neural Networks* — primary source for this finding.]
+Here is a pattern that turns up everywhere in modern deep learning, and it is not an accident of one bad model. The model is reasonably calibrated in the middle of its range — when it says "sixty percent" it is about right. But at the extremes, especially toward the high end, it is badly overconfident. It says "ninety-nine percent" when it should be saying "eighty-five." The mathematics of how these models are trained — deep architectures, the softmax with cross-entropy loss, the tricks that improve raw accuracy — actively rewards extreme confidence even when the underlying decision is not really that confident. A net will say "99%" when it should say "85%," and it will say it fluently.
 
-Here is the move I want you to internalize: *do not trust a model's stated probability without seeing its calibration curve on data drawn from the actual deployment distribution.* The number on the screen, by itself, is decorative. It might mean what you think it means; it might be off by a lot; you have no way of telling without checking.
+Guo, Pleiss, Sun, and Weinberger documented this precisely, and — this is the part worth internalizing — they also showed a cheap fix: **temperature scaling**. You take a single learned parameter $T$ and divide the pre-softmax logits $z$ by it before the softmax,
 
-And calibration is not just a property of models. It is a property of forecasters in general — of *you*. If you sit down and write ninety-percent confidence intervals for a stack of forecasting questions, then later check how many of those intervals actually contained the truth, you will almost certainly discover that your intervals contained the answer about half the time, not nine times out of ten. Most people, including most very smart people, walk around significantly overconfident in their own beliefs, and they do not know it because nobody runs the experiment. The calibration baseline at the end of this chapter is not optional.
+$$\text{softmax}(z / T)$$
 
-### Glimmer 2.4 — Calibration curves you can trust and ones you cannot
+with $T > 1$ softening the distribution toward honesty. One parameter, fit on a held-out set, and much of the overconfidence disappears (Guo, Pleiss, Sun, and Weinberger, "On Calibration of Modern Neural Networks," ICML 2017, arXiv:1706.04599). Why does something that simple work? Because the model's *ranking* of cases was usually fine; only the *stated confidence* was inflated. Temperature scaling fixes the number without touching the decision — which is direct evidence that the confidence and the correctness were separable all along. The number was decorative; temperature scaling is how you un-decorate it.
 
-1. Take a publicly available pretrained classifier — a sentiment classifier, an image classifier, anything with a confidence output.
-2. Find or construct a held-out dataset with ground truth labels.
+I am not going to sell temperature scaling as free, because that would be exactly the kind of decorative claim this chapter warns against. It fixes *average* calibration on the distribution you fit it to. It does nothing for distribution shift — if the deployment world drifts from the calibration set, the honest number goes stale, and it goes stale silently. This works if you value honest confidence on in-distribution data; it fails when you need honest confidence on the tail, on the novel case, on the day the world moves. Which, of course, is precisely the day you most needed it. That trade-off — honesty bought cheaply on the data you have, at the price of silence on the data you do not — is the shape of nearly every calibration fix.
+
+Here is the move I want you to internalize, and it is a Popperian one: *do not trust a model's stated probability without seeing its calibration curve on data drawn from the actual deployment distribution.* State the condition under which you would *reject* the number, then go look. The four diagnostic questions at the end of this chapter are falsification conditions in disguise. Without that prior specification you are reading the score with no criterion except how confident it sounds — and how confident it sounds is exactly the fluency trap from Chapter 1, now operating on a number instead of a sentence. The number on the screen, by itself, is decorative. It might mean what you think it means; it might be off by a lot; you have no way of telling without checking.
+
+And calibration is not just a property of models. It is a property of forecasters in general — of *you*. If you sit down and write ninety-percent confidence intervals for a stack of forecasting questions, then later check how many of those intervals actually contained the truth, you will almost certainly discover that your intervals contained the answer about half the time, not nine times out of ten. Most people, including most very smart people, walk around significantly overconfident in their own beliefs, and they do not know it because nobody runs the experiment. That is the plausibility audit turned on yourself — the same base-rate discipline you apply to a vendor's number, applied to your own. Run the experiment. The calibration baseline at the end of this chapter is not optional.
+
+### Glimmer 2.4 — Calibration curves you can trust and ones you cannot (BUILD)
+
+This is a **build** exercise: you make a pipeline emit its own confidence, calibrate it, and catch the decorative number before it catches you.
+
+1. Take a publicly available pretrained classifier — a sentiment classifier, an image classifier, anything with a confidence output. *Emit*: run it on a held-out dataset with ground-truth labels and capture the stated confidence on every case.
+2. *Lock your prediction before plotting*: do you expect the curve to track the diagonal, sag below it, or rise above it? Where on the x-axis do you expect the curve to peel off? Write it down; you cannot revise it.
 3. Bin the model's predictions by stated confidence (0.0–0.1, 0.1–0.2, …, 0.9–1.0).
-4. For each bin, compute the empirical accuracy.
-5. Plot.
-6. *Lock your prediction before plotting*: do you expect the curve to track the diagonal, sag below it, or rise above it? Where on the x-axis do you expect the curve to peel off?
-7. Compare your prediction to what you see.
-8. Now change the held-out set to one drawn from a slightly different distribution (different domain, different time period, different demographic skew). Re-plot. Predict where the calibration breaks.
+4. For each bin, compute the empirical accuracy. Plot stated versus actual against the diagonal.
+5. Compare your prediction to what you see.
+6. *Calibrate*: fit temperature scaling — one parameter $T$ on the held-out logits — and re-plot. Note what moved and what did not. The ranking of cases should not change; only the confidence should.
+7. *Name your decorative number*: point at one confidence score your pipeline emitted that you were about to trust, and say — with the curve as evidence — how far off it was and why you almost believed it.
+8. Now change the held-out set to one drawn from a slightly different distribution (different domain, different time period, different demographic skew). Re-plot. Predict where the calibration breaks — including whether your fitted $T$ still helps.
 
-The deliverable is the two plots and the gap analysis between your predictions and the curves. The first plot teaches calibration. The second teaches distribution shift. The gap between what you predicted and what you got is the learning event.
+The deliverable is the two (or three) plots, your locked prediction, the fitted $T$, the one-sentence confession about the decorative number, and the gap analysis between your predictions and the curves. The first plot teaches calibration. The temperature-scaling step teaches that confidence and correctness were separable all along. The last plot teaches distribution shift — and that a calibration fixed in-distribution goes stale silently out of it. The gap between what you predicted and what you got is the learning event.
 
 ---
 
@@ -549,7 +570,7 @@ That is Chapter 3. We will need it before we can talk honestly about what a cali
 
 **15.** Suppose you are building a content moderation system for a platform where 0.01% of posts are genuinely harmful. You have a budget for human review of 0.5% of all posts. Design a two-stage system — a fast classifier followed by human review — that maximizes the fraction of genuinely harmful content that gets reviewed, while staying within budget. State any assumptions you make, and identify the key trade-off your design encodes. *(Open-ended; tests base-rate reasoning, system design, and explicit trade-off articulation)*
 
-**16.** This chapter argues that most AI deployment failures are failures of interpretation, not model competence. Find a documented real-world case of an AI deployment failure (not the pandemic imaging case from the chapter). Identify which of the four diagnostic questions — base rate, calibration, cost distribution, distribution shift — best explains the failure, and defend your choice with reference to the mathematics developed in this chapter. *(Research and synthesis; tests ability to apply framework to novel cases)*
+**16. (AUDIT)** This chapter argues that most AI deployment failures are failures of interpretation, not model competence. Find a real deployed model or a published result that reports a confidence or accuracy number you are asked to trust — a vendor's fraud detector, a triage tool's validation figure, a paper's headline accuracy, or the Epic Sepsis Model from Chapter 1 (not the pandemic imaging case from this chapter). Then run the audit, which is the build skill facing the other direction: (a) **find the base rate** — what fraction of the population actually has the positive class, from a primary source or a named assumption; (b) **run Bayes on the flag** — given the reported accuracy (or sensitivity/specificity, if you can get both) and the base rate, compute what fraction of everything the system flags is genuinely positive, showing the arithmetic; (c) **name the missing number** — the quantity the source did *not* report that you needed, usually the base rate, the specificity, or the calibration curve on the deployment distribution; (d) **write the Popperian falsification condition** — the specific condition (metric, threshold, window) under which the reported confidence would be *false*, and whether the source gives you enough to check it. If the number turns out to be decorative — mostly false positives, or unbacked by a calibration curve — say so, and name which of the four diagnostic questions best explains the failure, defending your choice with reference to the mathematics developed in this chapter. *(Research and synthesis; tests ability to apply the build/audit framework to novel cases)*
 
 ---
 
