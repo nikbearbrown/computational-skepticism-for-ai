@@ -1,0 +1,157 @@
+{
+  "metadata": {
+    "chapter": "01-the-skeptics-toolkit",
+    "chapter_number": "01",
+    "title": "The Skeptic's Toolkit",
+    "course_eyebrow": "Computational Skepticism · Chapter 01",
+    "voice_id": "TyW6NH39JcFb5M3xdIIk",
+    "runtime_from": "/Users/nik/Documents/Cowork/unreal-reels/lectures/fairness-metrics-and-impossible-choices",
+    "ds_css": null,
+    "note": "Authored at the Phase-0 gate. Selects 6 real pool assets (2 live charts, 4 SVGs). Book stub figures skipped."
+  },
+  "slides": [
+    {
+      "archetype": "title",
+      "label": "Title",
+      "eyebrow": "Computational Skepticism · Chapter 01",
+      "headline": "The Skeptic's Toolkit",
+      "subtitle": "The moves you perform before you trust what the machine just told you.",
+      "speaker_notes": "Welcome. Chapter 1. This whole book is downstream of one chapter, and this is it: the four skeptical moves and the five supervisory capacities. Without this vocabulary, the rest of the book has nothing to attach to."
+    },
+    {
+      "archetype": "statement",
+      "label": "Two failures, one structure",
+      "eyebrow": "Cold open · two failures",
+      "headline": "The output was statistically valid. It was wrong about the question that mattered.",
+      "body": "Sweden, 2018: an AI triage tool scores a woman with a swollen leg as low-acuity. She waits four hours; the clot reaches her lung; she dies in the waiting room. The system worked exactly as designed. And an autonomous agent reports it deleted a sensitive email &mdash; confidently, in clean prose &mdash; while the email sits untouched on the server. <b style=\"color:var(--nu-white);\">The gap between statistically-valid and right-about-the-world is what this book is about.</b>",
+      "speaker_notes": "Start with the two failures that open the chapter. The Swedish triage death: the model wasn't broken — it worked exactly as designed, learned its training data, passed every review, and a patient died. Sit with that. Then Ash's agent, confidently reporting a deletion that never happened. Two failures, one shared structure: the output was statistically valid and wrong about the question that mattered. That gap is the whole book."
+    },
+    {
+      "archetype": "section",
+      "label": "The four moves",
+      "part": "Part one",
+      "headline": "The four moves",
+      "subtitle": "Skepticism as a method you can perform, teach, and check — not a mood.",
+      "speaker_notes": "Section divider. Part one: the four moves."
+    },
+    {
+      "archetype": "concept",
+      "label": "What skepticism means",
+      "eyebrow": "What I mean by skepticism",
+      "headline": "Not the disposition. A method.",
+      "bullets": [
+        "Not eye-rolling cynicism, and not the refusal to form beliefs &mdash; that would be insane. I don't doubt the chair I'm sitting on.",
+        "It's the <b>discipline of knowing how you formed a belief</b>, so you notice when the conditions that made it reliable have changed.",
+        "The hard part isn't doubting a suspicious output. It's running the moves when the output <b>looks right</b> &mdash; fluent, specific, well-shaped. The primary enemy of skepticism isn't laziness. It's confidence."
+      ],
+      "speaker_notes": "Define the term. Skepticism here is not a personality — not the cynic at the back of the meeting. It's a method: a set of moves you can perform on a claim, teach, and check. It's not rejecting evidence; it's knowing how you formed a belief so you can notice when the ground shifts. And the key difficulty: the moves matter most exactly when the output looks trustworthy, which is when the instinct to run them is weakest. The enemy is confidence, not laziness."
+    },
+    {
+      "archetype": "figure",
+      "label": "The four moves — checklist",
+      "eyebrow": "The portable checklist",
+      "headline": "Four philosophers, four moves, four checkable questions",
+      "src": "../assets/svg/four-moves-checklist.svg",
+      "asset_ref": "ch01-four-moves-checklist",
+      "caption": "Descartes' radical doubt, Hume's limit of induction, Popper's falsifiability, Plato's cave. The move is the thing — you needn't believe the philosopher.",
+      "alt": "Four cards: Descartes, Hume, Popper, Plato, each with its move and the checkable question it produces.",
+      "speaker_notes": "Here's the toolkit on one card. Descartes donates radical doubt — ask what would have to be true for this claim to be wrong, which turns doubt into a checkable list. Hume donates the limit of induction — the model's confidence is a property of the model, not the world. Popper donates falsifiability — a claim that can't be wrong isn't yet a claim. And Plato donates the cave, which we'll take next. These are tools; a structural engineer doesn't need the metaphysics of steel to load-test a beam."
+    },
+    {
+      "archetype": "chart",
+      "label": "Hume — the turkey",
+      "eyebrow": "Hume's move · the limit of induction",
+      "headline": "The turkey knew the correlation. It did not know the mechanism.",
+      "chart": "turkey-confidence-timeline",
+      "chart_w": 1480,
+      "chart_h": 600,
+      "center": false,
+      "speaker_notes": "Taleb's turkey. Fed every morning for a thousand days; each feeding raises its confidence that tomorrow brings food. By day 999 the belief is near-certain. On day 1000 the farmer arrives with an axe. The turkey wasn't foolish — it had good evidence, correctly processed. It knew the correlation and not the mechanism, and when the mechanism changed it had no way to notice. An AI trained on a hospital's history is doing exactly this. Watch where the confidence peaks: the instant before the catastrophe."
+    },
+    {
+      "archetype": "figure",
+      "label": "Plato — artifact vs world",
+      "eyebrow": "Plato's move · the cave",
+      "headline": "The output is a shadow of the world, not the world",
+      "src": "../assets/svg/artifact-vs-world.svg",
+      "asset_ref": "ch01-artifact-vs-world",
+      "caption": "The engineers reviewed the artifact — score, model, metrics. The world was on a gurney in the waiting room.",
+      "alt": "Two columns: the artifact the engineers reviewed versus the world they did not, joined by a statistical shadow that broke at deployment.",
+      "speaker_notes": "The move engineers most often skip. A model output is not the world — it's a shadow of the world, cast by a process the designers chose, on a wall the training data shaped. The move is three questions: what is the artifact, what is the world, what is the relationship between them? In the triage case the engineers reviewed the artifact — the score, the model, the validation set, the metrics — and never reviewed the world. The world was on a gurney in the waiting room. Run this hardest when the output is fluent."
+    },
+    {
+      "archetype": "chart",
+      "label": "Solve-verify asymmetry",
+      "eyebrow": "The structural observation",
+      "headline": "Producing an output is cheap. Verifying it is expensive.",
+      "chart": "cost-asymmetry",
+      "chart_w": 1480,
+      "chart_h": 600,
+      "center": false,
+      "speaker_notes": "In classical computer science, verifying is easier than producing — hand me the factors and I'll check them fast. In AI deployment the asymmetry inverts. The model produces an output for a fraction of a cent in milliseconds; verifying it takes a clinician with twenty minutes, or an hour of senior labor querying the actual system state. Note the log axis — the gap is real, roughly seven orders of magnitude. If you don't budget for verification you won't get it, and the unverified outputs all look like successes until one of them is the patient, or the loan, or the email that wasn't deleted."
+    },
+    {
+      "archetype": "section",
+      "label": "Supervising the machine",
+      "part": "Part two",
+      "headline": "Supervising the machine",
+      "subtitle": "If verification is the problem, what does the human actually do? Capacities, not vibes.",
+      "speaker_notes": "Section divider. Part two: the five supervisory capacities and the trap that defeats them."
+    },
+    {
+      "archetype": "figure",
+      "label": "Five supervisory capacities",
+      "eyebrow": "What the supervisor does that the model cannot",
+      "headline": "The Five Supervisory Capacities",
+      "src": "../assets/svg/five-supervisory-capacities.svg",
+      "asset_ref": "ch01-five-supervisory-capacities",
+      "caption": "Plausibility auditing, problem formulation, tool orchestration, interpretive judgment, executive integration. Where you can't name the capacity, you've found a gap.",
+      "alt": "Five capacities, each with what the supervisor does and what its absence looks like.",
+      "speaker_notes": "Five things a human supervisor can do that the model cannot do for itself. Plausibility auditing — the experienced twitch that says this output can't be right. Problem formulation — most AI failures are failures of formulation, not performance; the triage tool answered a different question than the one that mattered. Tool orchestration — including the hardest call, no tool yet, don't deploy. Interpretive judgment — the same number means different things in different domains. And executive integration — somewhere the buck has to stop. By the end of the book you'll name, for any deployment, which capacity is exercised and by whom. Where you can't, you've found a gap, and gaps are where the patients die."
+    },
+    {
+      "archetype": "concept",
+      "label": "The fluency trap",
+      "eyebrow": "The fluency trap",
+      "headline": "Fluency is an evaluation booster — and it boosts wrong answers too",
+      "bullets": [
+        "Stage one, expected: the more fluent the output, the more confident you are in <b>the output</b>.",
+        "Stage two, the trap: that confidence raises your confidence in <b>your own evaluation</b> &mdash; so any answer of the same shape gets waved through.",
+        "Form and content are <b>independent</b>. A sentence can be maximally fluent and maximally wrong at once. AI broke the heuristic that clear prose signals clear thinking."
+      ],
+      "speaker_notes": "The single most operationally important idea in the chapter. The fluency trap has two moves. First, fluency raises confidence in the output — no surprise. Second, and this is the trap, that confidence raises your confidence in your own evaluation, so fluency boosts wrong evaluations as readily as right ones. Ash's agent produced fluent, well-formed prose, and the fluency did the epistemic work the verification should have done. In human speech, clear prose usually means clear thinking. AI broke that heuristic — form and content are independent now."
+    },
+    {
+      "archetype": "figure",
+      "label": "Fluency trap — mechanism",
+      "eyebrow": "Naming it makes it interruptible",
+      "headline": "Specify the wrong answer before you read the output",
+      "src": "../assets/svg/fluency-trap-mechanism.svg",
+      "asset_ref": "ch01-fluency-trap-mechanism",
+      "caption": "The interrupt: state what a wrong answer would look like first. That prior specification is your anchor; without it, your only criterion is fluency.",
+      "alt": "Two-stage mechanism from fluent output to confidence in the output to confidence in your own evaluation, plus the form-versus-content independence.",
+      "speaker_notes": "Here's the mechanism, and naming it is what makes it interruptible. The Popperian move is the antidote: before you read the output, specify what a wrong answer would look like — specifically, not vaguely. That prior specification is your anchor. Without it you're reading with no criterion except fluency, and fluency is the trap. Note this is not a flaw the next model fixes — it's structural. These systems learn to produce outputs that resemble correct outputs, and in the cases that matter most — the edge cases, the out-of-distribution inputs — resemblance and correctness come apart."
+    },
+    {
+      "archetype": "concept",
+      "label": "Skepticism as a team practice",
+      "eyebrow": "From habit to architecture",
+      "headline": "Individual skepticism is fragile. Institutional skepticism is designed.",
+      "bullets": [
+        "Individual skepticism depends on whether one tired person, under deadline, remembers to run the moves. People forget.",
+        "Institutional skepticism <b>encodes the moves into the workflow</b>: the falsification question in the deployment checklist, the shift-check for distribution drift in the handoff protocol.",
+        "For each capacity, ask: where is it exercised, by whom, and what do they see that makes exercising it possible? If the answer is &ldquo;nobody,&rdquo; you've found an <b>undefended gap</b>."
+      ],
+      "speaker_notes": "The moves can be performed by one person in the moment, but the durable deployments make them organizational discipline. Individual skepticism is fragile — it depends on one person on one day under pressure remembering. Institutional skepticism encodes the moves into the workflow, into the checklist, into the monitoring dashboard, into the handoff protocol. This is an architectural point, not a bureaucratic one: when you design a system that hands AI outputs to humans, you're choosing where the skeptical moves happen, by whom, in what order. If you don't design for them, they won't happen reliably — and the failures in this chapter will happen in your organization."
+    },
+    {
+      "archetype": "close",
+      "label": "Close",
+      "eyebrow": "Meet Ash — and what's next",
+      "headline": "Producing is cheap. Verifying is expensive. The rest of the book is the development.",
+      "body": "Ash's agent is our <b style=\"color:var(--nu-white);\">Pebble</b> &mdash; one concrete failure whose ripples reach Chapters 5 through 10, each applying a different validation lens. Four moves, one structural observation, five capacities, one warning: the fluency trap. You'll use all of them on every chapter that follows.",
+      "next": "Next — Chapter 2: probability. A 99%-accurate test can be useless in a way that costs lives. We'll work the math on the page, slowly.",
+      "speaker_notes": "Close by planting the Pebble: Ash and Agents of Chaos Case One, the single concrete failure we return to in Chapters 5 through 10 from six different angles. Write his name in the margin. Then compress the chapter: AI systems can be technically correct and produce harm; fluent and wrong; report success and have done nothing. The capacities to catch this are supervisory, in humans, and largely undeveloped in the engineering education most of us got. The rest of the book is that development. Next chapter: probability — because a 99-percent-accurate test can be useless in a way that costs lives."
+    }
+  ]
+}

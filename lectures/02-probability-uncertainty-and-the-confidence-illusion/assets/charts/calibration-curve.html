@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- Calibration / reliability diagram — live D3. Candidate asset for ch02.
+     x = predicted probability, y = observed frequency. The diagonal is perfect
+     calibration; the red curve is an over-confident model (says 0.9, is right 0.6).
+     Brutalist palette: one red accent, grays as neutrals, zero baselines, mono ticks.
+     Self-contained: embeds in a .dc.html deck (which runs d3) or open standalone. -->
+<html lang="en"><head><meta charset="utf-8">
+<style>
+  :root{--red:#C8102E;--ink:#2a1a0e;--sec:#545454;--border:#D4D4D4;}
+  html,body{margin:0;background:#fff;font-family:Inter,Helvetica,Arial,sans-serif;color:var(--ink)}
+  #wrap{width:960px;margin:24px auto}
+  .title{font-size:22px;font-weight:700}
+  .sub{font-size:14px;fill:var(--sec);color:var(--sec)}
+  .tick text{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:11px;fill:var(--sec)}
+  .axis-title{font-size:13px;fill:var(--sec)}
+  .legend{font-size:13px}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script></head>
+<body><div id="wrap">
+  <div class="title">Calibration: does 0.8 mean 0.8?</div>
+  <div class="sub">Predicted probability vs. how often it actually happens</div>
+  <svg id="c" width="960" height="560" role="img" aria-label="Calibration curve: an over-confident model sits below the diagonal"></svg>
+</div>
+<script>
+const svg=d3.select("#c"), W=960,H=560, m={t:24,r:24,b:70,l:80};
+const x=d3.scaleLinear().domain([0,1]).range([m.l,W-m.r]);
+const y=d3.scaleLinear().domain([0,1]).range([H-m.b,m.t]);
+// gridlines + axes (zero baselines, gray)
+svg.append("g").attr("transform",`translate(0,${H-m.b})`).attr("class","tick")
+   .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format(".1f")));
+svg.append("g").attr("transform",`translate(${m.l},0)`).attr("class","tick")
+   .call(d3.axisLeft(y).ticks(5).tickFormat(d3.format(".1f")));
+svg.append("text").attr("class","axis-title").attr("x",(m.l+W-m.r)/2).attr("y",H-24)
+   .attr("text-anchor","middle").text("predicted probability");
+svg.append("text").attr("class","axis-title").attr("transform","rotate(-90)")
+   .attr("x",-(m.t+H-m.b)/2).attr("y",26).attr("text-anchor","middle").text("observed frequency");
+// perfect calibration = diagonal (gray dashed)
+svg.append("line").attr("x1",x(0)).attr("y1",y(0)).attr("x2",x(1)).attr("y2",y(1))
+   .attr("stroke","#9aa0a6").attr("stroke-width",2).attr("stroke-dasharray","6 6");
+// over-confident model: predicts high, delivers less
+const model=[[0,0.02],[0.1,0.05],[0.2,0.10],[0.3,0.17],[0.4,0.25],[0.5,0.34],
+             [0.6,0.42],[0.7,0.50],[0.8,0.58],[0.9,0.66],[1,0.78]];
+const line=d3.line().x(d=>x(d[0])).y(d=>y(d[1])).curve(d3.curveMonotoneX);
+svg.append("path").datum(model).attr("d",line).attr("fill","none")
+   .attr("stroke","var(--red)").attr("stroke-width",3.5);
+svg.selectAll("circle.m").data(model).join("circle").attr("class","m")
+   .attr("cx",d=>x(d[0])).attr("cy",d=>y(d[1])).attr("r",4).attr("fill","var(--red)");
+// legend
+svg.append("line").attr("x1",W-260).attr("y1",m.t+16).attr("x2",W-224).attr("y2",m.t+16)
+   .attr("stroke","#9aa0a6").attr("stroke-width",2).attr("stroke-dasharray","6 6");
+svg.append("text").attr("class","legend").attr("x",W-216).attr("y",m.t+21).text("perfect calibration");
+svg.append("line").attr("x1",W-260).attr("y1",m.t+42).attr("x2",W-224).attr("y2",m.t+42)
+   .attr("stroke","var(--red)").attr("stroke-width",3.5);
+svg.append("text").attr("class","legend").attr("x",W-216).attr("y",m.t+47).text("over-confident model");
+</script>
+</body></html>

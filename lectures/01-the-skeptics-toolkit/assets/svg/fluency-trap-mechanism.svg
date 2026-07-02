@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 720" role="img" aria-labelledby="tt ds" font-family="Lato, system-ui, sans-serif">
+  <title id="tt">The fluency trap as a two-stage mechanism</title>
+  <desc id="ds">Stage one: more fluent output raises confidence in the output — an expected effect. Stage two, the trap: that confidence raises the reader's confidence in their own evaluation, so fluency boosts wrong evaluations as readily as right ones. Form and content are independent; the shape of a sentence is not evidence about its truth.</desc>
+  <rect width="1600" height="720" fill="#FFFFFF"/>
+  <rect x="0" y="0" width="1600" height="8" fill="#C8102E"/>
+  <text x="64" y="82" font-size="26" font-weight="700" letter-spacing="3" fill="#C8102E">THE FLUENCY TRAP</text>
+  <text x="64" y="136" font-size="46" fill="#2a1a0e">Fluency is an evaluation booster &#8212; it boosts wrong answers too</text>
+  <line x1="64" y1="164" x2="152" y2="164" stroke="#C8102E" stroke-width="5"/>
+
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#C8102E"/>
+    </marker>
+  </defs>
+
+  <g class="pf pf-0">
+    <rect x="64" y="238" width="404" height="196" fill="#FFFFFF" stroke="#2a1a0e" stroke-width="2"/>
+    <text x="90" y="286" font-size="20" font-weight="700" letter-spacing="1" fill="#545454">THE OUTPUT</text>
+    <foreignObject x="90" y="300" width="356" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 27px/1.34 Lato,system-ui,sans-serif;color:#2a1a0e;">The output is <b>fluent</b> &#8212; clear, specific, well-formed prose.</div></foreignObject>
+  </g>
+
+  <g class="pf pf-1">
+    <line x1="468" y1="336" x2="596" y2="336" stroke="#C8102E" stroke-width="3" marker-end="url(#ar)"/>
+    <text x="532" y="322" text-anchor="middle" font-size="18" fill="#545454">expected</text>
+  </g>
+
+  <g class="pf pf-2">
+    <rect x="596" y="238" width="404" height="196" fill="#FFFFFF" stroke="#2a1a0e" stroke-width="2"/>
+    <text x="622" y="286" font-size="20" font-weight="700" letter-spacing="1" fill="#545454">STAGE 1</text>
+    <foreignObject x="622" y="300" width="356" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 27px/1.34 Lato,system-ui,sans-serif;color:#2a1a0e;">Confidence in the <b>output</b> rises.</div></foreignObject>
+  </g>
+
+  <g class="pf pf-3">
+    <line x1="1000" y1="336" x2="1128" y2="336" stroke="#C8102E" stroke-width="3" marker-end="url(#ar)"/>
+    <text x="1064" y="322" text-anchor="middle" font-size="18" font-weight="700" fill="#C8102E">the trap</text>
+  </g>
+
+  <g class="pf pf-4">
+    <rect x="1128" y="238" width="408" height="196" fill="#FBE7EA" stroke="#C8102E" stroke-width="2"/>
+    <rect x="1128" y="238" width="8" height="196" fill="#C8102E"/>
+    <text x="1160" y="286" font-size="20" font-weight="700" letter-spacing="1" fill="#C8102E">STAGE 2</text>
+    <foreignObject x="1160" y="300" width="352" height="130"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 27px/1.34 Lato,system-ui,sans-serif;color:#2a1a0e;">Confidence in your <b>own evaluation</b> rises &#8212; so any answer of the same shape gets accepted.</div></foreignObject>
+  </g>
+
+  <g class="pf pf-5">
+    <rect x="64" y="486" width="1472" height="150" fill="#FFFFFF" stroke="#E3E3E3" stroke-width="1.5"/>
+    <text x="92" y="532" font-size="24" font-weight="700" fill="#2a1a0e">Form and content are independent.</text>
+  </g>
+  <g class="pf pf-6">
+    <foreignObject x="92" y="548" width="1416" height="80"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 24px/1.4 Lato,system-ui,sans-serif;color:#545454;">A sentence can be <b style="color:#2a1a0e;">maximally fluent</b> and <b style="color:#C8102E;">maximally wrong</b> at once &#8212; there is no way to tell from the fluency alone. <b style="color:#2a1a0e;">Interrupt it:</b> specify what a wrong answer would look like <i>before</i> you read the output.</div></foreignObject>
+  </g>
+
+  <g class="pf pf-7"><text x="64" y="690" font-size="21" fill="#545454">Not a flaw the next model fixes &#8212; a structural feature of systems that learn to resemble correct outputs. Don't let fluency do the epistemic work verification should.</text></g>
+</svg>

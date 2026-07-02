@@ -1,0 +1,64 @@
+[WARNING] Could not fetch resource 'images/karl-popper.jpg': PandocResourceNotFound "images/karl-popper.jpg"
+[WARNING] Could not fetch resource 'images/frank-ramsey.jpg': PandocResourceNotFound "images/frank-ramsey.jpg"
+[WARNING] Could not fetch resource 'images/hannah-arendt.jpg': PandocResourceNotFound "images/hannah-arendt.jpg"
+[WARNING] Could not fetch resource 'images/lev-vygotsky.jpg': PandocResourceNotFound "images/lev-vygotsky.jpg"
+[WARNING] Could not fetch resource 'images/suzanne-briet.jpg': PandocResourceNotFound "images/suzanne-briet.jpg"
+[WARNING] Could not fetch resource 'images/hans-reichenbach.jpg': PandocResourceNotFound "images/hans-reichenbach.jpg"
+[WARNING] Could not fetch resource 'images/john-stuart-mill.jpg': PandocResourceNotFound "images/john-stuart-mill.jpg"
+[WARNING] Could not fetch resource 'images/john-von-neumann.jpg': PandocResourceNotFound "images/john-von-neumann.jpg"
+[WARNING] Could not fetch resource 'images/maurice-merleau-ponty.jpg': PandocResourceNotFound "images/maurice-merleau-ponty.jpg"
+[WARNING] Could not fetch resource 'images/donald-broadbent.jpg': PandocResourceNotFound "images/donald-broadbent.jpg"
+[WARNING] Could not fetch resource 'images/w-e-b-du-bois.jpg': PandocResourceNotFound "images/w-e-b-du-bois.jpg"
+[WARNING] Could not fetch resource 'images/florence-nightingale.jpg': PandocResourceNotFound "images/florence-nightingale.jpg"
+[WARNING] Could not fetch resource 'images/john-dewey.jpg': PandocResourceNotFound "images/john-dewey.jpg"
+[WARNING] Could not fetch resource 'images/alan-turing.jpg': PandocResourceNotFound "images/alan-turing.jpg"
+[WARNING] Could not convert TeX math 'P(A) = \frac{\text{number of outcomes in } A}{\text{total number of outcomes}}', rendering as TeX
+[WARNING] Could not convert TeX math '\frac{1}{5}', rendering as TeX
+[WARNING] Could not convert TeX math '\frac{7}{20}', rendering as TeX
+[WARNING] Could not convert TeX math 'P(A) = \lim_{N \to \infty} \frac{\text{number of times } A \text{ occurred}}{N}', rendering as TeX
+[WARNING] Could not convert TeX math 'P(A \mid B) = \frac{P(A \cap B)}{P(B)}', rendering as TeX
+[WARNING] Could not convert TeX math 'P(\text{first die} = 6 \mid \text{sum} = 9) = \frac{1}{4}', rendering as TeX
+[WARNING] Could not convert TeX math 'P(B \mid A) = \frac{P(A \cap B)}{P(A)} = \frac{0.30}{0.76} \approx 0.395', rendering as TeX
+[WARNING] Could not convert TeX math 'P(A \mid B) = \frac{P(A \cap B)}{P(B)}', rendering as TeX
+[WARNING] Could not convert TeX math 'P\left(\bigcap_{i=1}^n A_i\right) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \cdots P\left(A_n \mid \bigcap_{i=1}^{n-1} A_i\right)', rendering as TeX
+[WARNING] Could not convert TeX math 'P(A_1) = \frac{39}{52}', rendering as TeX
+[WARNING] Could not convert TeX math 'P(A_2 \mid A_1) = \frac{38}{51}', rendering as TeX
+[WARNING] Could not convert TeX math 'P(A_3 \mid A_1 \cap A_2) = \frac{37}{50}', rendering as TeX
+[WARNING] Could not convert TeX math 'P(A_1 \cap A_2 \cap A_3) = \frac{39}{52} \cdot \frac{38}{51} \cdot \frac{37}{50} = \frac{39 \times 38 \times 37}{52 \times 51 \times 50} \approx 0.413', rendering as TeX
+[WARNING] Could not convert TeX math 'P(B) = \sum_{i=1}^n P(A_i) \cdot P(B \mid A_i)', rendering as TeX
+[WARNING] Could not convert TeX math '\frac{1}{101}', rendering as TeX
+[WARNING] Could not convert TeX math 'P(A_i \mid B) = \frac{P(A_i) \cdot P(B \mid A_i)}{P(B)} = \frac{P(A_i) \cdot P(B \mid A_i)}{\sum_{k=1}^n P(A_k) \cdot P(B \mid A_k)}', rendering as TeX
+[WARNING] Could not convert TeX math 'P(\text{disease} \mid \text{positive}) = \frac{P(\text{disease}) \cdot P(\text{positive} \mid \text{disease})}{P(\text{positive})}', rendering as TeX
+[WARNING] Could not convert TeX math '= \frac{0.0001 \times 0.99}{0.0001 \times 0.99 + 0.9999 \times 0.01} \approx \frac{0.000099}{0.010098} \approx 0.0098', rendering as TeX
+[WARNING] Could not convert TeX math 'P(C \mid D) = \frac{P(C) \cdot P(D \mid C)}{P(D)} = \frac{0.30 \times 0.05}{0.032} = \frac{0.015}{0.032} \approx 0.469', rendering as TeX
+[WARNING] Could not convert TeX math 'P(A \mid D) = \frac{0.008}{0.032} = 0.25', rendering as TeX
+[WARNING] Could not convert TeX math 'P(B \mid D) = \frac{0.009}{0.032} \approx 0.28', rendering as TeX
+[WARNING] Could not convert TeX math 'P(H|D) = \frac{P(D|H) \cdot P(H)}{P(D)}', rendering as TeX
+[WARNING] Could not convert TeX math '\kappa = \frac{P_o - P_e}{1 - P_e}', rendering as TeX
+[WARNING] Could not convert TeX math 'w_i = \frac{N_i / N}{n_i / n}', rendering as TeX
+[WARNING] Could not convert TeX math 'Y_2 = \frac{\sum_{i} A(e_i, e_{i+1})}{\sum_i \mathbf{1}[e_i \neq e_{i+1}]}', rendering as TeX
+[WARNING] Could not convert TeX math '\text{BS} = \frac{1}{n}\sum_{i=1}^{n}(c_i - r_i)^2', rendering as TeX
+[WARNING] Could not convert TeX math 'Y_4 = 1 - \frac{\sum_i (c_i - r_i)^2}{B_{\text{ref}}}', rendering as TeX
+[WARNING] Could not convert TeX math 'Y_5 = \frac{\phi_1 + \phi_2 + \phi_3 + \phi_4}{8}', rendering as TeX
+[WARNING] Could not convert TeX math 'Y_7 = \frac{\rho(h_1) - \rho(h_0)}{\rho(h_2) - \rho(h_0)}', rendering as TeX
+[WARNING] Could not convert TeX math '\phi_i = \sum_{S \subseteq F \setminus \{i\}} \frac{|S|!\,(|F| - |S| - 1)!}{|F|!} \bigl[v(S \cup \{i\}) - v(S)\bigr]', rendering as TeX
+[WARNING] Could not convert TeX math '\frac{|S|!\,(|F|-|S|-1)!}{|F|!}', rendering as TeX
+[WARNING] Could not convert TeX math '\hat{\phi}_i \approx \frac{1}{M} \sum_{m=1}^{M} \Delta_i(S_m)', rendering as TeX
+[WARNING] Could not convert TeX math '\frac{|S|!\,(|F| - |S| - 1)!}{|F|!}', rendering as TeX
+[WARNING] Could not convert TeX math '\text{PPV} = \frac{p \cdot \text{TPR}}{p \cdot \text{TPR} + (1-p) \cdot \text{FPR}}', rendering as TeX
+[WARNING] Could not convert TeX math '\frac{v}{1 - v} = \frac{p}{1-p} \cdot \frac{t}{f}', rendering as TeX
+[WARNING] Could not convert TeX math '\frac{t_a}{f_a} = \frac{p_b(1-p_a)}{p_a(1-p_b)} \cdot \frac{t_b}{f_b}', rendering as TeX
+[WARNING] Could not convert TeX math 'D_{\text{TV}}(P, Q) = \frac{1}{2}\sum_a |P(a) - Q(a)|', rendering as TeX
+[WARNING] Could not convert TeX math '\mu = \frac{1}{N}\sum_i b_i', rendering as TeX
+[WARNING] Could not convert TeX math 'GE(\alpha) = \frac{1}{N \alpha (\alpha - 1)} \sum_{i=1}^{N} \left[\left(\frac{b_i}{\mu}\right)^\alpha - 1\right]', rendering as TeX
+[WARNING] Could not convert TeX math 'GE(0) = \frac{1}{N} \sum_{i=1}^{N} \ln\!\left(\frac{\mu}{b_i}\right) \quad \text{(Mean Log Deviation)}', rendering as TeX
+[WARNING] Could not convert TeX math 'GE(1) = \frac{1}{N} \sum_{i=1}^{N} \frac{b_i}{\mu} \ln\!\left(\frac{b_i}{\mu}\right) \quad \text{(Theil Index)}', rendering as TeX
+[WARNING] Could not convert TeX math 'GE(2) = \frac{1}{2N\mu^2} \sum_{i=1}^{N} (b_i - \mu)^2 = \frac{1}{2}\left(\frac{\sigma}{\mu}\right)^2 \quad \text{(Half the squared CV)}', rendering as TeX
+[WARNING] Could not convert TeX math 'GE(\alpha) = \underbrace{\sum_{g} \frac{n_g}{N} \left(\frac{\mu_g}{\mu}\right)^\alpha GE_g(\alpha)}_{\text{within-group unfairness}} + \underbrace{GE(\alpha)\bigg|_{\text{between-group}}}_{\text{between-group unfairness}}', rendering as TeX
+[WARNING] Could not convert TeX math '\frac{1}{2}(\sigma/\mu)^2', rendering as TeX
+[WARNING] Could not convert TeX math 'R = \frac{\sigma}{2}(\Phi^{-1}(p_A) - \Phi^{-1}(p_B))', rendering as TeX
+[WARNING] Could not convert TeX math '\text{BS} = \frac{1}{N} \sum_{i=1}^{N} (p_i - y_i)^2', rendering as TeX
+[WARNING] Could not convert TeX math '\text{BS} = \underbrace{\overline{y}(1 - \overline{y})}_{\text{Uncertainty}} - \underbrace{\text{REL}}_{\text{Resolution}} + \underbrace{\text{CAL}}_{\text{Calibration}}', rendering as TeX
+[WARNING] Could not convert TeX math '\overline{y}', rendering as TeX
+[WARNING] Could not convert TeX math '\text{ECE} = \sum_{m=1}^{M} \frac{|B_m|}{N} \left| \text{acc}(B_m) - \text{conf}(B_m) \right|', rendering as TeX
+[WARNING] Could not convert TeX math '\text{ECE}_g = \sum_{m=1}^{M} \frac{|B_m^g|}{N_g} \left| \text{acc}(B_m^g) - \text{conf}(B_m^g) \right|', rendering as TeX

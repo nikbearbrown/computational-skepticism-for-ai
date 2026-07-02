@@ -1,0 +1,18 @@
+{
+  "S05": {
+    "file": "../assets/svg/four-moves-checklist.svg",
+    "title": "The four moves"
+  },
+  "S07": {
+    "file": "../assets/svg/artifact-vs-world.svg",
+    "title": "Plato — the cave"
+  },
+  "S10": {
+    "file": "../assets/svg/five-supervisory-capacities.svg",
+    "title": "Five supervisory capacities"
+  },
+  "S12": {
+    "file": "../assets/svg/fluency-trap-mechanism.svg",
+    "title": "Interrupt the trap"
+  }
+}

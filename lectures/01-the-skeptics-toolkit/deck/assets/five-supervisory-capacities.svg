@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="tt ds" font-family="Lato, system-ui, sans-serif">
+  <title id="tt">The Five Supervisory Capacities</title>
+  <desc id="ds">Five capacities a human supervisor has that the model does not: plausibility auditing, problem formulation, tool orchestration, interpretive judgment, and executive integration. For each, what the supervisor does and what its absence looks like.</desc>
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+  <rect x="0" y="0" width="1600" height="8" fill="#C8102E"/>
+  <text x="64" y="82" font-size="26" font-weight="700" letter-spacing="3" fill="#C8102E">WHAT THE SUPERVISOR DOES THAT THE MODEL CANNOT</text>
+  <text x="64" y="136" font-size="46" fill="#2a1a0e">The Five Supervisory Capacities</text>
+  <line x1="64" y1="164" x2="152" y2="164" stroke="#C8102E" stroke-width="5"/>
+
+  <!-- column headers -->
+  <text x="248" y="210" font-size="19" font-weight="700" letter-spacing="1" fill="#545454">CAPACITY</text>
+  <text x="620" y="210" font-size="19" font-weight="700" letter-spacing="1" fill="#545454">WHAT THE SUPERVISOR DOES</text>
+  <text x="1140" y="210" font-size="19" font-weight="700" letter-spacing="1" fill="#C8102E">WHAT ITS ABSENCE LOOKS LIKE</text>
+
+  <!-- 5 bands -->
+  <g font-size="23">
+    <!-- 1 -->
+    <line x1="64" y1="230" x2="1536" y2="230" stroke="#E3E3E3"/>
+    <circle cx="96" cy="290" r="26" fill="#C8102E"/><text x="96" y="299" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">1</text>
+    <text x="152" y="284" font-size="27" font-weight="700" fill="#2a1a0e">Plausibility</text>
+    <text x="152" y="316" font-size="27" font-weight="700" fill="#2a1a0e">auditing</text>
+    <foreignObject x="620" y="252" width="480" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 23px/1.34 Lato,system-ui,sans-serif;color:#2a1a0e;">Asks: given what I know of this world, is this the kind of output that could be true? The experienced &#8220;twitch.&#8221;</div></foreignObject>
+    <foreignObject x="1140" y="252" width="400" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 22px/1.34 Lato,system-ui,sans-serif;color:#545454;">No one asks whether the output makes sense on its face &#8212; it arrived in a credible format.</div></foreignObject>
+
+    <!-- 2 -->
+    <line x1="64" y1="360" x2="1536" y2="360" stroke="#E3E3E3"/>
+    <circle cx="96" cy="420" r="26" fill="#C8102E"/><text x="96" y="429" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">2</text>
+    <text x="152" y="414" font-size="27" font-weight="700" fill="#2a1a0e">Problem</text>
+    <text x="152" y="446" font-size="27" font-weight="700" fill="#2a1a0e">formulation</text>
+    <foreignObject x="620" y="382" width="480" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 23px/1.34 Lato,system-ui,sans-serif;color:#2a1a0e;">Specifies the exact question the system answers &#8212; and checks it is the question that mattered.</div></foreignObject>
+    <foreignObject x="1140" y="382" width="400" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 22px/1.34 Lato,system-ui,sans-serif;color:#545454;">The model answers &#8220;statistical category&#8221; while the need was &#8220;life-threatening risk.&#8221;</div></foreignObject>
+
+    <!-- 3 -->
+    <line x1="64" y1="490" x2="1536" y2="490" stroke="#E3E3E3"/>
+    <circle cx="96" cy="550" r="26" fill="#C8102E"/><text x="96" y="559" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">3</text>
+    <text x="152" y="544" font-size="27" font-weight="700" fill="#2a1a0e">Tool</text>
+    <text x="152" y="576" font-size="27" font-weight="700" fill="#2a1a0e">orchestration</text>
+    <foreignObject x="620" y="512" width="480" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 23px/1.34 Lato,system-ui,sans-serif;color:#2a1a0e;">Chooses AI, a human, a different model &#8212; or the hardest call, &#8220;no tool yet, don't deploy.&#8221;</div></foreignObject>
+    <foreignObject x="1140" y="512" width="400" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 22px/1.34 Lato,system-ui,sans-serif;color:#545454;">AI is used because it's available, not because it's correct for the task.</div></foreignObject>
+
+    <!-- 4 -->
+    <line x1="64" y1="620" x2="1536" y2="620" stroke="#E3E3E3"/>
+    <circle cx="96" cy="680" r="26" fill="#C8102E"/><text x="96" y="689" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">4</text>
+    <text x="152" y="674" font-size="27" font-weight="700" fill="#2a1a0e">Interpretive</text>
+    <text x="152" y="706" font-size="27" font-weight="700" fill="#2a1a0e">judgment</text>
+    <foreignObject x="620" y="642" width="480" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 23px/1.34 Lato,system-ui,sans-serif;color:#2a1a0e;">Reads the output in the domain. The same number means different things in different fields.</div></foreignObject>
+    <foreignObject x="1140" y="642" width="400" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 22px/1.34 Lato,system-ui,sans-serif;color:#545454;">A 5% false-positive rate fine for spam is applied to a cancer screen.</div></foreignObject>
+
+    <!-- 5 -->
+    <line x1="64" y1="750" x2="1536" y2="750" stroke="#E3E3E3"/>
+    <circle cx="96" cy="810" r="26" fill="#C8102E"/><text x="96" y="819" text-anchor="middle" font-size="26" font-weight="700" fill="#fff">5</text>
+    <text x="152" y="804" font-size="27" font-weight="700" fill="#2a1a0e">Executive</text>
+    <text x="152" y="836" font-size="27" font-weight="700" fill="#2a1a0e">integration</text>
+    <foreignObject x="620" y="772" width="480" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 23px/1.34 Lato,system-ui,sans-serif;color:#2a1a0e;">Synthesizes many tools, models, and humans into a decision the system can stand behind.</div></foreignObject>
+    <foreignObject x="1140" y="772" width="400" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="font:400 22px/1.34 Lato,system-ui,sans-serif;color:#545454;">The pipeline makes decisions but no one owns them; accountability dissolves.</div></foreignObject>
+    <line x1="64" y1="878" x2="1536" y2="878" stroke="#E3E3E3"/>
+  </g>
+</svg>

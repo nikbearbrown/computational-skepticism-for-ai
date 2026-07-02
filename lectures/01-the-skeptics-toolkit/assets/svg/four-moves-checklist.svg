@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 780" role="img" aria-labelledby="tt ds" font-family="Lato, system-ui, sans-serif">
+  <title id="tt">The four skeptical moves as a portable checklist</title>
+  <desc id="ds">Four cards — Descartes (radical doubt), Hume (the limit of induction), Popper (falsifiability), and Plato (the cave) — each donating one move and the checkable question it produces.</desc>
+  <rect width="1600" height="780" fill="#FFFFFF"/>
+  <rect x="0" y="0" width="1600" height="8" fill="#C8102E"/>
+  <text x="64" y="86" font-size="26" font-weight="700" letter-spacing="3" fill="#C8102E">THE SKEPTIC'S TOOLKIT</text>
+  <text x="64" y="140" font-size="46" fill="#2a1a0e">Four moves you perform before you trust the output</text>
+  <line x1="64" y1="168" x2="152" y2="168" stroke="#C8102E" stroke-width="5"/>
+
+  <!-- Descartes -->
+  <g class="pf pf-0">
+    <rect x="64" y="212" width="352" height="470" fill="#FFFFFF" stroke="#E3E3E3" stroke-width="1.5"/>
+    <rect x="64" y="212" width="352" height="7" fill="#C8102E"/>
+    <text x="92" y="272" font-size="22" font-weight="700" letter-spacing="2" fill="#C8102E">MOVE 01</text>
+    <text x="92" y="322" font-size="38" fill="#2a1a0e">Descartes</text>
+    <text x="92" y="360" font-size="24" fill="#545454">Radical doubt</text>
+    <line x1="92" y1="386" x2="388" y2="386" stroke="#E3E3E3" stroke-width="1"/>
+  </g>
+  <g class="pf pf-1">
+    <text x="92" y="432" font-size="23" fill="#2a1a0e" font-weight="700">The question it hands you:</text>
+    <foreignObject x="92" y="448" width="300" height="210">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font:400 24px/1.4 Lato,system-ui,sans-serif;color:#2a1a0e;">What would have to be <b>true</b> for this claim to be <b>wrong</b>? — turns doubt into a checkable list.</div>
+    </foreignObject>
+  </g>
+
+  <!-- Hume -->
+  <g class="pf pf-2">
+    <rect x="440" y="212" width="352" height="470" fill="#FFFFFF" stroke="#E3E3E3" stroke-width="1.5"/>
+    <rect x="440" y="212" width="352" height="7" fill="#C8102E"/>
+    <text x="468" y="272" font-size="22" font-weight="700" letter-spacing="2" fill="#C8102E">MOVE 02</text>
+    <text x="468" y="322" font-size="38" fill="#2a1a0e">Hume</text>
+    <text x="468" y="360" font-size="24" fill="#545454">The limit of induction</text>
+    <line x1="468" y1="386" x2="764" y2="386" stroke="#E3E3E3" stroke-width="1"/>
+  </g>
+  <g class="pf pf-3">
+    <text x="468" y="432" font-size="23" fill="#2a1a0e" font-weight="700">The thing to remember:</text>
+    <foreignObject x="468" y="448" width="300" height="210">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font:400 24px/1.4 Lato,system-ui,sans-serif;color:#2a1a0e;">The model's <b>confidence</b> is a property of the model, <b>not of the world</b>. Past hits guarantee nothing.</div>
+    </foreignObject>
+  </g>
+
+  <!-- Popper -->
+  <g class="pf pf-4">
+    <rect x="816" y="212" width="352" height="470" fill="#FFFFFF" stroke="#E3E3E3" stroke-width="1.5"/>
+    <rect x="816" y="212" width="352" height="7" fill="#C8102E"/>
+    <text x="844" y="272" font-size="22" font-weight="700" letter-spacing="2" fill="#C8102E">MOVE 03</text>
+    <text x="844" y="322" font-size="38" fill="#2a1a0e">Popper</text>
+    <text x="844" y="360" font-size="24" fill="#545454">Falsifiability</text>
+    <line x1="844" y1="386" x2="1140" y2="386" stroke="#E3E3E3" stroke-width="1"/>
+  </g>
+  <g class="pf pf-5">
+    <text x="844" y="432" font-size="23" fill="#2a1a0e" font-weight="700">The question it hands you:</text>
+    <foreignObject x="844" y="448" width="300" height="210">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font:400 24px/1.4 Lato,system-ui,sans-serif;color:#2a1a0e;">Under what conditions would this be <b>false</b> — and have I <b>looked</b>? A claim that can't be wrong isn't a claim.</div>
+    </foreignObject>
+  </g>
+
+  <!-- Plato -->
+  <g class="pf pf-6">
+    <rect x="1192" y="212" width="352" height="470" fill="#FBE7EA" stroke="#C8102E" stroke-width="1.5"/>
+    <rect x="1192" y="212" width="352" height="7" fill="#C8102E"/>
+    <text x="1220" y="272" font-size="22" font-weight="700" letter-spacing="2" fill="#C8102E">MOVE 04</text>
+    <text x="1220" y="322" font-size="38" fill="#2a1a0e">Plato</text>
+    <text x="1220" y="360" font-size="24" fill="#545454">The cave</text>
+    <line x1="1220" y1="386" x2="1516" y2="386" stroke="#C8102E" stroke-width="1"/>
+  </g>
+  <g class="pf pf-7">
+    <text x="1220" y="432" font-size="23" fill="#2a1a0e" font-weight="700">The question it hands you:</text>
+    <foreignObject x="1220" y="448" width="300" height="210">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font:400 24px/1.4 Lato,system-ui,sans-serif;color:#2a1a0e;">What is the <b>artifact</b>, what is the <b>world</b>, and what is the <b>relationship</b>? Run it hardest when the output is fluent.</div>
+    </foreignObject>
+  </g>
+
+  <g class="pf pf-8">
+    <text x="64" y="742" font-size="21" fill="#545454">The output either reveals something or comes back clean. Either is useful. The move is the thing — you needn't believe the philosopher.</text>
+  </g>
+</svg>

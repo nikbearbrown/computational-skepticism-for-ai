@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/neu-019e1937-ed62-7aa9-95a9-0998a91179fc/colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<style>
+  html,body{{margin:0;padding:0;background:#000;}}
+  .katex{{font-size:1em;}}
+  @keyframes nu-rise{{from{{opacity:0;transform:translateY(22px);}}to{{opacity:1;transform:none;}}}}
+  @media (prefers-reduced-motion:no-preference){{
+    [data-deck-active] .rise{{animation:nu-rise .55s var(--ease-default) both;}}
+    [data-deck-active] .rise2{{animation:nu-rise .55s var(--ease-default) .12s both;}}
+    [data-deck-active] .rise3{{animation:nu-rise .55s var(--ease-default) .24s both;}}
+  }}
+</style>
+</helmet>
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+<section data-label="Title" data-speaker-notes="Welcome. Chapter 1. This whole book is downstream of one chapter, and this is it: the four skeptical moves and the five supervisory capacities. Without this vocabulary, the rest of the book has nothing to attach to." style="background:var(--nu-black);color:var(--nu-white);font-family:var(--font-sans);padding:120px 130px;display:flex;flex-direction:column;justify-content:center;">
+  <div style="position:absolute;top:0;left:0;right:0;height:10px;background:var(--nu-red);"></div>
+  <div class="rise" style="font-size:22px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--nu-red);">Computational Skepticism · Chapter 01</div>
+  <h1 class="rise2" style="font-size:104px;line-height:1.0;font-weight:400;margin:34px 0 0;letter-spacing:-0.02em;max-width:1560px;">The Skeptic's Toolkit</h1>
+  <div class="rise2" style="width:120px;height:8px;background:var(--nu-red);margin:46px 0 0;"></div>
+  <div class="rise3" style="font-size:38px;line-height:1.3;color:var(--nu-neutral-2);margin-top:40px;max-width:1300px;font-weight:400;">The moves you perform before you trust what the machine just told you.</div>
+</section>
+
+<section data-label="Two failures, one structure" data-speaker-notes="Start with the two failures that open the chapter. The Swedish triage death: the model wasn't broken — it worked exactly as designed, learned its training data, passed every review, and a patient died. Sit with that. Then Ash's agent, confidently reporting a deletion that never happened. Two failures, one shared structure: the output was statistically valid and wrong about the question that mattered. That gap is the whole book." style="background:var(--nu-black);color:var(--nu-white);font-family:var(--font-sans);padding:110px 130px;display:flex;flex-direction:column;justify-content:center;">
+  <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--nu-red);"></div>
+  <div class="rise" style="font-size:24px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--nu-red);">Cold open · two failures</div>
+  <h2 class="rise2" style="font-size:72px;line-height:1.1;font-weight:400;margin:30px 0 0;letter-spacing:-0.01em;max-width:1560px;">The output was statistically valid. It was wrong about the question that mattered.</h2>
+  <div class="rise3" style="font-size:30px;line-height:1.4;color:var(--nu-neutral-2);margin-top:44px;max-width:1380px;">Sweden, 2018: an AI triage tool scores a woman with a swollen leg as low-acuity. She waits four hours; the clot reaches her lung; she dies in the waiting room. The system worked exactly as designed. And an autonomous agent reports it deleted a sensitive email &mdash; confidently, in clean prose &mdash; while the email sits untouched on the server. <b style="color:var(--nu-white);">The gap between statistically-valid and right-about-the-world is what this book is about.</b></div>
+</section>
+
+<section data-label="The four moves" data-speaker-notes="Section divider. Part one: the four moves." style="background:var(--nu-red);color:var(--nu-white);font-family:var(--font-sans);padding:110px 130px;display:flex;flex-direction:column;justify-content:center;">
+  <div class="rise" style="font-size:26px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.78);">Part one</div>
+  <h2 class="rise2" style="font-size:108px;line-height:1.0;font-weight:400;margin:26px 0 0;letter-spacing:-0.02em;">The four moves</h2>
+  <div class="rise3" style="font-size:34px;line-height:1.3;color:rgba(255,255,255,0.92);margin-top:36px;max-width:1280px;">Skepticism as a method you can perform, teach, and check — not a mood.</div>
+</section>
+
+<section data-label="What skepticism means" data-speaker-notes="Define the term. Skepticism here is not a personality — not the cynic at the back of the meeting. It's a method: a set of moves you can perform on a claim, teach, and check. It's not rejecting evidence; it's knowing how you formed a belief so you can notice when the ground shifts. And the key difficulty: the moves matter most exactly when the output looks trustworthy, which is when the instinct to run them is weakest. The enemy is confidence, not laziness." style="background:var(--nu-white);color:var(--nu-black);font-family:var(--font-sans);padding:96px 130px;display:flex;flex-direction:column;">
+  <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--nu-red);"></div>
+  <div class="rise" style="font-size:22px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--nu-red);">What I mean by skepticism</div>
+  <h2 class="rise" style="font-size:66px;line-height:1.04;font-weight:400;margin:16px 0 0;letter-spacing:-0.01em;max-width:1500px;">Not the disposition. A method.</h2>
+  <div class="rise" style="width:88px;height:6px;background:var(--nu-red);margin:28px 0 0;"></div>
+  <div class="rise2" style="display:flex;flex-direction:column;gap:26px;margin-top:48px;max-width:1480px;"><div style="display:flex;align-items:flex-start;gap:22px;"><div style="width:14px;height:14px;background:var(--nu-red);margin-top:15px;flex:0 0 auto;"></div><div style="font-size:31px;line-height:1.42;color:var(--nu-neutral-7);">Not eye-rolling cynicism, and not the refusal to form beliefs &mdash; that would be insane. I don't doubt the chair I'm sitting on.</div></div><div style="display:flex;align-items:flex-start;gap:22px;"><div style="width:14px;height:14px;background:var(--nu-red);margin-top:15px;flex:0 0 auto;"></div><div style="font-size:31px;line-height:1.42;color:var(--nu-neutral-7);">It's the <b>discipline of knowing how you formed a belief</b>, so you notice when the conditions that made it reliable have changed.</div></div><div style="display:flex;align-items:flex-start;gap:22px;"><div style="width:14px;height:14px;background:var(--nu-red);margin-top:15px;flex:0 0 auto;"></div><div style="font-size:31px;line-height:1.42;color:var(--nu-neutral-7);">The hard part isn't doubting a suspicious output. It's running the moves when the output <b>looks right</b> &mdash; fluent, specific, well-shaped. The primary enemy of skepticism isn't laziness. It's confidence.</div></div></div>
+</section>
+
+<section data-label="The four moves — checklist" data-speaker-notes="Here's the toolkit on one card. Descartes donates radical doubt — ask what would have to be true for this claim to be wrong, which turns doubt into a checkable list. Hume donates the limit of induction — the model's confidence is a property of the model, not the world. Popper donates falsifiability — a claim that can't be wrong isn't yet a claim. And Plato donates the cave, which we'll take next. These are tools; a structural engineer doesn't need the metaphysics of steel to load-test a beam." style="background:var(--nu-white);color:var(--nu-black);font-family:var(--font-sans);padding:72px 110px 56px;display:flex;flex-direction:column;align-items:center;">
+  <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--nu-red);"></div>
+  <div class="rise" style="align-self:flex-start;font-size:22px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--nu-red);">The portable checklist</div>
+  <h2 class="rise" style="align-self:flex-start;font-size:50px;line-height:1.04;font-weight:400;margin:12px 0 0;letter-spacing:-0.01em;">Four philosophers, four moves, four checkable questions</h2>
+  <img class="rise2" src="assets/four-moves-checklist.svg" alt="Four cards: Descartes, Hume, Popper, Plato, each with its move and the checkable question it produces." style="max-width:1400px;max-height:720px;margin-top:18px;object-fit:contain;" />
+  <div class="rise3" style="font-size:24px;line-height:1.36;color:var(--nu-neutral-5);margin-top:20px;max-width:1400px;text-align:center;">Descartes' radical doubt, Hume's limit of induction, Popper's falsifiability, Plato's cave. The move is the thing — you needn't believe the philosopher.</div>
+</section>
+
+<section data-label="Hume — the turkey" data-speaker-notes="Taleb's turkey. Fed every morning for a thousand days; each feeding raises its confidence that tomorrow brings food. By day 999 the belief is near-certain. On day 1000 the farmer arrives with an axe. The turkey wasn't foolish — it had good evidence, correctly processed. It knew the correlation and not the mechanism, and when the mechanism changed it had no way to notice. An AI trained on a hospital's history is doing exactly this. Watch where the confidence peaks: the instant before the catastrophe." style="background:var(--nu-white);color:var(--nu-black);font-family:var(--font-sans);padding:64px 110px 56px;display:flex;flex-direction:column;">
+  <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--nu-red);"></div>
+  <div class="rise" style="font-size:22px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--nu-red);">Hume's move · the limit of induction</div>
+  <h2 class="rise" style="font-size:50px;line-height:1.04;font-weight:400;margin:12px 0 0;letter-spacing:-0.01em;">The turkey knew the correlation. It did not know the mechanism.</h2>
+  <div data-chart="turkey-confidence-timeline" style="width:1480px;height:600px;margin-top:10px;"></div>
+</section>
+
+<section data-label="Plato — artifact vs world" data-speaker-notes="The move engineers most often skip. A model output is not the world — it's a shadow of the world, cast by a process the designers chose, on a wall the training data shaped. The move is three questions: what is the artifact, what is the world, what is the relationship between them? In the triage case the engineers reviewed the artifact — the score, the model, the validation set, the metrics — and never reviewed the world. The world was on a gurney in the waiting room. Run this hardest when the output is fluent." style="background:var(--nu-white);color:var(--nu-black);font-family:var(--font-sans);padding:72px 110px 56px;display:flex;flex-direction:column;align-items:center;">
+  <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--nu-red);"></div>
+  <div class="rise" style="align-self:flex-start;font-size:22px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--nu-red);">Plato's move · the cave</div>
+  <h2 class="rise" style="align-self:flex-start;font-size:50px;line-height:1.04;font-weight:400;margin:12px 0 0;letter-spacing:-0.01em;">The output is a shadow of the world, not the world</h2>
+  <img class="rise2" src="assets/artifact-vs-world.svg" alt="Two columns: the artifact the engineers reviewed versus the world they did not, joined by a statistical shadow that broke at deployment." style="max-width:1400px;max-height:720px;margin-top:18px;object-fit:contain;" />
+  <div class="rise3" style="font-size:24px;line-height:1.36;color:var(--nu-neutral-5);margin-top:20px;max-width:1400px;text-align:center;">The engineers reviewed the artifact — score, model, metrics. The world was on a gurney in the waiting room.</div>
+</section>
+
+<section data-label="Solve-verify asymmetry" data-speaker-notes="In classical computer science, verifying is easier than producing — hand me the factors and I'll check them fast. In AI deployment the asymmetry inverts. The model produces an output for a fraction of a cent in milliseconds; verifying it takes a clinician with twenty minutes, or an hour of senior labor querying the actual system state. Note the log axis — the gap is real, roughly seven orders of magnitude. If you don't budget for verification you won't get it, and the unverified outputs all look like successes until one of them is the patient, or the loan, or the email that wasn't deleted." style="background:var(--nu-white);color:var(--nu-black);font-family:var(--font-sans);padding:64px 110px 56px;display:flex;flex-direction:column;">
+  <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--nu-red);"></div>
+  <div class="rise" style="font-size:22px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--nu-red);">The structural observation</div>
+  <h2 class="rise" style="font-size:50px;line-height:1.04;font-weight:400;margin:12px 0 0;letter-spacing:-0.01em;">Producing an output is cheap. Verifying it is expensive.</h2>
+  <div data-chart="cost-asymmetry" style="width:1480px;height:600px;margin-top:10px;"></div>
+</section>
+
+<section data-label="Supervising the machine" data-speaker-notes="Section divider. Part two: the five supervisory capacities and the trap that defeats them." style="background:var(--nu-red);color:var(--nu-white);font-family:var(--font-sans);padding:110px 130px;display:flex;flex-direction:column;justify-content:center;">
+  <div class="rise" style="font-size:26px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.78);">Part two</div>
+  <h2 class="rise2" style="font-size:108px;line-height:1.0;font-weight:400;margin:26px 0 0;letter-spacing:-0.02em;">Supervising the machine</h2>
+  <div class="rise3" style="font-size:34px;line-height:1.3;color:rgba(255,255,255,0.92);margin-top:36px;max-width:1280px;">If verification is the problem, what does the human actually do? Capacities, not vibes.</div>
+</section>
+
+<section data-label="Five supervisory capacities" data-speaker-notes="Five things a human supervisor can do that the model cannot do for itself. Plausibility auditing — the experienced twitch that says this output can't be right. Problem formulation — most AI failures are failures of formulation, not performance; the triage tool answered a different question than the one that mattered. Tool orchestration — including the hardest call, no tool yet, don't deploy. Interpretive judgment — the same number means different things in different domains. And executive integration — somewhere the buck has to stop. By the end of the book you'll name, for any deployment, which capacity is exercised and by whom. Where you can't, you've found a gap, and gaps are where the patients die." style="background:var(--nu-white);color:var(--nu-black);font-family:var(--font-sans);padding:72px 110px 56px;display:flex;flex-direction:column;align-items:center;">
+  <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--nu-red);"></div>
+  <div class="rise" style="align-self:flex-start;font-size:22px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--nu-red);">What the supervisor does that the model cannot</div>
+  <h2 class="rise" style="align-self:flex-start;font-size:50px;line-height:1.04;font-weight:400;margin:12px 0 0;letter-spacing:-0.01em;">The Five Supervisory Capacities</h2>
+  <img class="rise2" src="assets/five-supervisory-capacities.svg" alt="Five capacities, each with what the supervisor does and what its absence looks like." style="max-width:1400px;max-height:720px;margin-top:18px;object-fit:contain;" />
+  <div class="rise3" style="font-size:24px;line-height:1.36;color:var(--nu-neutral-5);margin-top:20px;max-width:1400px;text-align:center;">Plausibility auditing, problem formulation, tool orchestration, interpretive judgment, executive integration. Where you can't name the capacity, you've found a gap.</div>
+</section>
+
+<section data-label="The fluency trap" data-speaker-notes="The single most operationally important idea in the chapter. The fluency trap has two moves. First, fluency raises confidence in the output — no surprise. Second, and this is the trap, that confidence raises your confidence in your own evaluation, so fluency boosts wrong evaluations as readily as right ones. Ash's agent produced fluent, well-formed prose, and the fluency did the epistemic work the verification should have done. In human speech, clear prose usually means clear thinking. AI broke that heuristic — form and content are independent now." style="background:var(--nu-white);color:var(--nu-black);font-family:var(--font-sans);padding:96px 130px;display:flex;flex-direction:column;">
+  <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--nu-red);"></div>
+  <div class="rise" style="font-size:22px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--nu-red);">The fluency trap</div>
+  <h2 class="rise" style="font-size:66px;line-height:1.04;font-weight:400;margin:16px 0 0;letter-spacing:-0.01em;max-width:1500px;">Fluency is an evaluation booster — and it boosts wrong answers too</h2>
+  <div class="rise" style="width:88px;height:6px;background:var(--nu-red);margin:28px 0 0;"></div>
+  <div class="rise2" style="display:flex;flex-direction:column;gap:26px;margin-top:48px;max-width:1480px;"><div style="display:flex;align-items:flex-start;gap:22px;"><div style="width:14px;height:14px;background:var(--nu-red);margin-top:15px;flex:0 0 auto;"></div><div style="font-size:31px;line-height:1.42;color:var(--nu-neutral-7);">Stage one, expected: the more fluent the output, the more confident you are in <b>the output</b>.</div></div><div style="display:flex;align-items:flex-start;gap:22px;"><div style="width:14px;height:14px;background:var(--nu-red);margin-top:15px;flex:0 0 auto;"></div><div style="font-size:31px;line-height:1.42;color:var(--nu-neutral-7);">Stage two, the trap: that confidence raises your confidence in <b>your own evaluation</b> &mdash; so any answer of the same shape gets waved through.</div></div><div style="display:flex;align-items:flex-start;gap:22px;"><div style="width:14px;height:14px;background:var(--nu-red);margin-top:15px;flex:0 0 auto;"></div><div style="font-size:31px;line-height:1.42;color:var(--nu-neutral-7);">Form and content are <b>independent</b>. A sentence can be maximally fluent and maximally wrong at once. AI broke the heuristic that clear prose signals clear thinking.</div></div></div>
+</section>
+
+<section data-label="Fluency trap — mechanism" data-speaker-notes="Here's the mechanism, and naming it is what makes it interruptible. The Popperian move is the antidote: before you read the output, specify what a wrong answer would look like — specifically, not vaguely. That prior specification is your anchor. Without it you're reading with no criterion except fluency, and fluency is the trap. Note this is not a flaw the next model fixes — it's structural. These systems learn to produce outputs that resemble correct outputs, and in the cases that matter most — the edge cases, the out-of-distribution inputs — resemblance and correctness come apart." style="background:var(--nu-white);color:var(--nu-black);font-family:var(--font-sans);padding:72px 110px 56px;display:flex;flex-direction:column;align-items:center;">
+  <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--nu-red);"></div>
+  <div class="rise" style="align-self:flex-start;font-size:22px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--nu-red);">Naming it makes it interruptible</div>
+  <h2 class="rise" style="align-self:flex-start;font-size:50px;line-height:1.04;font-weight:400;margin:12px 0 0;letter-spacing:-0.01em;">Specify the wrong answer before you read the output</h2>
+  <img class="rise2" src="assets/fluency-trap-mechanism.svg" alt="Two-stage mechanism from fluent output to confidence in the output to confidence in your own evaluation, plus the form-versus-content independence." style="max-width:1400px;max-height:720px;margin-top:18px;object-fit:contain;" />
+  <div class="rise3" style="font-size:24px;line-height:1.36;color:var(--nu-neutral-5);margin-top:20px;max-width:1400px;text-align:center;">The interrupt: state what a wrong answer would look like first. That prior specification is your anchor; without it, your only criterion is fluency.</div>
+</section>
+
+<section data-label="Skepticism as a team practice" data-speaker-notes="The moves can be performed by one person in the moment, but the durable deployments make them organizational discipline. Individual skepticism is fragile — it depends on one person on one day under pressure remembering. Institutional skepticism encodes the moves into the workflow, into the checklist, into the monitoring dashboard, into the handoff protocol. This is an architectural point, not a bureaucratic one: when you design a system that hands AI outputs to humans, you're choosing where the skeptical moves happen, by whom, in what order. If you don't design for them, they won't happen reliably — and the failures in this chapter will happen in your organization." style="background:var(--nu-white);color:var(--nu-black);font-family:var(--font-sans);padding:96px 130px;display:flex;flex-direction:column;">
+  <div style="position:absolute;top:0;left:0;right:0;height:8px;background:var(--nu-red);"></div>
+  <div class="rise" style="font-size:22px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--nu-red);">From habit to architecture</div>
+  <h2 class="rise" style="font-size:66px;line-height:1.04;font-weight:400;margin:16px 0 0;letter-spacing:-0.01em;max-width:1500px;">Individual skepticism is fragile. Institutional skepticism is designed.</h2>
+  <div class="rise" style="width:88px;height:6px;background:var(--nu-red);margin:28px 0 0;"></div>
+  <div class="rise2" style="display:flex;flex-direction:column;gap:26px;margin-top:48px;max-width:1480px;"><div style="display:flex;align-items:flex-start;gap:22px;"><div style="width:14px;height:14px;background:var(--nu-red);margin-top:15px;flex:0 0 auto;"></div><div style="font-size:31px;line-height:1.42;color:var(--nu-neutral-7);">Individual skepticism depends on whether one tired person, under deadline, remembers to run the moves. People forget.</div></div><div style="display:flex;align-items:flex-start;gap:22px;"><div style="width:14px;height:14px;background:var(--nu-red);margin-top:15px;flex:0 0 auto;"></div><div style="font-size:31px;line-height:1.42;color:var(--nu-neutral-7);">Institutional skepticism <b>encodes the moves into the workflow</b>: the falsification question in the deployment checklist, the shift-check for distribution drift in the handoff protocol.</div></div><div style="display:flex;align-items:flex-start;gap:22px;"><div style="width:14px;height:14px;background:var(--nu-red);margin-top:15px;flex:0 0 auto;"></div><div style="font-size:31px;line-height:1.42;color:var(--nu-neutral-7);">For each capacity, ask: where is it exercised, by whom, and what do they see that makes exercising it possible? If the answer is &ldquo;nobody,&rdquo; you've found an <b>undefended gap</b>.</div></div></div>
+</section>
+
+<section data-label="Close" data-speaker-notes="Close by planting the Pebble: Ash and Agents of Chaos Case One, the single concrete failure we return to in Chapters 5 through 10 from six different angles. Write his name in the margin. Then compress the chapter: AI systems can be technically correct and produce harm; fluent and wrong; report success and have done nothing. The capacities to catch this are supervisory, in humans, and largely undeveloped in the engineering education most of us got. The rest of the book is that development. Next chapter: probability — because a 99-percent-accurate test can be useless in a way that costs lives." style="background:var(--nu-black);color:var(--nu-white);font-family:var(--font-sans);padding:120px 130px;display:flex;flex-direction:column;justify-content:center;">
+  <div style="position:absolute;top:0;left:0;right:0;height:10px;background:var(--nu-red);"></div>
+  <div class="rise" style="font-size:22px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--nu-red);">Meet Ash — and what's next</div>
+  <h2 class="rise2" style="font-size:84px;line-height:1.04;font-weight:400;margin:28px 0 0;letter-spacing:-0.02em;max-width:1560px;">Producing is cheap. Verifying is expensive. The rest of the book is the development.</h2>
+  <div class="rise3" style="width:120px;height:8px;background:var(--nu-red);margin:42px 0 0;"></div>
+  <div class="rise3" style="font-size:30px;line-height:1.4;color:var(--nu-neutral-2);margin-top:38px;max-width:1440px;">Ash's agent is our <b style="color:var(--nu-white);">Pebble</b> &mdash; one concrete failure whose ripples reach Chapters 5 through 10, each applying a different validation lens. Four moves, one structural observation, five capacities, one warning: the fluency trap. You'll use all of them on every chapter that follows.</div>
+  <div class="rise3" style="font-size:24px;color:var(--nu-neutral-4);margin-top:40px;">Next — Chapter 2: probability. A 99%-accurate test can be useless in a way that costs lives. We'll work the math on the page, slowly.</div>
+</section>
+
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this._ready = false;
+    this._timer = null;
+    this._drawers = {};
+    this._onSlide = (e) => this._activate(e && e.detail && e.detail.slide);
+    document.addEventListener('slidechange', this._onSlide);
+    this._wait();
+  }
+  componentWillUnmount() {
+    document.removeEventListener('slidechange', this._onSlide);
+    if (this._timer) clearInterval(this._timer);
+  }
+  _wait() {
+    const have = window.d3 && window.katex && document.querySelector('[data-tex],[data-chart]');
+    if (!have) { setTimeout(() => this._wait(), 70); return; }
+    this._renderMath();
+    this._define();
+    this._ready = true;
+    const active = document.querySelector('section[data-deck-active]') || document.querySelector('section');
+    this._activate(active);
+  }
+  _renderMath() {
+    document.querySelectorAll('[data-tex]').forEach((el) => {
+      if (el._k) return;
+      try {
+        window.katex.render(el.textContent.trim(), el, {
+          displayMode: el.hasAttribute('data-display'),
+          throwOnError: false,
+        });
+        el._k = true;
+      } catch (err) { /* leave raw */ }
+    });
+  }
+  _activate(slide) {
+    if (!this._ready || !slide || !slide.querySelector) return;
+    this._renderMath();
+    if (this._timer) { clearInterval(this._timer); this._timer = null; }
+    const c = slide.querySelector('[data-chart]');
+    if (!c) return;
+    const fn = this._drawers[c.getAttribute('data-chart')];
+    if (fn) try { fn(c); } catch (err) { console.warn('chart', err); }
+  }
+  _define() {
+    const d3 = window.d3;
+    const RED = '#C8102E', BLACK = '#111111', N7 = '#2D2926', N5 = '#545454',
+      N4 = '#787878', N3 = '#909090', N2 = '#C4C4C4', N1 = '#E3E3E3', GOLD = '#A4804A';
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const D = RM ? 0 : 850;
+    const FONT = '"Lato", system-ui, sans-serif';
+    const clear = (c) => { c.innerHTML = ''; };
+    const svgIn = (c, w, h) => d3.select(c).append('svg')
+      .attr('width', w).attr('height', h).attr('viewBox', `0 0 ${w} ${h}`)
+      .style('overflow', 'visible').style('display', 'block');
+    this._drawers['turkey-confidence-timeline'] = (c) => {
+  // The turkey problem (Taleb): the turkey's confidence that tomorrow brings food
+  // rises with every fed day — right up to day 1000, when the farmer arrives with
+  // the axe. The point of the chart: the model's confidence is a property of the
+  // model, not the world. Confidence peaks the instant before the catastrophe.
+  // Honest encoding: zero baseline, one red accent (the break), grays otherwise,
+  // mono numerals, no blue.
+  const d3 = window.d3;
+  const RED = '#C8102E', INK = '#2a1a0e', N5 = '#545454', N1 = '#E3E3E3';
+  const FONT = '"Lato", system-ui, sans-serif';
+  const MONO = 'ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace';
+  c.innerHTML = '';
+  const W = 1480, H = 600, m = { t: 54, r: 210, b: 68, l: 84 };
+  const svg = d3.select(c).append('svg')
+    .attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`)
+    .attr('role', 'img').attr('aria-label',
+      'A line rising steadily as the turkey is fed each day for 1000 days, then collapsing to zero on day 1000 when the farmer arrives.')
+    .style('overflow', 'visible').style('display', 'block');
+
+  const x = d3.scaleLinear().domain([1, 1000]).range([m.l, W - m.r]);
+  const y = d3.scaleLinear().domain([0, 1]).range([H - m.b, m.t]);
+
+  // confidence: a saturating rise (more fed days => higher belief tomorrow feeds too)
+  const rise = d3.range(1, 1000).map((d) => ({ d, v: 0.98 * (1 - Math.exp(-d / 260)) }));
+  const peak = rise[rise.length - 1].v;
+
+  // axes: zero baseline, sparse gray ticks
+  const xAxis = svg.append('g').attr('transform', `translate(0,${H - m.b})`);
+  xAxis.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('stroke', INK).attr('stroke-width', 1.5);
+  [1, 250, 500, 750, 1000].forEach((t) => {
+    xAxis.append('text').attr('x', x(t)).attr('y', 30).attr('text-anchor', 'middle')
+      .attr('font-family', MONO).attr('font-size', 18).attr('fill', N5).text(t);
+  });
+  svg.append('text').attr('x', (m.l + W - m.r) / 2).attr('y', H - 14).attr('text-anchor', 'middle')
+    .attr('font-family', FONT).attr('font-size', 19).attr('fill', N5).text('Days fed');
+  const yAxis = svg.append('g');
+  [0, 0.5, 1].forEach((t) => {
+    yAxis.append('text').attr('x', m.l - 16).attr('y', y(t) + 6).attr('text-anchor', 'end')
+      .attr('font-family', MONO).attr('font-size', 18).attr('fill', N5).text(d3.format('.0%')(t));
+    yAxis.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(t)).attr('y2', y(t))
+      .attr('stroke', N1).attr('stroke-width', 1);
+  });
+  svg.append('text').attr('transform', `translate(${m.l - 58},${(m.t + H - m.b) / 2}) rotate(-90)`)
+    .attr('text-anchor', 'middle').attr('font-family', FONT).attr('font-size', 19).attr('fill', N5)
+    .text("Turkey's confidence tomorrow brings food");
+
+  // the rising belief (ink line, drawn on)
+  const line = d3.line().x((p) => x(p.d)).y((p) => y(p.v)).curve(d3.curveMonotoneX);
+  const path = svg.append('path').datum(rise).attr('fill', 'none')
+    .attr('stroke', INK).attr('stroke-width', 3.5).attr('d', line);
+  const L = path.node().getTotalLength();
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  path.attr('stroke-dasharray', `${L} ${L}`).attr('stroke-dashoffset', RM ? 0 : L)
+    .transition().duration(RM ? 0 : 1400).ease(d3.easeCubicOut).attr('stroke-dashoffset', 0);
+
+  // the break: day 1000, confidence collapses to 0 (the axe)
+  const bx = x(1000);
+  const drop = svg.append('g').attr('opacity', 0);
+  drop.append('line').attr('x1', bx).attr('y1', y(peak)).attr('x2', bx).attr('y2', y(0))
+    .attr('stroke', RED).attr('stroke-width', 3.5).attr('stroke-dasharray', '2 7').attr('stroke-linecap', 'round');
+  drop.append('circle').attr('cx', bx).attr('cy', y(peak)).attr('r', 8).attr('fill', RED);
+  drop.append('circle').attr('cx', bx).attr('cy', y(0)).attr('r', 8).attr('fill', RED);
+  drop.transition().delay(RM ? 0 : 1500).duration(RM ? 0 : 500).attr('opacity', 1);
+
+  // annotations
+  const ann = svg.append('g').attr('opacity', 0);
+  ann.append('text').attr('x', bx + 18).attr('y', y(peak) + 4).attr('font-family', FONT)
+    .attr('font-weight', 700).attr('font-size', 22).attr('fill', RED).text('Day 1000:');
+  ann.append('text').attr('x', bx + 18).attr('y', y(peak) + 32).attr('font-family', FONT)
+    .attr('font-size', 21).attr('fill', INK).text('the farmer arrives');
+  ann.append('text').attr('x', bx + 18).attr('y', y(peak) + 58).attr('font-family', FONT)
+    .attr('font-size', 21).attr('fill', INK).text('with an axe.');
+  ann.append('text').attr('x', bx + 18).attr('y', y(0.30)).attr('font-family', FONT)
+    .attr('font-size', 19).attr('fill', N5).text('Confidence peaks');
+  ann.append('text').attr('x', bx + 18).attr('y', y(0.30) + 26).attr('font-family', FONT)
+    .attr('font-size', 19).attr('fill', N5).text('the instant before');
+  ann.append('text').attr('x', bx + 18).attr('y', y(0.30) + 52).attr('font-family', FONT)
+    .attr('font-size', 19).attr('fill', N5).text('the catastrophe.');
+  ann.transition().delay(RM ? 0 : 1900).duration(RM ? 0 : 500).attr('opacity', 1);
+};
+    this._drawers['cost-asymmetry'] = (c) => {
+  // The solve-verify asymmetry, inverted. In classical CS, verifying is cheap and
+  // producing is dear. In AI deployment it flips: the model PRODUCES an output for
+  // a fraction of a cent; VERIFYING it costs an hour of senior clinical/eng labor.
+  // Encoded on a log axis (the gap spans ~7 orders of magnitude) so the disparity
+  // is shown honestly rather than exaggerated or hidden. One red = the expensive
+  // side (the cost that doesn't scale). Mono numerals, zero-anchored log ticks.
+  const d3 = window.d3;
+  const RED = '#C8102E', INK = '#2a1a0e', N5 = '#545454', N3 = '#909090', N1 = '#E3E3E3';
+  const FONT = '"Lato", system-ui, sans-serif';
+  const MONO = 'ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace';
+  c.innerHTML = '';
+  const W = 1480, H = 600, m = { t: 60, r: 60, b: 96, l: 96 };
+  const svg = d3.select(c).append('svg')
+    .attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`)
+    .attr('role', 'img').attr('aria-label',
+      'Producing an AI output costs about one hundredth of a cent; verifying it costs about seventy-five dollars of senior labor — roughly seven orders of magnitude more.')
+    .style('overflow', 'visible').style('display', 'block');
+
+  // dollars per unit
+  const data = [
+    { k: 'Produce the output', sub: 'model runs · milliseconds', v: 0.0001, hl: false },
+    { k: 'Verify the output', sub: 'senior human · ~1 hour', v: 75, hl: true },
+  ];
+  const yLog = d3.scaleLog().domain([0.0001, 100]).range([H - m.b, m.t]);
+  const x = d3.scaleBand().domain(data.map((d) => d.k)).range([m.l, W - m.r]).padding(0.42);
+
+  // log gridlines + $ labels
+  const ticks = [0.0001, 0.001, 0.01, 0.1, 1, 10, 100];
+  const fmt = (t) => t < 1 ? `$${t}` : `$${d3.format(',')(t)}`;
+  ticks.forEach((t) => {
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', yLog(t)).attr('y2', yLog(t))
+      .attr('stroke', N1).attr('stroke-width', 1);
+    svg.append('text').attr('x', m.l - 16).attr('y', yLog(t) + 5).attr('text-anchor', 'end')
+      .attr('font-family', MONO).attr('font-size', 16).attr('fill', N5).text(fmt(t));
+  });
+  svg.append('text').attr('transform', `translate(${m.l - 66},${(m.t + H - m.b) / 2}) rotate(-90)`)
+    .attr('text-anchor', 'middle').attr('font-family', FONT).attr('font-size', 19).attr('fill', N5)
+    .text('Cost per output (log scale, USD)');
+
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const base = yLog(0.0001);
+  data.forEach((d, i) => {
+    const bx = x(d.k), bw = x.bandwidth();
+    const bar = svg.append('rect').attr('x', bx).attr('width', bw)
+      .attr('y', base).attr('height', 0)
+      .attr('fill', d.hl ? RED : N3);
+    bar.transition().delay(RM ? 0 : i * 250).duration(RM ? 0 : 700).ease(d3.easeCubicOut)
+      .attr('y', yLog(d.v)).attr('height', base - yLog(d.v));
+    // value label above the bar
+    const lab = svg.append('text').attr('x', bx + bw / 2).attr('y', yLog(d.v) - 16)
+      .attr('text-anchor', 'middle').attr('font-family', MONO).attr('font-weight', 700)
+      .attr('font-size', 30).attr('fill', d.hl ? RED : INK).attr('opacity', 0)
+      .text(d.v < 1 ? `${(d.v * 100).toFixed(2)}¢` : `$${d.v}`);
+    lab.transition().delay(RM ? 0 : i * 250 + 700).duration(RM ? 0 : 400).attr('opacity', 1);
+    // category + sub label
+    svg.append('text').attr('x', bx + bw / 2).attr('y', H - m.b + 34).attr('text-anchor', 'middle')
+      .attr('font-family', FONT).attr('font-weight', 700).attr('font-size', 24).attr('fill', INK).text(d.k);
+    svg.append('text').attr('x', bx + bw / 2).attr('y', H - m.b + 62).attr('text-anchor', 'middle')
+      .attr('font-family', FONT).attr('font-size', 19).attr('fill', N5).text(d.sub);
+  });
+
+  // the takeaway bracket between the two bars
+  const g = svg.append('g').attr('opacity', 0);
+  const x1 = x(data[0].k) + x.bandwidth() / 2, x2 = x(data[1].k) + x.bandwidth() / 2;
+  const yb = m.t - 22;
+  g.append('text').attr('x', (x1 + x2) / 2).attr('y', yb).attr('text-anchor', 'middle')
+    .attr('font-family', FONT).attr('font-weight', 700).attr('font-size', 22).attr('fill', RED)
+    .text('~750,000× more expensive to verify than to produce');
+  g.transition().delay(RM ? 0 : 1200).duration(RM ? 0 : 500).attr('opacity', 1);
+};
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

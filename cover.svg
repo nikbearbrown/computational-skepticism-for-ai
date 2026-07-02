@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 2560" width="1600" height="2560" preserveAspectRatio="xMidYMid meet" shape-rendering="geometricPrecision">
+  <g id="background"><rect x="0" y="0" width="1600" height="2560" fill="#1B6B5A"/></g>
+  <g id="symbol-fragments" transform="rotate(10, 800, 830)">
+    <polygon points="300,415 382,466 442,932 342,943" fill="#F5F0E8"/>
+    <polygon points="430,419 512,437 572,929 472,982" fill="#F5F0E8"/>
+    <polygon points="560,437 642,444 702,913 602,947" fill="#F5F0E8"/>
+    <polygon points="690,360 772,419 832,1058 732,1062" fill="#F5F0E8"/>
+    <polygon points="820,311 902,332 962,1077 862,1082" fill="#F5F0E8"/>
+    <polygon points="950,327 1032,381 1092,931 992,970" fill="#F5C518"/>
+    <polygon points="1080,511 1162,553 1222,1099 1122,1119" fill="#F5F0E8"/>
+  </g>
+  <g id="title-letterforms">
+    <text x="120" y="1510" font-family="Arial Black, Arial, sans-serif" font-size="250" font-weight="900" letter-spacing="0" fill="#F5F0E8" textLength="1300" lengthAdjust="spacingAndGlyphs">COMPUTATIONAL</text>
+    <text x="120" y="1768" font-family="Arial Black, Arial, sans-serif" font-size="250" font-weight="900" letter-spacing="0" fill="#F5C518" textLength="1300" lengthAdjust="spacingAndGlyphs">SKEPTICISM</text>
+    <text x="120" y="2026" font-family="Arial Black, Arial, sans-serif" font-size="250" font-weight="900" letter-spacing="0" fill="#F5F0E8" textLength="1300" lengthAdjust="spacingAndGlyphs">FOR AI</text>
+  </g>
+</svg>

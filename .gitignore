@@ -1,0 +1,41 @@
+# --- Media & large binaries — NEVER commit unless explicitly asked ---
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.mp3
+*.wav
+*.m4a
+*.aac
+*.flac
+*.zip
+*.tar
+*.tar.gz
+*.gz
+*.pack
+*.psd
+*.aep
+
+# --- Build artifacts & dependencies (regenerable) ---
+node_modules/
+**/node_modules/
+**/remotion/out/
+**/remotion/node_modules/
+**/.remotion/
+**/.cache/
+chrome-headless-shell
+out/
+dist/
+build/
+output/
+
+# --- Lecture-video renders/audio (belong in Unreal Reels, not the book) ---
+lectures/**/mp3/
+lectures/**/deck-stills/
+lectures/**/remotion/
+
+# --- OS / editor cruft ---
+.DS_Store
+*.swp
+__pycache__/
+*.pyc

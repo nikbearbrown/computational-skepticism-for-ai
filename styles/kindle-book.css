@@ -1,0 +1,119 @@
+/*
+ * kindle-book.css — Botspeak-specific overrides on top of kindle.css
+ * Loaded after kindle.css; overrides win on conflict.
+ */
+
+/* ------------------------------------------------------------------ Title block */
+
+/* The frontmatter title page (h1 followed immediately by italic subtitle). */
+h1 + p em:first-child {
+  display: block;
+  font-style: italic;
+  font-size: 1.2em;
+  color: #4a4540;
+  margin: -0.4em 0 1.2em 0;
+  font-weight: normal;
+}
+
+/* ------------------------------------------------------------------ Chapter epigraphs */
+
+/* The italic line right under each chapter title — treat as epigraph. */
+h1 + p em:only-child {
+  display: block;
+  text-align: center;
+  font-style: italic;
+  font-size: 1em;
+  color: #4a4540;
+  margin: 0.4em auto 1.6em auto;
+  max-width: 75%;
+  line-height: 1.4;
+}
+
+/* ------------------------------------------------------------------ AI Wayback Machine sections */
+
+h2:has(+ p > strong:first-child) {
+  /* Light tinting if the renderer supports :has — degrades gracefully otherwise. */
+}
+
+/* The portrait stub: image + italic single-line caption. */
+p > img + em,
+img + p em {
+  font-size: 0.86em;
+  color: #4a4540;
+  text-align: center;
+  display: block;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+/* ------------------------------------------------------------------ Run-this prompt blocks */
+
+/* Code blocks inside the Wayback Machine sections look like prompt cards. */
+pre {
+  border-left: 2px solid #4a4540;
+  background: #f5f2ee;
+  font-size: 0.88em;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------------ Exercise sections */
+
+/* H3 exercise headers (Warm-Up, Application, Synthesis, Challenge) */
+h3 {
+  font-size: 1.1em;
+  font-style: normal;
+  font-weight: bold;
+  margin-top: 1.2em;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid #c8c4c0;
+  padding-bottom: 0.2em;
+}
+
+/* ------------------------------------------------------------------ Tables — book overrides */
+
+/* Centered checkbox cells in the self-assessment grid (Ch. 2 Fig. 2.4). */
+table td:nth-child(n+2):nth-child(-n+5) {
+  text-align: center;
+  font-size: 1.1em;
+}
+
+/* ------------------------------------------------------------------ Hard rules between scene shifts */
+
+hr {
+  border: 0;
+  text-align: center;
+  margin: 1.6em 0;
+  color: #8a8480;
+  width: 100%;
+}
+
+hr::before {
+  content: "* * *";
+  display: block;
+  font-size: 1.1em;
+  letter-spacing: 0.6em;
+  color: #8a8480;
+}
+
+/* ------------------------------------------------------------------ Block quotes for spec templates */
+
+blockquote {
+  border-left-color: #1a1714;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #f5f2ee;
+  padding: 0.6em 0.9em;
+  margin: 0.9em 0;
+}
+
+blockquote p {
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------------ Front matter */
+
+/* Frontmatter sections (How to read, Copyright, Dedication) get smaller H2s. */
+section.frontmatter h2 {
+  font-size: 1.2em;
+}

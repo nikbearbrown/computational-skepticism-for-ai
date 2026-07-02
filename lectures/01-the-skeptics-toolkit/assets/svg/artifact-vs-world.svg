@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 780" role="img" aria-labelledby="tt ds" font-family="Lato, system-ui, sans-serif">
+  <title id="tt">The artifact is not the world</title>
+  <desc id="ds">Two columns. Left: the artifact the engineers reviewed — the triage score, the model, the validation set, the metrics. Right: the world they did not review — the patient with a clot on a gurney. The relationship between them is a statistical shadow, and it broke at deployment.</desc>
+  <rect width="1600" height="780" fill="#FFFFFF"/>
+  <rect x="0" y="0" width="1600" height="8" fill="#C8102E"/>
+  <text x="64" y="86" font-size="26" font-weight="700" letter-spacing="3" fill="#C8102E">THE CAVE · PLATO'S MOVE</text>
+  <text x="64" y="140" font-size="46" fill="#2a1a0e">The output is a shadow of the world, not the world</text>
+  <line x1="64" y1="168" x2="152" y2="168" stroke="#C8102E" stroke-width="5"/>
+
+  <!-- ARTIFACT column -->
+  <g class="pf pf-0">
+    <rect x="64" y="212" width="640" height="470" fill="#FFFFFF" stroke="#2a1a0e" stroke-width="2"/>
+    <text x="96" y="272" font-size="24" font-weight="700" letter-spacing="2" fill="#545454">THE ARTIFACT</text>
+    <text x="96" y="316" font-size="32" fill="#2a1a0e">What the engineers reviewed</text>
+    <line x1="96" y1="340" x2="672" y2="340" stroke="#E3E3E3" stroke-width="1"/>
+  </g>
+  <g class="pf pf-1" font-size="26" fill="#2a1a0e"><circle cx="112" cy="390" r="6" fill="#545454"/><text x="136" y="398">The triage score: &#8220;low-acuity&#8221;</text></g>
+  <g class="pf pf-2" font-size="26" fill="#2a1a0e"><circle cx="112" cy="446" r="6" fill="#545454"/><text x="136" y="454">The model and its learned patterns</text></g>
+  <g class="pf pf-3" font-size="26" fill="#2a1a0e"><circle cx="112" cy="502" r="6" fill="#545454"/><text x="136" y="510">The validation set</text><circle cx="112" cy="558" r="6" fill="#545454"/><text x="136" y="566">The published metrics</text></g>
+  <g class="pf pf-4"><text x="96" y="636" font-size="22" fill="#545454" font-style="italic">By every measure built into the system, it succeeded.</text></g>
+
+  <!-- relationship arrow between -->
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#909090"/>
+    </marker>
+  </defs>
+  <g class="pf pf-5">
+    <line x1="712" y1="447" x2="888" y2="447" stroke="#909090" stroke-width="2.5" stroke-dasharray="3 8" marker-end="url(#ah)" marker-start="url(#ah)"/>
+    <text x="800" y="420" text-anchor="middle" font-size="20" fill="#545454" font-weight="700">statistical</text>
+    <text x="800" y="486" text-anchor="middle" font-size="20" fill="#545454">shadow</text>
+  </g>
+
+  <!-- WORLD column -->
+  <g class="pf pf-6">
+    <rect x="896" y="212" width="640" height="470" fill="#FBE7EA" stroke="#C8102E" stroke-width="2"/>
+    <text x="928" y="272" font-size="24" font-weight="700" letter-spacing="2" fill="#C8102E">THE WORLD</text>
+    <text x="928" y="316" font-size="32" fill="#2a1a0e">What they did not review</text>
+    <line x1="928" y1="340" x2="1504" y2="340" stroke="#C8102E" stroke-width="1"/>
+  </g>
+  <g class="pf pf-7" font-size="26" fill="#2a1a0e"><circle cx="944" cy="390" r="6" fill="#C8102E"/><text x="968" y="398">A 49-year-old woman, swollen leg</text></g>
+  <g class="pf pf-8" font-size="26" fill="#2a1a0e"><circle cx="944" cy="446" r="6" fill="#C8102E"/><text x="968" y="454">A clot the model had no signal for</text></g>
+  <g class="pf pf-9" font-size="26" fill="#2a1a0e"><circle cx="944" cy="502" r="6" fill="#C8102E"/><text x="968" y="510">Four hours in the waiting room</text><circle cx="944" cy="558" r="6" fill="#C8102E"/><text x="968" y="566">The clot moves to the lung</text></g>
+  <g class="pf pf-10"><text x="928" y="636" font-size="22" fill="#C8102E" font-weight="700">A patient was dead. The system had succeeded.</text></g>
+
+  <g class="pf pf-11"><text x="64" y="742" font-size="21" fill="#545454">The shadow is a real shadow. The shadow is not the thing. When the relationship breaks and no one is watching the world &#8212; that is where the patients die.</text></g>
+</svg>

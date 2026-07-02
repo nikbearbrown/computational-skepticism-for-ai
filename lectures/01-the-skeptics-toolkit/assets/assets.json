@@ -1,0 +1,151 @@
+{
+  "chapter": "01-the-skeptics-toolkit",
+  "source": "chapters/01-the-skeptics-toolkit.md",
+  "status": "pool — candidates only, nothing forced into the deck",
+  "assets": [
+    {
+      "id": "01-the-skeptics-toolkit-book-fig-01",
+      "kind": "figure",
+      "concept": "Cartesian doubt as an inspection protocol",
+      "source": "book",
+      "file": "book/01-the-skeptics-toolkit-fig-01.svg",
+      "status": "placeholder",
+      "notes": "shipped with the book; formats: svg, png, jpg | auto-flagged: generic stub bars (title words as bar labels, not the real concept)"
+    },
+    {
+      "id": "01-the-skeptics-toolkit-book-fig-02",
+      "kind": "figure",
+      "concept": "The turkey problem as a confidence timeline",
+      "source": "book",
+      "file": "book/01-the-skeptics-toolkit-fig-02.svg",
+      "status": "placeholder",
+      "notes": "shipped with the book; formats: svg, png, jpg | auto-flagged: generic stub bars (title words as bar labels, not the real concept)"
+    },
+    {
+      "id": "01-the-skeptics-toolkit-book-fig-03",
+      "kind": "figure",
+      "concept": "book figure 3",
+      "source": "book",
+      "file": "book/01-the-skeptics-toolkit-fig-03.svg",
+      "status": "placeholder",
+      "notes": "shipped with the book; formats: svg, png | auto-flagged: generic stub bars (title words as bar labels, not the real concept)"
+    },
+    {
+      "id": "01-the-skeptics-toolkit-book-fig-04",
+      "kind": "figure",
+      "concept": "Two-column split",
+      "source": "book",
+      "file": "book/01-the-skeptics-toolkit-fig-04.svg",
+      "status": "placeholder",
+      "notes": "shipped with the book; formats: svg, png, jpg | auto-flagged: generic stub bars (title words as bar labels, not the real concept)"
+    },
+    {
+      "id": "01-the-skeptics-toolkit-book-fig-05",
+      "kind": "figure",
+      "concept": "Cost asymmetry bar chart",
+      "source": "book",
+      "file": "book/01-the-skeptics-toolkit-fig-05.svg",
+      "status": "placeholder",
+      "notes": "shipped with the book; formats: svg, png, jpg | auto-flagged: generic stub bars (title words as bar labels, not the real concept)"
+    },
+    {
+      "id": "01-the-skeptics-toolkit-book-fig-06",
+      "kind": "figure",
+      "concept": "book figure 6",
+      "source": "book",
+      "file": "book/01-the-skeptics-toolkit-fig-06.svg",
+      "status": "placeholder",
+      "notes": "shipped with the book; formats: svg, png | auto-flagged: generic stub bars (title words as bar labels, not the real concept)"
+    },
+    {
+      "id": "01-the-skeptics-toolkit-book-fig-07",
+      "kind": "figure",
+      "concept": "book figure 7",
+      "source": "book",
+      "file": "book/01-the-skeptics-toolkit-fig-07.svg",
+      "status": "placeholder",
+      "notes": "shipped with the book; formats: svg, png | auto-flagged: generic stub bars (title words as bar labels, not the real concept)"
+    },
+    {
+      "id": "01-the-skeptics-toolkit-book-fig-08",
+      "kind": "figure",
+      "concept": "book figure 8",
+      "source": "book",
+      "file": "book/01-the-skeptics-toolkit-fig-08.jpg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: jpg"
+    },
+    {
+      "id": "01-the-skeptics-toolkit-book-fig-09",
+      "kind": "figure",
+      "concept": "book figure 9",
+      "source": "book",
+      "file": "book/01-the-skeptics-toolkit-fig-09.jpg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: jpg"
+    },
+    {
+      "id": "chart-turkey-confidence-timeline",
+      "kind": "chart",
+      "concept": "induction's limit: confidence rises with every fed day, then the axe on day 1000",
+      "source": "authored",
+      "file": "charts/turkey-confidence-timeline.drawer.js",
+      "status": "candidate",
+      "notes": "drawer contract: (c)=>{…}; standalone html beside it"
+    },
+    {
+      "id": "chart-cost-asymmetry",
+      "kind": "chart",
+      "concept": "solve-verify inversion: producing an AI output is cheap, verifying it is expensive",
+      "source": "authored",
+      "file": "charts/cost-asymmetry.drawer.js",
+      "status": "candidate",
+      "notes": "drawer contract: (c)=>{…}; standalone html beside it"
+    },
+    {
+      "id": "ch01-four-moves-checklist",
+      "kind": "figure",
+      "concept": "the four skeptical moves as a portable checklist (Descartes/Hume/Popper/Plato)",
+      "source": "authored",
+      "file": "svg/four-moves-checklist.svg",
+      "status": "candidate",
+      "notes": "replaces stub fig-03; the chapter's spine"
+    },
+    {
+      "id": "ch01-artifact-vs-world",
+      "kind": "figure",
+      "concept": "artifact vs world: the Plato's-cave / Swedish-triage split",
+      "source": "authored",
+      "file": "svg/artifact-vs-world.svg",
+      "status": "candidate",
+      "notes": "replaces stub fig-04; the cave move made concrete"
+    },
+    {
+      "id": "ch01-five-supervisory-capacities",
+      "kind": "figure",
+      "concept": "the five supervisory capacities and their failure modes",
+      "source": "authored",
+      "file": "svg/five-supervisory-capacities.svg",
+      "status": "candidate",
+      "notes": "from the capacities table; core chapter vocabulary"
+    },
+    {
+      "id": "ch01-fluency-trap-mechanism",
+      "kind": "figure",
+      "concept": "the fluency trap as a two-stage mechanism (form vs content)",
+      "source": "authored",
+      "file": "svg/fluency-trap-mechanism.svg",
+      "status": "candidate",
+      "notes": "replaces stub fig-06; the most operational idea in the chapter"
+    },
+    {
+      "id": "ch01-doodle-candidates",
+      "kind": "doodle",
+      "concept": "8 doodle-worthy moments (turkey, cave, Ash's agent, black swan, fluency trap, etc.)",
+      "source": "scout",
+      "file": "doodles/doodle-candidates.md",
+      "status": "candidate",
+      "notes": "candidate scenes for deck-lecture's doodle tier"
+    }
+  ]
+}

@@ -1,0 +1,711 @@
+{
+  "metadata": {
+    "chapter": "02-probability-uncertainty-and-the-confidence-illusion",
+    "chapter_number": "02",
+    "title": "Probability, Uncertainty, and the Confidence Illusion",
+    "course_eyebrow": "AI Engineering · Chapter 02",
+    "voice_id": "TyW6NH39JcFb5M3xdIIk",
+    "runtime_from": "TODO: abs path to a lecture folder that has support.js, deck-stage.js, _ds/",
+    "ds_css": null,
+    "note": "STARTER plan — every TODO must be authored before emit. Review at the Phase-0 gate."
+  },
+  "slides": [
+    {
+      "archetype": "title",
+      "label": "Title",
+      "eyebrow": "AI Engineering · Chapter 02",
+      "headline": "Probability, Uncertainty, and the Confidence Illusion",
+      "subtitle": "Why your intuition forgets the prior, and what to do when it does.",
+      "speaker_notes": "TODO: open the lecture. Why your intuition forgets the prior, and what to do when it does."
+    },
+    {
+      "archetype": "section",
+      "label": "Learning objectives",
+      "part": "Part one",
+      "headline": "Learning objectives",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "Learning objectives",
+      "eyebrow": "Learning objectives",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "By the end of this chapter, you will be able to:",
+        "- Apply Bayes' theorem to calculate the actual probability of a rare event given a positive test result, and explain why the result differs from naive intuition - Use the total probability theorem to decompose complex probability calculations into tractable pieces - Apply the multiplication (chain) rule to compute joint probabilities across sequential events - Identify the base rate in a deployment scenario and explain how ignoring it produces systematically wrong conclusions - Distinguish between model accuracy and model calibration, and describe what a calibration curve reveals that accuracy metrics hide - Recognize the conditions under which the Central Limit Theorem does not apply, and identify when a deployment's loss distribution is likely to be heavy-tailed - Explain distribution shift as an instance of Hume's problem of induction, and name at least two mechanisms by which a model can become confidently wrong after deployment"
+      ],
+      "speaker_notes": "By the end of this chapter, you will be able to: - Apply Bayes' theorem to calculate the actual probability of a rare event given a positive test result, and explain why the result differs from naive intuition - Use the total probability theorem to decompose complex probability calculations into tractable pieces - Apply the multiplication (chain) rule to compute joint probabilities across sequential events - Identify the base rate in a deployment scenario and explain how ignoring it produces systematically wrong conclusions - Distinguish between model accuracy and model calibration, and describe what a calibration curve reveals that accuracy metrics hide - Recognize the conditions under which the Central Limit Theorem does not apply, and identify when a deployment's loss distribution is likely to be heavy-tailed - Explain distribution shift as an instance of Hume's problem of induction, and name at least two mechanisms by which a model can become confidently wrong after deployment"
+    },
+    {
+      "archetype": "section",
+      "label": "Prerequisites",
+      "part": "Part two",
+      "headline": "Prerequisites",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "Prerequisites",
+      "eyebrow": "Prerequisites",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "Chapter 1 (AI systems and supervisory capacities).",
+        "---"
+      ],
+      "speaker_notes": "Chapter 1 (AI systems and supervisory capacities). Familiarity with basic probability notation is helpful but not required — the notation is introduced from scratch. No calculus."
+    },
+    {
+      "archetype": "section",
+      "label": "Why this chapter",
+      "part": "Part three",
+      "headline": "Why this chapter",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "Why this chapter",
+      "eyebrow": "Why this chapter",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "The failures we examined in Chapter 1 were not, for the most part, failures of model competence.",
+        "This chapter builds the apparatus for repairing those intuitions.",
+        "---"
+      ],
+      "speaker_notes": "The failures we examined in Chapter 1 were not, for the most part, failures of model competence. The models were doing what their training permitted. The failures were failures of interpretation — of engineers and operators reading model outputs through intuitions that were not built for the problem at hand."
+    },
+    {
+      "archetype": "section",
+      "label": "What probability actually is — and why two engineers can disagree without either being wrong",
+      "part": "Part four",
+      "headline": "What probability actually is — and why two engineers can disagree without either being wrong",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "What probability actually is — and why two engineers can dis",
+      "eyebrow": "What probability actually is — and why two engineers can disagree without either being wrong",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "Most of you came up through a Boolean education.",
+        "Probability is a different animal.",
+        "Here is the thing that takes some adjustment."
+      ],
+      "speaker_notes": "Most of you came up through a Boolean education. A bit is one or zero. A program either runs or doesn't."
+    },
+    {
+      "archetype": "equation",
+      "label": "What probability actually is — and why two engineers can disagree without either being wrong — equation",
+      "eyebrow": "Equation",
+      "headline": "TODO: name the equation",
+      "subhead": "TODO: one line on what it is a statement about",
+      "tex": "P(A) = \\lim_{N \\to \\infty} \\frac{\\text{number of times } A \\text{ occurred}}{N}",
+      "plain": "TODO: plain-terms sentence.",
+      "values_claim": "TODO: the contestable value the equation encodes.",
+      "tangent": {
+        "lhs": "TODO",
+        "rhs": "TODO",
+        "claim": "TODO",
+        "glossary": [],
+        "example": {},
+        "values_claim": "TODO",
+        "reentry": "TODO: hand back to the main argument."
+      },
+      "speaker_notes": "TODO: expand into an equation tangent (see EQUATIONS.md)."
+    },
+    {
+      "archetype": "section",
+      "label": "Conditional probability — the probability that updates on what you know",
+      "part": "Part five",
+      "headline": "Conditional probability — the probability that updates on what you know",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "Conditional probability — the probability that updates on wh",
+      "eyebrow": "Conditional probability — the probability that updates on what you know",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "Here is the engine.",
+        "Conditional probability gives you a way to reason about outcomes when you already have partial information.",
+        "The formal definition: the conditional probability of event $A$ given event $B$ — written $P(A \\mid B)$, read \"probability of $A$ given $B$\" — is"
+      ],
+      "speaker_notes": "Here is the engine. Almost every calculation in this chapter, and most of the calculations in this book, is a conditional probability. Conditional probability gives you a way to reason about outcomes when you already have partial information."
+    },
+    {
+      "archetype": "equation",
+      "label": "Conditional probability — the probability that updates on what you know — equation",
+      "eyebrow": "Equation",
+      "headline": "TODO: name the equation",
+      "subhead": "TODO: one line on what it is a statement about",
+      "tex": "P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}",
+      "plain": "TODO: plain-terms sentence.",
+      "values_claim": "TODO: the contestable value the equation encodes.",
+      "tangent": {
+        "lhs": "TODO",
+        "rhs": "TODO",
+        "claim": "TODO",
+        "glossary": [],
+        "example": {},
+        "values_claim": "TODO",
+        "reentry": "TODO: hand back to the main argument."
+      },
+      "speaker_notes": "TODO: expand into an equation tangent (see EQUATIONS.md)."
+    },
+    {
+      "archetype": "equation",
+      "label": "Conditional probability — the probability that updates on what you know — equation",
+      "eyebrow": "Equation",
+      "headline": "TODO: name the equation",
+      "subhead": "TODO: one line on what it is a statement about",
+      "tex": "P(B \\mid A) = \\frac{P(A \\cap B)}{P(A)} = \\frac{0.30}{0.76} \\approx 0.395",
+      "plain": "TODO: plain-terms sentence.",
+      "values_claim": "TODO: the contestable value the equation encodes.",
+      "tangent": {
+        "lhs": "TODO",
+        "rhs": "TODO",
+        "claim": "TODO",
+        "glossary": [],
+        "example": {},
+        "values_claim": "TODO",
+        "reentry": "TODO: hand back to the main argument."
+      },
+      "speaker_notes": "TODO: expand into an equation tangent (see EQUATIONS.md)."
+    },
+    {
+      "archetype": "figure",
+      "label": "Figure — Conditional probability — the probabilit",
+      "eyebrow": "Figure",
+      "headline": "TODO: what the figure shows",
+      "src": "TODO: pick from pool (02-probability-uncertainty-and-the-confidence-illusion-book-fig-01)",
+      "caption": "Venn diagram ",
+      "alt": "Venn diagram ",
+      "speaker_notes": "Venn diagram ",
+      "asset_ref": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-01"
+    },
+    {
+      "archetype": "section",
+      "label": "The multiplication rule — building joint probabilities from conditionals",
+      "part": "Part six",
+      "headline": "The multiplication rule — building joint probabilities from conditionals",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "The multiplication rule — building joint probabilities from ",
+      "eyebrow": "The multiplication rule — building joint probabilities from conditionals",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "Rearranging the conditional probability definition gives us something immediately useful.",
+        "$$P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}$$",
+        "then"
+      ],
+      "speaker_notes": "Rearranging the conditional probability definition gives us something immediately useful. If $$P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}$$ then $$P(A \\cap B) = P(B) \\cdot P(A \\mid B)$$ This is the multiplication rule: to find the probability that both events occur, multiply the probability of the first by the conditional probability of the second given the first. It sounds simple."
+    },
+    {
+      "archetype": "equation",
+      "label": "The multiplication rule — building joint probabilities from conditionals — equation",
+      "eyebrow": "Equation",
+      "headline": "TODO: name the equation",
+      "subhead": "TODO: one line on what it is a statement about",
+      "tex": "P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}",
+      "plain": "TODO: plain-terms sentence.",
+      "values_claim": "TODO: the contestable value the equation encodes.",
+      "tangent": {
+        "lhs": "TODO",
+        "rhs": "TODO",
+        "claim": "TODO",
+        "glossary": [],
+        "example": {},
+        "values_claim": "TODO",
+        "reentry": "TODO: hand back to the main argument."
+      },
+      "speaker_notes": "TODO: expand into an equation tangent (see EQUATIONS.md).",
+      "derivation_steps": [
+        "P(A_1 \\cap A_2 \\cap A_3) = P(A_1) \\cdot P(A_2 \\mid A_1) \\cdot P(A_3 \\mid A_1 \\cap A_2)",
+        "P\\left(\\bigcap_{i=1}^n A_i\\right) = P(A_1) \\cdot P(A_2 \\mid A_1) \\cdot P(A_3 \\mid A_1 \\cap A_2) \\cdots P\\left(A_n \\mid \\bigcap_{i=1}^{n-1} A_i\\right)",
+        "P(A_1) = \\frac{39}{52}",
+        "P(A_2 \\mid A_1) = \\frac{38}{51}",
+        "P(A_3 \\mid A_1 \\cap A_2) = \\frac{37}{50}",
+        "P(A_1 \\cap A_2 \\cap A_3) = \\frac{39}{52} \\cdot \\frac{38}{51} \\cdot \\frac{37}{50} = \\frac{39 \\times 38 \\times 37}{52 \\times 51 \\times 50} \\approx 0.413",
+        "P(A \\cap B) = P(A) \\cdot P(B)"
+      ],
+      "_note": "9 display equations in this section were consolidated to 2; extra steps in derivation_steps. Split back out only if a step earns a beat."
+    },
+    {
+      "archetype": "equation",
+      "label": "The multiplication rule — building joint probabilities from conditionals — equation",
+      "eyebrow": "Equation",
+      "headline": "TODO: name the equation",
+      "subhead": "TODO: one line on what it is a statement about",
+      "tex": "P(A \\cap B) = P(B) \\cdot P(A \\mid B)",
+      "plain": "TODO: plain-terms sentence.",
+      "values_claim": "TODO: the contestable value the equation encodes.",
+      "tangent": {
+        "lhs": "TODO",
+        "rhs": "TODO",
+        "claim": "TODO",
+        "glossary": [],
+        "example": {},
+        "values_claim": "TODO",
+        "reentry": "TODO: hand back to the main argument."
+      },
+      "speaker_notes": "TODO: expand into an equation tangent (see EQUATIONS.md)."
+    },
+    {
+      "archetype": "figure",
+      "label": "Figure — The multiplication rule — building joint",
+      "eyebrow": "Figure",
+      "headline": "TODO: what the figure shows",
+      "src": "TODO: bind a pool asset",
+      "caption": "Each edge is a conditional probability. Each leaf is a joint probability found by multiplying along the path — the chain rule made visible.",
+      "alt": "Each edge is a conditional probability. Each leaf is a joint probability found by multiplying along the path — the chain rule made visible.",
+      "speaker_notes": "Each edge is a conditional probability. Each leaf is a joint probability found by multiplying along the path — the chain rule made visible."
+    },
+    {
+      "archetype": "section",
+      "label": "The total probability theorem — decomposing complex problems",
+      "part": "Part seven",
+      "headline": "The total probability theorem — decomposing complex problems",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "The total probability theorem — decomposing complex problems",
+      "eyebrow": "The total probability theorem — decomposing complex problems",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "Here is the next tool.",
+        "Let $A_1, A_2, \\ldots, A_n$ be events that partition the sample space: they are mutually exclusive (no two can occur simultaneously), collectively exhaustive (one of them must occur), and each has positive probability.",
+        "$$P(B) = \\sum_{i=1}^n P(A_i) \\cdot P(B \\mid A_i)$$"
+      ],
+      "speaker_notes": "Here is the next tool. Sometimes you cannot compute $P(B)$ directly, but you can compute it by breaking the sample space into pieces. Let $A_1, A_2, \\ldots, A_n$ be events that partition the sample space: they are mutually exclusive (no two can occur simultaneously), collectively exhaustive (one of them must occur), and each has positive probability.",
+      "asset_ref": "ch02-total-probability-partition"
+    },
+    {
+      "archetype": "equation",
+      "label": "The total probability theorem — decomposing complex problems — equation",
+      "eyebrow": "Equation",
+      "headline": "TODO: name the equation",
+      "subhead": "TODO: one line on what it is a statement about",
+      "tex": "P(B) = \\sum_{i=1}^n P(A_i) \\cdot P(B \\mid A_i)",
+      "plain": "TODO: plain-terms sentence.",
+      "values_claim": "TODO: the contestable value the equation encodes.",
+      "tangent": {
+        "lhs": "TODO",
+        "rhs": "TODO",
+        "claim": "TODO",
+        "glossary": [],
+        "example": {},
+        "values_claim": "TODO",
+        "reentry": "TODO: hand back to the main argument."
+      },
+      "speaker_notes": "TODO: expand into an equation tangent (see EQUATIONS.md).",
+      "derivation_steps": [
+        "= 0.40 \\times 0.02 + 0.30 \\times 0.03 + 0.30 \\times 0.05",
+        "= 0.008 + 0.009 + 0.015 = 0.032",
+        "P(U_2) = P(U_1) \\cdot P(U_2 \\mid U_1) + P(B_1) \\cdot P(U_2 \\mid B_1) = 0.8 \\times 0.8 + 0.2 \\times 0.4 = 0.72",
+        "P(B_2) = 1 - P(U_2) = 0.28",
+        "P(U_3) = P(U_2) \\cdot 0.8 + P(B_2) \\cdot 0.4 = 0.72 \\times 0.8 + 0.28 \\times 0.4 = 0.576 + 0.112 = 0.688"
+      ],
+      "_note": "7 display equations in this section were consolidated to 2; extra steps in derivation_steps. Split back out only if a step earns a beat."
+    },
+    {
+      "archetype": "equation",
+      "label": "The total probability theorem — decomposing complex problems — equation",
+      "eyebrow": "Equation",
+      "headline": "TODO: name the equation",
+      "subhead": "TODO: one line on what it is a statement about",
+      "tex": "P(D) = P(A) \\cdot P(D \\mid A) + P(B) \\cdot P(D \\mid B) + P(C) \\cdot P(D \\mid C)",
+      "plain": "TODO: plain-terms sentence.",
+      "values_claim": "TODO: the contestable value the equation encodes.",
+      "tangent": {
+        "lhs": "TODO",
+        "rhs": "TODO",
+        "claim": "TODO",
+        "glossary": [],
+        "example": {},
+        "values_claim": "TODO",
+        "reentry": "TODO: hand back to the main argument."
+      },
+      "speaker_notes": "TODO: expand into an equation tangent (see EQUATIONS.md)."
+    },
+    {
+      "archetype": "figure",
+      "label": "Figure — The total probability theorem — decompos",
+      "eyebrow": "Figure",
+      "headline": "TODO: what the figure shows",
+      "src": "TODO: pick from pool (02-probability-uncertainty-and-the-confidence-illusion-book-fig-03)",
+      "caption": "Partition diagram ",
+      "alt": "Partition diagram ",
+      "speaker_notes": "Partition diagram ",
+      "asset_ref": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-03"
+    },
+    {
+      "archetype": "figure",
+      "label": "Figure — The total probability theorem — decompos",
+      "eyebrow": "Figure",
+      "headline": "TODO: what the figure shows",
+      "src": "TODO: pick from pool (02-probability-uncertainty-and-the-confidence-illusion-book-fig-04)",
+      "caption": "State transition diagram for Alice's two-state Markov chain",
+      "alt": "State transition diagram for Alice's two-state Markov chain",
+      "speaker_notes": "State transition diagram for Alice's two-state Markov chain",
+      "asset_ref": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-04"
+    },
+    {
+      "archetype": "section",
+      "label": "The test that is 99% accurate, and the patient it kills",
+      "part": "Part eight",
+      "headline": "The test that is 99% accurate, and the patient it kills",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "The test that is 99% accurate, and the patient it kills",
+      "eyebrow": "The test that is 99% accurate, and the patient it kills",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "Now I want to tell you about a test.",
+        "It is a screening test for some disease — pick whichever one makes you uncomfortable.",
+        "Now: how confident are you that this patient has the disease?"
+      ],
+      "speaker_notes": "Now I want to tell you about a test. It is a screening test for some disease — pick whichever one makes you uncomfortable. The disease is rare."
+    },
+    {
+      "archetype": "figure",
+      "label": "Figure — The test that is 99% accurate, and the p",
+      "eyebrow": "Figure",
+      "headline": "TODO: what the figure shows",
+      "src": "TODO: pick from pool (02-probability-uncertainty-and-the-confidence-illusion-book-fig-05)",
+      "caption": "Most positive results come from the large healthy population, not the tiny sick one. Even an excellent test produces mostly false positives when the base rate is low.",
+      "alt": "Most positive results come from the large healthy population, not the tiny sick one. Even an excellent test produces mostly false positives when the base rate is low.",
+      "speaker_notes": "Most positive results come from the large healthy population, not the tiny sick one. Even an excellent test produces mostly false positives when the base rate is low.",
+      "asset_ref": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-05"
+    },
+    {
+      "archetype": "section",
+      "label": "Bayes' theorem — the bookkeeping made explicit",
+      "part": "Part nine",
+      "headline": "Bayes' theorem — the bookkeeping made explicit",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "Bayes' theorem — the bookkeeping made explicit",
+      "eyebrow": "Bayes' theorem — the bookkeeping made explicit",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "The calculation we just did has a name and a formula.",
+        "Let $A_1, A_2, \\ldots, A_n$ partition the sample space, and let $B$ be any event with $P(B) > 0$.",
+        "$$P(A_i \\mid B) = \\frac{P(A_i) \\cdot P(B \\mid A_i)}{P(B)} = \\frac{P(A_i) \\cdot P(B \\mid A_i)}{\\sum_{k=1}^n P(A_k) \\cdot P(B \\mid A_k)}$$"
+      ],
+      "speaker_notes": "The calculation we just did has a name and a formula. Let me write it down, because the formula makes explicit where the prior lives. Let $A_1, A_2, \\ldots, A_n$ partition the sample space, and let $B$ be any event with $P(B) > 0$."
+    },
+    {
+      "archetype": "equation",
+      "label": "Bayes' theorem — the bookkeeping made explicit — equation",
+      "eyebrow": "Equation",
+      "headline": "TODO: name the equation",
+      "subhead": "TODO: one line on what it is a statement about",
+      "tex": "P(A_i \\mid B) = \\frac{P(A_i) \\cdot P(B \\mid A_i)}{P(B)} = \\frac{P(A_i) \\cdot P(B \\mid A_i)}{\\sum_{k=1}^n P(A_k) \\cdot P(B \\mid A_k)}",
+      "plain": "TODO: plain-terms sentence.",
+      "values_claim": "TODO: the contestable value the equation encodes.",
+      "tangent": {
+        "lhs": "TODO",
+        "rhs": "TODO",
+        "claim": "TODO",
+        "glossary": [],
+        "example": {},
+        "values_claim": "TODO",
+        "reentry": "TODO: hand back to the main argument."
+      },
+      "speaker_notes": "TODO: expand into an equation tangent (see EQUATIONS.md).",
+      "derivation_steps": [
+        "= \\frac{0.0001 \\times 0.99}{0.0001 \\times 0.99 + 0.9999 \\times 0.01} \\approx \\frac{0.000099}{0.010098} \\approx 0.0098",
+        "P(C \\mid D) = \\frac{P(C) \\cdot P(D \\mid C)}{P(D)} = \\frac{0.30 \\times 0.05}{0.032} = \\frac{0.015}{0.032} \\approx 0.469"
+      ],
+      "_note": "4 display equations in this section were consolidated to 2; extra steps in derivation_steps. Split back out only if a step earns a beat."
+    },
+    {
+      "archetype": "equation",
+      "label": "Bayes' theorem — the bookkeeping made explicit — equation",
+      "eyebrow": "Equation",
+      "headline": "TODO: name the equation",
+      "subhead": "TODO: one line on what it is a statement about",
+      "tex": "P(\\text{disease} \\mid \\text{positive}) = \\frac{P(\\text{disease}) \\cdot P(\\text{positive} \\mid \\text{disease})}{P(\\text{positive})}",
+      "plain": "TODO: plain-terms sentence.",
+      "values_claim": "TODO: the contestable value the equation encodes.",
+      "tangent": {
+        "lhs": "TODO",
+        "rhs": "TODO",
+        "claim": "TODO",
+        "glossary": [],
+        "example": {},
+        "values_claim": "TODO",
+        "reentry": "TODO: hand back to the main argument."
+      },
+      "speaker_notes": "TODO: expand into an equation tangent (see EQUATIONS.md)."
+    },
+    {
+      "archetype": "figure",
+      "label": "Figure — Bayes' theorem — the bookkeeping made ex",
+      "eyebrow": "Figure",
+      "headline": "TODO: what the figure shows",
+      "src": "TODO: pick from pool (02-probability-uncertainty-and-the-confidence-illusion-book-fig-06)",
+      "caption": "The positive test does real work: it raises the probability of disease a hundredfold. But the prior was so low that the posterior is still very small. Both facts are important — and neither is visible if you only read the test's accuracy number.",
+      "alt": "The positive test does real work: it raises the probability of disease a hundredfold. But the prior was so low that the posterior is still very small. Both facts are important — and neither is visible if you only read the test's accuracy number.",
+      "speaker_notes": "The positive test does real work: it raises the probability of disease a hundredfold. But the prior was so low that the posterior is still very small. Both facts are important — and neither is visible if you only read the test's accuracy number.",
+      "asset_ref": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-06"
+    },
+    {
+      "archetype": "section",
+      "label": "From Boolean to probabilistic — and why the move is harder than it looks",
+      "part": "Part ten",
+      "headline": "From Boolean to probabilistic — and why the move is harder than it looks",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "From Boolean to probabilistic — and why the move is harder t",
+      "eyebrow": "From Boolean to probabilistic — and why the move is harder than it looks",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "The calculation above does more than give you a number.",
+        "In deterministic systems, the output is a fact.",
+        "This matters when you chain probabilistic inferences."
+      ],
+      "speaker_notes": "The calculation above does more than give you a number. It requires a full shift in how you think about outputs. In deterministic systems, the output is a fact."
+    },
+    {
+      "archetype": "section",
+      "label": "Hume's induction problem, re-translated as distribution shift",
+      "part": "Part eleven",
+      "headline": "Hume's induction problem, re-translated as distribution shift",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "Hume's induction problem, re-translated as distribution shif",
+      "eyebrow": "Hume's induction problem, re-translated as distribution shift",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "There is a problem from philosophy you have to know about, because it shows up, in disguise, in every deployed system.",
+        "David Hume, in the eighteenth century, asked an awkward question.",
+        "Engineers translate this into our own language."
+      ],
+      "speaker_notes": "There is a problem from philosophy you have to know about, because it shows up, in disguise, in every deployed system. David Hume, in the eighteenth century, asked an awkward question. You have watched the sun come up every morning of your life."
+    },
+    {
+      "archetype": "figure",
+      "label": "Figure — Hume's induction problem, re-translated ",
+      "eyebrow": "Figure",
+      "headline": "TODO: what the figure shows",
+      "src": "TODO: pick from pool (02-probability-uncertainty-and-the-confidence-illusion-book-fig-07)",
+      "caption": "The model's confidence scores do not move when the world moves. The dashboards stay green. Detection requires watching actual outcomes — not just model outputs.",
+      "alt": "The model's confidence scores do not move when the world moves. The dashboards stay green. Detection requires watching actual outcomes — not just model outputs.",
+      "speaker_notes": "The model's confidence scores do not move when the world moves. The dashboards stay green. Detection requires watching actual outcomes — not just model outputs.",
+      "asset_ref": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-07"
+    },
+    {
+      "archetype": "section",
+      "label": "Calibration — the most operationally important diagnostic in this chapter",
+      "part": "Part twelve",
+      "headline": "Calibration — the most operationally important diagnostic in this chapter",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "Calibration — the most operationally important diagnostic in",
+      "eyebrow": "Calibration — the most operationally important diagnostic in this chapter",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "I want to spend time on a specific, operational idea — the most useful diagnostic in this chapter.",
+        "A model is calibrated when its stated probabilities match what actually happens.",
+        "You can see this in a picture."
+      ],
+      "speaker_notes": "I want to spend time on a specific, operational idea — the most useful diagnostic in this chapter. It is called calibration, and a model can be very accurate without being calibrated, and the difference matters. A model is calibrated when its stated probabilities match what actually happens."
+    },
+    {
+      "archetype": "figure",
+      "label": "Figure — Calibration — the most operationally imp",
+      "eyebrow": "Figure",
+      "headline": "TODO: what the figure shows",
+      "src": "TODO: pick from pool (02-probability-uncertainty-and-the-confidence-illusion-book-fig-07)",
+      "caption": "The well-calibrated region (left portion) is where the model's stated confidence is informative. The overconfident tail (right portion) is where it lies.",
+      "alt": "The well-calibrated region (left portion) is where the model's stated confidence is informative. The overconfident tail (right portion) is where it lies.",
+      "speaker_notes": "The well-calibrated region (left portion) is where the model's stated confidence is informative. The overconfident tail (right portion) is where it lies.",
+      "asset_ref": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-07"
+    },
+    {
+      "archetype": "section",
+      "label": "When the Central Limit Theorem politely declines to help",
+      "part": "Part 13",
+      "headline": "When the Central Limit Theorem politely declines to help",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "When the Central Limit Theorem politely declines to help",
+      "eyebrow": "When the Central Limit Theorem politely declines to help",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "There is one more thing, because it is the place where standard-issue probability training will betray you.",
+        "If you have taken a stats class, you have met the Central Limit Theorem.",
+        "The theorem has two requirements buried in it."
+      ],
+      "speaker_notes": "There is one more thing, because it is the place where standard-issue probability training will betray you. If you have taken a stats class, you have met the Central Limit Theorem. It says, more or less, that if you add up a lot of independent random variables with finite variance and normalize them, the result looks like a Gaussian — the bell curve."
+    },
+    {
+      "archetype": "figure",
+      "label": "Figure — When the Central Limit Theorem politely ",
+      "eyebrow": "Figure",
+      "headline": "TODO: what the figure shows",
+      "src": "TODO: pick from pool (02-probability-uncertainty-and-the-confidence-illusion-book-fig-09)",
+      "caption": "In the heavy-tailed regime, the next observation can move your average dramatically no matter how many observations you have already collected.",
+      "alt": "In the heavy-tailed regime, the next observation can move your average dramatically no matter how many observations you have already collected.",
+      "speaker_notes": "In the heavy-tailed regime, the next observation can move your average dramatically no matter how many observations you have already collected.",
+      "asset_ref": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-09"
+    },
+    {
+      "archetype": "figure",
+      "label": "Figure — When the Central Limit Theorem politely ",
+      "eyebrow": "Figure",
+      "headline": "TODO: what the figure shows",
+      "src": "TODO: bind a pool asset",
+      "caption": "Glimmer 2.3 warm-up plot. Students should lock their prediction of this crossing point before plotting. The curve's shape is the lesson — not the specific numbers.",
+      "alt": "Glimmer 2.3 warm-up plot. Students should lock their prediction of this crossing point before plotting. The curve's shape is the lesson — not the specific numbers.",
+      "speaker_notes": "Glimmer 2.3 warm-up plot. Students should lock their prediction of this crossing point before plotting. The curve's shape is the lesson — not the specific numbers."
+    },
+    {
+      "archetype": "section",
+      "label": "The calibration baseline",
+      "part": "Part 14",
+      "headline": "The calibration baseline",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "The calibration baseline",
+      "eyebrow": "The calibration baseline",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "This exercise returns in Chapters 8 and 14.",
+        "You are given a set of forecasting questions across several domains — some technical, some general.",
+        "If you are well-calibrated at 90%, that fraction should be 0.9."
+      ],
+      "speaker_notes": "This exercise returns in Chapters 8 and 14. You are given a set of forecasting questions across several domains — some technical, some general. For each question, provide a 90% confidence interval for the answer."
+    },
+    {
+      "archetype": "section",
+      "label": "Synthesis — four questions that prevent most deployment disasters",
+      "part": "Part 15",
+      "headline": "Synthesis — four questions that prevent most deployment disasters",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "Synthesis — four questions that prevent most deployment disa",
+      "eyebrow": "Synthesis — four questions that prevent most deployment disasters",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "Most of the failures of confidence in deployed AI systems are not failures of model competence.",
+        "The technical content of this chapter — conditional probability, the chain rule, the total probability theorem, Bayes, calibration, heavy tails — is the apparatus for repairing those intuitions.",
+        "Four questions, in order:"
+      ],
+      "speaker_notes": "Most of the failures of confidence in deployed AI systems are not failures of model competence. The models are doing what their architectures and training data permit them to do. The failures are failures of interpretation — of humans reading model outputs through intuitions not built for the problem at hand."
+    },
+    {
+      "archetype": "figure",
+      "label": "Figure — Synthesis — four questions that prevent ",
+      "eyebrow": "Figure",
+      "headline": "TODO: what the figure shows",
+      "src": "TODO: bind a pool asset",
+      "caption": "The four questions. Carry these into every system you evaluate.",
+      "alt": "The four questions. Carry these into every system you evaluate.",
+      "speaker_notes": "The four questions. Carry these into every system you evaluate."
+    },
+    {
+      "archetype": "section",
+      "label": "What would change my mind",
+      "part": "Part 16",
+      "headline": "What would change my mind",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "What would change my mind",
+      "eyebrow": "What would change my mind",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "If a deployment-monitoring methodology emerged that reliably detected distribution shift in production from output statistics alone — without access to ground-truth outcomes — the calibration framing in this chapter would need revision.",
+        "I do not have a clean diagnostic for when a deployment's loss distribution is heavy-tailed before the catastrophic event reveals it.",
+        "---"
+      ],
+      "speaker_notes": "If a deployment-monitoring methodology emerged that reliably detected distribution shift in production from output statistics alone — without access to ground-truth outcomes — the calibration framing in this chapter would need revision. Current methods detect a subset of shifts; the general problem is open. [Verify: Krell et al."
+    },
+    {
+      "archetype": "section",
+      "label": "Connections forward",
+      "part": "Part 17",
+      "headline": "Connections forward",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "Connections forward",
+      "eyebrow": "Connections forward",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "A calibration curve tells you how confident the model should be.",
+        "That is Chapter 3.",
+        "---"
+      ],
+      "speaker_notes": "A calibration curve tells you how confident the model should be. It does not tell you what the model is confident about — what it has noticed, what it has missed, whose face it works on and whose it does not. The model's outputs are shaped by its training data, and the training data was shaped by people who made choices, often without noticing they were making them."
+    },
+    {
+      "archetype": "section",
+      "label": "Chapter summary",
+      "part": "Part 18",
+      "headline": "Chapter summary",
+      "subtitle": "TODO: one line on what this part establishes.",
+      "speaker_notes": "Section divider."
+    },
+    {
+      "archetype": "concept",
+      "label": "Chapter summary",
+      "eyebrow": "Chapter summary",
+      "headline": "TODO: a sharp claim, not the heading.",
+      "bullets": [
+        "You can now do six things you could not do before this chapter.",
+        "You can apply conditional probability to compute the probability of one event given another, using the formal definition and the chain rule to handle sequential events.",
+        "You can calculate what a positive test result actually means, given a population base rate, and explain the false-positive structure that makes this relevant to every rare-event detection system."
+      ],
+      "speaker_notes": "You can now do six things you could not do before this chapter. You can apply conditional probability to compute the probability of one event given another, using the formal definition and the chain rule to handle sequential events. You can use the total probability theorem to decompose complex probabilities by conditioning on a partition of the sample space."
+    },
+    {
+      "archetype": "close",
+      "label": "Close",
+      "eyebrow": "TODO: the takeaway eyebrow",
+      "headline": "TODO: the one line to leave them with.",
+      "body": "TODO: synthesize the chapter in two sentences.",
+      "next": "TODO: tease the next chapter.",
+      "speaker_notes": "TODO: closing narration."
+    }
+  ]
+}

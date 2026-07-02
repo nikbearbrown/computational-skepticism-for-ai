@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>cost-asymmetry</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<style>
+  :root {{ --white:#FFFFFF; --ink:#2a1a0e; --red:#C8102E; }}
+  html,body{{margin:0;background:var(--white);color:var(--ink);
+    font-family:"Lato",system-ui,sans-serif;}}
+  #chart{{width:1480px;max-width:100%;margin:24px auto;}}
+</style></head>
+<body>
+<div id="chart" role="img" aria-label="solve-verify cost asymmetry"></div>
+<script>
+// inlined from charts/cost-asymmetry.drawer.js — regenerate with: new_chart.py … --sync
+const draw = (c) => {
+  // The solve-verify asymmetry, inverted. In classical CS, verifying is cheap and
+  // producing is dear. In AI deployment it flips: the model PRODUCES an output for
+  // a fraction of a cent; VERIFYING it costs an hour of senior clinical/eng labor.
+  // Encoded on a log axis (the gap spans ~7 orders of magnitude) so the disparity
+  // is shown honestly rather than exaggerated or hidden. One red = the expensive
+  // side (the cost that doesn't scale). Mono numerals, zero-anchored log ticks.
+  const d3 = window.d3;
+  const RED = '#C8102E', INK = '#2a1a0e', N5 = '#545454', N3 = '#909090', N1 = '#E3E3E3';
+  const FONT = '"Lato", system-ui, sans-serif';
+  const MONO = 'ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace';
+  c.innerHTML = '';
+  const W = 1480, H = 600, m = { t: 60, r: 60, b: 96, l: 96 };
+  const svg = d3.select(c).append('svg')
+    .attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`)
+    .attr('role', 'img').attr('aria-label',
+      'Producing an AI output costs about one hundredth of a cent; verifying it costs about seventy-five dollars of senior labor — roughly seven orders of magnitude more.')
+    .style('overflow', 'visible').style('display', 'block');
+
+  // dollars per unit
+  const data = [
+    { k: 'Produce the output', sub: 'model runs · milliseconds', v: 0.0001, hl: false },
+    { k: 'Verify the output', sub: 'senior human · ~1 hour', v: 75, hl: true },
+  ];
+  const yLog = d3.scaleLog().domain([0.0001, 100]).range([H - m.b, m.t]);
+  const x = d3.scaleBand().domain(data.map((d) => d.k)).range([m.l, W - m.r]).padding(0.42);
+
+  // log gridlines + $ labels
+  const ticks = [0.0001, 0.001, 0.01, 0.1, 1, 10, 100];
+  const fmt = (t) => t < 1 ? `$${t}` : `$${d3.format(',')(t)}`;
+  ticks.forEach((t) => {
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', yLog(t)).attr('y2', yLog(t))
+      .attr('stroke', N1).attr('stroke-width', 1);
+    svg.append('text').attr('x', m.l - 16).attr('y', yLog(t) + 5).attr('text-anchor', 'end')
+      .attr('font-family', MONO).attr('font-size', 16).attr('fill', N5).text(fmt(t));
+  });
+  svg.append('text').attr('transform', `translate(${m.l - 66},${(m.t + H - m.b) / 2}) rotate(-90)`)
+    .attr('text-anchor', 'middle').attr('font-family', FONT).attr('font-size', 19).attr('fill', N5)
+    .text('Cost per output (log scale, USD)');
+
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const base = yLog(0.0001);
+  data.forEach((d, i) => {
+    const bx = x(d.k), bw = x.bandwidth();
+    const bar = svg.append('rect').attr('x', bx).attr('width', bw)
+      .attr('y', base).attr('height', 0)
+      .attr('fill', d.hl ? RED : N3);
+    bar.transition().delay(RM ? 0 : i * 250).duration(RM ? 0 : 700).ease(d3.easeCubicOut)
+      .attr('y', yLog(d.v)).attr('height', base - yLog(d.v));
+    // value label above the bar
+    const lab = svg.append('text').attr('x', bx + bw / 2).attr('y', yLog(d.v) - 16)
+      .attr('text-anchor', 'middle').attr('font-family', MONO).attr('font-weight', 700)
+      .attr('font-size', 30).attr('fill', d.hl ? RED : INK).attr('opacity', 0)
+      .text(d.v < 1 ? `${(d.v * 100).toFixed(2)}¢` : `$${d.v}`);
+    lab.transition().delay(RM ? 0 : i * 250 + 700).duration(RM ? 0 : 400).attr('opacity', 1);
+    // category + sub label
+    svg.append('text').attr('x', bx + bw / 2).attr('y', H - m.b + 34).attr('text-anchor', 'middle')
+      .attr('font-family', FONT).attr('font-weight', 700).attr('font-size', 24).attr('fill', INK).text(d.k);
+    svg.append('text').attr('x', bx + bw / 2).attr('y', H - m.b + 62).attr('text-anchor', 'middle')
+      .attr('font-family', FONT).attr('font-size', 19).attr('fill', N5).text(d.sub);
+  });
+
+  // the takeaway bracket between the two bars
+  const g = svg.append('g').attr('opacity', 0);
+  const x1 = x(data[0].k) + x.bandwidth() / 2, x2 = x(data[1].k) + x.bandwidth() / 2;
+  const yb = m.t - 22;
+  g.append('text').attr('x', (x1 + x2) / 2).attr('y', yb).attr('text-anchor', 'middle')
+    .attr('font-family', FONT).attr('font-weight', 700).attr('font-size', 22).attr('fill', RED)
+    .text('~750,000× more expensive to verify than to produce');
+  g.transition().delay(RM ? 0 : 1200).duration(RM ? 0 : 500).attr('opacity', 1);
+};
+draw(document.getElementById('chart'));
+</script>
+</body></html>

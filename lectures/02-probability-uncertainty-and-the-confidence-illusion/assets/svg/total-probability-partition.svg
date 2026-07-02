@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-label="Partition diagram for the total probability theorem">
+<title>Total probability as a partition</title>
+<desc>The sample space split into mutually exclusive causes B1, B2, B3; event A overlaps each, so P(A) is the sum of P(A given Bi) times P(Bi).</desc>
+<style>@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap");
+text{font-family:Inter,Helvetica,Arial,sans-serif}</style>
+<rect width="1920" height="1080" fill="#fff"/>
+<rect width="1920" height="10" fill="#C8102E"/>
+<text x="210" y="120" font-size="46" font-weight="700" fill="#2a1a0e">One event, several causes — add them up</text>
+<text x="210" y="168" font-size="30" fill="#545454">The sample space splits into mutually exclusive causes; A overlaps each</text>
+
+<!-- partitioned sample space -->
+<rect x="210" y="240" width="470" height="470" fill="#F0EBE3" stroke="#2a1a0e" stroke-width="2"/>
+<rect x="680" y="240" width="470" height="470" fill="#DCD5CA" stroke="#2a1a0e" stroke-width="2"/>
+<rect x="1150" y="240" width="470" height="470" fill="#C7BEAF" stroke="#2a1a0e" stroke-width="2"/>
+<text x="445" y="285" font-size="34" font-weight="700" fill="#2a1a0e" text-anchor="middle">B&#8321;</text>
+<text x="915" y="285" font-size="34" font-weight="700" fill="#2a1a0e" text-anchor="middle">B&#8322;</text>
+<text x="1385" y="285" font-size="34" font-weight="700" fill="#2a1a0e" text-anchor="middle">B&#8323;</text>
+
+<!-- event A crossing all three partitions -->
+<rect x="210" y="470" width="1410" height="150" fill="#C8102E" fill-opacity="0.16" stroke="#C8102E" stroke-width="3"/>
+<text x="1595" y="455" font-size="40" font-weight="700" fill="#C8102E" text-anchor="end">A</text>
+<text x="445" y="560" font-size="26" fill="#2a1a0e" text-anchor="middle" font-family="'JetBrains Mono',monospace">P(A|B&#8321;)P(B&#8321;)</text>
+<text x="915" y="560" font-size="26" fill="#2a1a0e" text-anchor="middle" font-family="'JetBrains Mono',monospace">P(A|B&#8322;)P(B&#8322;)</text>
+<text x="1385" y="560" font-size="26" fill="#2a1a0e" text-anchor="middle" font-family="'JetBrains Mono',monospace">P(A|B&#8323;)P(B&#8323;)</text>
+
+<text x="210" y="820" font-size="34" fill="#2a1a0e" font-family="'JetBrains Mono',monospace">P(A) = &#931;&#7522; P(A|B&#7522;) &#183; P(B&#7522;)</text>
+<text x="210" y="880" font-size="28" fill="#545454">The whole chance of A is the causes' slices, each weighted by how likely that cause is.</text>
+</svg>

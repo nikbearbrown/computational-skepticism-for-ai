@@ -1,0 +1,214 @@
+/*
+ * kindle.css — baseline Kindle / EPUB stylesheet
+ * Editorial register; serif body; restrained typography; no color.
+ * Paired with kindle-book.css for book-specific overrides.
+ */
+
+/* ------------------------------------------------------------------ Typography */
+@namespace epub "http://www.idpf.org/2007/ops";
+
+html {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1em;
+  line-height: 1.55;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  padding: 0 0.6em;
+  color: #1a1714;
+  background: #fdfcfb;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  word-wrap: break-word;
+  orphans: 3;
+  widows: 3;
+}
+
+/* ------------------------------------------------------------------ Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: bold;
+  page-break-after: avoid;
+  break-after: avoid;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.25;
+  color: #1a1714;
+}
+
+h1 {
+  font-size: 1.85em;
+  margin-top: 2em;
+  text-align: left;
+  page-break-before: always;
+  break-before: page;
+  border-bottom: 1px solid #c8c4c0;
+  padding-bottom: 0.3em;
+}
+
+h2 {
+  font-size: 1.4em;
+  margin-top: 1.6em;
+}
+
+h3 {
+  font-size: 1.15em;
+  font-style: italic;
+}
+
+h4 {
+  font-size: 1em;
+  font-style: italic;
+  color: #4a4540;
+}
+
+h5, h6 {
+  font-size: 0.95em;
+  color: #4a4540;
+}
+
+/* ------------------------------------------------------------------ Paragraphs */
+p {
+  margin: 0 0 0.7em 0;
+  text-indent: 0;
+  text-align: left;
+}
+
+/* First paragraph after a heading is not indented. */
+h1 + p, h2 + p, h3 + p, hr + p {
+  text-indent: 0;
+}
+
+/* ------------------------------------------------------------------ Inline */
+em, i, cite {
+  font-style: italic;
+}
+
+strong, b {
+  font-weight: bold;
+}
+
+a {
+  color: #1a1714;
+  text-decoration: underline;
+}
+
+code, pre, kbd, samp {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.9em;
+}
+
+code {
+  background: #f5f2ee;
+  padding: 0.05em 0.25em;
+}
+
+pre {
+  background: #f5f2ee;
+  padding: 0.7em 0.9em;
+  margin: 0.7em 0;
+  border-left: 2px solid #4a4540;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+}
+
+/* ------------------------------------------------------------------ Quotes */
+blockquote {
+  margin: 0.8em 1.2em;
+  padding-left: 0.8em;
+  border-left: 2px solid #8a8480;
+  color: #4a4540;
+  font-style: normal;
+}
+
+blockquote p {
+  margin: 0 0 0.5em 0;
+}
+
+/* ------------------------------------------------------------------ Lists */
+ul, ol {
+  margin: 0.5em 0 0.7em 0;
+  padding-left: 1.4em;
+}
+
+li {
+  margin-bottom: 0.25em;
+}
+
+/* ------------------------------------------------------------------ Rules */
+hr {
+  border: 0;
+  border-top: 1px solid #c8c4c0;
+  margin: 1.4em auto;
+  width: 60%;
+}
+
+/* ------------------------------------------------------------------ Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8em 0;
+  font-size: 0.92em;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+thead th {
+  background: #f5f2ee;
+  border-bottom: 1px solid #1a1714;
+  padding: 0.4em 0.5em;
+  text-align: left;
+  font-weight: bold;
+}
+
+tbody td {
+  border-bottom: 1px solid #c8c4c0;
+  padding: 0.4em 0.5em;
+  vertical-align: top;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ------------------------------------------------------------------ Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em auto;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+figcaption,
+img + em,
+img + p em {
+  font-size: 0.88em;
+  color: #4a4540;
+  text-align: center;
+  display: block;
+  margin-top: -0.3em;
+  margin-bottom: 1em;
+}
+
+/* ------------------------------------------------------------------ Page breaks */
+.page-break {
+  page-break-after: always;
+  break-after: page;
+}
+
+.no-break {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>turkey-confidence-timeline</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<style>
+  :root {{ --white:#FFFFFF; --ink:#2a1a0e; --red:#C8102E; }}
+  html,body{{margin:0;background:var(--white);color:var(--ink);
+    font-family:"Lato",system-ui,sans-serif;}}
+  #chart{{width:1480px;max-width:100%;margin:24px auto;}}
+</style></head>
+<body>
+<div id="chart" role="img" aria-label="turkey confidence timeline"></div>
+<script>
+// inlined from charts/turkey-confidence-timeline.drawer.js — regenerate with: new_chart.py … --sync
+const draw = (c) => {
+  // The turkey problem (Taleb): the turkey's confidence that tomorrow brings food
+  // rises with every fed day — right up to day 1000, when the farmer arrives with
+  // the axe. The point of the chart: the model's confidence is a property of the
+  // model, not the world. Confidence peaks the instant before the catastrophe.
+  // Honest encoding: zero baseline, one red accent (the break), grays otherwise,
+  // mono numerals, no blue.
+  const d3 = window.d3;
+  const RED = '#C8102E', INK = '#2a1a0e', N5 = '#545454', N1 = '#E3E3E3';
+  const FONT = '"Lato", system-ui, sans-serif';
+  const MONO = 'ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace';
+  c.innerHTML = '';
+  const W = 1480, H = 600, m = { t: 54, r: 210, b: 68, l: 84 };
+  const svg = d3.select(c).append('svg')
+    .attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`)
+    .attr('role', 'img').attr('aria-label',
+      'A line rising steadily as the turkey is fed each day for 1000 days, then collapsing to zero on day 1000 when the farmer arrives.')
+    .style('overflow', 'visible').style('display', 'block');
+
+  const x = d3.scaleLinear().domain([1, 1000]).range([m.l, W - m.r]);
+  const y = d3.scaleLinear().domain([0, 1]).range([H - m.b, m.t]);
+
+  // confidence: a saturating rise (more fed days => higher belief tomorrow feeds too)
+  const rise = d3.range(1, 1000).map((d) => ({ d, v: 0.98 * (1 - Math.exp(-d / 260)) }));
+  const peak = rise[rise.length - 1].v;
+
+  // axes: zero baseline, sparse gray ticks
+  const xAxis = svg.append('g').attr('transform', `translate(0,${H - m.b})`);
+  xAxis.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('stroke', INK).attr('stroke-width', 1.5);
+  [1, 250, 500, 750, 1000].forEach((t) => {
+    xAxis.append('text').attr('x', x(t)).attr('y', 30).attr('text-anchor', 'middle')
+      .attr('font-family', MONO).attr('font-size', 18).attr('fill', N5).text(t);
+  });
+  svg.append('text').attr('x', (m.l + W - m.r) / 2).attr('y', H - 14).attr('text-anchor', 'middle')
+    .attr('font-family', FONT).attr('font-size', 19).attr('fill', N5).text('Days fed');
+  const yAxis = svg.append('g');
+  [0, 0.5, 1].forEach((t) => {
+    yAxis.append('text').attr('x', m.l - 16).attr('y', y(t) + 6).attr('text-anchor', 'end')
+      .attr('font-family', MONO).attr('font-size', 18).attr('fill', N5).text(d3.format('.0%')(t));
+    yAxis.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(t)).attr('y2', y(t))
+      .attr('stroke', N1).attr('stroke-width', 1);
+  });
+  svg.append('text').attr('transform', `translate(${m.l - 58},${(m.t + H - m.b) / 2}) rotate(-90)`)
+    .attr('text-anchor', 'middle').attr('font-family', FONT).attr('font-size', 19).attr('fill', N5)
+    .text("Turkey's confidence tomorrow brings food");
+
+  // the rising belief (ink line, drawn on)
+  const line = d3.line().x((p) => x(p.d)).y((p) => y(p.v)).curve(d3.curveMonotoneX);
+  const path = svg.append('path').datum(rise).attr('fill', 'none')
+    .attr('stroke', INK).attr('stroke-width', 3.5).attr('d', line);
+  const L = path.node().getTotalLength();
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  path.attr('stroke-dasharray', `${L} ${L}`).attr('stroke-dashoffset', RM ? 0 : L)
+    .transition().duration(RM ? 0 : 1400).ease(d3.easeCubicOut).attr('stroke-dashoffset', 0);
+
+  // the break: day 1000, confidence collapses to 0 (the axe)
+  const bx = x(1000);
+  const drop = svg.append('g').attr('opacity', 0);
+  drop.append('line').attr('x1', bx).attr('y1', y(peak)).attr('x2', bx).attr('y2', y(0))
+    .attr('stroke', RED).attr('stroke-width', 3.5).attr('stroke-dasharray', '2 7').attr('stroke-linecap', 'round');
+  drop.append('circle').attr('cx', bx).attr('cy', y(peak)).attr('r', 8).attr('fill', RED);
+  drop.append('circle').attr('cx', bx).attr('cy', y(0)).attr('r', 8).attr('fill', RED);
+  drop.transition().delay(RM ? 0 : 1500).duration(RM ? 0 : 500).attr('opacity', 1);
+
+  // annotations
+  const ann = svg.append('g').attr('opacity', 0);
+  ann.append('text').attr('x', bx + 18).attr('y', y(peak) + 4).attr('font-family', FONT)
+    .attr('font-weight', 700).attr('font-size', 22).attr('fill', RED).text('Day 1000:');
+  ann.append('text').attr('x', bx + 18).attr('y', y(peak) + 32).attr('font-family', FONT)
+    .attr('font-size', 21).attr('fill', INK).text('the farmer arrives');
+  ann.append('text').attr('x', bx + 18).attr('y', y(peak) + 58).attr('font-family', FONT)
+    .attr('font-size', 21).attr('fill', INK).text('with an axe.');
+  ann.append('text').attr('x', bx + 18).attr('y', y(0.30)).attr('font-family', FONT)
+    .attr('font-size', 19).attr('fill', N5).text('Confidence peaks');
+  ann.append('text').attr('x', bx + 18).attr('y', y(0.30) + 26).attr('font-family', FONT)
+    .attr('font-size', 19).attr('fill', N5).text('the instant before');
+  ann.append('text').attr('x', bx + 18).attr('y', y(0.30) + 52).attr('font-family', FONT)
+    .attr('font-size', 19).attr('fill', N5).text('the catastrophe.');
+  ann.transition().delay(RM ? 0 : 1900).duration(RM ? 0 : 500).attr('opacity', 1);
+};
+draw(document.getElementById('chart'));
+</script>
+</body></html>

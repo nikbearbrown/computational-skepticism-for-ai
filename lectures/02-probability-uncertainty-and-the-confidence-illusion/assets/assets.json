@@ -1,0 +1,187 @@
+{
+  "chapter": "02-probability-uncertainty-and-the-confidence-illusion",
+  "source": "chapters/02-probability-uncertainty-and-the-confidence-illusion.md",
+  "status": "pool — candidates only, nothing forced into the deck",
+  "assets": [
+    {
+      "id": "ch02-base-rate-icon-array",
+      "kind": "figure",
+      "concept": "base rates dominate positive tests",
+      "source": "cajal",
+      "file": "svg/base-rate-icon-array.svg",
+      "status": "candidate",
+      "notes": "central figure; 1000-person icon array, most positives false"
+    },
+    {
+      "id": "ch02-total-probability-partition",
+      "kind": "figure",
+      "concept": "total probability theorem as a partition",
+      "source": "cajal",
+      "file": "svg/total-probability-partition.svg",
+      "status": "candidate",
+      "notes": "sample space split into causes; A overlaps each"
+    },
+    {
+      "id": "ch02-calibration-curve",
+      "kind": "chart",
+      "concept": "calibration / reliability diagram",
+      "source": "ai-for-graphs",
+      "file": "charts/calibration-curve.html",
+      "status": "candidate",
+      "notes": "live D3; over-confident model below the diagonal"
+    },
+    {
+      "id": "ch02-doodle-candidates",
+      "kind": "doodle",
+      "concept": "6 doodle-worthy moments",
+      "source": "scout",
+      "file": "doodles/doodle-candidates.md",
+      "status": "candidate",
+      "notes": "99%-test, Bayes bookkeeping, confidence under shift, etc."
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-01",
+      "kind": "figure",
+      "concept": "Venn diagram",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-01.svg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: svg, png, jpg"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-02",
+      "kind": "figure",
+      "concept": "book figure 2",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-02.svg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: svg, png"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-03",
+      "kind": "figure",
+      "concept": "Partition diagram",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-03.svg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: svg, png, jpg"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-04",
+      "kind": "figure",
+      "concept": "State transition diagram for Alice's two-state Markov chain",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-04.svg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: svg, png, jpg"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-05",
+      "kind": "figure",
+      "concept": "Most positive results come from the large healthy population, not the",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-05.svg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: svg, png, jpg"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-06",
+      "kind": "figure",
+      "concept": "The positive test does real work: it raises the probability of disease a",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-06.svg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: svg, png, jpg"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-07",
+      "kind": "figure",
+      "concept": "The model's confidence scores do not move when the world moves",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-07.svg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: svg, png, jpg"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-08",
+      "kind": "figure",
+      "concept": "book figure 8",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-08.svg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: svg, png"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-09",
+      "kind": "figure",
+      "concept": "In the heavy-tailed regime, the next observation can move your average",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-09.svg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: svg, png, jpg"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-10",
+      "kind": "figure",
+      "concept": "book figure 10",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-10.svg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: svg, png"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-11",
+      "kind": "figure",
+      "concept": "book figure 11",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-11.svg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: svg, png"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-12",
+      "kind": "figure",
+      "concept": "book figure 12",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-12.jpg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: jpg"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-13",
+      "kind": "figure",
+      "concept": "book figure 13",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-13.jpg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: jpg"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-14",
+      "kind": "figure",
+      "concept": "book figure 14",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-14.jpg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: jpg"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-15",
+      "kind": "figure",
+      "concept": "book figure 15",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-15.jpg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: jpg"
+    },
+    {
+      "id": "02-probability-uncertainty-and-the-confidence-illusion-book-fig-16",
+      "kind": "figure",
+      "concept": "book figure 16",
+      "source": "book",
+      "file": "book/02-probability-uncertainty-and-the-confidence-illusion-fig-16.jpg",
+      "status": "candidate",
+      "notes": "shipped with the book; formats: jpg"
+    }
+  ]
+}

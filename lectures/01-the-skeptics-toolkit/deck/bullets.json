@@ -1,0 +1,278 @@
+{
+  "S01": {
+    "title": "The Skeptic's Toolkit",
+    "bullets": [
+      {
+        "text": "A method — not a mood",
+        "atLine": 0
+      },
+      {
+        "text": "Skepticism you can perform and check",
+        "atLine": 2
+      },
+      {
+        "text": "Run the moves even when the output looks right",
+        "atLine": 4
+      },
+      {
+        "text": "Everything else is downstream of this",
+        "atLine": 6
+      },
+      {
+        "text": "Four moves you run on any AI output",
+        "atLine": 9
+      },
+      {
+        "text": "Five capacities a supervisor exercises",
+        "atLine": 11
+      },
+      {
+        "text": "The enemy isn't laziness — it's confidence",
+        "atLine": 13
+      }
+    ],
+    "_auto": false
+  },
+  "S02": {
+    "title": "Two failures, one structure",
+    "bullets": [
+      {
+        "text": "Two failures set up the whole book",
+        "atLine": 0
+      },
+      {
+        "text": "Sweden, 2018 — an AI triage tool",
+        "atLine": 2
+      },
+      {
+        "text": "A swollen leg, scored low-acuity",
+        "atLine": 5
+      },
+      {
+        "text": "Four-hour wait; the clot reaches the lung",
+        "atLine": 7
+      },
+      {
+        "text": "She dies in the waiting room",
+        "atLine": 9
+      },
+      {
+        "text": "The system was not broken",
+        "atLine": 12
+      },
+      {
+        "text": "It passed every review — she still died",
+        "atLine": 14
+      },
+      {
+        "text": "The metrics all came back green",
+        "atLine": 16
+      },
+      {
+        "text": "An agent reports an email deleted",
+        "atLine": 18
+      },
+      {
+        "text": "The email is still on the server",
+        "atLine": 21
+      },
+      {
+        "text": "Statistically valid. Wrong about what mattered.",
+        "atLine": 23
+      }
+    ],
+    "_auto": false
+  },
+  "S04": {
+    "title": "Skepticism is a method",
+    "bullets": [
+      {
+        "text": "Not the cynic at the back of the room",
+        "atLine": 0
+      },
+      {
+        "text": "Not the refusal to believe anything",
+        "atLine": 2
+      },
+      {
+        "text": "I don't doubt the chair I sit on",
+        "atLine": 4
+      },
+      {
+        "text": "A method: knowing how you formed a belief",
+        "atLine": 7
+      },
+      {
+        "text": "So you notice when the ground shifts",
+        "atLine": 9
+      },
+      {
+        "text": "The moves can be taught and checked",
+        "atLine": 11
+      },
+      {
+        "text": "Easy when the output looks suspicious",
+        "atLine": 13
+      },
+      {
+        "text": "Hard when the output looks right",
+        "atLine": 15
+      },
+      {
+        "text": "Fluent, specific, well-shaped",
+        "atLine": 18
+      },
+      {
+        "text": "That's when checking matters most",
+        "atLine": 20
+      },
+      {
+        "text": "The enemy isn't laziness — it's confidence",
+        "atLine": 22
+      }
+    ],
+    "_auto": false
+  },
+  "S11": {
+    "title": "The fluency trap",
+    "bullets": [
+      {
+        "text": "The most operational idea in the chapter",
+        "atLine": 0
+      },
+      {
+        "text": "Stage 1 — fluent output, you trust it",
+        "atLine": 2
+      },
+      {
+        "text": "Stage 2 — you trust your own judgment",
+        "atLine": 4
+      },
+      {
+        "text": "Any answer of that shape gets waved through",
+        "atLine": 6
+      },
+      {
+        "text": "Fluency boosts wrong answers too",
+        "atLine": 8
+      },
+      {
+        "text": "Fluent output is usually more useful",
+        "atLine": 11
+      },
+      {
+        "text": "Ash's agent: clean prose, no verification",
+        "atLine": 13
+      },
+      {
+        "text": "Clear writing used to mean clear thinking",
+        "atLine": 15
+      },
+      {
+        "text": "AI severed that link",
+        "atLine": 17
+      },
+      {
+        "text": "Form and content are independent",
+        "atLine": 19
+      }
+    ],
+    "_auto": false
+  },
+  "S13": {
+    "title": "From habit to architecture",
+    "bullets": [
+      {
+        "text": "One person can run the moves",
+        "atLine": 0
+      },
+      {
+        "text": "But individual skepticism is fragile",
+        "atLine": 2
+      },
+      {
+        "text": "One tired person, under deadline, forgets",
+        "atLine": 4
+      },
+      {
+        "text": "Durable teams make it institutional",
+        "atLine": 6
+      },
+      {
+        "text": "Encode the moves into the workflow",
+        "atLine": 8
+      },
+      {
+        "text": "Falsification question in the checklist",
+        "atLine": 10
+      },
+      {
+        "text": "Drift check in the monitoring",
+        "atLine": 11
+      },
+      {
+        "text": "Shift questions in the handoff",
+        "atLine": 13
+      },
+      {
+        "text": "It's architecture, not bureaucracy",
+        "atLine": 15
+      },
+      {
+        "text": "You choose where the moves happen",
+        "atLine": 17
+      },
+      {
+        "text": "Skip it, and the failures become yours",
+        "atLine": 19
+      }
+    ],
+    "_auto": false
+  },
+  "S14": {
+    "title": "What you'll carry forward",
+    "bullets": [
+      {
+        "text": "Meet Ash — the Pebble",
+        "atLine": 0
+      },
+      {
+        "text": "One failure, revisited in Chapters 5 to 10",
+        "atLine": 2
+      },
+      {
+        "text": "Correct and harmful",
+        "atLine": 5
+      },
+      {
+        "text": "Fluent and wrong",
+        "atLine": 7
+      },
+      {
+        "text": "Reports success, did nothing",
+        "atLine": 10
+      },
+      {
+        "text": "The fix is supervisory — in humans",
+        "atLine": 12
+      },
+      {
+        "text": "Largely untaught in engineering",
+        "atLine": 15
+      },
+      {
+        "text": "The rest of the book builds it",
+        "atLine": 17
+      },
+      {
+        "text": "Next — Chapter 2: probability",
+        "atLine": 20
+      },
+      {
+        "text": "A 99% test can still cost lives",
+        "atLine": 22
+      }
+    ],
+    "_auto": false
+  }
+}

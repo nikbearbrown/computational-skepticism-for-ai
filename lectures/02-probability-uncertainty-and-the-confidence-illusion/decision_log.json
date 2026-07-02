@@ -1,0 +1,60 @@
+{
+  "chapter": "02-probability-uncertainty-and-the-confidence-illusion",
+  "started": "2026-07-01T21:00:43",
+  "stages": {
+    "setup": {
+      "status": "ok",
+      "note": "folder=/sessions/loving-youthful-hawking/mnt/Cowork/computational-skepticism-for-ai/lectures/02-probability-uncertainty-and-the-confidence-illusion",
+      "at": "21:43:33"
+    },
+    "assets": {
+      "status": "ok",
+      "note": "    fig-16: (untitled)",
+      "at": "21:43:34"
+    },
+    "plan": {
+      "status": "blocked",
+      "note": "author 01-author-plan.md",
+      "at": "21:43:34"
+    }
+  },
+  "decisions": [
+    {
+      "gate": "runtime_source",
+      "choice": "/sessions/loving-youthful-hawking/mnt/Cowork/computational-skepticism-for-ai/lectures/01-the-skeptics-toolkit/deck",
+      "reason": "copied ['support.js', 'deck-stage.js', '_ds/']"
+    },
+    {
+      "gate": "asset_pool",
+      "choice": "20 candidates",
+      "reason": "imported book figures as candidate pool"
+    },
+    {
+      "gate": "plan_gate",
+      "choice": "BLOCKED",
+      "reason": "starter has 296 TODOs — author deck_plan.json (no TODOs left)"
+    },
+    {
+      "gate": "plan_gate",
+      "choice": "BLOCKED",
+      "reason": "starter has 156 TODOs — author deck_plan.json (no TODOs left)"
+    },
+    {
+      "gate": "runtime_source",
+      "choice": "NONE",
+      "reason": "no runtime given — deck will need _ds/support.js before scaffold"
+    },
+    {
+      "gate": "asset_pool",
+      "choice": "20 candidates",
+      "reason": "imported book figures as candidate pool"
+    },
+    {
+      "gate": "plan_gate",
+      "choice": "SLOT",
+      "reason": "author deck_plan.json (156 TODOs) via 01-author-plan.md [agent]"
+    }
+  ],
+  "blocked_on": "/sessions/loving-youthful-hawking/mnt/Cowork/computational-skepticism-for-ai/lectures/02-probability-uncertainty-and-the-confidence-illusion/packets/01-author-plan.md",
+  "mode": "agent"
+}

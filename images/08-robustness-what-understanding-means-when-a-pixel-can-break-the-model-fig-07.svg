@@ -1,0 +1,32 @@
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Diagram</title>
+  <desc id="desc">The classifier votes by majority across thousands of noisy versions of the input.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="700" height="420" fill="#FFFFFF"/>
+  <text x="32" y="42" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="13" font-weight="bold" fill="#2a1a0e">Diagram</text>
+  <text x="32" y="62" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="10" fill="#545454">The classifier votes by majority across thousands of noisy versions of the input.</text>
+  <rect x="64" y="92" width="572" height="252" fill="#F5EFE8" stroke="#D4D4D4" stroke-width="0.75"/>
+  <line x1="64" y1="344" x2="636" y2="344" stroke="#2a1a0e" stroke-width="1"/>
+  <line x1="64" y1="92" x2="64" y2="344" stroke="#2a1a0e" stroke-width="1"/>
+  <line x1="64" y1="232" x2="636" y2="232" stroke="#D4D4D4" stroke-width="0.75" stroke-dasharray="4 3"/>
+  <rect x="88" y="132.4" width="64" height="201.6" fill="#C8102E"/>
+  <text x="120" y="356" text-anchor="middle" font-family="'IBM Plex Mono', 'Courier New', monospace" font-size="10" letter-spacing="0.08em" fill="#545454">A</text>
+  <text x="120" y="124.4" text-anchor="middle" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="10" fill="#2a1a0e">72</text>
+  <rect x="194" y="180" width="64" height="154" fill="#6B3520"/>
+  <text x="226" y="356" text-anchor="middle" font-family="'IBM Plex Mono', 'Courier New', monospace" font-size="10" letter-spacing="0.08em" fill="#545454">B</text>
+  <text x="226" y="172" text-anchor="middle" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="10" fill="#2a1a0e">55</text>
+  <rect x="300" y="210.8" width="64" height="123.19999999999999" fill="#6B3520"/>
+  <text x="332" y="356" text-anchor="middle" font-family="'IBM Plex Mono', 'Courier New', monospace" font-size="10" letter-spacing="0.08em" fill="#545454">C</text>
+  <text x="332" y="202.8" text-anchor="middle" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="10" fill="#2a1a0e">44</text>
+  <rect x="406" y="247.2" width="64" height="86.8" fill="#6B3520"/>
+  <text x="438" y="356" text-anchor="middle" font-family="'IBM Plex Mono', 'Courier New', monospace" font-size="10" letter-spacing="0.08em" fill="#545454">D</text>
+  <text x="438" y="239.2" text-anchor="middle" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="10" fill="#2a1a0e">31</text>
+  <rect x="512" y="283.6" width="64" height="50.4" fill="#6B3520"/>
+  <text x="544" y="356" text-anchor="middle" font-family="'IBM Plex Mono', 'Courier New', monospace" font-size="10" letter-spacing="0.08em" fill="#545454">E</text>
+  <text x="544" y="275.6" text-anchor="middle" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="10" fill="#2a1a0e">18</text>
+  <text x="64" y="382" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="11" fill="#2a1a0e">Values are illustrative, structured from the chapter prompt.</text>
+</svg>

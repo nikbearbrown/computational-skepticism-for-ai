@@ -1,0 +1,29 @@
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Language-game mismatch </title>
+  <desc id="desc">Language-game mismatch — two overlapping circles. Left circle: "model's language game" (words used in the model's operational scope). Right circle: "u</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="700" height="420" fill="#FFFFFF"/>
+  <text x="32" y="42" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="13" font-weight="bold" fill="#2a1a0e">Language-game mismatch </text>
+  <text x="32" y="62" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="10" fill="#545454">Language-game mismatch — two overlapping circles. Left circle: "model's language game" (words used in the model's operational scope). Right circle: "u</text>
+  <rect x="64" y="166" width="112" height="88" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="1"/>
+  <text x="120" y="205" text-anchor="middle" font-family="'IBM Plex Mono', 'Courier New', monospace" font-size="10" letter-spacing="0.08em" fill="#545454">START</text>
+  <text x="120" y="226" text-anchor="middle" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="10" fill="#2a1a0e">checkpoint</text>
+  <path d="M 180 210 C 196 210, 206 210, 218 210" stroke="#2a1a0e" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="218" y="166" width="112" height="88" fill="#F5EFE8" stroke="#D4D4D4" stroke-width="1"/>
+  <text x="274" y="205" text-anchor="middle" font-family="'IBM Plex Mono', 'Courier New', monospace" font-size="10" letter-spacing="0.08em" fill="#545454">LANGUAGE-GAME</text>
+  <text x="274" y="226" text-anchor="middle" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="10" fill="#2a1a0e">checkpoint</text>
+  <path d="M 334 210 C 350 210, 360 210, 372 210" stroke="#2a1a0e" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="372" y="166" width="112" height="88" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="1"/>
+  <text x="428" y="205" text-anchor="middle" font-family="'IBM Plex Mono', 'Courier New', monospace" font-size="10" letter-spacing="0.08em" fill="#545454">MISMATCH</text>
+  <text x="428" y="226" text-anchor="middle" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="10" fill="#2a1a0e">checkpoint</text>
+  <path d="M 488 210 C 504 210, 514 210, 526 210" stroke="#2a1a0e" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="526" y="166" width="112" height="88" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="1"/>
+  <text x="582" y="205" text-anchor="middle" font-family="'IBM Plex Mono', 'Courier New', monospace" font-size="10" letter-spacing="0.08em" fill="#545454">DECISION</text>
+  <text x="582" y="226" text-anchor="middle" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="10" fill="#2a1a0e">checkpoint</text>
+  <path d="M 120 292 C 240 340, 430 340, 584 292" stroke="#C8102E" stroke-width="1.5" fill="none" stroke-dasharray="5 4"/>
+  <text x="350" y="362" text-anchor="middle" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="11" fill="#2a1a0e">The diagram emphasizes sequence, dependency, and the decision point.</text>
+</svg>
