@@ -56,108 +56,48 @@ Think of it this way, as a design-critic would: the newspaper meaning of "bias" 
 
 A bookkeeping note before I list them, because a book about reading a dataset like a historian cannot have a counting error in its own taxonomy. The ten below are the *entry-point* mechanisms — ten places where $E[\hat{\theta}] \neq \theta$ can be born. Later I'll show a *compound* table with pairs like "Aggregation × Subgroup-mask" and "Linkage × Re-identification." Those are not an eleventh and twelfth mechanism. They are *derived interactions* — named patterns that arise when two of the ten (or two structural effects downstream of the ten) act together. When you see them, read them as compounds, not as new primitives. The ten are the alphabet; the compound table is a short list of common words.
 
+Three of the ten carry this chapter, because three of them are where the leverage usually hides: selection, historical, and implicit. I'll take those apart slowly. The other seven I'll handle in a group — not because they matter less in a given pipeline, but because once you can see how one of them enters, you can see how its neighbors do, and I would rather you feel three mechanisms in your hands than skim ten.
+
 ### Selection bias
 
-Selection bias occurs when the sample used for analysis was drawn by a process that gave different inclusion probabilities to different members of the population — and the variable driving inclusion is related to the outcome being estimated.
+Watch how it enters. You never sit down and decide to exclude anyone. You write a query — "patients with a complete lab panel within six hours of admission" — and the query is reasonable, and the exclusion rides in on the back of the reasonableness. The estimator you built computes $E[Y \mid i \in S]$: the average outcome among the sample $S$ you actually assembled. The quantity you wanted was $E[Y]$, the average outcome in the population. Those two are equal on exactly one condition: that the probability of landing in the sample, $P(i \in S)$, is independent of the outcome $Y$. The moment inclusion depends on what happened to a person, the two come apart, and your estimate is biased before a single parameter is fit.
 
-Formally: your estimator computes $E[Y | i \in S]$. You want $E[Y]$. These are equal only if the probability of inclusion $P(i \in S)$ is independent of the outcome $Y$. When that independence fails — when who gets included depends on what happened to them — you get a biased estimate.
+Take the sepsis model. The patients too critical to have labs drawn on time are the patients who most need the alert — and they are precisely the ones the six-hour filter drops. So the model learns what predicts sepsis *among patients stable enough to be tested*, and then it is asked about the unstable ones. It underestimates their risk, systematically, every time. And here is the part that should make you uneasy: more training data does not help. Drawn by the same query, more data encodes the same exclusion more precisely. You get a sharper, more confident wrong answer. This is the estimator lesson from the first section, wearing a hospital badge.
 
-A hospital deploying a sepsis prediction model trained on patients who had a complete lab panel within six hours of admission is doing this. Patients too critical to have labs drawn on time are excluded from training. The model learns that certain patterns predict sepsis in *stable enough to be tested* patients. Its predictions for the genuinely critical patients systematically underestimate risk. More training data, drawn by the same process, makes the bias more precisely encoded.
+Now the trade-off, because there is always one. You can correct for observed selection: inverse probability weighting gives each retained observation a weight of $1/P(i \in S)$, so the survivors of an aggressive filter stand in for the people who were dropped; propensity score matching models inclusion as a function of covariates you *can* see and reweights on the estimated scores. Both moves buy you back an unbiased estimate — but only if the variable driving selection is one you recorded. If the thing that got people excluded is unobserved, no weight recovers it, because you have nothing to weight on. That case is not a modeling problem you can solve at your desk. It is a data-collection problem, and the honest answer is to go collect differently, not to reach for a fancier estimator.
 
-The corrective interventions are inverse probability weighting — give each observation a weight proportional to $1/P(i \in S)$, so underrepresented individuals count for more — and propensity score matching, which models the inclusion probability as a function of observed covariates and uses the estimated scores to reweight the sample. Both corrections fail if the covariates driving selection are unobserved. That case requires a different data collection strategy, not a better model.
+### The five that enter through the humans in the loop
 
-### Confirmation bias
+Five of the remaining mechanisms share a spine: somewhere a person exercises judgment, and their prior leaks into the record. Name them once and you can spot the family. **Confirmation bias** is the researcher's prior shaping which data gets collected, kept, and reported — in Bayesian terms, an invisible multiplier greater than one on evidence that flatters the hypothesis and less than one on evidence that dents it, so the posterior drifts toward the prior instead of toward the world. **Observer bias** is that same prior localized to a single measurement act: the annotator who knows a patient's prior diagnosis and codes ambiguous notes as symptom-positive, so the labels quietly learn to predict *past diagnosis* rather than *current state*. **Self-report bias** is the subject's own prior doing the leaking — people report voting more, drinking less, exercising more than they do, and the error runs toward social desirability, not randomly. **Data-coding bias** enters one step later, when qualitative material is squeezed into categories: is "not bad" positive or neutral? which diagnosis code fits? Where the mapping needs judgment, systematic miscoding follows the judgment. And **publication bias** is the same leak at the scale of a literature: significant results get submitted, accepted, cited; nulls die in drawers, so a meta-analysis computes $E[\hat{\theta} \mid \text{published}]$ and reads an effect inflated by the censoring.
 
-Confirmation bias occurs when the researcher's prior beliefs shape what data is collected, how it is interpreted, or which results are reported — systematically in the direction of confirming the prior.
-
-In a Bayesian frame, confirmation bias corrupts the likelihood function. Bayes' theorem says:
-
-$$P(H|D) = \frac{P(D|H) \cdot P(H)}{P(D)}$$
-
-A researcher subject to confirmation bias is unconsciously applying a multiplier greater than 1 to data that supports their hypothesis $H$ and less than 1 to data that contradicts it. The posterior they compute is not the posterior they should compute. Their model of the world converges on their prior rather than on reality.
-
-The distinctive feature of confirmation bias is where the intervention must happen: *upstream of data collection*, not downstream of it. Pre-registration commits to hypothesis and analysis plan before outcomes are seen. Blind analysis separates the person who chose the hypothesis from the person who runs the model. Adversarial testing assigns a team member explicitly to find evidence against the hypothesis. None of these look like model corrections. They look like organizational practices — because the bias enters the pipeline before the data does.
-
-### Observer bias
-
-Observer bias occurs when the individual making a judgment — a clinician, an annotator, a reviewer — systematically records outcomes that align with their expectations, rather than what is actually present.
-
-This is confirmation bias localized to a measurement act. Wherever human judgment is required to generate data — a diagnosis, a label, a quality rating — the observer's prior can influence the outcome. Unlike confirmation bias, which corrupts the research process, observer bias corrupts the *data itself*: recorded values are systematically off from true values, and the direction of the error tracks the observer's beliefs.
-
-If $Y_i^*$ is the true value and $Y_i$ is the recorded value, observer bias means $E[Y_i - Y_i^*] \neq 0$, with the sign depending on the observer's prior. A dataset of clinical notes labeled for depression symptoms, where annotators who know the patient's prior diagnosis tend to code ambiguous language as positive for symptoms when the patient has a depression history — that is observer bias. The resulting labels learn to predict prior diagnosis, not current symptom state.
-
-The point of intervention is the labeling process. The most reliable implementation is blinding: strip from the labeling task any information that would allow the annotator to form a prior about the correct answer. The quality of the intervention is measured by Cohen's kappa — the agreement between independent annotators, corrected for chance:
+The reason to group them is that they share a diagnostic *and* a leverage point. The diagnostic, wherever two humans code the same thing, is Cohen's kappa — agreement corrected for chance,
 
 $$\kappa = \frac{P_o - P_e}{1 - P_e}$$
 
-A kappa drop between blinded and unblinded conditions is not just a quality signal. It is direct evidence that observer bias is operating in the labeling process.
+— and its movement tells you which mechanism you have. A kappa that collapses when you *unblind* the annotators is direct evidence of observer bias: it was the visible prior doing the work. A kappa that is low on specific *items* rather than specific *people* points at data-coding bias instead — the category is underspecified, not the coder. For publication bias the analogue is the funnel plot: effect size against precision should form a symmetric inverted funnel, and a missing lower-left corner is the drawer of unpublished small-null studies made visible; trim-and-fill imputes them back. For self-report, the diagnostic is an external gold standard — medical records, purchase data — and when none exists, which is most of the time, the discipline is not to launder the self-reports into ground truth but to label them as self-reports with the likely direction of distortion named.
 
-### Publication bias
+The leverage point is what ties the family together and separates it from selection bias. You do not fix any of these five by touching the model, because none of them entered through the model. They entered *upstream of the data*, at the moment a human judged. So the interventions look like organizational practice, not machine learning: pre-registration that commits to the hypothesis before outcomes are seen; blinding that strips from the labeler any cue about the "right" answer; adversarial review that pays someone to find the disconfirming case. This is the design-critic's trade named plainly — you spend process discipline, meetings and protocols and slower annotation, to buy back an unbiased record. Engineers reach past these because they don't look like engineering. That is exactly why the bias survives.
 
-Publication bias occurs when studies with statistically significant or positive results are more likely to be submitted, accepted, and cited — making the published literature an unrepresentative sample of conducted research.
+### The two that enter at the keyboard
 
-This type does not corrupt any individual study. It corrupts the *aggregate signal* across studies. If you estimate an effect size from a meta-analysis, you are computing $E[\hat{\theta} | \text{published}]$, not $E[\hat{\theta}]$. The distribution of published studies is censored from the left: null and small effects go unreported; large effects get through. The meta-analytic estimate is inflated by this selection.
-
-The funnel plot is the diagnostic: plot effect size against study precision. Without publication bias, the result is a symmetric inverted funnel. Asymmetry — a missing lower-left quadrant — indicates that small studies with small effects are underrepresented.
-
-The trim-and-fill correction estimates how many studies are likely missing based on the degree of asymmetry, imputes their probable effect sizes, and recomputes the meta-analytic estimate on the augmented dataset. This gives a more honest summary of what the full literature likely shows.
-
-### Self-report bias
-
-Self-report bias occurs when participants misreport their own behaviors or attitudes — typically toward social acceptability or toward what they believe the researcher wants to hear.
-
-If $X_i^*$ is the true value and $X_i$ is the reported value, self-report bias means $E[X_i - X_i^*] \neq 0$, and the direction tracks social desirability. People report voting at higher rates than they actually vote; report consuming less alcohol; report exercising more and eating fewer calories. The social desirability scale is the diagnostic instrument — a validated set of questions with known answers that measures the tendency to give self-favorable responses.
-
-Correction requires an external gold standard: compare self-reported data against objective sources where they exist (medical records, purchase data, direct observation), estimate the mean discrepancy, apply a correction factor. When no gold standard exists — which is most of the time — the correct response is to report the data as self-reported and note the known direction of likely distortion. Not to treat the self-reports as ground truth.
-
-### Sampling bias
-
-Sampling bias occurs when the process of drawing a sample systematically excludes or underrepresents certain subgroups — not because of anything about their outcomes, but because of how easy or hard they were to reach.
-
-This is a specific case of selection bias where the mechanism is accessibility. The reason to treat it separately is that the correction is different: external population data often tells you which groups are underrepresented, so the fix is reweighting rather than propensity modeling. For a respondent from stratum $i$:
-
-$$w_i = \frac{N_i / N}{n_i / n}$$
-
-where $N_i$ is the true population size of stratum $i$ and $n_i$ is the sample size from it. If stratum $i$ is underrepresented, its weight exceeds 1. Apply the weights in analysis to restore representativeness.
-
-An online survey distributed through LinkedIn about remote work habits will systematically overrepresent professional workers with college degrees. The bias is not in the measurement instrument; it is in the accessibility of the sampling frame. More responses from LinkedIn users does not fix it — it makes the biased answer more precise.
-
-### Data coding bias
-
-Data coding bias occurs when the process of assigning categorical or numerical values to qualitative information introduces systematic distortions — through poorly defined categories, inconsistent application of rules, or categorizations that collapse meaningful distinctions.
-
-This type enters during the transformation from raw information to structured data. It is common in sentiment analysis (is "not bad" positive, negative, or neutral?), medical coding (which diagnosis code captures this case most accurately?), and any annotation task where the mapping from observation to category requires judgment. The bias is systematic when certain types of items are consistently miscategorized in the same direction.
-
-The primary diagnostic is inter-rater reliability: measure Cohen's kappa across multiple independent coders, identify items with high disagreement, revise the coding manual to reduce ambiguity in those items, repeat. A kappa clustered on specific items — some examples always coded inconsistently — suggests the category is poorly defined. A kappa clustered on specific annotators — some annotators always disagreeing with the rest — suggests observer bias is the dominant problem. The two have different interventions.
-
-### Data entry bias
-
-Data entry bias occurs when errors in transcribing or inputting data into electronic systems introduce systematic distortions — not random noise, but patterned errors that track something meaningful.
-
-The distinguishing feature is that data entry bias does not affect who is in the sample or how outcomes are labeled. It affects whether values recorded for individuals already in the sample accurately reflect reality. Common sources include form design constraints — a form requiring a diagnosis code may lead clinicians to enter the nearest available code rather than the most accurate one, systematically undercoding conditions whose codes are harder to find. The bias is in the tool, not the clinician.
-
-Detection relies on outlier analysis for numeric fields and consistency checking for categorical ones. Flagged values should be verified against source documents — not automatically corrected, because a genuine extreme value and an entry error require opposite responses.
+Two more are quieter still, and they are worth separating because they are the ones people confuse with "just noise." **Data-entry bias** is patterned transcription error — not random slips, but errors that track something. A form that demands a diagnosis code and buries the accurate one three menus deep gets the *nearest* code instead, and a whole class of conditions is undercoded in one direction. The tell: it changes neither who is in the sample nor how outcomes are labeled, only whether the recorded value for an already-enrolled person matches reality. You catch it with outlier scans on numeric fields and consistency checks on categorical ones — and you *verify against source documents rather than auto-correct*, because a real extreme value and a fat-fingered one demand opposite responses, and the tool cannot tell them apart. **Sampling bias** is the accessibility special case of selection bias: subgroups are underrepresented not because of their outcomes but because they were hard to reach. A remote-work survey pushed through LinkedIn overrepresents credentialed professionals — the frame, not the instrument, is skewed. It earns its own name because the fix differs: when external population data tells you the true stratum sizes, you reweight, $w_i = (N_i/N)/(n_i/n)$, so an underrepresented stratum counts for more than one. More LinkedIn responses only sharpen the wrong answer.
 
 ### Historical bias
 
-Historical bias occurs when a model trained on historical data inherits the patterns of a past world — one shaped by discriminatory practices, unequal treatment, or structural inequities — and encodes those patterns into predictions about the present.
+Now the one that breaks the pattern, and I want you to feel exactly how it breaks it, because it is the mechanism most engineers cannot see. In every mechanism so far, something was *wrong* with the data — a filter, a prior, a miscoding, a slip. Historical bias has none of that. The sample is representative. The labels are accurate. No annotator erred. The data is a faithful recording of the world that produced it. And it is still poison.
 
-This type is structurally different from all the others, and understanding why is important. The data is not wrong. The sample is not corrupted. The labels are not distorted by annotator error. The data *accurately reflects the historical world*. The bias arises because the historical world had systematic patterns that do not represent the outcomes a fair process would have produced.
-
-A hiring model trained on ten years of promotion records at a company that historically promoted men at higher rates in engineering roles is learning $P(Y_{\text{historical}} | \mathbf{x})$ rather than $P(Y_{\text{fair}} | \mathbf{x})$. The model is accurate on its training distribution. Its accuracy perpetuates the historical disparity. No data quality intervention helps, because the labels are accurately recorded. The bias is in what was recorded, not in how it was recorded.
+Here is the move. A hiring model trains on ten years of promotion records at a company that promoted men into engineering roles at higher rates. It learns $P(Y_{\text{historical}} \mid \mathbf{x})$ and learns it *well* — it is accurate on its training distribution, which is why every metric you check comes back green. But $P(Y_{\text{historical}} \mid \mathbf{x})$ is not $P(Y_{\text{fair}} \mid \mathbf{x})$. The thing the model got right is a world you did not want to reproduce. Its accuracy *is* the harm. This is why the reflex — "the labels are clean, so the pipeline is clean" — fails here: the labels record what happened, faithfully, and what happened was the problem.
 
 ![Historical bias mechanism](../images/06-bias-where-it-enters-and-who-is-responsible-fig-02.png)
 *Figure 6.2 — Historical bias mechanism*
 
-The practical mitigations are: finding a less-biased proxy for the outcome; applying fairness constraints during training that penalize perpetuation of historical disparities; or using time-sensitive weighting to de-emphasize older records from periods with more discriminatory practice. None of these fully solve the problem. They reduce the leverage of the historical signal on current predictions.
+So the corrections cannot be data-quality corrections; there is no quality defect to fix. They are all attempts to *lower the leverage of the historical signal on the present prediction*: swap in a less-biased proxy for the outcome, add a fairness constraint that penalizes reproducing the historical disparity, weight recent records over records from more discriminatory periods. Notice that not one of these claims to solve the problem — each one trades some predictive fit for less inheritance of the past, and you, not the loss function, have to decide how much fit you are willing to spend. That is the whole trade, stated honestly. Anyone who tells you historical bias has a clean technical fix is selling the fluent answer.
 
 ### Implicit bias
 
-Implicit bias refers to unconscious associations and stereotypes held by humans in the pipeline — researchers, annotators, reviewers — that shape data and model behavior in ways that systematically disadvantage certain groups, without intent.
+The last one is not really a peer of the other nine, and pretending it is would be a category error. Implicit bias — the unconscious associations of the humans in the pipeline — is not an entry point. It is the *medium* several entry points swim in. When a prior shapes which hypothesis you form, that surfaced as confirmation bias; when it shapes what you observe, observer bias; when it shapes how you categorize, data-coding bias; when it shapes what you submit, publication bias. Implicit bias is the underground water table; those four are the springs where it reaches daylight. This is why the ten are not independent, and why counting them as ten separate switches to flip is the wrong mental model.
 
-Implicit bias is the ambient background from which several other types emerge. It is not a single data artifact but a pervasive source that infiltrates every stage where human judgment is required: which hypotheses to form (confirmation bias), what to observe (observer bias), how to categorize (data coding bias), which results to submit (publication bias). The ten types are not independent. Implicit bias runs through all of them.
-
-The most tractable algorithmic intervention is demographic parity auditing after the model is built: test whether $P(\hat{Y}=1|A=0) \approx P(\hat{Y}=1|A=1)$ across protected groups. Disparities in this test are not proof of implicit bias — they might reflect real differences in outcome base rates — but they are a flag that requires investigation. The systemic interventions are diverse teams (homogeneous teams share the same blind spots), structured decision processes (structure reduces the surface area for implicit judgment), and continuous auditing.
+Which means it resists a point intervention, because it has no single point. The most tractable *algorithmic* handle is a downstream audit — check whether $P(\hat{Y}=1 \mid A=0) \approx P(\hat{Y}=1 \mid A=1)$ across protected groups — but read that result carefully: a gap is a *flag, not a verdict*, since real base-rate differences produce the same gap, and Chapter 7 is where that ambiguity gets its due. The interventions with actual leverage are structural: diverse teams, because a homogeneous team shares one water table and audits itself blind; structured decision processes, because structure shrinks the surface where an unexamined prior can act; and continuous auditing, because a source this diffuse is never fixed once. Hold onto that word *structural*. It is the hinge to the next section, and to the third team from the cold open who fixed the room instead of the model.
 
 ![Pipeline entry-point map for all ten bias types](../images/06-bias-where-it-enters-and-who-is-responsible-fig-03.png)
 *Figure 6.3 — Pipeline entry-point map for all ten bias types*

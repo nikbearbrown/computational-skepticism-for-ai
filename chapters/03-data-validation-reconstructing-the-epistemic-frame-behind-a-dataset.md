@@ -50,211 +50,55 @@ So here is what you should be able to do by the end. You should be able to expla
 
 ---
 
-## The procedural EDA pass — what it does, how to do it, and what it misses
+## The procedural EDA pass — what it sees, and what it structurally cannot
 
-Before we can interrogate the dataset, we need to look at it. The procedural pass is how we look. It is not optional. You cannot skip the histograms and go straight to the epistemic frame — you will miss things the histograms would have caught, and you will invent concerns the histograms would have dismissed. Run the procedure first. Then ask the harder questions.
+Before I can interrogate a dataset, I have to look at it, and the procedural pass is how I look. It is not optional. Skip the histograms and go straight to the epistemic frame and you miss the pathologies the histograms would have caught while inventing concerns they would have dismissed. So I run the procedure first, then ask the harder questions. What follows is not a pandas tutorial — the tools rotate every few years and the diagnostic logic doesn't. I want you to hold the logic: for each diagnostic, what it reveals, and the thing it structurally cannot.
 
-I am going to walk through the procedural pass as a workflow, naming what each step produces and what it cannot produce. The goal is not a tutorial on any specific tool — tools rotate every few years and the concepts don't — but a principled understanding of the diagnostic logic that any tool is implementing.
+**Types first.** Before drawing anything, I classify every column, because the right diagnostic depends entirely on the type. Continuous numeric (salary, temperature, a confidence score) has meaningful distributions, means, histograms. Small-range discrete counts look numeric but behave categorically. Categorical nominal (city, blood type) has frequencies but no order; ordinal (survey rating, education level) carries an order I must not scramble. Temporal data has an ordering that is often the most important thing about it. Text may hide structure — phone numbers, identifiers — worth surfacing before I treat it as a blob. The classification is not always obvious and that is where the first errors live: `zip_code` looks numeric but arithmetic on it is meaningless, and a column called `score` might be a raw measurement or somebody's calculated composite. The most dangerous mistake here is treating a categorical column as numeric. Read the schema before you classify.
 
-### Step 0 — Understand the data type of each column
+**Shape.** How many rows, how many columns, and do the inferred types match what the documentation claims? A column that should be numeric but reads as string — usually because it carries a sentinel like `"N/A"` — is one of the most common early warnings. The `.describe()` table (count, mean, std, min, quartiles, max) is worth scanning before any plot: does the minimum make sense, does the maximum, is the mean far from the median in a way that signals skew or outliers? What this cannot tell me is whether the row count is *right* — only what it is.
 
-Before drawing anything, know what kind of data each column contains. This matters because the right visualization for a column depends entirely on its type.
+**Univariate distributions.** A histogram bins a numeric column and shows its shape: symmetric, skewed, bimodal (two humps, often two subpopulations), or spiked at one value (often a sentinel or imputed default). A bar chart sorted by frequency does the same for categorical data and makes rare categories jump out. A box plot compresses the summary — median, interquartile range, whiskers, outlier dots — into a small footprint so I can line many columns up side by side. What I am hunting: spikes at round numbers, impossible values (negative ages, superhuman salaries), bimodal humps the documentation never mentioned. What the distribution cannot show is *why* the shape is what it is.
 
-**Numeric continuous** data (temperatures, salaries, ages, model confidence scores) can take any value in a range. Distributions are meaningful. Means and standard deviations are meaningful. Scatter plots and histograms are natural.
-
-**Numeric discrete** data (counts, integers with a bounded range) looks numeric but behaves categorically when the range is small. The number of floors in a building is discrete. Treat small-range discrete columns like categorical for visualization purposes.
-
-**Categorical nominal** data has no natural ordering — city names, product categories, blood types. Frequencies and proportions are meaningful. Ordering is not.
-
-**Categorical ordinal** data has a natural ordering — survey ratings (Unsatisfied / Neutral / Satisfied), education levels, income brackets. The order carries information and should be preserved in any visualization.
-
-**Temporal** data has an inherent ordering that is meaningful and often the most important thing about the column. Date and time deserve their own axis.
-
-**Text** data is unstructured. It may contain embedded structure (phone numbers, identifiers, addresses) that is worth surfacing before treating the column as a text blob.
-
-This classification is not always obvious. A column called `zip_code` looks numeric but is categorical nominal — arithmetic on zip codes is meaningless. A column called `score` may be continuous, ordinal, or a calculated composite depending on how it was produced. Read the schema documentation before classifying.
-
-| Data Type | Examples | Natural Summary Statistics | Visualization Default | Key Questions to Ask |
-|---|---|---|---|---|
-| **Continuous numeric** | salary, temperature, model confidence score | mean, median, std, min/max, percentiles | histogram (30 bins), box plot | Is the distribution skewed? Are there outliers? Does the range make physical sense? |
-| **Discrete numeric** | number of visits, floor count | frequency table, mode | bar chart (treat as categorical if range < ~20 distinct values) | Are there impossible values? Gaps in the range? |
-| **Categorical nominal** | city, product category, blood type | frequency, mode, entropy | bar chart sorted by frequency descending | Rare categories? Misspellings suggesting dirty data? Unexpected values? |
-| **Categorical ordinal** | survey rating, education level, income bracket | frequency, mode | bar chart sorted by natural order | Is ordering preserved in the encoding? Are any levels absent? |
-| **Temporal** | date, timestamp | min, max, range, count-by-period | line chart (record count over time) | Gaps in coverage? Seasonality? Sudden distribution changes? |
-
-*Before drawing a single plot, classify every column. The correct visualization depends entirely on the data type — and the most dangerous classification error is treating a categorical column as numeric.*
-
-### Step 1 — Get the shape of the dataset
-
-To start an EDA pass, ask an AI assistant:
-
-> *"I'm loading a CSV file called [filename] into a pandas dataframe. Give me a Python snippet that prints the shape, inferred dtypes for all columns, the non-null counts via .info(), and a .describe() of all numeric columns. Add a brief comment after each call explaining what I'm looking for."*
-
-The first question is always: how many rows, how many columns, and do the inferred types match what the documentation says? Type mismatches — a column that should be numeric but is read as string, usually because it contains a sentinel value like `"N/A"` — are one of the most common early warnings.
-
-The `.describe()` output gives you, for each numeric column: count (non-missing rows), mean, standard deviation, minimum, 25th percentile, median, 75th percentile, maximum. Before you draw a single histogram, scan this table. Does the minimum make sense? Does the maximum? Is the mean close to the median, or are they far apart (suggesting skew or outliers)?
-
-### Step 2 — Examine univariate distributions
-
-For each column, you want to see the shape of its distribution. The right visualization depends on the data type.
-
-**Histogram** for numeric continuous data. A histogram bins the values and shows counts per bin. The shape tells you whether the distribution is roughly symmetric, skewed, bimodal (two humps, suggesting two subpopulations), or contains a spike at a particular value (often a sentinel or default). The choice of bin count matters — too few bins hides structure, too many creates noise. Start with 20–30 bins and adjust.
-
-To generate this with an AI assistant:
-
-> *"Write a Python function using matplotlib that takes a dataframe and a list of numeric column names and produces one histogram per column with 30 bins, labeled axes, and a title showing the column name. Add a horizontal line at the mean and a vertical annotation showing the median."*
-
-**Bar chart** for categorical data, sorted by frequency descending. Sorting by frequency makes it easy to spot rare categories that may warrant investigation.
-
-> *"Write a Python snippet using pandas and matplotlib that plots a horizontal bar chart of value counts for the column [column_name], sorted by frequency descending, with count labels on each bar."*
-
-**Box plot** as a complement to the histogram for numeric data. A box plot shows the median (center line), the interquartile range (the box), the whiskers (typically extending to 1.5× the IQR), and outliers beyond the whiskers as individual dots. The value of the box plot is that it compresses the distribution summary into a small space, making it easy to compare many columns side by side.
-
-> *"Write a Python snippet that produces a side-by-side box plot for columns [col1, col2, col3] from a pandas dataframe, with each box labeled with its column name and a horizontal reference line at zero."*
-
-What you are looking for: spikes at round numbers (often imputed defaults); impossible values (negative ages, salaries above what is physically plausible); bimodal distributions suggesting subpopulations the documentation doesn't mention.
-
-### Step 3 — Examine missingness
-
-Missing data is not a single thing. The correct frame here is Rubin's 1976 taxonomy, and it is worth stating precisely.[^rubin] There are three structurally different reasons a value can be missing:
-
-**Missing completely at random (MCAR):** The probability of a value being missing is independent of both the observed and unobserved data. A sensor failure that randomly drops readings. Safe to impute; unlikely to introduce bias.
-
-**Missing at random (MAR):** The probability of being missing depends on other observed variables, but not on the missing value itself. Younger respondents in a survey skip the income question at higher rates. Conditional on age, the missingness is random. More complex to handle, but manageable.
-
-**Missing not at random (MNAR):** The probability of being missing depends on the value itself. High earners are less likely to report their income. Sick patients leave a study before the final measurement. MNAR is the hard case — standard imputation produces biased estimates, and the bias is exactly in the direction you cannot measure. Standard EDA does not detect MNAR; you detect it by reasoning about who would not report this value, and why. Seeing the co-missing pattern in a `missingno` matrix is not the same as knowing the mechanism.
+**Missingness.** Missing data is not one thing, and Rubin's 1976 taxonomy is the frame worth stating precisely.[^rubin] *Missing completely at random* (MCAR) — a sensor randomly dropping readings — is independent of everything and safe to impute. *Missing at random* (MAR) depends on other observed variables but not the missing value itself: younger respondents skip the income question more often, but conditional on age the missingness is random. *Missing not at random* (MNAR) depends on the missing value itself — high earners suppress their income, sick patients leave the study before the final measurement — and it is the hard case, because standard imputation produces bias in exactly the direction I cannot measure. And here is the trade-off the tooling hides: a `missingno` matrix (rows as lines, columns as stripes, dark where absent) shows me whether two columns go missing together, which is a real and useful structural signal. But seeing the co-missing pattern is not knowing the mechanism. Procedural EDA does not detect MNAR at all. I detect it by reasoning about who would not report this value, and why — which is not a diagnostic the pass can run.
 
 [^rubin]: Donald B. Rubin, "Inference and Missing Data," *Biometrika* 63(3):581–592, 1976, DOI:10.1093/biomet/63.3.581. Rubin introduced "Missing at Random"; the now-standard MCAR/MAR/MNAR labels were consolidated in Little & Rubin, *Statistical Analysis with Missing Data* (Wiley, 1987).
-
-To compute missingness by column and produce a sortable summary:
-
-> *"Write a Python snippet that computes the number and percentage of missing values per column in a pandas dataframe, sorts by percentage descending, and prints only columns with at least one missing value."*
-
-For a visual overview of missingness patterns across columns:
-
-> *"Write a Python snippet using the missingno library that produces a matrix plot of missing values across all columns of a pandas dataframe, with a title and figure size of 12×6. Add a comment explaining what co-missing column patterns mean and what I should look for."*
-
-The `missingno` matrix plot shows each row as a horizontal line and each column as a vertical stripe — white where a value is present, black where it is missing. The critical diagnostic is whether missingness in one column tends to co-occur with missingness in another column. If columns A and B are missing together in the same rows, either there is a structural data-collection reason (both come from the same source that sometimes fails) or there is a meaningful subpopulation that systematically does not have these values recorded.
 
 ![Aligned stripes = structural missing pattern. Scattered dots = random missingness. The difference is the question: does missingness depend on something we can see, or something we can't?](../images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-02.png)
 *Figure 3.2 — Missingno-style matrix visualization*
 
-### Step 4 — Examine bivariate relationships
-
-A univariate distribution tells you about one column in isolation. A bivariate plot tells you how two columns relate. This matters for two reasons: understanding the data, and catching data-quality problems that only become visible when two variables are plotted together (a relationship that should exist but doesn't, or shouldn't exist but does).
-
-**Scatter plot** for two numeric continuous variables. Each row in the dataset becomes a point; x-position encodes one variable, y-position encodes the other. If 10,000 rows overplot into an uninformative blob, add transparency or use a 2D density plot instead.
-
-> *"Write a Python snippet using pandas and matplotlib that produces a scatter plot of [col_x] versus [col_y] with alpha=0.3 to handle overplotting. Add axis labels, a title, and a best-fit line using numpy.polyfit."*
-
-**Correlation heatmap** for a high-level view of pairwise relationships across all numeric columns. Pearson correlation measures linear relationships; values near +1 or -1 indicate strong linear association, values near 0 indicate little linear relationship. Note the important caveat: Pearson correlation misses nonlinear relationships entirely. Two variables can be perfectly dependent (say, $y = x^2$) and have a Pearson correlation near zero.
-
-> *"Write a Python snippet using seaborn that produces a correlation heatmap for all numeric columns in a pandas dataframe. Use the coolwarm colormap centered at 0, annotate each cell with the correlation value to 2 decimal places, and add a caption in the title noting that Pearson correlation only captures linear relationships."*
-
-**Pair plot** for simultaneous pairwise visualization across multiple numeric columns. Each off-diagonal cell is a scatter plot; the diagonal shows the univariate distribution. Useful for small-to-medium column sets (up to about 8–10 columns before it becomes unreadable).
-
-> *"Write a Python snippet using seaborn.pairplot for columns [col1, col2, col3, col4], with histograms on the diagonal and alpha=0.3 on scatter plots. Color the points by [categorical_column] if present."*
-
-**Cross-tabulation** for two categorical columns:
-
-> *"Write a Python one-liner using pandas that produces a normalized cross-tabulation of [col1] versus [col2], expressed as row percentages."*
+**Bivariate relationships.** A single distribution tells me about one column alone; plotting two together catches problems invisible from either margin — a relationship that should exist and doesn't, or shouldn't and does. A scatter plot puts one row per point, each variable on its own axis (add transparency when ten thousand points overplot into a blob). A correlation heatmap gives a high-level view of pairwise linear association across numeric columns — but the load-bearing caveat is that Pearson correlation captures *only* linear structure. Two variables can be perfectly dependent ($y = x^2$) and correlate near zero. A pair plot shows every scatter at once for a handful of columns before it becomes unreadable. What none of these can show is a relationship the recording instrument never let into the data.
 
 ![A scatter plot catches problems invisible to either univariate distribution alone. The age histogram showed no spike at zero because 40 points in a dataset of 10,000 is too small to flag there — but it's a structurally meaningful cluster.](../images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-03.png)
 *Figure 3.3 — Scatter plot *
 
-### Step 5 — Examine temporal patterns
-
-If the dataset has a date or timestamp column, plot counts over time as the first temporal diagnostic. This catches: time periods with unusually few records (a source system was down, a batch job failed, a collection methodology changed); sudden distribution shifts (the product changed, the data schema changed, the population changed); seasonality that you need to account for in modeling.
-
-> *"Write a Python snippet that converts [date_column] to datetime, resamples the dataframe to weekly record counts, and plots the result as a line chart with a title, axis labels, and a horizontal dashed line at the mean weekly count. Add a comment explaining what a sharp drop would mean."*
-
-A sharp drop in record counts is always a finding. It may be benign (a holiday, a weekend effect in a business dataset). It may be critical (the system was down; the subpopulation affected by the downtime is now underrepresented).
+**Temporal patterns.** If there is a date column, I plot record counts over time first. This surfaces periods with too few records (a source system down, a batch job failed, a methodology changed), sudden distribution shifts, and seasonality. A sharp drop is *always* a finding — sometimes benign (a holiday), sometimes critical (the system was down and the subpopulation it served is now underrepresented). What the count-over-time cannot tell me is which of those two it is; it hands me the finding, not the cause.
 
 ![Record counts over time are the first temporal diagnostic. A drop that aligns with a known external event (pandemic, system migration, policy change) is a finding — the subpopulation that stopped generating data during the gap may be systematically absent from your training set.](../images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-04.png)
 *Figure 3.4 — Time-series line chart *
 
-### Step 6 — Examine outliers formally
-
-The histogram and box plot will surface obvious outliers visually. Formal outlier detection uses either the IQR method or the Z-score method.
-
-**IQR method:** A value is an outlier if it falls below $Q_1 - 1.5 \times IQR$ or above $Q_3 + 1.5 \times IQR$. This is the criterion the box plot's whiskers implement. It is robust to the presence of outliers because the IQR itself is not affected by extreme values.
-
-**Z-score method:** A value is an outlier if its Z-score — the number of standard deviations from the mean — exceeds a threshold, typically $|z| > 3$. This method is sensitive to the presence of outliers in the mean and standard deviation calculation, which makes it less reliable when the dataset is already contaminated.
-
-> *"Write a Python function that takes a dataframe and a column name and returns a dataframe of outlier rows using the IQR method (Q1 - 1.5×IQR and Q3 + 1.5×IQR as bounds). Print the count and percentage of outliers. Add a comment explaining why the IQR method is preferred over Z-score when the data may already contain outliers."*
-
-The most important thing about outlier detection is not the detection — it is what you do next. Every identified outlier needs a decision: is this a data-entry error (a salary of $1,200,000 when typical salaries are $50,000–$200,000 might be a decimal-point error)? A legitimate extreme value (a CEO salary is legitimately high)? A sentinel value used to encode "unknown" or "not applicable"? The decision determines whether you remove, impute, cap, or retain the value.
+**Outliers.** The histogram and box plot surface the obvious ones; formal detection uses the IQR rule (a value below $Q_1 - 1.5 \times IQR$ or above $Q_3 + 1.5 \times IQR$, the same criterion the box-plot whiskers draw, robust because the IQR itself is not moved by extremes) or the Z-score rule ($|z| > 3$, which is less reliable precisely because outliers contaminate the mean and standard deviation it depends on). But the detection is the easy half. Every flagged value needs a decision the method cannot make: is a $1,200,000 salary a decimal-point error, a legitimate CEO, or a sentinel for "unknown"? IQR flags the candidate; only domain knowledge makes the call about whether to remove, impute, cap, or keep it.
 
 ![Outlier detection is triage, not removal. The IQR method flags the candidates. Domain knowledge makes the call.](../images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-05.png)
 *Figure 3.5 — Box plot for a single "salary" column*
 
-### What the procedural pass cannot see
-
-The procedural pass is designed to surface pathologies visible in the data as written. It has a structural blind spot: it cannot see what was never written.
-
-It cannot see rows that were dropped in a join before the dataset reached you. It cannot see the label's relationship to the construct it claims to measure. It cannot see features that are other people's model outputs baked in as inputs. It cannot see who could not generate data in this dataset. These are not failures of EDA tools — they are structural properties of what EDA is.
-
-The next section gives you the theory for reading the visual output you have just produced. After that, the interrogation gives you the tools for what comes next.
+Notice the shape of everything I just described. Every diagnostic reads the data *as written*, and every one of them has the same blind spot underneath its specific one: none can see what was never written. The pass cannot see rows dropped in a join before the dataset reached me. It cannot see the gap between a label and the construct it claims to measure. It cannot see a feature that is someone else's model output wearing the costume of raw data. It cannot see who could not generate a record here at all. These are not failures of the tools — they are structural properties of what EDA *is*. The next two sections take up the tools for reading what the pass produced, and then the interrogation for reading what it could not.
 
 ---
 
-## Marks and channels — the grammar of what EDA plots are doing
+## A chart is an argument — and the argument is in the encoding
 
-You have just run a procedural EDA pass. You have histograms, scatter plots, heatmaps, box plots. Now I want to step back and explain the visual logic underneath all of these — why certain representations work well and others mislead, and why knowing this matters for both reading and designing visualizations.
+Now I have the plots. Before I read them, one thing about how they work, because it changes what "the plot looks clean" is worth. Every visualization encodes numbers by assigning them to visual *channels* — the position of a point, the length of a bar, the intensity of a color, the size of a circle — and the channels are not interchangeable. Cleveland and McGill established this empirically, not as taste: people read position along a common scale most accurately, then length, with area and color intensity well down the list.[^cm] Stevens' psychophysical work supplies the mood for why the eye compresses area but tracks length almost faithfully — though that is a bridge, not the finding; Cleveland and McGill is the load-bearing citation.[^stevens]
 
-Every data visualization is built from two primitives: **marks** and **channels**.
-
-A **mark** is a geometric primitive that represents an item or a relationship. Points, lines, and areas are the three fundamental mark types. In a scatter plot, each row in the dataset is a point. In a line chart, the relationship between consecutive measurements is encoded as a line. In an area chart, a quantitative amount is encoded as a filled region.
-
-A **channel** is a visual property that encodes information about marks. Position (horizontal and vertical), size, color, shape, and orientation are channels. When you place a dot at a particular x and y position, both x and y are channels. When you color the dots by category, color is a channel. When you size the dots by a third numeric variable, size is a channel.
-
-![Every visualization is marks + channels. Understanding which channels are active — and whether they are matched to the right data types — is how you evaluate whether a chart is telling the truth.](../images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-06.png)
-*Figure 3.6 — Illustration*
-
-### Why some channels are stronger than others
-
-Not all channels are equal, and this is empirically established, not a matter of taste. Cleveland and McGill's 1984 study ranked the accuracy with which people read elementary perceptual tasks: position along a common scale is read most accurately, then length, then angle and area, with color intensity well down the list.[^cm] Position is therefore the most powerful channel for encoding quantitative data — human perception of position along a common scale is extremely accurate. Length is next, which is why bar charts (where length encodes value) work well for comparing quantities. Area and color intensity are weaker: we perceive them inaccurately, especially when comparing non-adjacent elements.
-
-Stevens' psychophysical power law gives us a mood for why.[^stevens] For length, perceived magnitude tracks physical magnitude almost exactly — your eye correctly judges that one bar is twice as long as another. For area, perceived magnitude is systematically compressed — you underestimate how much larger a big circle is compared to a small one. This is why pie charts and bubble charts require more cognitive effort than bar charts to read accurately: they rely on area rather than position or length. I want to be careful, though: Stevens is about sensory magnitude estimation, and using it as the *theoretical basis* for chart-channel ranking is a rhetorical bridge, not a direct finding. Cleveland and McGill is the load-bearing citation for graphical perception. Stevens supports the mood, not the ranking.
+The practical consequence is small and sharp. Position and length are why scatter plots and histograms read true — both put the quantity on the channel the eye judges best. A correlation heatmap encodes strength as color intensity, a *weak* channel, which is exactly why it is an overview tool: fine for spotting an extreme correlation, unreliable for deciding whether 0.43 differs from 0.51, and a value you should confirm numerically before you act on it. Which means a chart is never a neutral window onto the data. It is an argument made through structural choices about what gets the strong channel and what gets buried — and a plot can be technically honest and still steer you, simply by encoding the thing that matters on a channel you read badly.
 
 [^cm]: William S. Cleveland & Robert McGill, "Graphical Perception: Theory, Experimentation, and Application to the Development of Graphical Methods," *Journal of the American Statistical Association* 79(387):531–554, 1984, DOI:10.1080/01621459.1984.10478080.
 [^stevens]: S. S. Stevens, "On the Psychophysical Law," *Psychological Review* 64(3):153–181, 1957, DOI:10.1037/h0046162.
 
-![Channel effectiveness hierarchy, based on Cleveland & McGill's landmark perceptual studies. Encode the variable that matters most with the channel people read most accurately.](../images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-07.png)
-*Figure 3.7 — Two-column ranked list *
+![Every visualization is marks + channels. Understanding which channels are active — and whether they are matched to the right data types — is how you evaluate whether a chart is telling the truth.](../images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-06.png)
+*Figure 3.6 — Illustration*
 
-This ranking has direct consequences for EDA:
-
-**Histograms use position and length.** The x-axis position of a bar encodes the value range; the height (length) of the bar encodes the count. This is why histograms are easy to read accurately — both active channels are high in the hierarchy.
-
-**Scatter plots use position.** Two variables, two axes, position-only encoding. This is the gold standard for showing bivariate relationships. The reason scatter plots are so legible is that position is the best channel we have.
-
-**Correlation heatmaps use color intensity.** Color intensity (luminance) is a weaker channel. This means heatmaps are better for quickly spotting extreme correlations than for judging whether a correlation of 0.43 is meaningfully different from 0.51. The heatmap is an overview tool; verify the specific values numerically.
-
-**Pie charts use angle and area.** Both are weaker channels than position and length. This is why pie charts are less accurate than bar charts for comparing parts. A bar chart of the same data, with bars sorted by value, lets you compare parts much more precisely. The rule of thumb: use a pie chart only when there are two or three parts and the goal is to communicate a rough proportion, not to support precise comparison.
-
-### The expressiveness principle and the effectiveness principle
-
-There are two principles worth knowing by name.
-
-The **expressiveness principle** says: match the channel to the data type. Quantitative data should use channels with a natural ordering (position, length, size, luminance). Categorical data should use channels without a natural ordering (hue, shape). Using size to encode a categorical variable — making one category's dots larger than another's with no quantitative meaning — implies an ordering that isn't there. This misleads the reader.
-
-The **effectiveness principle** says: encode the most important variable with the most powerful channel. If your visualization encodes three variables, the variable that matters most to the reader's question should get position. A secondary variable can get color hue if it is categorical, or size if it is quantitative. The tertiary variable gets whatever is left.
-
-![Using size for a categorical variable is the single most common expressiveness violation. It misleads without lying — the data is all there, but the encoding creates a false impression of magnitude differences.](../images/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset-fig-08.png)
-*Figure 3.8 — Two side-by-side scatter plots *
-
-### Applying this to EDA output
-
-When you are reading your own EDA output — or someone else's — ask these questions:
-
-What marks are being used? What does each mark represent? Is there a row-to-mark correspondence (one data point per mark) or an aggregation (each mark represents a group)?
-
-What channels are being used? Are they matched to the data types they encode? Is the most important variable on the highest-ranked channel?
-
-What is the chart not showing? Every visualization encodes some variables and omits others. A histogram of salary shows nothing about who earned those salaries. A correlation heatmap shows nothing about the temporal structure of the relationships.
-
-The last question is the one that connects the procedural pass to the interrogation. The procedural pass tells you what the data looks like from the inside. The interrogation asks what the data is not showing you, and why.
+I keep only one question from this whole literature, and it is the one that hands off to the rest of the chapter: *what is the chart not showing?* Every plot encodes some variables and silently omits the rest. A salary histogram says nothing about who earned those salaries. A correlation heatmap says nothing about the temporal structure underneath the relationships. The encoding tells me what the data looks like from the inside; it can never tell me what the recording instrument left out. That gap is where the interrogation begins.
 
 ---
 

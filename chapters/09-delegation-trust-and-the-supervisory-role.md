@@ -153,333 +153,48 @@ The test for completeness: can an engineer who did not build the pipeline read t
 
 ## A worked walkthrough: the Research Paper Summarizer
 
-Everything above is abstract. Let me make it concrete with a system I will build step by step, using Gru as the conductor.
+Everything above is abstract, so let me build one concrete system and watch the delegation map fall out of it. The system is a *Research Paper Summarizer with Citation Verification*. You paste in the PDF of an academic paper; it returns a structured summary — problem, method, findings, limitations — with every factual claim linked to a specific passage in the source, so a researcher can decide whether the paper is worth reading in full. It is simple enough to follow and contested enough that the human-AI boundary is genuinely in play at several steps.
 
-The system is a *Research Paper Summarizer with Citation Verification*. The user pastes a PDF of an academic paper. The system returns a structured summary — problem statement, method, key findings, limitations — with each factual claim linked to a specific passage in the source. A researcher or student uses this to decide whether a paper is worth reading in full.
+I built this with Gru — the software-design consultant tool built on this curriculum, available at [nikbearbrown.com/tools/gru-tool](https://www.nikbearbrown.com/tools/gru-tool) — walking it through the ordinary front end of a design conversation before asking it to produce the delegation map. That front end is four steps of specification, and I will compress them here rather than march you through each one, because none of them is the point and all of them are the kind of thing an AI is happy to generate plausibly and wrongly.
 
-This system is simple enough to follow but complicated enough that the human-AI boundary is genuinely contested at several steps. By the end of the walkthrough, you will be able to point to exactly where a human must be present and exactly why AI alone will not do.
-
-### Step 1 — Problem formulation with Gru's /v0
-
-Before writing a line of documentation, Gru requires one thing: a sentence that names the thing being built, not the problem it solves. This is the /v0 gate. Skipping it produces documents that look rigorous and describe nothing specific.
-
-Here is what that conversation looks like. I open Gru and type:
-
-```
-/v0
-```
-
-Gru asks three questions in sequence. The third is the one that matters:
-
-> *In one sentence — not a paragraph, not a list — what are you proposing to ADD? The sentence must name the thing being built, where it sits, and what it produces. FORMAT: "[THING] is a [WHAT] inserted [WHERE] that produces [OUTPUT]."*
-
-A weak answer: *"A tool to help researchers save time on literature review."*
-
-That names a goal, not a thing. Gru will not move.
-
-A stronger answer: *"The Paper Summarizer is a structured-extraction pipeline inserted between PDF ingestion and researcher review that produces a claim-linked summary with passage citations for each factual assertion."*
-
-Now Gru has something to work with. Notice what the sentence encodes: the word *claim-linked* specifies that each summary claim maps to source text, not just that the summary exists. The word *passage citations* specifies that the link is specific (a passage) not general (the paper). These are not details to figure out later. They are the engineering constraints that determine which steps need human verification.
-
-**Why this is a human step.** Gru asks the question, but the answer requires me. An AI could generate plausible-sounding sentences of this form. It cannot determine whether *claim-linked* is the right specification for my deployment — whether researchers using this tool need sentence-level citations or paragraph-level, whether the summary structure matches how researchers actually read papers in this domain, whether the word *factual assertion* is the right boundary for what gets cited. Those are domain judgments. They determine the correctness criteria for every subsequent step. The problem formulation is not a form to fill in. It is the most consequential decision in the project, and it is irreducibly mine.
-
-![The /v0 gate produces one sentence. That sentence is the engineering specification everything else is tested against.](../images/09-delegation-trust-and-the-supervisory-role-fig-01.png)
-*Figure 9.1 — Gru /v0 conversation flow *
-
-### Step 2 — Intake with /v1
-
-Once /v0 is confirmed, Gru runs /v1 — a structured intake that produces a problem summary in a canonical form:
-
-> *"This system is [WHAT] for [WHO], that solves [CORE PROBLEM] through [PRIMARY MECHANISM]. It occupies the space between [COMPARABLE A] and [COMPARABLE B], and it succeeds when the user can [SUCCESS CONDITION] without [CURRENT FRICTION]."*
-
-Here is my /v1 prompt to Gru:
-
-```
-/v1
-```
-
-Gru asks eight questions. The answers I provide:
-
-- **System name:** Paper Summarizer
-- **Core problem:** Researchers spend 15–30 minutes skimming a paper to decide whether it warrants full reading; they want that decision to be reliable and fast.
-- **Primary user:** A doctoral student or postdoc processing 10–20 papers per week during a literature review.
-- **What existing solutions miss:** General-purpose summarizers lose methodological detail and cite nothing. Reading the abstract misses findings buried in results sections.
-- **Category of system:** Structured extraction pipeline with human-in-the-loop verification.
-- **Deployment target:** Web app, single-user initially.
-- **Build scale:** Solo developer, two-week build.
-- **Three systems the user relies on:** Zotero (reference management), Google Scholar (discovery), their institution's library PDF access.
-
-Gru produces the problem summary:
-
-> *"The Paper Summarizer is a structured-extraction pipeline for doctoral researchers that solves the reliable-triage problem — deciding whether a paper warrants full reading — through claim-linked extraction with passage citations. It occupies the space between generic AI summarizers (fast but uncited) and full reading (thorough but slow), and it succeeds when a researcher can determine a paper's relevance and credibility in under five minutes without reading beyond the summary."*
-
-**Why the problem summary matters for delegation.** The phrase *claim-linked extraction with passage citations* is now a testable success criterion. Any AI step in the pipeline that produces text without source links has failed, regardless of how fluent the text is. The phrase *determine relevance and credibility* specifies what the summary must enable, which means any summary that is accurate but hides methodological weaknesses has failed. These criteria cannot come from the AI. The AI does not know what researchers in this domain consider methodologically credible. I do. The problem summary crystallizes that knowledge into a form the pipeline can be tested against.
-
-### Step 3 — Architecture principles with /v2
-
-Gru now asks for architecture principles — non-negotiable design commitments that bound every downstream decision. I run:
-
-```
-/v2
-```
-
-After reviewing the /v1 summary, I commit to three principles:
-
-**Citation fidelity over fluency.** Every claim in the summary must be traceable to a specific passage. A fluent summary with unverifiable claims is worse than a rough summary with exact citations. This principle rules out using AI to "fill in" claims it infers rather than extracts.
-
-**Failure visibility.** When the pipeline cannot reliably extract a section — methods are embedded in a figure caption, findings are in a supplemental file, the PDF is a scanned image — the system must say so explicitly rather than hallucinate a plausible substitute. The output "methods section not parseable" is more useful than a confident fabrication.
-
-**Human authority over scope.** The researcher decides which sections matter for their use case. The system proposes a default structure; the researcher can modify it before extraction runs. The AI's proposed structure is an input to human judgment, not a determination.
-
-**Why principles are a human step.** Gru can generate plausible-sounding principles from the problem summary. It cannot determine which trade-offs are right for this deployment. The "citation fidelity over fluency" principle rules out a large class of AI behavior that users of general-purpose summarizers accept routinely. That ruling-out is a values choice. It encodes my judgment that researchers are better served by honest gaps than confident hallucinations. I have to make that judgment. Gru cannot make it for me, because making it requires knowing what harms researchers in my target domain — and that knowledge is not in the prompt.
-
-| Principle | Design commitment | One decision that honors it | One decision that violates it | Failure state if ignored |
-|---|---|---|---|---|
-| **Provenance preservation** | Every claim in the output is traceable to a span in the input paper | Each generated sentence carries a citation key linked to a source span | Output mixes paraphrase with synthesis without citation keys | Reviewer cannot tell which claims are summarized vs. fabricated |
-| **Bounded autonomy** | The pipeline cannot reach data outside the input PDF | Tools are scoped to the file path; no web fetch | A "supplementary lookup" tool added without scope review | Hallucinated citations from outside the corpus |
-| **Independent verification** | A second pass checks the first pass | A separate plausibility-audit step runs against the source spans | The summarization model also self-verifies in the same call | Errors that the model cannot catch about itself ship downstream |
-| **Disclosure as default** | Every step the AI did is visible to the reader | Per-step AI Use Disclosure block in the output | The disclosure is opt-in or buried in a footer | Readers cannot calibrate trust in the output |
-| **Reversible defaults** | The pipeline produces drafts, not final commitments | Output is a markdown draft, not an autopublished post | Output is auto-pushed to a public surface | A bad summary ships before review |
-
-### Step 4 — Core user flows with /v3
-
-Now the primary flow, written at the interaction level:
-
-```
-/v3
-```
-
-Gru asks me to define the happy path, the integration flow, and the administrative flow. The happy path:
-
-1. Researcher uploads PDF.
-2. System parses the PDF into sections (Introduction, Methods, Results, Discussion, Limitations). *AI task.*
-3. System extracts the core claim for each section, with passage citations. *AI task.*
-4. System flags any section where citation confidence is below threshold. *AI task.*
-5. Researcher reviews the flagged sections and either confirms, corrects, or marks as unverifiable. *Human task.*
-6. Researcher reviews the full summary for accuracy and domain coherence. *Human task.*
-7. Researcher saves or exports the verified summary.
-
-The integration flow: PDF parsing uses a library (pdfplumber or similar). The AI extraction uses a language model API. The citation confidence scoring uses a second pass over the extracted text.
-
-The administrative flow: I need a way to see which extractions are being flagged most often — which section types, which paper types, which journals — so I can tune the confidence threshold and identify systematic failure modes.
-
-**Why the flow requires human judgment to write.** Step 5 and step 6 are the load-bearing human steps. The reason they are human steps cannot be determined by AI: it requires knowing that researchers cannot rely on AI to evaluate domain-specific methodological quality. A language model may correctly extract the claim "we used a random effects model" and produce a citation. It cannot flag that a random effects model is inappropriate for this study design — that judgment requires domain knowledge the model does not reliably have. That is why step 6 is a human step, and why the handoff condition for step 5 must specify what the researcher is checking, not just that checking occurred.
+**The specification, compressed.** First I had to name the thing in one sentence — not the problem it solves, the thing being built: *"The Paper Summarizer is a structured-extraction pipeline inserted between PDF ingestion and researcher review that produces a claim-linked summary with passage citations for each factual assertion."* That sentence is not decoration. The words *claim-linked* and *passage citations* are engineering constraints — they say each summary claim must map to specific source text, and that decides which later steps need human verification. Then I fixed the success criterion (a researcher can judge a paper's relevance and credibility in under five minutes without reading past the summary), committed to three architecture principles — *citation fidelity over fluency* (never let the model fill in a claim it cannot extract), *failure visibility* (when a section will not parse, say so rather than hallucinate a substitute), and *human authority over scope* — and sketched the happy path: parse the PDF into sections, extract a core claim per section with citations, flag low-confidence extractions, then hand to a researcher to confirm and to read the whole thing as a user. Every one of these was a human decision. An AI can produce sentences of this shape all day; it cannot tell me whether *claim-linked* is the right specification for my readers, or that a random-effects model is inappropriate for a given study design. Those judgments set the correctness criteria that everything downstream is tested against, and they are irreducibly mine.
 
 ![The flow shows where authority changes hands. Those transitions are where the delegation map must be tightest.](../images/09-delegation-trust-and-the-supervisory-role-fig-02.png)
 *Figure 9.2 — Happy path flow diagram for the Paper Summarizer*
 
-### Step 5 — Generating the Boondoggle Score with /claude
+### Generating the Boondoggle Score
 
-Now I have enough: a confirmed problem sentence, a problem summary, three architecture principles, and a core user flow. I run the Boondoggle Score:
+With the specification in hand — a named thing, a success criterion, three principles, a flow — I asked Gru for the Boondoggle Score. That request is where the abstract map becomes a concrete artifact, and it is the highest-risk handoff in the whole exercise, because this document is what a reviewer will read to decide whether the pipeline is supervised or merely looks supervised. So this is the one step I will show you in full.
 
-```
-/claude
-```
-
-Gru asks three questions before generating: deployment target (web app), team Claude fluency level (Level I — copy-paste individual prompts), and whether any components are flagged EXPERIMENTAL (the citation confidence scoring is experimental — I have not validated the threshold).
-
-Gru generates the score. I will show you the most important steps in full, because this is where the delegation map becomes concrete.
+Gru asks a couple of framing questions first — what surface this deploys on, and whether any component is experimental (the citation-confidence threshold is; I have not validated it) — and then produces a step-by-step score. Each step in the score carries the same fields: which supervisory capacity it exercises, whether the AI or a human owns it, the concrete action, and the testable handoff condition that lets the next step proceed. I have trimmed the copy-paste prompt bodies down to a line each — in the real artifact each AI step ships with a full prompt, but the prompt text is machinery you can regenerate; the handoff conditions are the thing worth reading. Here is the score:
 
 ---
 
-**STEP 1 · PHASE F · HUMAN TASK**
+**STEP 1 · HUMAN · Problem Formulation.** Define the section taxonomy the parser will use — the list of section types the system recognizes (Introduction, Methods, Results, Discussion, Limitations, and so on) and the rules for atypical headings ("Experimental Design" maps to Methods, "Future Work" maps to Discussion). This cannot be generated by AI because it requires knowing how papers in *your* target domain are structured, and domain variation is precisely the failure mode you must not silently absorb.
 
-*Supervisory Capacity: [PF] Problem Formulation*
+*Handoff condition:* there is a written list of recognized section types, mapping rules for variant headings, and a policy for sections that cannot be mapped — such that an engineer reading it can predict how any given heading will be classified.
 
-*Action: Define the section taxonomy the parser will use. Write a list of section types the system will recognize (Introduction, Related Work, Methods, Results, Discussion, Limitations, Appendix, References) and the rules for what to do when a section has an atypical heading (e.g., "Experimental Design" maps to Methods, "Future Work" maps to Discussion). This taxonomy is the specification the AI extraction prompt will be built against. It cannot be generated by AI because it requires knowledge of how papers in your target domain are structured — and domain variation is exactly the failure mode you must not silently absorb.*
+**STEP 2 · CLAUDE · Parsing.** Segment the extracted paper text into named sections using Step 1's taxonomy. *Prompt, in one line:* classify each block into a taxonomy section, mark anything that does not fit as UNMAPPED, flag any suspiciously short or caption-like block as SUSPECT, and invent nothing.
 
-*Handoff Condition: You have a written list of recognized section types, mapping rules for variant headings, and a policy for sections that cannot be mapped. An engineer reading this list can predict, for any given paper heading, how the system will classify it.*
+*Handoff condition:* every heading in the original paper appears somewhere in the output — mapped, UNMAPPED, or SUSPECT. No section has been silently dropped.
 
-*Dependency: None. This is the foundation.*
+**STEP 3 · CLAUDE · Claim extraction.** For each section, extract the single core claim and the verbatim passage that supports it, with a HIGH/MEDIUM/LOW confidence tag. *Prompt, in one line:* the claim must be a direct extraction or minimal paraphrase, the citation must be a 1–3 sentence excerpt that appears word-for-word in the source, and any claim without a supporting passage is emitted with citation NO_CITATION and flagged for human review.
 
----
+*Handoff condition:* every section from Step 2 appears in the output, and every HIGH-tagged citation can be found verbatim in that section's source text. No citation has been paraphrased or synthesized — it is extracted or it is absent.
 
-**STEP 2 · PHASE F · CLAUDE TASK**
+**STEP 4 · HUMAN · Plausibility Auditing.** For every LOW-confidence or flagged entry, open the source and check three things: is the extracted claim accurate in the domain-specific sense, not merely fluent; is the cited passage the strongest available support; and does the claim drop a qualification that changes its meaning (the model extracts "outperformed baselines" where the paper said "on the training set only"). Confirm, correct, or mark unverifiable. Spot-check one in five HIGH-confidence entries against the PDF. This cannot be delegated: it takes domain judgment about whether a claim is *meaningfully* accurate, which requires knowing the field's conventions for reporting results and limitations.
 
-*Context Required: Step 1's section taxonomy (paste directly into prompt). The architecture principle "failure visibility" (paste the one-sentence statement).*
+*Handoff condition:* every LOW and flagged entry has a disposition — confirmed, corrected, or unverifiable — a sample of HIGH entries is spot-checked, and the researcher has signed off.
 
-```
-You are a document parser assistant. I will give you the text of a PDF academic paper, 
-extracted as plain text. Your task is to segment the text into named sections using 
-the taxonomy below.
+**STEP 5 · CLAUDE · Formatting.** Format the confirmed claims into a reader-facing summary. *Prompt, in one line:* produce a top PAPER SNAPSHOT (question, method, headline finding), a section-by-section list of claims with their verbatim citations in block quotes, and a bottom VERIFICATION STATUS listing what was human-reviewed, what was marked unverifiable, and what rests on automated extraction alone — adding no commentary and no new claims.
 
-SECTION TAXONOMY:
-[paste Step 1 output here]
+*Handoff condition:* every claim in the summary traces to the Step 3/4 data, and the VERIFICATION STATUS accurately reflects which sections a human reviewed. No new claims appear.
 
-For each section:
-- Output the section name (from the taxonomy)
-- Output the full text of that section
-- If a heading does not match the taxonomy, apply the mapping rules below
-- If a section cannot be mapped, output: UNMAPPED: [original heading text]
+**STEP 6 · HUMAN · Interpretive Judgment.** Read the finished summary the way its intended user will — as a researcher deciding whether to read the paper, not as a QA pass on the AI. Does the snapshot characterize the contribution fairly? Are the limitations represented, or does the summary quietly make the paper look stronger than its own claims warrant? Then sign it with your name and the date. This cannot be delegated because it requires judging whether the summary would mislead a peer who trusted it — and the AI has no model of what a researcher in this domain would infer from a gap or a hedge.
 
-MAPPING RULES:
-[paste Step 1 mapping rules here]
+*Handoff condition:* the researcher has read the summary as a user and is willing to put their name on it as a reliable triage artifact.
 
-FAILURE VISIBILITY RULE: If the section text is under 50 words, or if the 
-section heading appears to be a figure caption or table note rather than a 
-section header, flag it as: SUSPECT: [section name] — [reason].
-
-Do not infer content. Do not fill gaps. Output only what is present in the text.
-
-OUTPUT FORMAT:
-Return a JSON array. Each element: 
-{"section": "section_name", "text": "full section text", "status": "OK | UNMAPPED | SUSPECT"}
-
-PAPER TEXT:
-[paste extracted paper text]
-```
-
-*Expected Output: A JSON array where every section is named, every heading is either mapped or flagged UNMAPPED, and every suspect section is flagged. No invented content.*
-
-*Handoff Condition: The JSON array contains at least one section tagged OK. Every heading in the original paper appears somewhere in the output — either as a recognized section, UNMAPPED, or SUSPECT. No section has been silently dropped.*
-
-*Dependency: Step 1 complete.*
-
----
-
-**STEP 3 · PHASE C · CLAUDE TASK**
-
-*Context Required: Step 2's JSON output. The architecture principle "citation fidelity over fluency." The problem summary's success criterion: "claim-linked extraction with passage citations."*
-
-```
-You are a structured extraction assistant. I will give you the segmented text of an 
-academic paper in JSON format. For each section, extract the core claim — the single 
-most important assertion the section makes — and identify the specific passage that 
-best supports it.
-
-EXTRACTION RULES:
-1. The claim must be a direct extraction or minimal paraphrase of text present in the 
-   section. Do not infer or generalize beyond what the text states.
-2. The citation must be a verbatim excerpt of 1–3 sentences from the section text 
-   that most directly supports the claim. The excerpt must appear word-for-word in 
-   the source text.
-3. If you cannot identify a clear core claim — the section contains only procedures, 
-   only data tables, or only references — output: NO_CLAIM: [reason]
-4. If you cannot find a passage that directly supports a claim you extracted, output 
-   the claim and set citation to: NO_CITATION — then flag the section as requiring 
-   human review.
-
-OUTPUT FORMAT:
-Return a JSON array. Each element:
-{
-  "section": "section_name",
-  "claim": "extracted claim text",
-  "citation": "verbatim supporting passage or NO_CITATION",
-  "confidence": "HIGH | MEDIUM | LOW",
-  "flag": null | "REQUIRES_HUMAN_REVIEW"
-}
-
-Set confidence:
-- HIGH: claim is a direct quote or minimal paraphrase; citation is verbatim and clearly supports claim
-- MEDIUM: claim requires inference across two sentences; citation is present but indirect
-- LOW: claim cannot be supported by a single passage; citation is absent or tangential
-
-SEGMENTED PAPER:
-[paste Step 2 JSON output]
-```
-
-*Expected Output: A JSON array with one entry per section. Every entry has a claim (or NO_CLAIM), a citation (verbatim or NO_CITATION), a confidence level, and a flag if review is needed. No section is silently skipped.*
-
-*Handoff Condition: Every section from Step 2 appears in the output. Every citation tagged HIGH can be found verbatim in the Step 2 source text for that section. No citation has been paraphrased or synthesized — it is extracted or absent.*
-
-*Dependency: Step 2 complete and handoff condition verified.*
-
----
-
-**STEP 4 · PHASE C · HUMAN TASK**
-
-*Supervisory Capacity: [PA] Plausibility Auditing*
-
-*Action: For every entry tagged LOW confidence or REQUIRES_HUMAN_REVIEW, open the source paper and verify three things: (1) Is the extracted claim an accurate representation of what the section says — not just fluent, but accurate in the domain-specific sense? (2) Is the cited passage the most informative support available, or is there a stronger passage the AI missed? (3) Does the claim omit a qualification that changes its meaning (e.g., the AI extracted "the model outperformed baselines" but the paper said "the model outperformed baselines on the training set only")? For each flagged section: confirm, correct, or mark as unverifiable.*
-
-*Action: For every entry tagged HIGH confidence, spot-check at least one in five by locating the citation in the source PDF and confirming it appears verbatim.*
-
-*This step cannot be delegated because it requires domain judgment about whether a claim is meaningfully accurate — not just textually faithful — and that judgment requires knowledge of the field's conventions for how results and limitations are reported.*
-
-*Handoff Condition: Every LOW and REQUIRES_HUMAN_REVIEW entry has a human disposition: confirmed, corrected, or marked unverifiable. A random sample of HIGH-confidence entries has been spot-checked. The researcher has signed off on the reviewed output.*
-
-*Dependency: Step 3 complete.*
-
----
-
-**STEP 5 · PHASE C · CLAUDE TASK**
-
-*Context Required: Step 3 JSON (with Step 4 human corrections applied). The problem summary's success criterion: "determine relevance and credibility in under five minutes."*
-
-```
-You are a summary formatter. I will give you the extracted claims and citations 
-for a research paper in JSON format. Human review has been applied; the data 
-has been confirmed or corrected.
-
-Your task is to format the claims into a structured summary for a researcher 
-deciding whether to read the full paper. The summary must:
-
-1. Present each section as a short paragraph: the core claim, followed by the 
-   verbatim citation in block quote format.
-2. At the top, include a PAPER SNAPSHOT: three bullet points — (a) the central 
-   research question, extracted from the Introduction claim; (b) the primary 
-   method, extracted from the Methods claim; (c) the headline finding, extracted 
-   from the Results claim.
-3. At the bottom, include a VERIFICATION STATUS section listing: sections reviewed 
-   by human (list them), sections marked unverifiable (list them with reason), 
-   sections with HIGH-confidence automated extraction only (list them).
-
-DO NOT add interpretive commentary. DO NOT evaluate whether the paper's methods 
-are sound. DO NOT add claims that are not in the input JSON. Your job is formatting 
-and organization, not evaluation.
-
-INPUT JSON:
-[paste Step 3 + Step 4 corrected JSON]
-```
-
-*Expected Output: A formatted summary with a PAPER SNAPSHOT at top, section-by-section claims with verbatim block-quote citations, and a VERIFICATION STATUS section at bottom.*
-
-*Handoff Condition: Every claim in the formatted summary appears in the Step 3/4 JSON. The VERIFICATION STATUS section accurately reflects which sections were human-reviewed and which were not. No new claims have been added.*
-
-*Dependency: Step 4 complete.*
-
----
-
-**STEP 6 · PHASE C · HUMAN TASK**
-
-*Supervisory Capacity: [IJ] Interpretive Judgment*
-
-*Action: Read the formatted summary as a researcher would read it — not as a QA check on the AI's output, but as the intended user of this summary. Ask: Would this summary give a researcher a reliable basis for the triage decision? Specifically:*
-
-- *Does the PAPER SNAPSHOT accurately characterize the paper's contribution?*
-- *Are the limitations represented — or does the summary accidentally make the paper look stronger than its own claims warrant?*
-- *Is there anything in the VERIFICATION STATUS that should affect how a researcher trusts this summary — and if so, is that clearly communicated?*
-
-*Make any final edits. Sign the summary with your name and the date of review.*
-
-*This step cannot be delegated because it requires the researcher to exercise their own judgment about whether this summary would mislead a peer who trusted it. The AI cannot assess its own misleading — it has no model of what a researcher in this domain would infer from a gap or a hedge.*
-
-*Handoff Condition: The researcher has read the summary as a user, not as a reviewer, and is willing to put their name on it as a reliable triage artifact.*
-
-*Dependency: Step 5 complete.*
-
----
-
-**SCORE SUMMARY**
-
-Total steps: 6
-Claude tasks: 3 (Steps 2, 3, 5) — 50% of steps
-Human tasks: 3 (Steps 1, 4, 6) — 50% of steps
-
-Critical path: Step 1 → Step 2 → Step 3 → Step 4 → Step 5 → Step 6
-
-Highest-risk handoffs:
-- Step 3 → Step 4: AI citation extraction to human plausibility audit. Risk: researcher accepts HIGH-confidence extractions without spot-checking; a domain-important qualification is silently omitted.
-- Step 5 → Step 6: Formatted summary to researcher sign-off. Risk: researcher treats this as a proofreading task rather than an interpretive judgment; the summary ships with a framing that misleads peers.
-
-Supervisory capacity distribution:
-- [PA] Plausibility Auditing: 1 step (Step 4)
-- [PF] Problem Formulation: 1 step (Step 1)
-- [TO] Tool Orchestration: implicitly present across all Claude tasks
-- [IJ] Interpretive Judgment: 1 step (Step 6)
-- [EI] Executive Integration: 0 steps flagged
-
-Flag: No executive integration step is documented. If this system is used in a team setting — where one researcher runs the pipeline and another uses the summary — a documented handoff between them is missing. Add a Step 7 if the context requires it.
+**Score summary.** Six steps, split evenly: Claude owns 2, 3, and 5 — the pattern work — and a human owns 1, 4, and 6 — the judgment work. The two highest-risk handoffs are both AI-to-human: Step 3 into Step 4, where the danger is that the researcher waves through HIGH-confidence extractions and a domain-critical qualification vanishes; and Step 5 into Step 6, where the danger is treating a sign-off as proofreading rather than interpretation, so a misleading framing ships. And the score flags one gap: no step exercises *executive integration*, the capacity that synthesizes across multiple people. That is fine for a single user, but the moment one researcher runs the pipeline and another relies on the output, a documented handoff between them is missing and a Step 7 is required.
 
 ---
 
@@ -488,11 +203,9 @@ Flag: No executive integration step is documented. If this system is used in a t
 
 ### What the Boondoggle Score reveals
 
-Look at where the human steps fall in the score. Step 1 is human because the taxonomy requires domain knowledge. Step 4 is human because citation accuracy requires domain judgment. Step 6 is human because the researcher must exercise interpretive judgment about what the summary will communicate to a peer.
+Look at where the human steps fall. Step 1 is human because the taxonomy takes domain knowledge; Step 4 because citation accuracy takes domain judgment; Step 6 because the researcher has to judge what the summary will communicate to a peer. These are not the steps that look like heavy lifting. The AI steps — parsing, extracting, formatting — are the ones that look like work; the human steps look like review. That is the fluency trap operating at the level of a whole workflow: the AI's outputs will be fluent and specific, the pull to trust them and move on will be strong, and the Boondoggle Score's whole job is to name the failure mode *before* the workflow runs rather than after the first researcher trusts a hallucinated citation.
 
-These are not the obvious heavy-lifting steps. The AI steps — parsing, extracting, formatting — are the ones that look like work. The human steps are the ones that look like review. This is the fluency trap operating at the workflow level: the AI's outputs will be fluent and specific, and the pull toward trusting them and moving on will be strong. The Boondoggle Score makes the failure mode explicit *before* the workflow runs, not after the first researcher trusts a hallucinated citation.
-
-Notice also what the score does not contain: the word "reasonable," the phrase "human reviews," the instruction "check for accuracy." Every human action in the score specifies what is being checked, against what criteria, at what granularity. Step 4 does not say "review the extractions." It says: open the source PDF, verify that qualifications haven't been dropped, spot-check one in five HIGH-confidence entries. That specificity is the difference between a handoff condition that can be audited and one that cannot. *"Looks good" is not a handoff condition.* That is the sentence to tattoo somewhere.
+Notice what the score does not contain: the word "reasonable," the phrase "human reviews," the instruction "check for accuracy." Every human action names what is checked, against what criteria, at what granularity. Step 4 does not say "review the extractions." It says: open the PDF, verify no qualification was dropped, spot-check one in five HIGH-confidence entries. That specificity is the entire difference between a handoff condition a stranger can audit and one they cannot. *"Looks good" is not a handoff condition.* That is the sentence to tattoo somewhere.
 
 ---
 

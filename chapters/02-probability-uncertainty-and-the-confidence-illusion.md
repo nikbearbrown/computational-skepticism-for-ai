@@ -104,21 +104,15 @@ There is a helpful picture here. Conditioning on $B$ is like shrinking the sampl
 ![Venn diagram ](../images/02-probability-uncertainty-and-the-confidence-illusion-fig-01.png)
 *Figure 2.1 — Venn diagram *
 
-A few worked examples, in increasing order of practical relevance.
+And this is why it is the engine. When an agent reports "task complete," you do not want the raw probability that any such report is true. You want the probability that *this* report is true *given* what you know — that the task was novel, that the tool has failed before, that the environment was one the agent had never touched. Conditioning is the mathematics of "given what I already know," and every audit in this book is a conditional probability wearing a different costume.
 
-**Example 1 — Dice.** Two fair dice are rolled. You are told the sum is nine. How likely is it that the first die showed a six?
+An illustration to fix the formula. Say I have logged how a triage-support model behaves on the cases crossing its desk. Let $A$ = the case is genuinely high-acuity, $B$ = the case arrives with an abnormal lab flag already attached. From the log: 76% carry the flag, 45% turn out high-acuity, 30% are both. A flagged case arrives — how likely is it to be genuinely high-acuity?
 
-The outcomes summing to nine: (3,6), (4,5), (5,4), (6,3). That is four equally likely outcomes. Of those, one — (6,3) — has the first die showing six. So $P(\text{first die} = 6 \mid \text{sum} = 9) = \frac{1}{4}$.
+$$P(A \mid B) = \frac{P(A \cap B)}{P(B)} = \frac{0.30}{0.76} \approx 0.395$$
 
-**Example 2 — Conditional in words.** Among a group of students, 76% have passed strength of materials, 45% have passed statics, and 30% have passed both. A student is selected at random and has passed strength of materials. What is the probability they have also passed statics?
+About 39.5% — *lower* than the unconditional 45%. Seeing the flag did not raise my estimate, it lowered it, because the flag is common and most flagged cases are not serious. That is the shape of the trap this whole chapter circles: a salient signal arrives, intuition reads it as bad news, and the conditioning says otherwise. The formula does the work the intuition won't.
 
-Let $A$ = passed strength of materials, $B$ = passed statics. We want $P(B \mid A)$.
-
-$$P(B \mid A) = \frac{P(A \cap B)}{P(A)} = \frac{0.30}{0.76} \approx 0.395$$
-
-About 39.5%. Notice that this is quite different from the unconditional probability of passing statics (45%) — knowing that a student passed one course changes the probability they passed the other.
-
-**Key point.** Conditional probabilities satisfy all three axioms. $P(\cdot \mid B)$ is itself a legitimate probability measure on the shrunken sample space $B$. This means everything you know how to do with probability — add disjoint events, compute complements — works exactly the same way for conditional probabilities.
+One property to carry forward: $P(\cdot \mid B)$ is itself a legitimate probability measure on the shrunken sample space $B$ — it obeys all three axioms. Adding disjoint events, taking complements: all of it works unchanged once you condition. You have not learned a new tool, only moved into a smaller world.
 
 ---
 
@@ -142,40 +136,26 @@ For $n$ events — the **chain rule**:
 
 $$P\left(\bigcap_{i=1}^n A_i\right) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \cdots P\left(A_n \mid \bigcap_{i=1}^{n-1} A_i\right)$$
 
-This lets you break sequential probability problems into a chain of steps. Each step asks: given everything that has happened so far, how likely is the next event?
+This is the machinery for reasoning about anything sequential — which is to say, for reasoning about an agent. An agent that reports "task complete" almost never did one thing. It chained tool calls: read a file, call an API, write a result, verify. The report is a claim about the *whole chain* succeeding, and the chain rule is how you take that claim apart.
 
-### Worked example — cards without replacement
+### Worked example — an agent's tool-call chain
 
-Three cards are drawn from an ordinary 52-card deck without replacement. What is the probability that none of the three cards is a heart?
+An illustration, with numbers invented to keep the arithmetic clean. An agent must land three tool calls in order, and all three have to succeed for the task to actually be done. Let $A_i$ = step $i$ succeeds. The first call goes into a fresh, known environment, so it is reliable: $P(A_1) = 0.9$.
 
-Let $A_i$ = the $i$-th card is not a heart.
+But the calls are *not* independent, and that is the point. Once the first call succeeds, the agent is operating on the state that call produced — less certain than the one it started from — so the second call, given the first, is a little less reliable, and the third, given the first two, less reliable again:
 
-$$P(A_1) = \frac{39}{52}$$
+$$P(A_2 \mid A_1) = 0.85, \qquad P(A_3 \mid A_1 \cap A_2) = 0.8$$
 
-Thirty-nine of the fifty-two cards are non-hearts. If the first card was not a heart, we have 51 cards left, 38 of which are non-hearts:
+The chain rule gives the probability the whole task actually completed:
 
-$$P(A_2 \mid A_1) = \frac{38}{51}$$
+$$P(A_1 \cap A_2 \cap A_3) = 0.9 \cdot 0.85 \cdot 0.8 = 0.612$$
 
-If the first two were non-hearts, we have 50 left, 37 of which are non-hearts:
-
-$$P(A_3 \mid A_1 \cap A_2) = \frac{37}{50}$$
-
-Multiply:
-
-$$P(A_1 \cap A_2 \cap A_3) = \frac{39}{52} \cdot \frac{38}{51} \cdot \frac{37}{50} = \frac{39 \times 38 \times 37}{52 \times 51 \times 50} \approx 0.413$$
-
-About 41%. You can verify this: it is the number of ways to choose 3 cards from 39 non-hearts divided by the number of ways to choose 3 cards from 52.
+About 61% — against a single, clean "task complete." The report is one bit; the thing it claims is a product of three shrinking conditionals.
 
 ![Each edge is a conditional probability. Each leaf is a joint probability found by multiplying along the path — the chain rule made visible.](../images/02-probability-uncertainty-and-the-confidence-illusion-fig-02.png)
-*Figure 2.2 — Probability tree for the card-drawing example*
+*Figure 2.2 — Probability tree for the agent tool-call chain*
 
-### Worked example — independent events
-
-If two events $A$ and $B$ are **independent** — knowing one occurred tells you nothing about whether the other occurred — then $P(A \mid B) = P(A)$, and the multiplication rule simplifies:
-
-$$P(A \cap B) = P(A) \cdot P(B)$$
-
-Independence is a strong assumption. It means the two events have no influence on each other. In many real deployments, independence fails quietly — and the failure produces badly wrong probability estimates.
+Now the mistake almost everyone makes. Two events are **independent** when knowing one tells you nothing about the other — then $P(A \mid B) = P(A)$ and the rule collapses to $P(A \cap B) = P(A) \cdot P(B)$. Assume the three steps are independent and reliable at $0.9$ each, and you compute $0.9^3 = 0.729$: 73% where the honest number was 61%. Twelve points of unearned confidence, all of it from assuming away the dependence. In real agent runs independence fails *quietly* — one step's failure degrades the state the next depends on, so failures cluster instead of scattering — and the error runs in the optimistic direction. That is the direction that gets you hurt.
 
 ---
 
@@ -194,42 +174,16 @@ The intuition: each $A_i$ is a different state the world could be in. $P(B \mid 
 ![Partition diagram ](../images/02-probability-uncertainty-and-the-confidence-illusion-fig-03.png)
 *Figure 2.3 — Partition diagram *
 
-### Worked example — manufacturing defects
+### Worked example — the fleet's error rate
 
-A factory has three machines: A produces 40% of all output, B produces 30%, and C produces 30%. Machine A produces 2% defective items, B produces 3%, C produces 5%. What fraction of all output is defective?
+Here is where I need it. A fraud-screening pipeline routes its cases across three model versions still running in production — call them A, B, C, with numbers chosen to keep the arithmetic clean. Version A handles 40% of traffic, B 30%, C 30%; they are not equally good — A gets a case wrong 2% of the time, B 3%, C 5%. I want the pipeline's overall error rate, the fraction of *all* screened cases that come back wrong.
 
-Let $D$ = item is defective. Let $A$, $B$, $C$ partition the sample space by which machine produced the item.
+No single model reports that number. But I can partition. Let $D$ = the output is wrong, and let $A$, $B$, $C$ partition the cases by which version handled them:
 
 $$P(D) = P(A) \cdot P(D \mid A) + P(B) \cdot P(D \mid B) + P(C) \cdot P(D \mid C)$$
-$$= 0.40 \times 0.02 + 0.30 \times 0.03 + 0.30 \times 0.05$$
-$$= 0.008 + 0.009 + 0.015 = 0.032$$
+$$= 0.40 \times 0.02 + 0.30 \times 0.03 + 0.30 \times 0.05 = 0.032$$
 
-Overall, 3.2% of output is defective.
-
-### Worked example — a Markov chain preview
-
-Alice takes a probability course. Each week she is either up-to-date (U) or behind (B). If she is up-to-date, she stays up-to-date the following week with probability 0.8 and falls behind with probability 0.2. If she is behind, she catches up with probability 0.4 and stays behind with probability 0.6. She starts up-to-date.
-
-What is the probability she is up-to-date after three weeks?
-
-Let $U_i$ = up-to-date at week $i$, $B_i$ = behind at week $i$.
-
-Week 1: $P(U_1) = 0.8$, $P(B_1) = 0.2$.
-
-Week 2, using total probability:
-
-$$P(U_2) = P(U_1) \cdot P(U_2 \mid U_1) + P(B_1) \cdot P(U_2 \mid B_1) = 0.8 \times 0.8 + 0.2 \times 0.4 = 0.72$$
-
-$$P(B_2) = 1 - P(U_2) = 0.28$$
-
-Week 3:
-
-$$P(U_3) = P(U_2) \cdot 0.8 + P(B_2) \cdot 0.4 = 0.72 \times 0.8 + 0.28 \times 0.4 = 0.576 + 0.112 = 0.688$$
-
-About 69%. This kind of recursive calculation — using this week's probabilities to compute next week's, via the total probability theorem — is the foundation of Markov chain analysis. You will see it again whenever we model systems that evolve over time.
-
-![State transition diagram for Alice's two-state Markov chain](../images/02-probability-uncertainty-and-the-confidence-illusion-fig-04.png)
-*Figure 2.4 — State transition diagram for Alice's two-state Markov chain*
+3.2% of outputs are wrong — a number that lives in none of the three models but falls straight out of the partition. That is the whole use of the theorem: when you cannot measure a system-level rate directly, decompose it into scenarios you *can* measure, weight each by how often it occurs, and sum. Hold onto this partition. In the Bayes section we run it backward — given that an output *was* wrong, which version most likely produced it? Not the one handling the most traffic.
 
 ---
 
@@ -548,7 +502,7 @@ That is Chapter 3. Before the model, there is data; before the data, there is th
 
 **13.** The chapter draws a structural analogy between Hume's problem of induction and machine learning deployment. Construct a parallel argument: take any ML system you are familiar with and describe (a) what "the past" consists of for that system, (b) what assumption about continuity is being made, and (c) one specific change in the world that would invalidate that assumption. *(Tests: transferring the induction framework to a new domain)*
 
-**14.** Alice from the total probability theorem example (above) now starts her second course *behind* on the first week, with the same transition probabilities as before. Calculate $P(U_3)$ — the probability she is up-to-date after three weeks — and compare it to the result from the chapter. What does this suggest about the long-run behavior of the system regardless of starting state? *(Tests: applying the total probability theorem and recursion in a new setup)*
+**14.** In the fleet example from the total probability theorem section (above), suppose the traffic split shifts: version C — the least reliable, at a 5% error rate — is scaled up to handle 50% of cases, while A drops to 20% and B stays at 30%. Recompute the pipeline's overall error rate $P(D)$ with the total probability theorem. Then, using Bayes, recompute $P(C \mid D)$ — the probability that a wrong output came from C — and compare both numbers to the chapter's values. What does the comparison show about how routing decisions move a system-level error rate even when no individual model changed? *(Tests: applying the total probability theorem and Bayesian inversion to a changed partition)*
 
 ### Challenge
 
