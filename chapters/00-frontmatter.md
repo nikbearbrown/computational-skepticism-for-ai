@@ -1,14 +1,14 @@
 # Computational Skepticism for AI
 
-**Humanitarians AI Incorporated**
+**Nik Bear Brown**
 
 ---
 
 ## Copyright
 
-Copyright © 2026 Humanitarians AI Incorporated. All rights reserved.
+Copyright © 2026 Bear Brown, LLC. All rights reserved.
 
-Published by Humanitarians AI Incorporated, a 501(c)(3) nonprofit organization.
+Published by Bear Brown, LLC.
 
 No part of this publication may be reproduced, distributed, or transmitted in any form or by any means without the prior written permission of the publisher, except in the case of brief quotations in critical reviews and certain other noncommercial uses permitted by copyright law.
 
@@ -26,8 +26,6 @@ First edition: 2026
 
 ## Preface
 
-This book exists because Computational Skepticism for AI needs a usable path for readers who want more than fragments, prompts, or disconnected explanations. It was written to gather the field into a sequence: first the core ideas, then the working vocabulary, then the cases and practices that make the ideas durable.
+This is the skepticism volume in the *Irreducibly Human* series — books about the cognitive work that does not transfer to a machine no matter how capable the machine becomes. Its companion, *Frictional*, argues that genuine human engagement leaves traces a machine cannot fake. This book argues the mirror image: that verifying a machine's output is human work the machine cannot do for you, and it teaches that work as a craft with named moves, not a disposition.
 
-The urgency is practical. Learners now meet every subject through search engines, AI systems, dashboards, tutorials, and partial answers. That abundance helps, but it also creates a new problem: it is easy to collect explanations without building judgment. This book is meant to slow the reader down just enough to see the structure of the subject.
-
-The authorial stance is applied and instructional. The goal is not to be encyclopedic. The goal is to give readers enough language, examples, and order that they can continue learning with better questions.
+A short note on how to use it. The chapters stand on their own as prose, but they are built to be *done*. If you skip the build-and-audit exercises and the running casebook, you will have read an argument; if you do them, you will have a skill. Turn to the introduction — it explains the bargain the whole book rests on, and the one project you will carry through all thirteen chapters.

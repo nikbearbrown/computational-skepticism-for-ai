@@ -8,7 +8,7 @@ Thanks to the readers, students, collaborators, and tool builders whose question
 
 ## About the Author
 
-**Humanitarians AI Incorporated** is a 501(c)(3) nonprofit organization focused on public-interest AI education, intelligent textbooks, and practical learning infrastructure. Its books are designed to support learners, teachers, and communities with accessible explanations, structured practice, and AI-ready educational materials.
+**Nik Bear Brown** is Associate Teaching Professor of Computer Science and AI at Northeastern University and the founder of Humanitarians AI, a 501(c)(3) nonprofit, and Bear Brown and Company. He writes and builds at the intersection of AI, education, and the cognitive work that stays human when the machine can do everything else. This book is part of his *Irreducibly Human* series; more of the work appears at skepticism.ai and irreduciblyhuman.com.
 
 ---
 

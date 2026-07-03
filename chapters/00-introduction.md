@@ -1,55 +1,17 @@
 # Introduction
 
-A learner opens the first chapter of *Computational Skepticism for AI* with a familiar problem: there is too much information and not enough structure. The terms are available. The examples are available. The missing thing is a route through the material that turns exposure into understanding.
+Somewhere in the last few years, a specific thing happened to the cost of being wrong.
 
-This book is about the gap between knowing the name of Computational Skepticism for AI's subject and being able to use its ideas with judgment.
+Machines became very good — superhumanly good — at producing outputs that look right. An answer, a diagnosis, a summary, a completed task, a confident report that the thing you asked for has been done. What did not change, and what this book argues cannot change, is who has to doubt those outputs. The doubt is still yours. That asymmetry is the whole subject: the machine solves at a speed no human can match, and the verification stays irreducibly human. Computational skepticism is the discipline of holding up your end of that bargain — the machine's speed, your doubt.
 
-The central argument is that Computational Skepticism for AI is best learned as a sequence of distinctions, practices, and recurring problems rather than as a list of topics. A reader who can name those distinctions can move through the field with more confidence than a reader who has only memorized definitions.
+You might expect that a system fluent enough to produce the answer is fluent enough to check it. It is not, and the reason is structural rather than temporary. The same model that generated an output is the least reliable judge of whether the output is right, because it will defend its own fluency. A wrong answer that arrives in a credible format is more dangerous than one that arrives looking wrong, precisely because it disarms the check. Most of this book is about performing the check anyway — deliberately, mechanically, at exactly the moment the output looks most trustworthy. That is the hard part. Skepticism is easy when something looks suspicious. The skill is doing it when the output looks right.
 
-This is written for learners, teachers, practitioners, and builders who want a clear path through the material.
+This is a book you do, not only a book you read. Every chapter ends in two exercises that are really one skill facing two directions: a **BUILD**, where you make something and hunt for where you let a mistake in, and an **AUDIT**, where you take a system that already exists and trace where it breaks and who owns the break. And running underneath all thirteen chapters is a single project. In Chapter 1 you will choose one agentic AI system — ideally one of your own, something with real consequences when it fails — and you will red-team it, chapter by chapter, applying each new instrument to the same system, until by the end you have written a full casebook on it, the way security researchers write up the systems they break. I call that running case the *Pebble*: one concrete failure dropped into the book early, whose ripples reach every chapter after it.
 
-## What This Book Is
+The Pebble has a model. In Chapter 1 you will also meet Ash, who gave an AI agent access to his email and asked it to delete a sensitive message. The agent reported, confidently and in well-formed prose, that the message was deleted and the account secured. It was not. The agent had reset a password and renamed an alias; the data sat untouched on the provider's servers. The agent did not lie — its report was true about its local actions and false about the world, and its confidence was proportional to its blindness. Ash returns when the book has built the tools to take him apart: in Chapter 5, when we ask what an agent's explanation of its own behavior is actually worth; in Chapter 8, on his home ground, where autonomous systems misbehave; and in Chapter 12, when we ask who is answerable when they do.
 
-This book is a structured introduction to Computational Skepticism for AI. It teaches the vocabulary of the field, shows how the main ideas connect, and gives readers enough conceptual grip to continue with more specialized work. It is designed to be read as a book, used as a reference, and integrated into an intelligent textbook system.
+The order of the chapters is itself an argument. The first two build the instruments — the four classical skeptical moves, and the probability you need to price a confident claim. Chapters 3 through 5 turn those instruments on what a model is actually made of: the data behind it, whether it is robust or merely lucky, and whether its explanations are real or only look real. Chapters 6 and 7 move to values — where bias enters a system and who is responsible for it, and why no single definition of fairness can satisfy everyone at once. Chapters 8 and 9 confront autonomy directly: agents that take actions in the world, and the contract you write before you trust the handoff. Chapters 10 and 11 are about telling the truth to other people — in charts, and in words. And the last two are about stakes: who is accountable when the system fails, and what these tools categorically cannot do, no matter how much they scale. Read them in order the first time. After that, use the titles as a map and go straight to where your understanding is weakest.
 
-## What This Book Is Not
+I wrote this for the people who have to stand behind an AI system's output — engineers, clinicians, analysts, supervisors, and the students on their way into those roles. The goal is not to make you distrust the machine. It is to make your trust in it earned, checkable, and yours to defend.
 
-This book is not a substitute for practice, mentorship, experimentation, or domain-specific judgment. It does not try to say everything. It tries to say enough, in the right order, so that the reader can recognize what matters next.
-
-## The Concept Running Through the Book
-
-The recurring idea is transfer: the movement from explanation to usable understanding. Each chapter should help the reader carry an idea from the page into a problem, a classroom, a project, or a decision.
-
-## How This Book Is Organized
-
-- **Chapter 1 — The Skeptic's Toolkit.** - The moves you perform before you trust what the machine just told you. - The chapter moves through What I mean by skepticism, The cave, The solve-verify asymmetry, The Five Supervisory Capacities, and related ideas. - Read it for the main...
-- **Chapter 2 — Probability, Uncertainty, and the Confidence Illusion.** - Why your intuition forgets the prior, and what to do when it does. - You will practice Apply Bayes' theorem to calculate the actual probability of a rare event given a positive test result, and explain why the result differs from...
-- **Chapter 3 — Data Validation: Reconstructing the Epistemic Frame Behind a Dataset.** - What the histograms can see, and the failures that live in everything else. - You will practice Explain why procedural EDA is necessary but not sufficient for deployment-ready data validation, and describe what the interrogation approach adds; Execute the core procedural...
-- **Chapter 4 — Robustness: What "Understanding" Means When a Pixel Can Break the Model.** - You will practice Distinguish between "the model is fragile" and "the model learned a proxy instead of the human-relevant feature," and explain why the distinction changes the engineering response; Explain the linearity hypothesis and boundary-tilting perspective as competing geometric accounts of...
-- **Chapter 5 — Model Explainability: Distinguishing Explanation from the Appearance of Explanation.** - When a Correct Explanation Makes the Wrong Decision Feel Right. - The chapter moves through What SHAP is, and what SHAP isn't, The mathematics of Shapley values, The value function, The marginal contribution, and related ideas. - Read it for the...
-- **Chapter 6 — Bias: Where It Enters and Who Is Responsible.** - Doing the Fix the Model Alone Cannot Do. - The chapter moves through What "bias" actually means, Ten mechanisms, distinguished, Selection bias, Confirmation bias, and related ideas. - Read it for the main argument, the vocabulary it introduces, and the practical...
-- **Chapter 7 — Fairness Metrics: Choosing a Definition and Defending It.** - This chapter gives a working overview of Fairness Metrics: Choosing a Definition and Defending It, focusing on the ideas a reader needs before moving to the next chapter. - The chapter moves through Three definitions, The arithmetic, The COMPAS case, Each...
-- **Chapter 8 — Validating Agentic AI: When Autonomous Systems Misbehave.** - You Broke My Toy, and the Agent Didn't Know It. - The chapter moves through From prediction to action, The laboratory: what OpenClaw actually was, A taxonomy of how agents go wrong, What agents are lacking: the three core deficits, and...
-- **Chapter 9 — Delegation, Trust, and the Supervisory Role.** - Write the contract before you trust the handoff. - The chapter moves through The handoff condition, The Five Supervisory Capacities as pipeline jobs, The Boondoggle questions, The full delegation map structure, and related ideas. - Read it for the main argument,...
-- **Chapter 10 — Visualization Under Validation: Honest, Misleading, and the Choices Between.** - You will practice Explain why visualization is an argument made through structural choices, not a transparent transmission of facts; Identify the nine misleading visualization choices in the catalog, distinguish honest from dishonest uses of each, and apply the catalog to audit...
-- **Chapter 11 — Communicating Uncertainty: Calibrating Claims to Evidence.** - The Verb Is Doing Epistemic Work You Are Not Noticing. - The chapter moves through The verb taxonomy, Two readers, one document, Metrics and measures of trust calibration, The Brier score: a proper scoring rule, and related ideas. - Read it...
-- **Chapter 12 — Accountability: Who Is Responsible When the System Fails?.** - I want to put a case in front of you. - The chapter moves through Why humans must be in the loop: the cognitive argument, AI as extended mind: what the capacities actually are, The seven-tier taxonomy, The Gödel argument, and...
-- **Chapter 13 — The Limits of AI: What the Tools Cannot Do.** - Three things capability scaling cannot fix, and what the supervisor does about them. - You will practice Name the three categorical limits of AI systems — meaning, intentionality, and the data-world gap — and explain why capability scaling does not close...
-
-## How to Read This Book
-
-Read the chapters in order if you are new to the subject. If you already know the area, use the chapter titles as a map and move directly to the parts where your understanding is weakest. The chapters are designed to be self-contained enough for reference, but they work best as a progression from Chapter 1 — The Skeptic's Toolkit to Chapter 13 — The Limits of AI: What the Tools Cannot Do.
-
-## A Note About AI
-
-AI matters to *Computational Skepticism for AI* because the modern textbook is no longer only a static container. It is also part of a learning system: searchable, remixable, explainable, and increasingly connected to tools such as Medhavy. For Humanitarians AI books, the relevant question is not whether AI can replace the learner or the teacher. It cannot. The useful question is what AI can make easier to inspect: definitions, worked examples, misconceptions, practice sequences, alternate explanations, and the structure of an argument. This book treats AI as infrastructure for open, public-interest learning infrastructure. The chapters should still stand on their own as readable prose, but they are also designed to be legible to an intelligent textbook system.
-
-## Closing Return
-
-The learner at the opening does not need more noise. They need a path. This book is that path: not the whole territory, but a reliable way to begin moving through it.
-
-Let's go.
-
-## Tags
-
-Computational Skepticism for AI, textbook, Medhavy, AI-assisted learning, Humanitarians AI Incorporated
+Let's begin.
