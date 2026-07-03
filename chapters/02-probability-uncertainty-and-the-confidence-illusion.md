@@ -454,7 +454,7 @@ These four questions, asked in the right order, would have prevented most of the
 
 ## What would change my mind
 
-If a deployment-monitoring methodology emerged that reliably detected distribution shift in production from output statistics alone — without access to ground-truth outcomes — the calibration framing in this chapter would need revision. Current methods detect a subset of shifts; the general problem is open. [Verify: Krell et al. 2024 on out-of-distribution detection — confirm citation before publication.]
+If a deployment-monitoring methodology emerged that reliably detected distribution shift in production from output statistics alone — without access to ground-truth outcomes — the calibration framing in this chapter would need revision. Current methods detect a subset of shifts; the general problem is open (Rabanser, Günnemann, and Lipton, *Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift*, NeurIPS 2019, arXiv:1810.11953; for the label-free production setting, Amoukou, Bewley, et al., *Sequential Harmful Shift Detection Without Labels*, 2024, arXiv:2412.12910).
 
 I do not have a clean diagnostic for when a deployment's loss distribution is heavy-tailed *before* the catastrophic event reveals it. Tail estimation from a sample is mathematically impolite. The honest answer is: assume heavy tails when the cost-of-error includes harm to people, and engineer accordingly. That is a heuristic, not a calculation, and I have not solved this.
 
