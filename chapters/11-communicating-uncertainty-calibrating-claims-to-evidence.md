@@ -64,18 +64,20 @@ Each verb implies a specific epistemic posture toward the evidence. Choose the v
 
 The taxonomy is not exhaustive — *characterize*, *report*, *describe*, *quantify*, *establish* each occupy specific niches — but it covers most of the useful range. The exercise, every time you draft something, is to read your draft sentence by sentence and ask whether the verb you used matches the evidence the sentence is built on.
 
+The rows run in the frozen ladder order — weakest to strongest.
+
 | Verb | Epistemic posture | Minimum evidence required | Correct use example | Common misuse |
 |---|---|---|---|---|
 | **Hypothesize** | Tentative; pre-evidence | A defensible reason to consider the claim | "We hypothesize that calibration degrades on the rare-disease subgroup" | Used as a softener for a claim already supported by data |
-| **Observe** | Direct; descriptive | A measurement and the measurement procedure | "We observe ECE = 0.04 on the global test set" | Used to soften a causal claim ("we observe the model causes…") |
-| **Find** | Direct; established by the analysis | The analysis result, the comparison, the n | "We find subgroup ECE exceeds global ECE by 2.3× on the elderly cohort" | Used for a one-shot anecdote |
-| **Suggest** | Cautious inference | Evidence consistent with the inference; alternatives not ruled out | "These results suggest miscalibration concentrates in the elderly subgroup" | Used in place of *find* when the evidence already supports the stronger verb |
-| **Indicate** | Stronger inference; multiple lines of evidence | Convergent results from independent analyses | "Cross-site replication indicates the subgroup pattern is not site-specific" | Used as a synonym for *suggest* |
-| **Demonstrate** | Established; replicated | Reproducible result, named replication, no live alternative | "We demonstrate that the subgroup gap persists under three calibration methods" | Used for a single-study finding |
-| **Conclude** | Action-warrant; takes a position | A conclusion that survives the alternatives the team has named and tested | "We conclude the deployment cannot ship without subgroup-specific recalibration" | Used as a paragraph-ending stylistic flourish |
-| **Prove** | Decisive; mathematically or by formal verification | A proof, formal or empirical with a closed-form alternative space | "We prove the bound holds for all inputs in the certified region" | Used in any non-formal engineering setting |
+| **Suggest** | Cautious inference; data consistent with the claim but not distinguishing it from alternatives | An observation that points toward the claim without ruling out other explanations | "These results suggest miscalibration concentrates in the elderly subgroup" | Used in place of *find* when the evidence already supports the stronger verb |
+| **Observe** | Direct; descriptive, single-condition | A measurement and the stated measurement procedure | "We observe ECE = 0.04 on the global test set" | Used to soften a causal claim ("we observe the model causes…") |
+| **Find** | Established by the analysis; some robustness | The analysis result, the comparison, the n; at least replication | "We find subgroup ECE exceeds global ECE by 2.3× on the elderly cohort" | Used for a one-shot anecdote |
+| **Show** | Strong; the evidence makes the claim the operational reading | Replication, robustness, alternative explanations ruled out | "We show the subgroup gap persists under three calibration methods" | Used when only a single dataset supports the claim |
+| **Demonstrate** | Constructed proof or near-proof | An experiment designed to test the claim, with formal or strong inferential control | "We demonstrate the gap survives a named distribution shift" | Used for a single-study finding |
+| **Conclude** | Action-warrant; the motivating question is settled | Full analysis, alternatives named and rejected, sensitivity analysis the finding survives | "We conclude the deployment cannot ship without subgroup-specific recalibration" | Used as a paragraph-ending stylistic flourish |
+| **Prove** | Decisive; mathematical or formal verification | A proof, formal or empirical with a closed alternative space | "We prove the bound holds for all inputs in the certified region" | Used in any non-formal engineering setting |
 
-*Most engineering writing sits between* observe *and* find. *Most engineering writing uses* conclude. *The gap is the problem.*
+*Most engineering writing has evidence sitting between* observe *and* find. *Most engineering writing uses* conclude. *The gap is the problem.* (The caution verb *indicate* is deliberately off this ladder — as the section above noted, it measures inferential caution rather than evidential strength, so folding it into a strength ranking is exactly the wobble the frozen ladder avoids.)
 
 This is unromantic editing. There is no inspiration in it. You are downgrading verbs because the evidence does not warrant the original verb, and the prose loses some of the punch you put into it. I want to tell you that this is also the most operationally important single skill in technical communication of validation findings. The careful engineer's writing reads, at first, as quieter than the careless engineer's. It also survives reading.
 
@@ -147,7 +149,7 @@ A perfectly calibrated model has $\text{ECE} = 0$. You will hear rules of thumb:
 
 That bin-dependence is the ECE's structural weakness: its value depends on the number and width of bins chosen. Small changes in bin count can produce meaningfully different ECE values on the same data. The ECE is therefore best understood as a directional indicator rather than a precise measurement, and it should always be accompanied by the binning specification. *An ECE reported without the number of bins is not fully reproducible.* (The ECE and MCE binning definitions come from Naeini, Cooper, and Hauskrecht, 2015.)
 
-An alternative that avoids this dependence is the *Maximum Calibration Error* (MCE), which reports the worst-case gap across bins rather than the weighted average:
+A companion metric — not an escape from bin-dependence, since it is computed over the same bins and is if anything *more* sensitive to how they are drawn — is the *Maximum Calibration Error* (MCE), which reports the worst-case gap across bins rather than the weighted average:
 
 $$\text{MCE} = \max_{m \in \{1,\ldots,M\}} \left| \text{acc}(B_m) - \text{conf}(B_m) \right|$$
 
@@ -241,9 +243,9 @@ This table is not decoration. I use it to write Layer 2. Every calibration claim
 | **L0 — internal-only ECE** | hypothesize | The model's reliability diagram has been examined on the training set | Generalization, subgroup behavior, deployment shift | Held-out evaluation on a non-training split |
 | **L1 — held-out test ECE** | observe | Calibration on a held-out split from the same source | Subgroup variation, distribution shift | Subgroup decomposition |
 | **L2 — subgroup ECE** | find | Subgroup-specific calibration patterns identified | Generalization across sites, across time | External replication |
-| **L3 — replicated subgroup ECE** | suggest | Pattern holds across at least one independent site or cohort | Causal mechanism; deployment-context behavior | Stress-test under named distribution shift |
-| **L4 — replicated under stress** | indicate | Pattern survives a named distribution shift | Whether the deployment population matches the validated population | A monitored deployment with calibration tracking |
-| **L5 — validated in deployment** | demonstrate | Calibration holds under live deployment conditions | The next regime; novel subpopulations not in the validation set | (Subsequent regimes require fresh validation) |
+| **L3 — replicated subgroup ECE** | show | Pattern holds across at least one independent site or cohort | Causal mechanism; deployment-context behavior | Stress-test under named distribution shift |
+| **L4 — replicated under stress** | demonstrate | Pattern survives a named distribution shift | Whether the deployment population matches the validated population | A monitored deployment with calibration tracking |
+| **L5 — validated in deployment** | conclude | Calibration holds under live deployment conditions | The next regime; novel subpopulations not in the validation set | (Subsequent regimes require fresh validation) |
 
 *The verb follows from the evidence. The table makes the derivation explicit and the upgrade path visible.*
 
@@ -498,7 +500,7 @@ What verb is warranted for the post-scaling calibration claim when applied to th
 Continuing my Red-Team Casebook. The casebook now contains: System Dossier, Bias-and-Leverage Brief, casebook journal (set up in Chapter 1) with locked predictions, Data Frame Audit, Self-Explanation Audit, Defended Fairness Choice, Robustness Probe Results, casebook-index, individual case files (5–11), delegation maps, dashboards.
 
 This chapter teaches:
-- VERB TAXONOMY: hypothesize → suggest → find → observe → conclude. Each verb implies a specific epistemic posture; engineers default to "conclude" when "find" or "suggest" is what the evidence warrants.
+- VERB TAXONOMY (frozen ladder, weakest to strongest): hypothesize → suggest → observe → find → show → demonstrate → conclude → prove. Each verb implies a specific epistemic posture; engineers default to "conclude" when "find" or "observe" is what the evidence warrants.
 - THREE-LAYER DOCUMENT: plain English summary; technical detail; reproducibility appendix.
 - CALIBRATION METRICS: Brier score, Expected Calibration Error (ECE), reliability diagrams, proper scoring rules. SUBGROUP calibration matters more than aggregate.
 - PEER CRITIQUE: solitary review does not work for verb-calibration; collective synthesis catches what self-review misses.

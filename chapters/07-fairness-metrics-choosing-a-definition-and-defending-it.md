@@ -111,10 +111,12 @@ I want you to sit with this for a moment. The three definitions all sound reason
 |---|---|---|
 | **Base rate** | 0.6 | 0.3 |
 | **Threshold** | 0.5 | 0.5 |
-| **True-positive rate (TPR)** | 0.83 | 0.50 |
-| **False-positive rate (FPR)** | 0.20 | 0.10 |
-| **Positive predictive value (PPV)** | 0.86 | 0.83 |
-| **Positive prediction rate** | 0.55 | 0.20 |
+| **True-positive rate (TPR)** | 0.60 | 0.70 |
+| **False-positive rate (FPR)** | 0.30 | 0.10 |
+| **Positive predictive value (PPV)** | 0.75 | 0.75 |
+| **Positive prediction rate** | 0.48 | 0.28 |
+
+*PPV is equal across groups — calibration holds — but TPR and FPR differ, so equalized odds is violated. (Check: for Group B, PPV = 0.3·0.70 / (0.3·0.70 + 0.7·0.10) = 0.21/0.28 = 0.75.)*
 
 **Equalized-odds-satisfying version (calibration violation visible)**
 
@@ -125,7 +127,7 @@ I want you to sit with this for a moment. The three definitions all sound reason
 | **True-positive rate (TPR)** | 0.70 | 0.70 |
 | **False-positive rate (FPR)** | 0.15 | 0.15 |
 | **Positive predictive value (PPV)** | 0.88 | 0.67 |
-| **Positive prediction rate** | 0.47 | 0.27 |
+| **Positive prediction rate** | 0.48 | 0.32 |
 
 *Same model, different threshold choices. Calibration parity and equalized odds cannot both hold while base rates differ.*
 

@@ -140,13 +140,13 @@ The taxonomy organizes human intelligence into seven tiers, sorted by AI capabil
 
 | Tier | Label | Brief definition | AI capability status | Educational implication |
 |---|---|---|---|---|
-| **1** | Mechanical execution | Apply a procedure to well-defined input | Superhuman | Training humans to compete here is malpractice |
-| **2** | Pattern recognition on structured data | Detect a pattern in a defined feature space | Superhuman within distribution | Train pattern *audit* (when does it fail?) instead of pattern detection |
-| **3** | Domain-specific judgment under ambiguity | Apply expertise where the right answer is uncertain | Weak-emerging | Train the judgment; use AI for first pass |
-| **4** | Cross-domain reasoning under stakes | Connect representations across fields when consequences differ | Simulates; does not feel | Train the human; AI cannot bear the stakes |
-| **5** | Moral seriousness | Take responsibility for the right thing to do | Poor (no phenomenal stake) | Train the human; AI is an instrument, not an agent |
-| **6** | Accountability under public scrutiny | Account for the decision to a public | Weak-to-absent | Train the human; AI cannot be examined by a community of practice |
-| **7** | Wisdom across a career | Integrate decades of contextual learning into present judgment | Absent — no biographical continuity | Train the human; this is the durable comparative advantage |
+| **1** | Pattern and Association | Linguistic and logical-mathematical reasoning, fact recall, associative lookup | Superhuman | Training humans to compete here is malpractice |
+| **2** | Embodied and Sensorimotor | Knowledge that lives in the body: proprioception, physical skill, tactile feedback through a tool | Weak — data and actuator limits, not a philosophical barrier | Train hands-on judgment; AI cannot verify by touch |
+| **3** | Social and Personal | Interpersonal intelligence, emotional regulation, moral reasoning under genuine stakes | Simulates the output; does not experience what produces it | Train the human; AI can produce the text but cannot be implicated in the outcome |
+| **4** | Metacognitive and Supervisory | Plausibility auditing, problem formulation, tool orchestration, interpretive judgment — the Five Supervisory Capacities | Poor — lacks the validator's independence from the system it audits | Train the human; this is the primary accountability tier |
+| **5** | Causal and Counterfactual | Pearl's ladder: observation, intervention, counterfactual | Superhuman at Rung 1; nearly absent at Rungs 2 and 3 | Train the human for intervention and counterfactual work |
+| **6** | Collective and Distributed | Intelligence emergent from systems of people in relationship | Reflects the record of collective intelligence; absent from the practice that generated it | Train the human; accountability regimes are Tier 6 artifacts |
+| **7** | Existential and Wisdom | Practical wisdom that requires stakes and the possibility of loss | Absent — no stakes, no biographical continuity | Train the human; the durable comparative advantage |
 
 *Read this not as an academic classification but as a triage. Where machines are strongest, training humans to compete directly is now malpractice.*
 
@@ -225,13 +225,13 @@ The **sanctions requirement** is Tier 7. Sanctions are consequential only when t
 
 | Requirement | Which tier it depends on | What that tier specifically provides | Why AI at Tier 1 cannot supply it | What a human must do instead |
 |---|---|---|---|---|
-| **Specifications** | Tier 4 (cross-domain reasoning) | Translate context into testable criteria | Tier-1 systems do not understand the context; they pattern-match within it | A named human writes the spec, signs it, owns it |
-| **Audit trail** | Tier 6 (accountability to a public) | Log the chain in a form a community can examine | Tier-1 logs are mechanical; they do not anticipate the questions a public will ask | A human curates the log to be inspectable |
-| **Recourse** | Tier 5 (moral seriousness) | Recognize a wronged party and offer a meaningful response | Tier-1 systems cannot bear moral seriousness | A human delivers recourse; the system facilitates the channel |
-| **Independent review** | Tier 7 (wisdom across a career) | Integrate the deployment context with decades of contextual learning | Tier-1 systems lack biographical continuity | A human reviewer with relevant career experience signs off |
-| **Sanctions** | Tier 5 (moral seriousness) + Tier 6 (public accountability) | Make consequences felt; deter future misconduct | Tier-1 systems cannot be sanctioned in any morally meaningful sense | A human and an institution bear the sanction |
+| **Specifications** | Tier 4 (metacognitive & supervisory) | Problem formulation — translate context into testable criteria | Tier-1 systems pattern-match within the context; they do not formulate the question it poses | A named human writes the spec, signs it, owns it |
+| **Audit trail** | Tier 1 capture + Tier 4 interpretation | Log the chain (Tier 1) and check it against the world (Tier 4) | Tier-1 logging is mechanical; the trail neither interprets itself nor notices when it diverges from reality | A human curates the log and independently verifies it matches the world |
+| **Recourse** | Tier 3 (social) + Tier 6 (collective) | Recognize a wronged party and offer a response that is genuinely heard | Tier-1 systems simulate the response without the social act of hearing | A human delivers recourse; the system only facilitates the channel |
+| **Independent review** | Tier 4 (metacognitive & supervisory) | Stand outside the system and audit whether the output matches reality | An AI reviewing another AI is more derivation, not external review | A human reviewer, independent of the deployment, signs off |
+| **Sanctions** | Tier 7 (existential & wisdom) | Make consequences felt on a party that has something to lose | Tier-1 systems have no stakes; they cannot be sanctioned in any meaningful sense | A human and an institution bear the sanction |
 
-*The accountability apparatus requires Tiers 4 through 7 at every stage. AI systems operate primarily at Tier 1. This is the structural argument for human oversight, not the contingent one.*
+*The accountability apparatus lives at Tiers 3, 4, 6, and 7 — the tiers where AI is weak to absent — while AI systems operate primarily at Tier 1. That gap is the structural argument for human oversight, not the contingent one.*
 
 ---
 
@@ -254,10 +254,10 @@ Specifications, audit trails, recourse, independent review, sanctions. A deploym
 | Requirement | What it consists of | Failure mode if absent | How to verify it is present | Tier dependency |
 |---|---|---|---|---|
 | **Specifications** | Written task definition, input/output contracts, named acceptance criteria, signed by an accountable human | The deployment runs against unstated criteria; "the model said so" is the audit response | A reviewer can read the spec and predict what counts as success | Tier 4 |
-| **Audit trail** | Per-action log: inputs, outputs, tool calls, decisions, with timestamps and reviewers | Post-incident review reconstructs nothing | Pull a random recent incident; can the chain be reconstructed in under an hour? | Tier 6 |
-| **Recourse** | A documented channel for affected parties to contest, appeal, or repair | Affected parties have nowhere to go; complaints route to "support" with no resolution path | An external party can read the channel description and use it | Tier 5 |
-| **Independent review** | A reviewer outside the deployment team with authority to halt or revise | The deployment team marks its own homework | Named reviewer; documented review cadence; visible halt authority | Tier 7 |
-| **Sanctions** | A consequence regime — internal (employment, license) and external (regulator, civil) — that attaches to the named accountable human | Failures distribute across the team; no one bears the cost | Pull the policy; can a specific named role lose something specific for a specific failure? | Tiers 5 + 6 |
+| **Audit trail** | Per-action log: inputs, outputs, tool calls, decisions, with timestamps and reviewers | Post-incident review reconstructs nothing | Pull a random recent incident; can the chain be reconstructed in under an hour? | Tier 4 (interpretation; capture is Tier 1) |
+| **Recourse** | A documented channel for affected parties to contest, appeal, or repair | Affected parties have nowhere to go; complaints route to "support" with no resolution path | An external party can read the channel description and use it | Tiers 3 + 6 |
+| **Independent review** | A reviewer outside the deployment team with authority to halt or revise | The deployment team marks its own homework | Named reviewer; documented review cadence; visible halt authority | Tier 4 |
+| **Sanctions** | A consequence regime — internal (employment, license) and external (regulator, civil) — that attaches to the named accountable human | Failures distribute across the team; no one bears the cost | Pull the policy; can a specific named role lose something specific for a specific failure? | Tier 7 |
 
 *Designed as a reusable audit instrument. A regime that cannot tick all five boxes is a regime in which AI accountability is a slogan, not a practice.*
 
