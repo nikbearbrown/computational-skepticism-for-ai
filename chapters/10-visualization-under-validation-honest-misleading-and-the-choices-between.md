@@ -440,7 +440,7 @@ Design choices:
 - Failure rate (cases per N tasks tested) shown on a position-encoded chart (bar or dot plot), with a y-axis starting at 0
 - Severity classification (fundamental vs contingent) shown alongside, not buried
 - Per-category breakdown (the four taxonomy categories) shown with consistent ordering
-- The two prediction-locks from Chapter 4 [verify-xref: Frictional Method chapter cut] that resolved badly are visible — calibration of the casebook itself is on the dashboard
+- Your prediction-locks (Chapters 2–4, from the casebook journal) that resolved badly are visible — calibration of the casebook itself is on the dashboard
 - Aleatoric uncertainty around each rate shown via confidence intervals (use Wilson or bootstrap CI for small N)
 - Epistemic uncertainty (sources of structural unknown — opacity of training data, untested deployment contexts) shown via a "what we cannot say" panel
 - Color used for category, not for judgment

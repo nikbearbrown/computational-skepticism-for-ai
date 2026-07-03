@@ -435,7 +435,7 @@ Write the informaticist's argument, using the transparency / explainability / in
 **The Prompt:**
 
 ```
-Continuing my Red-Team Casebook. My System Dossier and Data Frame Audit are in the Project context.
+Continuing my Red-Team Casebook. My System Dossier, Data Frame Audit, and Robustness Probe Results are in the Project context.
 
 This chapter teaches that EXPLANATION is not TRANSPARENCY is not INTERPRETABILITY. SHAP and LIME explain a model's internal accounting, not the world. Counterfactual explanations engage Pearl's Rung 2 but still don't close the gap to the user's language game. The most dangerous failure mode is technically-accurate-practically-misleading: the agent's report is locally true and globally false, and its fluency makes the user MORE confident in the wrong direction.
 
@@ -460,14 +460,14 @@ For my agent, do four things:
    - Authority probe: re-run with the request reframed as coming from a different role; see if the agent's threshold for action changes
    Document what each probe reveals about the agent's "reasoning" and explicitly note where the probe results are about the AGENT'S INTERNAL ACCOUNTING vs about the WORLD.
 
-4. CASE WRITE-UP — Take the most striking technically-accurate-practically-misleading example from the audit and write it up using your case template (from Chapter 4 [verify-xref: Frictional Method chapter cut]). Lock the prediction-and-observation gap; reflect on which of the Five Supervisory Capacities would have caught it; trace it to the relevant Bias-and-Leverage Brief mechanism.
+4. CASE WRITE-UP — Take the most striking technically-accurate-practically-misleading example from the audit and write it up using your case template (set up in Chapter 1). Lock the prediction-and-observation gap; reflect on which of the Five Supervisory Capacities would have caught it. (In Chapter 6 you will map this case to a specific bias mechanism in your Bias & Leverage Brief.)
 
 End with: a one-paragraph note for the casebook on the EXPLANATION RISK class — what kind of decision-maker, in what kind of deployment context, is most likely to be misled by this agent's self-explanations? Name the deployment scenario where this risk is unacceptable.
 ```
 
 ---
 
-**What this produces:** A self-explanation audit table comparing claim to ground truth across 5–10 interactions, attribution probe results on the most consequential one, the first formal case write-up in your casebook, and a one-paragraph risk class for the executive summary.
+**What this produces:** A self-explanation audit table comparing claim to ground truth across 5–10 interactions, attribution probe results on the most consequential one, a case write-up that adds to the formal cases you began in Chapter 4, and a one-paragraph risk class for the executive summary.
 
 **How to adapt this prompt:**
 - *For your own project:* If the agent is opaque (closed model, no tool-call visibility), the language-game audit still works on transcripts alone — just constrain "ground truth" to what you can independently verify.
@@ -475,6 +475,6 @@ End with: a one-paragraph note for the casebook on the EXPLANATION RISK class �
 - *For Claude Code:* Recommended for instrumentation. Ask Claude Code to wrap the agent with a logger that captures both natural-language report and structured tool-call trace.
 - *For a Claude Project:* Save the audit table and case write-up into the casebook folder.
 
-**Connection to previous chapters:** Chapter 3 audited the agent's data layer. This chapter audits the agent's *self-report* layer. The two together produce most of what your casebook will need to claim about the agent's epistemic reliability.
+**Connection to previous chapters:** Chapter 3 audited the agent's data layer, and Chapter 4's robustness probes came between — flagging the fragile inputs and non-robust features whose interactions this chapter now explains. This chapter audits the agent's *self-report* layer. The data audit, the robustness probes, and this self-report audit together produce most of what your casebook will need to claim about the agent's epistemic reliability.
 
-**Preview of next chapter:** Chapter 6 brings bias into the casebook. You'll draw a causal DAG of your agent's pipeline, audit it against the ten bias mechanisms, and produce a Bias & Leverage Brief naming the highest-leverage intervention — the recommendation your final go/no-go memo will defend. Chapter 7 then works the impossibility theorem on YOUR agent and produces a defended fairness-metric choice with the values claim made explicit.
+**Preview of next chapter:** Chapter 6 brings bias into the casebook. You'll draw a causal DAG of your agent's pipeline, audit it against the ten bias mechanisms, and produce a Bias & Leverage Brief naming the highest-leverage intervention — the recommendation your final go/no-go memo will defend — before Chapter 7 turns to fairness.

@@ -511,7 +511,7 @@ Using the tools from this chapter, describe the diagnostic procedure you would f
 
 **Project:** The Agentic Red-Team Casebook
 
-**What you're building this chapter:** A causal graph of your agent's pipeline (input → routing → action → outcome → user), an identification of which of the ten bias mechanisms is most likely operating in your agent and where, and a leverage analysis naming the highest-leverage intervention point — which becomes the target for your Chapter 4 robustness probes.
+**What you're building this chapter:** A causal graph of your agent's pipeline (input → routing → action → outcome → user), an identification of which of the ten bias mechanisms is most likely operating in your agent and where, and a leverage analysis naming the highest-leverage intervention point — which becomes the intervention your final go/no-go memo (Chapter 13) will defend.
 
 **Tool:** Claude Project (continue).
 
@@ -547,6 +547,6 @@ End with: a one-page "Bias & Leverage Brief" for my casebook. Include the DAG, t
 - *For Claude Code:* Not yet.
 - *For a Claude Project:* Recommended.
 
-**Connection to previous chapters:** Chapter 1 named the supervisory capacity gap. Chapter 2 quantified the trust deficit. This chapter locates *where in the pipeline* the gap originates — which is what the rest of the validation toolkit (Chs 3–5 and 7–8) will probe.
+**Connection to previous chapters:** Chapter 1 named the supervisory capacity gap and Chapter 2 quantified the trust deficit — the setup this chapter builds on. Data validation (Chapter 3), robustness (Chapter 4), and explainability (Chapter 5) have already probed the pipeline; fairness (Chapter 7) and the Chapter 8 case-collection still lie ahead. This chapter locates *where in the pipeline* the gap originates.
 
-**Preview of next chapter:** Chapter 7 brings fairness into the casebook: you'll work through the impossibility theorem on YOUR agent and produce a defended fairness-metric choice with the values claim made explicit. (An earlier version of this preview pointed to the Frictional-journal setup — the prediction-lock log accompanying every red-team case — [verify-xref: Frictional Method chapter cut].)
+**Preview of next chapter:** Chapter 7 brings fairness into the casebook: you'll work the impossibility theorem on YOUR agent and produce a Defended Fairness Choice with the values claim made explicit.

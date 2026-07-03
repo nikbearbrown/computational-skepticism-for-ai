@@ -490,7 +490,7 @@ Compute, qualitatively (no specific numbers required), what satisfying calibrati
 **The Prompt:**
 
 ```
-Continuing my Red-Team Casebook. My System Dossier and Self-Explanation Audit are in the Project context.
+Continuing my Red-Team Casebook. My System Dossier, Self-Explanation Audit, and Bias & Leverage Brief are in the Project context.
 
 This chapter teaches the fairness impossibility theorem: demographic parity, equalized odds, and calibration parity cannot all be satisfied simultaneously when base rates differ across groups. The choice of which to satisfy is a values claim, not a technical optimization. The defended-choice deliverable makes the values claim explicit.
 

@@ -303,7 +303,7 @@ The first time most engineers do this exercise honestly, the result is uncomfort
 
 **Project:** The Agentic Red-Team Casebook
 
-**What you're building this chapter:** The agent you will red-team across the next thirteen chapters, plus a System Dossier and a first-pass application of the four moves and Five Supervisory Capacities to one observed interaction with that agent.
+**What you're building this chapter:** The agent you will red-team across the next twelve chapters (Chapters 2–13), plus a System Dossier and a first-pass application of the four moves and Five Supervisory Capacities to one observed interaction with that agent. You are also standing up the record-keeping apparatus the later chapters assume: a casebook journal (the prediction-lock log you will keep for every red-team observation) and a reusable one-page case-write-up template. The prediction-lock-before-observation discipline and the journal are the Frictional method (Nik Bear Brown's Frictional framework) applied to validation.
 
 **Tool:** Claude Project — set up a new Project called "Red-Team Casebook" and return to it every chapter. Pin the System Dossier into the system prompt.
 
@@ -338,11 +338,13 @@ TASK 2 — Once we settle on the agent, do a first-pass skeptic's-toolkit applic
 Then, for the FIVE SUPERVISORY CAPACITIES, name (a) what exercising each capacity would look like concretely on this agent and (b) what the failure mode is if that capacity is absent. Identify the single capacity whose absence would most likely break this agent — that's the capacity my Chapter 8 case-collection should center on.
 
 End with a one-paragraph "System Dossier" I can paste into my Claude Project's system prompt: name of agent, architecture summary, tool surface, deployment context, the candidate failure mode my casebook will pursue, and any access constraints I'm working under.
+
+TASK 3 — Help me set up my record-keeping apparatus in this Project, which every later chapter will reference. Draft (a) a "casebook journal" file where I log a prediction-lock — my stated expectation, written and dated BEFORE I observe the agent — for each red-team observation, and (b) a reusable one-page case-write-up template (fields: case ID, input, action taken, reported outcome, actual outcome, which supervisory capacity failed, evidence, severity). Keep both short enough that I will actually fill them in every chapter.
 ```
 
 ---
 
-**What this produces:** A chosen agent, a four-moves analysis on one interaction, a Five-Capacities scoring with the most-likely-binding capacity named, and a System Dossier paragraph pinned to the top of your Claude Project so every subsequent chapter exercise inherits the context.
+**What this produces:** A chosen agent, a four-moves analysis on one interaction, a Five-Capacities scoring with the most-likely-binding capacity named, a System Dossier paragraph pinned to the top of your Claude Project, and your casebook journal (for prediction-locks) plus a case-write-up template — so every subsequent chapter exercise inherits the context and the record-keeping apparatus.
 
 **How to adapt this prompt:**
 - *For your own project:* Fill in the bracketed fields. If you don't have candidates, write "Help me brainstorm given my background." Be honest about access — a publicly-documented agent you can only analyze (not poke at) still works for many chapters but limits Chs 4 and 8.

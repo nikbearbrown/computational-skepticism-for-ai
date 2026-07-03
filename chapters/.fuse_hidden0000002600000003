@@ -31,7 +31,7 @@ There is a deeper reason this matters, and it is the reason this chapter sits at
 
 By the end of this chapter you should be able to construct a delegation map with testable handoff conditions for a multi-step pipeline, and to apply the five Boondoggle questions to sort pipeline sub-tasks into delegation buckets. You should be able to identify which trust-calibration failure mode a deployment is in, given accept/override data, and to operationalize each of the five supervisory capacities as a concrete pipeline job with a documented artifact. And you should be able to use Gru to generate a Boondoggle Score for a real project and interpret what it reveals, and to produce an AI Use Disclosure that functions as a supervisory log, not a compliance checkbox.
 
-**Prerequisites:** Chapter 1's five supervisory capacities and the solve-verify asymmetry are both required vocabulary. The AI Use Disclosure — the record of how AI was used in producing a piece of work — is defined in this chapter as a delegation deliverable. Chapter 7's defended-choice format is structurally related to the delegation map — both are engineering decisions under value pluralism, documented for external review.
+**Prerequisites:** Chapter 1's five supervisory capacities and the solve-verify asymmetry are both required vocabulary. Chapter 4's [verify-xref: Frictional Method chapter cut] AI Use Disclosure is extended here. Chapter 7's defended-choice format is structurally related to the delegation map — both are engineering decisions under value pluralism, documented for external review.
 
 **Where this fits:** This chapter is the operational center of the book. The chapters before it built the apparatus. This chapter operationalizes that apparatus into pipeline documentation you can hand to an adoption committee. Chapters 10–13 apply the apparatus to communication, accountability, and the limits of the technical.
 
@@ -521,7 +521,7 @@ In the Paper Summarizer, the trust calibration question is specific and answerab
 
 ## The AI Use Disclosure as supervisory log
 
-The AI Use Disclosure — a record of how AI was used in producing a piece of work — is worth making a required deliverable for any assignment where the work will be relied on. Here it becomes something larger.
+Chapter 4 [verify-xref: Frictional Method chapter cut] introduced the AI Use Disclosure as a required deliverable for every assignment in this course. Here it becomes something larger.
 
 In its course form, the Disclosure asks the student to document what AI was used, on what step, with what verification. The format is structured. The intent is that, read in aggregate, the Disclosure serves as a *supervisory log* — a record of where the student exercised which supervisory capacity.
 

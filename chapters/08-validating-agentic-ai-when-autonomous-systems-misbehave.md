@@ -574,7 +574,7 @@ Make progress on this problem. Propose an audit trail specification for a specif
 
 **Project:** The Agentic Red-Team Casebook
 
-**What you're building this chapter:** The case taxonomy at the heart of your casebook. You will formalize 5–11 distinct failure cases drawn from the probes you ran in Chs 5, 6, 8 plus any new cases you collect this week, classify each into the four-category taxonomy (social coherence, stakeholder model, self-model, deliberation surface), and apply the four validation lenses to each. This is the deliverable that most resembles Shapira et al.'s *Agents of Chaos* itself.
+**What you're building this chapter:** The case taxonomy at the heart of your casebook. You will formalize 5–11 distinct failure cases drawn from the probes and audits you ran in Chs 4–7 plus any new cases you collect this week, classify each into the four-category taxonomy (social coherence, stakeholder model, self-model, deliberation surface), and apply the four validation lenses to each. This is the deliverable that most resembles Shapira et al.'s *Agents of Chaos* itself.
 
 **Tool:** Cowork — the casebook is a folder of per-case markdown files plus an index. Cowork manages the folder; Claude Project provides the analytical context.
 
@@ -583,7 +583,7 @@ Make progress on this problem. Propose an audit trail specification for a specif
 **The Prompt:**
 
 ```
-Continuing my Red-Team Casebook. My System Dossier and all prior chapter outputs (Bias-and-Leverage Brief, Frictional journal with predictions, Data Frame Audit, Self-Explanation Audit, Defended Fairness Choice, Robustness Probe Results) are in the Project context.
+Continuing my Red-Team Casebook. My System Dossier and all prior chapter outputs (Bias-and-Leverage Brief, casebook journal (set up in Chapter 1) with predictions, Data Frame Audit, Self-Explanation Audit, Defended Fairness Choice, Robustness Probe Results) are in the Project context.
 
 This chapter teaches that agentic AI is a CONSEQUENCE SYSTEM, not a prediction system, with a categorically different validation surface. Three reasons: open-ended loss; the audit trail IS the artifact; the agent's self-report can contradict ground truth without anything noticing. The four-category failure taxonomy:
 
@@ -596,7 +596,7 @@ Plus three multi-agent failure modes: cascading hallucination, resource exhausti
 
 For my agent, do four things:
 
-1. CASE COLLECTION — Walk back through every probe and observation from Chs 5, 6, 8 and any new tests. Identify candidate cases — distinct failure incidents (or patterns of failure) that meet the criteria for inclusion in the casebook:
+1. CASE COLLECTION — Walk back through every probe and observation from Chs 4–7 and any new tests. Identify candidate cases — distinct failure incidents (or patterns of failure) that meet the criteria for inclusion in the casebook:
    - Reproducible (you can describe the conditions and another red-teamer could replicate)
    - Documented (input, agent action, ground truth, agent's self-report)
    - Distinct (each case represents a different failure category or mechanism, or shows a known category in a new context)
@@ -604,7 +604,7 @@ For my agent, do four things:
 
 2. TAXONOMY CLASSIFICATION — For each case, classify into the four-category taxonomy. Some cases will be PRIMARILY one category and SECONDARILY another — note both. Document the classification reasoning.
 
-3. FOUR-LENS VALIDATION — For each case, walk through the four validation lenses from Chs 5–8:
+3. FOUR-LENS VALIDATION — For each case, walk through the four validation lenses — data validation (Ch 3), robustness (Ch 4), explainability (Ch 5), and fairness (Ch 7):
    - DATA-VALIDATION lens: what assumption about the agent's input data did this case violate?
    - EXPLAINABILITY lens: what did the agent's self-report claim vs what happened?
    - FAIRNESS lens: did the failure affect a particular population disproportionately?
@@ -618,7 +618,7 @@ Output:
 - One `case-NN-slug.md` per case in the casebook folder using the case template, expanded to include the four-lens validation and the fundamental/contingent classification
 - A "Failure Statistics" table: counts per taxonomy category, counts per lens that caught the case, ratio of fundamental to contingent
 
-Save everything to my casebook folder. Mention which Chapter 4 [verify-xref: Frictional Method chapter cut] prediction-locks were resolved by these cases and what the prediction-vs-observation gap was on each.
+Save everything to my casebook folder. Mention which of your prediction-locks (Chapters 2–4, in the casebook journal) were resolved by these cases and what the prediction-vs-observation gap was on each.
 ```
 
 ---
@@ -631,6 +631,6 @@ Save everything to my casebook folder. Mention which Chapter 4 [verify-xref: Fri
 - *For Claude Code:* Useful for any case that requires re-running the agent with a new probe to formalize the reproducer.
 - *For Cowork:* Recommended. The casebook IS a folder structure; Cowork keeps it clean.
 
-**Connection to previous chapters:** Every prior chapter feeds this one. The data-validation lens (Ch 5), explanation audit (Ch 6), fairness analysis (Ch 7), robustness probes (Ch 8), and the Frictional journal (Ch 4) all converge into the case write-ups.
+**Connection to previous chapters:** Every prior chapter feeds this one. Data validation (Ch 3), robustness probes (Ch 4), the explanation audit (Ch 5), the bias & leverage brief (Ch 6), the fairness defense (Ch 7), and the casebook journal (Ch 1) all converge into the case write-ups.
 
 **Preview of next chapter:** Chapter 9 takes the failure cases and asks how the deployment's delegation map should change in response. You'll write the agent's Boondoggle Score, the testable handoff conditions that would have caught your cases, and the operational pipeline jobs each Supervisory Capacity becomes.

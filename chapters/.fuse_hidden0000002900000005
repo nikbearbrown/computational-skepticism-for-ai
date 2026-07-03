@@ -24,7 +24,7 @@ The fix is a taxonomy. We are going to build it now.
 
 By the end of this chapter you should be able to apply the verb taxonomy to any claim in a technical document, identify whether the verb is warranted by the evidence, and use the same taxonomy as a fluency-trap detector on AI-generated output. You should be able to structure a validation document in three audience layers — plain English summary, technical detail, reproducibility appendix — without losing critical nuance in translation, and to name specific uncertainty in prose, distinguishing epistemic from aleatoric, quantifying where possible, and avoiding throat-clearing hedges. On the quantitative side, you should be able to compute and interpret the core trust calibration metrics — Brier score, Expected Calibration Error, reliability diagrams, and the proper-scoring-rule family — and identify which trust calibration failure mode a deployment is exhibiting from its metric profile. And you should be able to give and receive peer critique on the verb-evidence calibration of a peer's validation writing.
 
-**Prerequisites.** Chapter 10 (uncertainty visualization — this chapter is its paired textual counterpart). Chapter 1 (the prediction-lock discipline — peer critique is the same epistemic discipline applied collectively). Chapter 2 (probability and calibration foundations). No prerequisites beyond Chapter 2 for the metrics section.
+**Prerequisites.** Chapter 10 (uncertainty visualization — this chapter is its paired textual counterpart). Chapter 4 [verify-xref: Frictional Method chapter cut] (the Frictional method and prediction-locking — peer critique is the same epistemic discipline applied collectively). Chapter 2 (probability and calibration foundations). No prerequisites beyond Chapter 2 for the metrics section.
 
 ---
 
@@ -329,7 +329,7 @@ The structured peer critique protocol:
 
 The receiving student gets multiple critiques and is not expected to incorporate every comment. Many comments will conflict. The synthesis is to *integrate the critiques into a sharpened argument* — a revision that addresses the substantive issues and stands behind the choices the writer is making despite some of the comments. The critique-given matters as much as the critique-received: the ability to find calibration mismatches in a peer's work is the same skill as finding them in your own, and the external direction makes the blind spots visible.
 
-This is a callback to Chapter 1's prediction-lock discipline, in operational form. That discipline made the prediction-lock the load-bearing element of individual work. Peer critique makes *the inability to recognize one's own blind spots* the structural problem the cohort solves together.
+This is a Chapter 4 [verify-xref: Frictional Method chapter cut] callback in operational form. The Frictional method made the prediction-lock the load-bearing element of individual work. Peer critique makes *the inability to recognize one's own blind spots* the structural problem the cohort solves together.
 
 ---
 

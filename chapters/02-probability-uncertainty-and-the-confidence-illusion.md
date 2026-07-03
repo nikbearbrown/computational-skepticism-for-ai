@@ -604,7 +604,7 @@ Design how I will collect calibration data across my red-team cases:
 - For each, what is GROUND TRUTH and how do I observe it independently of the agent's report?
 - What format will I log so I can construct a reliability diagram by Chapter 11?
 
-End with: a one-page "Probabilistic Baseline" appendix to my casebook. Include the Bayes calculation, the base-rate inventory, the calibration plan, and one explicit prediction-lock for the casebook itself: "I predict that for the cases I will collect, the agent's reliability under adversarial conditions will be [HIGHER / SIMILAR / LOWER] than its baseline reliability — because [reason]."
+End with: a one-page "Probabilistic Baseline" appendix to my casebook. Include the Bayes calculation, the base-rate inventory, the calibration plan, and one explicit prediction-lock, logged in my casebook journal (set up in Chapter 1): "I predict that for the cases I will collect, the agent's reliability under adversarial conditions will be [HIGHER / SIMILAR / LOWER] than its baseline reliability — because [reason]."
 ```
 
 ---
@@ -619,4 +619,4 @@ End with: a one-page "Probabilistic Baseline" appendix to my casebook. Include t
 
 **Connection to previous chapters:** Chapter 1 named the supervisory capacity most likely to break the agent. This chapter quantifies why — given a realistic base rate, the agent's confident self-reports may be far less informative than they appear.
 
-**Preview of next chapter:** Chapter 3 turns to the data your agent depends on. You'll inventory every dataset behind it — training corpus, retrieval corpus, system prompt, tool documentation — run the six-step epistemic-frame reconstruction on the most consequential one, and design a hidden-failure test targeting a structural assumption the agent's developers never wrote down. Chapter 6 returns to the pipeline later with a causal graph and the ten bias mechanisms.
+**Preview of next chapter:** Chapter 3 turns to the data your agent depends on. You'll build a Data Frame Audit — inventory every dataset behind it (training corpus, retrieval corpus, system prompt, tool documentation), run the six-step epistemic-frame reconstruction on the most consequential one, and design a hidden-failure test targeting a structural assumption the agent's developers never wrote down (bias mechanisms proper wait until Chapter 6).

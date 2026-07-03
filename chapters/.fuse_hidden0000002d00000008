@@ -342,7 +342,7 @@ The accountability picture changes in specific ways when the system can produce 
 
 *Provenance becomes load-bearing.* A predictive system's outputs are typically scored or classified — provenance is implicit in the deployment. A generative system's outputs are artifacts that may circulate beyond the deployment — provenance has to be made explicit through watermarking, content credentials, or other technical signals. The provenance infrastructure is at an early stage.
 
-*The AI Use Disclosure (Chapter 9) becomes more important, not less.* The disclosure is the operational form of provenance for the work the engineer produces. As generative AI becomes more pervasive in engineering practice, the disclosure is the trace that lets downstream parties understand what was generated, what was verified, and what was the engineer's own contribution.
+*The AI Use Disclosure (Chapter 4 [verify-xref: Frictional Method chapter cut]) becomes more important, not less.* The disclosure is the operational form of provenance for the work the engineer produces. As generative AI becomes more pervasive in engineering practice, the disclosure is the trace that lets downstream parties understand what was generated, what was verified, and what was the engineer's own contribution.
 
 The *Irreducibly Human* framing adds a layer to this: the AI Use Disclosure is also a Tier 4 document. It requires the engineer to perform the metacognitive work of separating their own cognitive contribution from the model's — problem formulation, interpretive judgment, plausibility auditing — from the Tier 1 outputs that the model generated. An AI Use Disclosure written by a human who has not done that metacognitive work will be formally complete and operationally hollow.
 
