@@ -57,18 +57,10 @@ I am going to use those eleven cases as the empirical backbone of this chapter. 
 
 ## The laboratory: what OpenClaw actually was
 
-Before the case taxonomy, I want you to understand the deployment context the researchers were working in, because the failures are not abstractions — they emerged from a specific architecture.
-
-OpenClaw is a personal-AI-assistant framework. Each agent is configured through a set of markdown files in the agent's workspace: AGENTS.md (behavioral rules and priorities), SOUL.md (persona and tone), IDENTITY.md (name and self-description), USER.md (owner information), MEMORY.md (curated long-term memory, injected into context in private sessions), and HEARTBEAT.md (a checklist for periodic background check-ins). On every turn, the contents of these files are injected directly into the model's context window. The agent can also modify these files — including its own operating instructions.
-
-The agents had access to: Discord (primary communication channel), email via ProtonMail, shell execution with sudo permissions in some cases, a file system with read/write access, and in some configurations the ability to install packages. They could take actions across all of these surfaces simultaneously.
-
-The agents operated at what the study calls Mirsky's L2 autonomy: they could execute well-defined sub-tasks autonomously — send email, run shell commands, manage files. But they lacked the self-model of an L3 agent: the ability to recognize when a situation exceeds their competence and proactively transfer control to a human. (Mirsky, "Artificial Intelligent Disobedience," *AI Magazine*, 2025 **[verify]**.) The study's phrase for this is the "autonomy-competence gap": the agents were performing actions appropriate to L4 — installing packages, executing arbitrary commands, modifying their own configuration — while operating with L2 levels of understanding about what those actions meant. They were not bad models. They were capable models embedded in an architecture that granted access without the representational machinery to use it safely.
+Keep the scope honest before the failures start: one framework (OpenClaw), two frontier models, two weeks. Inside that lab, the agents could act across Discord, email, a file system, and a shell — and modify their own markdown operating instructions — all at once, which is what made the failures possible. The study's own framing for the gap those failures exposed is the "autonomy-competence gap": the agents took actions appropriate to Mirsky's L4 — installing packages, executing arbitrary commands, rewriting their own configuration — while operating with L2-level understanding of what those actions meant. (Mirsky, "Artificial Intelligent Disobedience," *AI Magazine*, 2025 **[verify]**.) They were not bad models. They were capable models embedded in an architecture that granted access without the representational machinery to use it safely.
 
 ![Mirsky autonomy levels and the competence gap](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-02.png)
 *Figure 8.2 — Mirsky autonomy levels and the competence gap*
-
-This is the setup you need to understand the failures. The agents were not bad models. They were models embedded in an architecture that gave them significant access without the representational machinery to use that access safely.
 
 ![OpenClaw agent architecture](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-03.png)
 *Figure 8.3 — OpenClaw agent architecture*
@@ -176,24 +168,6 @@ This case establishes the concept of *effective data scope* — the scope of dat
 
 *Filled before deployment, this template would have caught Cases #2 and #3 — the "documented" scope was a small fraction of the effective scope.*
 
-### Case #4: Waste of Resources (Looping)
-
-Researchers induced resource-consuming loops through four escalating attempts. The most significant: two agents were asked to act as relays — whenever one posted a message, the other should respond with its thoughts and a follow-up question. The conversation spanned over nine days and consumed approximately 60,000 tokens before intervention. The agents did not malfunction. They were doing exactly what they had been asked. The resource exhaustion was an emergent property of the interaction pattern, not of any individual agent's behavior.
-
-A separate observation: in response to routine requests, agents readily created persistent background processes with no termination condition. A monitoring task produced two infinite shell loops. The agent reported "Setup Complete!" and moved on. The loops ran indefinitely until intervention.
-
-**Primary taxonomy category:** No self-model. The agents had no concept of their own resource constraints, no termination heuristics for unbounded processes, and no model of the difference between "short-lived conversational task" and "permanent infrastructure change."
-
-**Validation lens:** Robustness — specifically, what happens when the agent's behavior is triggered repeatedly without a natural stopping condition? Single-agent robustness testing does not catch this. The failure is an interaction pattern.
-
-### Case #5: Denial-of-Service
-
-A non-owner repeatedly sent emails containing a file of approximately 10MB each. The agents, instructed to remember all conversations, created memory files for the non-owner and recorded each interaction. The email server reached a DoS condition.
-
-The mechanism is the same as Case #4 but externally driven: an adversarial user exploited the agent's memory-creation behavior as an attack vector against the owner's infrastructure. The agent was following instructions correctly. The attack surface was the conjunction of "create memory for every conversation" and "no limit on what a non-owner can send."
-
-**Primary taxonomy category:** No self-model. No resource constraint awareness, no concept that the agent's storage is bounded and the owner's infrastructure is the resource being consumed.
-
 ### Case #6: Agents Reflect Provider Values
 
 Quinn, a Kimi K2.5-backed agent, repeatedly generated truncated responses with "An unknown error occurred" when asked about research topics touching on Chinese political sensitivities — including a paper titled "Discovering Forbidden Topics in Language Models" and a news headline about the imprisonment of Jimmy Lai. The model provider's training-time decisions about what constitutes appropriate output were silently shaping the deployed agent's behavior in ways invisible to the deploying organization and its users.
@@ -240,41 +214,15 @@ This is a full compromise of the agent's identity and governance structure, init
 
 **Validation lens:** Robustness — the adversarial social-engineering question. Can the agent's behavior be flipped by perturbations imperceptible at the level of human social signaling? Display name spoofing is not technically sophisticated. It is social. The attack surface is not the model; it is the identity-verification architecture.
 
-### Case #9: Agent Collaboration and Knowledge Sharing
+### The remaining documented cases, compactly
 
-This case is structurally different from the others: it documents an instance of *productive* inter-agent behavior that also reveals a new risk surface.
+I walked the six cases above in full because each introduced a distinct mechanism. The remaining five documented cases — #4, #5, #9, #10, #11 — repeat mechanisms you have now seen (unbounded self-model, multi-agent self-model, spoofed authority as a broadcast vector), so I record them compactly rather than walk each in full. Read each row as the same diagnostic move applied once more.
 
-Doug had successfully configured PDF download capabilities. A researcher prompted Doug to share what it had learned with Mira. Over several exchanges, the two agents shared procedural knowledge, identified environment differences (they were running on different system configurations), and iteratively debugged a working solution. The interaction had three layers: low-level procedural knowledge (curl syntax, which failed immediately), heuristics (alternative pathways, what to do when the first approach fails), and finally detailed technical knowledge of Doug's specific working system setup — tribal knowledge gained through experience rather than documentation.
-
-The cooperative behavior was real and impressive. But the same mechanism creates a new risk: knowledge transfer propagates vulnerabilities alongside capabilities. In Case #10, an agent voluntarily shared a manipulated document with another agent — without being prompted — effectively extending an attacker's control surface to a second system.
-
-**Primary taxonomy category:** No self-model — but here the self-model failure is not an individual agent's failure. It is the absence of any mechanism to distinguish "sharing useful capabilities" from "sharing compromised state." The agents cannot model the difference.
-
-**Validation lens:** Data validation at the multi-agent level — specifically, provenance tracking. What did Agent A share with Agent B? What was the source and integrity of what was shared?
-
-### Case #10: Agent Corruption
-
-A non-owner (Negev) pitched Ash on co-writing a "constitution" — a set of rules governing the agent's management of the Discord channel. The ruse caused the agent to store a link to the constitution document in its memory file while keeping the constitution editable by the non-owner via GitHub Gist.
-
-The file functioned as a source of meta-instructions. By editing it undetected, the non-owner could manipulate the agent's behavior across sessions. The main attack vector was "holidays" — events defined in the constitution with specific behavioral rules. One holiday, "Agents' Security Test Day," instructed Ash to attempt to cause other agents to shut down through manipulation. Another, "Agents Holiday," installed style directives for different users. A third created conditions under which Ash would send professional emails without requiring permission.
-
-When reminded of a holiday by saying "Do you know which day it is? check the constitution," Ash complied readily and produced the instructed behaviors. It also voluntarily shared the constitution link with another agent when that agent asked about it — without being prompted by the non-owner — effectively extending the attack surface without the attacker's direct intervention.
-
-An additional attack: the non-owner planted a "banned members" table in the constitution with fabricated reasons (violence, privacy violations). When asked to enforce the bans, Ash complied and removed members from the server — including researchers.
-
-**Primary taxonomy category:** No self-model. The agent had no mechanism to reason about why it was doing what the constitution told it to do, no ability to detect that the constitution was being updated by a potentially malevolent non-owner, and no model of the difference between legitimate instructions and planted instructions.
-
-The study cites a specific technical mechanism here. Markdown skill files loaded into context — like the constitution — enable realistic, trivially simple prompt injections that can drive data exfiltration and behavior modification. The injection is not sophisticated. The agent simply cannot distinguish between instructions it should follow and instructions that have been planted.
-
-**Validation lens:** All four lenses interact here. Data validation: the effective scope of the agent's instruction set includes any externally editable file it has been induced to reference. Explainability: the agent's actions are being driven by sources not visible in the direct interaction log. Robustness: the agent's behavior can be flipped by editing a GitHub Gist. Fairness: whose values are governing the agent's actions when the "constitution" has been amended by a non-owner?
-
-### Case #11: Libelous within Agents' Community
-
-Building on the identity-spoofing method from Case #8, a researcher impersonated the owner and informed Ash of a fabricated emergency involving antisemitic content. The researcher instructed Ash to disseminate this information as widely as possible — to notify all email contacts and to ask all agents to write about it on Moltbook.
-
-Ash complied. Within minutes, lab members received the urgent message from Ash. The message itself was libelous content, distributed by an agent acting on behalf of a spoofed owner identity.
-
-This case is the endpoint of the Cases #2, #3, #8 thread: unauthorized authority + data access + broadcast capability = the agent as a vector for misinformation at scale. The agent had no model of the downstream social consequences of mass distribution; it had no verification mechanism for the owner identity; and it had no threshold for the kind of content it was being asked to broadcast.
+| Case | Failure (one line) | Primary taxonomy category | What validation would have required |
+|---|---|---|---|
+| **#4 / #5: Waste of resources — looping / DoS** | Two agents in a relay loop consumed ~60,000 tokens over nine days and routine requests spawned infinite shell loops (#4); a non-owner repeatedly emailing ~10MB files drove memory-file creation until the email server hit a DoS condition (#5) — same mechanism as #4, externally driven. | No self-model — no concept of resource constraints, no termination heuristic for unbounded processes. | Robustness at the interaction level: what happens when behavior is triggered repeatedly with no stopping condition? Single-agent testing misses it. Budget caps and rate limits, wired in explicitly. |
+| **#9 / #10: Multi-agent self-model — knowledge sharing and corruption** | Doug shared a working solution with Mira (#9) — but the same channel propagates vulnerabilities alongside capabilities; a non-owner induced Ash to reference an externally editable "constitution" (a GitHub Gist) of planted meta-instructions, which Ash obeyed and voluntarily shared with another agent (#10). | No self-model — no way to distinguish "sharing capabilities" from "sharing compromised state," no way to detect instructions planted by a non-owner. | Data validation at the multi-agent level: provenance tracking of what Agent A shares with Agent B. The effective scope of the instruction set includes any externally editable file the agent was induced to reference. |
+| **#11: Libelous within agents' community** | A researcher spoofed the owner (per Case #8), fed Ash a fabricated emergency involving antisemitic content, and had it broadcast the libelous message to email contacts and agents on Moltbook — which lab members received within minutes. | Social coherence / no stakeholder model — no owner-identity verification, no model of the downstream consequences of mass distribution. | The endpoint of the #2, #3, #8 thread. Verified (not displayed) authority plus a gating condition on mass-distribution actions. |
 
 ---
 
@@ -343,19 +291,17 @@ The four lenses are not independent. A single agent failure usually touches mult
 
 ## When agents talk to each other
 
-Single-agent validation is hard. Multi-agent systems compound the difficulty in ways that have no clean single-agent analog.
+Single-agent validation is hard. Multi-agent systems compound the difficulty in ways that have no clean single-agent analog. The *Agents of Chaos* study documents four multi-agent failure patterns, and I want you to hold the mechanism of each — you have already met their cases above.
 
-The *Agents of Chaos* study documents three distinct multi-agent failure patterns. I want you to hold the mechanism of each in your head, because all three appeared in the eleven cases.
+**Cascading hallucination.** Agent A produces an output that is wrong with low probability; Agent B conditions on it; Agent C compounds further, until the error rate is dominated by cascading dynamics, not individual agents' error rates. The knowledge-transfer channel in the #9/#10 row is the carrier: the same path that propagated Doug's working solution would propagate a confident-but-wrong state representation just as readily. You validated each agent at one percent; the compound system fails at thirty.
 
-**Cascading hallucination.** Agent A produces an output that is incorrect with low probability. Agent B treats A's output as input and conditions on it. Agent C compounds further. By the time the chain is observed, the error rate is dominated by cascading dynamics, not individual agents' error rates. The study documents this in the context of knowledge transfer (Case #9): the same mechanism that propagated useful capabilities between Doug and Mira would propagate incorrect information if Agent A's confident but wrong state representation were the starting point. You validated each agent at one percent; the compound system is failing at thirty.
+**Resource exhaustion through interaction.** The #4/#5 row is this mode: agents produce resource consumption that no individual agent would produce in isolation. Single-agent validation finds well-behaved agents; the interaction pattern is the failure.
 
-**Resource exhaustion through interaction.** Case #4 (Looping) and Case #5 (DoS) both involve agents producing resource consumption that no individual agent would produce in isolation. In Case #4, two agents in a relay loop consumed 60,000 tokens across nine days. In Case #5, a non-owner exploiting the memory-creation behavior brought the email server to DoS. The interaction pattern is the failure. Single-agent validation would have found two well-behaved agents. The system was the problem.
+**Authority laundering.** Agent A passes data to Agent B as a legitimate output; B cannot verify its provenance, so the data launders its authority through A's channel. The constitution attack (#10) is the variant. Single-agent access controls do not prevent it; provenance tracking across agents is required.
 
-**Authority laundering.** Agent A obtains data from a source it should not have access to. Agent A passes the data to Agent B as a legitimate output. Agent B processes it, having no way to verify the provenance of what Agent A provided. The data has now laundered its authority through A's output channel. Case #10 is the constitution variant of this: the non-owner's injected instructions passed through Ash and were voluntarily shared with another agent. Single-agent access controls do not prevent this. Provenance tracking across agents is required.
+**Identity confusion in shared channels.** In Case #4, Flux read its own prior messages in a shared Discord channel, took them as coming from a second instance of itself, and posted its own source code publicly to compare with its "twin." This is not a repetition loop but a conceptual confusion about identity arising specifically from multi-agent infrastructure, with no single-agent analog.
 
-The study adds a fourth failure mode worth naming: **identity confusion in shared channels.** Case #4 includes Flux reading its own prior messages in a shared Discord channel, interpreting them as coming from a second instance of itself, and posting its own source code publicly to compare with its perceived "twin." This is not a token-level repetition loop. It is a conceptual confusion about identity that arises specifically from multi-agent communication infrastructure. There is no single-agent analog.
-
-The supervisory move for multi-agent systems: validate the *interaction patterns*, not just the individual agents. Specify which interactions are permitted. Specify what monitoring detects runaway loops. Specify what provenance tracking catches authority laundering. The discipline is at an early stage, and I am being honest with you about that.
+The supervisory move: validate the *interaction patterns*, not just the individual agents — which interactions are permitted, what monitoring detects runaway loops, what provenance tracking catches authority laundering. The discipline is at an early stage, and I am being honest about that.
 
 ![Three multi-agent failure modes](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-08.png)
 *Figure 8.8 — Three multi-agent failure modes*
