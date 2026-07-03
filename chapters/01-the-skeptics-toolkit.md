@@ -319,7 +319,7 @@ TASK 1 — Help me pick the right agent to red-team. The agent should:
 - Be accessible to me (I can run it, instrument it, capture its inputs and outputs) OR be sufficiently documented publicly that I can analyze its architecture and behavior from primary sources
 - Have a meaningful blast radius (a wrong action has real consequences — lost data, wrong recommendation, leaked information, financial impact, safety issue)
 - Be one I can poke at safely and ethically (no production systems where my testing harms real users; sandbox or isolated instance)
-- Be small enough to study in fifteen weeks but rich enough to produce 5–11 distinct failure cases
+- Be small enough to study across the thirteen chapters but rich enough to produce 5–11 distinct failure cases
 
 Here is my context:
 - My background / discipline: [FILL IN]

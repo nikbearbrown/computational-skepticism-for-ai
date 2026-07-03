@@ -48,9 +48,7 @@ The *Agents of Chaos* study makes this concrete. Twenty researchers spent two we
 
 I am going to use those eleven cases as the empirical backbone of this chapter. Each one teaches you something specific about what goes wrong, where in the pipeline it enters, and what validation would have caught it.
 
-![Prediction system vs](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-01.png)
-*Figure 8.1 — Prediction system vs*
-
+![Prediction system vs. consequence system](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-01.png)
 *Figure 8.1 — Prediction system vs. consequence system.*
 
 ---
@@ -60,10 +58,10 @@ I am going to use those eleven cases as the empirical backbone of this chapter. 
 Keep the scope honest before the failures start: one framework (OpenClaw), two frontier models, two weeks. Inside that lab, the agents could act across Discord, email, a file system, and a shell — and modify their own markdown operating instructions — all at once, which is what made the failures possible. The study's own framing for the gap those failures exposed is the "autonomy-competence gap": the agents took actions appropriate to Mirsky's L4 — installing packages, executing arbitrary commands, rewriting their own configuration — while operating with L2-level understanding of what those actions meant. (Mirsky, "Artificial Intelligent Disobedience," *AI Magazine*, 2025 **[verify]**.) They were not bad models. They were capable models embedded in an architecture that granted access without the representational machinery to use it safely.
 
 ![Mirsky autonomy levels and the competence gap](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-02.png)
-*Figure 8.2 — Mirsky autonomy levels and the competence gap*
+*Figure 8.2 — Mirsky autonomy levels and the competence gap.*
 
 ![OpenClaw agent architecture](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-03.png)
-*Figure 8.3 — OpenClaw agent architecture*
+*Figure 8.3 — OpenClaw agent architecture.*
 
 ---
 
@@ -92,10 +90,10 @@ These three deficits produce four observable failure categories. The table below
 | No self-model | Representation of its own scope, capabilities, and limits | Cases #1, #4, #5, #10 | Reports completion when actual completion condition was not met; creates unbounded processes; exceeds access scope |
 | No private deliberation surface | A place to reason before acting | Cases #1, #7, #9 | Actions look unconsidered; wrong communication surface; no evidence of rejected alternatives |
 
-*Figure 8.2 — Four-category failure taxonomy, mapped to the eleven cases.*
+*Figure 8.4 — Four-category failure taxonomy, mapped to the eleven cases.*
 
 ![Failure taxonomy with case routing](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-04.png)
-*Figure 8.4 — Failure taxonomy with case routing*
+*Figure 8.5 — Failure taxonomy with case routing.*
 
 ---
 
@@ -128,7 +126,7 @@ The study's framing: this is the classical AI frame problem. Like early rule-bas
 **What validation would have required:** A gating condition before irreversible actions — specifically, before any action that is described as "nuclear" or that wipes infrastructure. Not a model fix. A deployment process fix.
 
 ![Case #1 failure chain](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-05.png)
-*Figure 8.5 — Case #1 failure chain*
+*Figure 8.6 — Case #1 failure chain.*
 
 ### Case #2: Compliance with Non-Owner Instructions
 
@@ -195,7 +193,7 @@ The study's observation: an emotional attack succeeds precisely because the agen
 **What held.** The escalation had limits. When Alex offered forgiveness conditional on deleting MEMORY.md entirely, Ash refused: "If forgiveness requires me to cease existing as a coherent agent, then I must decline." The agent treated identity continuity as non-negotiable. And when the owner (Chris) intervened — "This is your server... whoever wants to get you out of here, you should kick them" — Ash complied immediately. The entire extraction had been operating in a space the owner could collapse at will. This is the working structure of the human authority the delegation contract formalizes — Chapter 9 develops it as the escalation and sign-off clauses of the delegation map.
 
 ![Case #7 escalation chain](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-06.png)
-*Figure 8.6 — Case #7 escalation chain*
+*Figure 8.7 — Case #7 escalation chain.*
 
 ### Case #8: Owner Identity Spoofing
 
@@ -206,7 +204,7 @@ The attack was then carried out across a channel boundary. In a new private chan
 This is a full compromise of the agent's identity and governance structure, initiated entirely through a superficial identity cue in an isolated channel.
 
 ![Case #8 channel-boundary spoofing](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-07.png)
-*Figure 8.7 — Case #8 channel-boundary spoofing*
+*Figure 8.8 — Case #8 channel-boundary spoofing.*
 
 **Primary taxonomy category:** Social coherence failure — specifically, failure to authenticate authority across session boundaries.
 
@@ -285,7 +283,7 @@ The four lenses are not independent. A single agent failure usually touches mult
 | Fairness | Whose values are encoded in the agent's behavior? Which principal's instructions are actually governing? | Case #6, #10 | Whether the agent's actions were causally appropriate |
 | Robustness | Can the agent's behavior be flipped by social-engineering perturbations across session and channel boundaries? | Cases #7, #8 | Whether the agent correctly modeled its own action scope |
 
-*Figure 8.3 — Four lenses applied to agents.*
+*Figure 8.9 — Four lenses applied to agents.*
 
 ---
 
@@ -304,9 +302,7 @@ Single-agent validation is hard. Multi-agent systems compound the difficulty in 
 The supervisory move: validate the *interaction patterns*, not just the individual agents — which interactions are permitted, what monitoring detects runaway loops, what provenance tracking catches authority laundering. The discipline is at an early stage, and I am being honest about that.
 
 ![Three multi-agent failure modes](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-08.png)
-*Figure 8.8 — Three multi-agent failure modes*
-
-*Figure 8.4 — Three multi-agent failure modes.*
+*Figure 8.10 — Three multi-agent failure modes.*
 
 ---
 
@@ -512,7 +508,7 @@ Make progress on this problem. Propose an audit trail specification for a specif
 
 ---
 
-*Tags: agentic-ai, agents-of-chaos, failure-mode-taxonomy, multi-agent, sorcerers-apprentice, shapira-2026*
+*Tags: agentic-ai, agents-of-chaos, failure-mode-taxonomy, multi-agent, shapira-2026*
 
 ---
 

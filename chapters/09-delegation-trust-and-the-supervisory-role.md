@@ -303,7 +303,7 @@ The next chapter pivots from the pipeline to the *communication* of what the pip
 
 **Glimmer 9.1 — Build your delegation map**
 
-1. Take your own research project (Project v2.0, submitted at the midterm milestone). The project is the case.
+1. Take your own casebook project as it stands so far. The project is the case.
 2. Decompose the project's validation pipeline into discrete steps. Aim for between 8 and 20 steps. Specifically: data ingestion, EDA, model evaluation, fairness analysis, robustness testing, agentic-system validation if applicable, communication, decision.
 3. For each step, apply the five Boondoggle questions. Document your assessment and the delegation bucket.
 4. *Lock your prediction:* before constructing the delegation map, predict (a) how many steps will be Claude tasks, human tasks, and hybrids; (b) which step will have the most contested delegation; (c) which step's handoff condition will be hardest to make testable.

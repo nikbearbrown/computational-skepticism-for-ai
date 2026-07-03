@@ -210,7 +210,7 @@ So we have: one true positive, and about one hundred false positives. One hundre
 A precision note, since this chapter's whole brand is precision about numbers: "99% accurate" is doing double duty above. I used it as both the true-positive rate and the true-negative rate. Those are two different numbers — *sensitivity* and *specificity* — and a real test has two, not one. The loose shortcut is standard in textbooks, and I keep it here because it makes the counting clean, but I am flagging it because a sharp reader should catch a book that warns against decorative numbers using one of its own.
 
 ![Most positive results come from the large healthy population, not the tiny sick one. Even an excellent test produces mostly false positives when the base rate is low.](../images/02-probability-uncertainty-and-the-confidence-illusion-fig-05.png)
-*Figure 2.5 — Population grid of 10,000 dots arranged as a*
+*Figure 2.5 — Most positive results come from the large healthy population, not the tiny sick one; even an excellent test yields mostly false positives at a low base rate.*
 
 Now, isn't that something? The test is doing exactly what its specification said it would do. The number on the box is honest. Nothing is broken. And yet your intuition was off by two orders of magnitude.
 
@@ -292,7 +292,7 @@ Whenever the positive class is rare, even an excellent detector produces mostly 
 
 What happens in practice when you build a system like this and deploy it? The analysts or on-call engineers get a flood of alarms. They check the first few. False. They check the next few. False again. Within a week or two they learn, in their bones, that the alarms do not mean anything. They start ignoring them. They miss the real one when it comes. Not because they are careless. Because the system's signal-to-noise ratio was too low, by a structural mathematical fact that nobody warned them about during design.
 
-The Epic Sepsis Model from Chapter 1 is this structure caught in the act: an external validation found it flagged a large fraction of hospitalized patients as at-risk while sepsis is far rarer than the alert rate, so most of those alerts were false — exactly the base-rate arithmetic above, at hospital scale, generating the alert fatigue clinicians reported. [verify: confirm the specific alert-rate and sensitivity figures and the Wong et al. 2021 *JAMA Internal Medicine* external-validation citation before publication.]
+The Epic Sepsis Model from Chapter 1 is this structure caught in the act: an external validation generated an alert on 18% of all hospitalized patients while sepsis is far rarer than that alert rate, so most of those alerts were false — and the model still missed sepsis in 67% of the patients who had it (sensitivity 33%) — exactly the base-rate arithmetic above, at hospital scale, generating the alert fatigue clinicians reported (Wong et al., "External Validation of a Widely Implemented Proprietary Sepsis Prediction Model in Hospitalized Patients," *JAMA Internal Medicine* 181, no. 8, 2021).
 
 This is why we started with base rates. Not because the math is hard. Because forgetting the prior is the single most common mistake in interpreting probabilistic system outputs, and the consequences are not theoretical.
 
@@ -332,10 +332,10 @@ Engineers translate this into our own language. The training set is the past. Th
 
 Every machine learning deployment is a bet that the world you operate in looks enough like the world you trained on that the patterns you learned still apply. Sometimes the bet pays off and pays off for years. Sometimes the world quietly changes — the inputs drift, the base rates move, the relationship between cause and effect mutates — and the model keeps producing confident outputs that have come unstuck from reality. The model does not know. It cannot know. Its confidence is calculated under the assumption that the world is the world it learned.
 
-There is a documented case from the early pandemic. Models trained on pre-2020 medical imaging were deployed in 2021. The imaging signatures had been altered by COVID's effect on the lungs and on the population that ended up in scanners. The models produced confident predictions that no longer matched the underlying disease distribution. [Verify: DeGrave et al. 2021, *Nature Machine Intelligence* — confirm specific citation and scope before publication.]
+There is a documented case from the early pandemic. Models trained on pre-2020 medical imaging were deployed in 2021. The imaging signatures had been altered by COVID's effect on the lungs and on the population that ended up in scanners. The models produced confident predictions that no longer matched the underlying disease distribution (DeGrave, Janizek, and Lee, "AI for radiographic COVID-19 detection selects shortcuts over signal," *Nature Machine Intelligence* 3, 2021).
 
 ![The model's confidence scores do not move when the world moves. The dashboards stay green. Detection requires watching actual outcomes — not just model outputs.](../images/02-probability-uncertainty-and-the-confidence-illusion-fig-07.png)
-*Figure 2.7 — Two overlapping bell curves on a shared x-axis*
+*Figure 2.7 — The model does not update its confidence when the world moves; detecting the shift requires watching actual outcomes, not model outputs.*
 You will not, in general, be able to detect this kind of drift just by watching the model's outputs. The model continues to look confident through the shift; the shape of its outputs stays similar; the dashboards stay green. Detection requires watching the inputs, watching the outputs, and — most of all — watching the actual outcomes the model was supposed to predict, when those outcomes eventually become observable. Most deployments do not budget for that. Most find out about distribution shift through the harm.
 
 Hume on the page, in our register: the model's track record tells you about the past. The honest question is *what would have to remain true about the deployment for the track record to keep being informative?* If you cannot answer that, you do not actually trust the track record. You just have not noticed yet.
@@ -397,7 +397,7 @@ When either requirement fails, the theorem fails, and the failure is usually qui
 Power-law distributions are common in real systems: wealth, file sizes, network connection counts, earthquake magnitudes, training-loss spikes during model fitting, and the cost of a deployed AI system being wrong about a single decision.
 
 ![In the heavy-tailed regime, the next observation can move your average dramatically no matter how many observations you have already collected.](../images/02-probability-uncertainty-and-the-confidence-illusion-fig-09.png)
-*Figure 2.9 — Two distributions overlaid on the same x-axis*
+*Figure 2.9 — In the heavy-tailed regime, the next observation can move your average dramatically, no matter how many you have already collected.*
 
 In a heavy-tailed regime, the sample mean does not settle down as you collect more data. You compute the average of a thousand observations and the next observation moves the average by a lot. Confidence intervals computed under Gaussian assumptions are nonsense here — but they look exactly like normal confidence intervals, so you have to know to be suspicious.
 

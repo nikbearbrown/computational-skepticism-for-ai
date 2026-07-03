@@ -57,7 +57,7 @@ That is also the move that lets meaning and intentionality inherit the bite. I d
 
 **Limit 1: Meaning.** The system processes symbols. The symbols have referents in the world. The system has no representation of the referents. It manipulates the symbols; the meaning of the symbols — what they refer to in the world the user inhabits — is supplied by the user, not the system.
 
-This is contested. There is serious literature arguing that contemporary large multimodal models acquire something like meaning through embedding structure and grounding via diverse modalities. [Verify: Bender et al. 2021 stochastic-parrots framing; Chalmers 2023 on consciousness and large language models; Searle 1980, *Minds, Brains, and Programs*.] I do not consider that question settled. But the contestation does not need to be resolved for the operational consequence to bind. *The system's behavior is inconsistent with the user's expectation of meaning often enough that the supervisor has to perform meaning-attribution for the system, and the supervisor cannot offload that work to the system itself.*
+This is contested. There is serious literature arguing that contemporary large multimodal models acquire something like meaning through embedding structure and grounding via diverse modalities (Bender et al., 2021, the stochastic-parrots framing; Chalmers, 2023, on consciousness and large language models; and against, Searle, 1980, *Minds, Brains, and Programs*). I do not consider that question settled. But the contestation does not need to be resolved for the operational consequence to bind. *The system's behavior is inconsistent with the user's expectation of meaning often enough that the supervisor has to perform meaning-attribution for the system, and the supervisor cannot offload that work to the system itself.*
 
 When the system's picture of the world and the user's picture of the world align, the deployment looks fine. When they come apart — at the boundary of the data, at the edges of the training distribution, in cases the system has never seen — the user is still reading the output as a statement about the world, and the system is still producing symbols. The gap between those two activities is the failure mode.
 
@@ -241,9 +241,7 @@ Used well, AI is the most powerful cognitive tool humanity has built. Used as a 
 The capacities required to use AI well are precisely the capacities AI cannot replicate: problem formulation, plausibility auditing, interpretive judgment under stakes, and accountability for the consequences. These are not luxuries or checkboxes. They are the work. The tools in this book — the verb taxonomy, the chart-review discipline, the peer critique protocol, the prediction-lock, the delegation maps, the categorical-limit analysis — are all instruments for exercising these capacities more reliably in the presence of an extraordinarily fluent AI output stream that will, without intervention, produce fluent-sounding answers to questions it cannot answer, conclusions warranted by evidence it has not examined, and confident charts that hide the uncertainty they were supposed to show.
 
 ![The extended mind has always had this structure: the tool extends a specific capacity; the mind supplies the judgment the tool cannot. AI is the most powerful entry in the series. Its power makes the confusion between extension and replacement more dangerous, not less.](../images/13-the-limits-of-ai-what-the-tools-cannot-do-fig-02.png)
-*Figure 13.2 — Extended mind catalog *
-
-*Figure 13.1 — The extended mind: the catalog named.*
+*Figure 13.2 — The extended mind: the catalog named.*
 
 ---
 
@@ -277,7 +275,7 @@ For the third and final time, you take the same form of forecasting questions. Y
 The expected pattern across the three baselines:
 
 - *First baseline (Chapter 2):* most students score in the 0.4–0.6 range. Systematically overconfident.
-- *Second baseline (Chapter 4):* most students improve to the 0.6–0.75 range. Eight weeks of supervisory practice has begun to shift the stance toward uncertainty.
+- *Second baseline (Chapter 4):* most students improve to the 0.6–0.75 range. Several chapters of supervisory practice have begun to shift the stance toward uncertainty.
 - *Third baseline (this chapter):* most students reach the 0.7–0.85 range. Calibration is improving but rarely reaches 0.9 — overconfidence is sticky.
 
 *Treat those specific ranges as an **[verify]** expected pattern, not a measured finding — there is no data source behind the exact numbers. Check your own trajectory against the shape of the claim (overconfident at first, improving with practice, rarely reaching 0.9), not against the particular figures.*
@@ -295,6 +293,33 @@ If a development emerged that demonstrably closed one of the three categorical l
 On the cognitive profile: if AI systems demonstrated calibrated metacognitive monitoring — in the Hampton sense, where a measured internal certainty signal asymmetrically predicts accuracy on novel material — I would update on the plausibility auditing weakness. The current evidence is that language models produce the language of uncertainty without the underlying mechanism. A clean demonstration of the contrary would move the boundary.
 
 The open problem I most want to flag: I do not know how, at scale, to make the limits visible to affected parties in a form they can act on. Disclosure-style approaches are partial; they often produce the appearance of transparency without the practical effect. The general problem of communicating AI limits to non-technical affected parties, at the moment of consequential decisions, is open.
+
+---
+
+## Chapter summary
+
+You can now do seven things you could not do before this chapter — and that the book has been building toward.
+
+You can name the three categorical limits — meaning, intentionality, the data-world gap — explain why capability scaling does not close them, and trace each limit back to where you first encountered its operational version earlier in the book. You can state what Turing's argument actually claims and what it does not, and do the same for Searle's, and catch the overclaim when you encounter it. You can distinguish deployments where the limits require skepticism as a safety mechanism from those where skepticism is methodology — and specify the five components of the engineering practice the safety-mechanism cases demand. You can design and run a rapid prototype test for a load-bearing deployment assumption, pre-registered and gap-analyzed.
+
+You can map AI's cognitive profile against the three-tier framework — where it is genuinely strong, where it is structurally weak, and where it is absent — and translate that profile directly into a delegation policy for your own work. You can identify the moment in any AI-assisted workflow where the human picks up the accountability chain and recognize when that moment has been skipped. And you can stake a position on a specific deployment — proceed, modify, defer, refuse — using the verb taxonomy, and identify what would change your mind.
+
+The system passed every test. The engineers designed the wrong tests. You are now in a position to design different tests, to name the limits the tests cannot reach, to hold the authority to refuse when the limits and the stakes together make refusal the right call, and to understand why the tool in your hand is a tool and not a replacement for the judgment it cannot supply.
+
+---
+
+## Connections to the research project
+
+The course's last week is the research-project presentations. Your research project (Version 4.0, the final version) is the operational form of the whole book:
+
+- The validation pipeline (Chs. 3–8), with the delegation map (Ch. 9)
+- The findings, communicated visually (Ch. 10) and in prose (Ch. 11), with calibrated verbs and named uncertainty
+- The accountability framework (Ch. 12), with the regime under which the deployment would operate
+- The categorical-limit analysis (this chapter), with your position on whether the deployment should proceed
+- The Frictional record — the prediction-lock journal (Ch. 1) — retained as supervisory log
+- The AI Use Disclosure (Ch. 9), formatted as evidence of your supervisory work
+
+The final paper is the layered writeup. The presentation is the Living Deck (Ch. 10) with the changelog visible. The defense is the verb taxonomy in real time.
 
 ---
 
@@ -318,22 +343,9 @@ The system passed every test. The engineers designed the wrong tests. Three pati
 
 You can be the engineer who designs the right tests. You can be the validator who recognizes the limit and decides the deployment should not proceed in its absence. You can be the supervisor who has the authority to refuse, and who uses it, and who builds the infrastructure for that authority to be real.
 
+There is no Chapter 14.
+
 Go do the work.
-
----
-
-## Connections to the research project
-
-There is no Chapter 14. The course's last week is the research-project presentations. Your research project (Version 4.0, the final version) is the operational form of the whole book:
-
-- The validation pipeline (Chs. 3–8), with the delegation map (Ch. 9)
-- The findings, communicated visually (Ch. 10) and in prose (Ch. 11), with calibrated verbs and named uncertainty
-- The accountability framework (Ch. 12), with the regime under which the deployment would operate
-- The categorical-limit analysis (this chapter), with your position on whether the deployment should proceed
-- The Frictional record — the prediction-lock journal (Ch. 1) — retained as supervisory log
-- The AI Use Disclosure (Ch. 9), formatted as evidence of your supervisory work
-
-The final paper is the layered writeup. The presentation is the Living Deck (Ch. 10) with the changelog visible. The defense is the verb taxonomy in real time.
 
 ---
 
@@ -381,17 +393,6 @@ The final paper is the layered writeup. The presentation is the Living Deck (Ch.
 
 ---
 
-## Chapter summary
-
-You can now do seven things you could not do before this chapter — and that the book has been building toward.
-
-You can name the three categorical limits — meaning, intentionality, the data-world gap — explain why capability scaling does not close them, and trace each limit back to where you first encountered its operational version earlier in the book. You can state what Turing's argument actually claims and what it does not, and do the same for Searle's, and catch the overclaim when you encounter it. You can distinguish deployments where the limits require skepticism as a safety mechanism from those where skepticism is methodology — and specify the five components of the engineering practice the safety-mechanism cases demand. You can design and run a rapid prototype test for a load-bearing deployment assumption, pre-registered and gap-analyzed.
-
-You can map AI's cognitive profile against the three-tier framework — where it is genuinely strong, where it is structurally weak, and where it is absent — and translate that profile directly into a delegation policy for your own work. You can identify the moment in any AI-assisted workflow where the human picks up the accountability chain and recognize when that moment has been skipped. And you can stake a position on a specific deployment — proceed, modify, defer, refuse — using the verb taxonomy, and identify what would change your mind.
-
-The system passed every test. The engineers designed the wrong tests. You are now in a position to design different tests, to name the limits the tests cannot reach, to hold the authority to refuse when the limits and the stakes together make refusal the right call, and to understand why the tool in your hand is a tool and not a replacement for the judgment it cannot supply.
-
-Go do the work.
 
 ---
 
@@ -470,7 +471,7 @@ End with the supervisor's claim, in your own voice (not generated): the casebook
 
 **Connection to previous chapters:** Every chapter has produced an artifact in the casebook. This chapter integrates them into the deliverable. The verb taxonomy (Ch 11) audits the memo. The accountability map (Ch 12) names the owner. The delegation map (Ch 9) specifies the proposed deployment constraints. The case taxonomy (Ch 8) is the evidence. The prediction-locks (Chapters 2–4) are the provenance.
 
-**Preview of next chapter:** There is no next chapter. The next thing is to send the casebook to the deployment-review committee, the system's developers, and (if the agent is publicly deployed) to the appropriate accountability venue. The book closes here; your supervisory work begins.
+**Preview of next chapter:** There is no next chapter. The next thing is to send the casebook to the deployment-review committee, the system's developers, and (if the agent is publicly deployed) to the appropriate accountability venue. Your supervisory work begins now.
 
 ---
 

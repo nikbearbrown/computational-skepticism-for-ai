@@ -103,7 +103,7 @@ That is the whole theorem, and it took four lines of algebra. Kleinberg, Mullain
 I want you to sit with this for a moment. The three definitions all sound reasonable. They cannot all hold. *One of them has to give.* And which one gives is not a technical question. It is a claim about which error you are less willing to make, whom you are willing to wrong, and who bears the cost. That question has a social answer, not a mathematical one. The engineer who treats it as pure optimization is still choosing — they are choosing whatever their loss function encodes — while appearing neutral. That is the move this chapter exists to make impossible.
 
 ![You can satisfy any two. The third breaks. The triangle is the theorem.](../images/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-01.png)
-*Figure 7.1 — Three nodes (demographic parity, equalized odds, calibration parity)*
+*Figure 7.1 — You can satisfy any two; the third breaks. The triangle is the theorem.*
 
 **Calibration-satisfying version (equalized-odds violation visible)**
 
@@ -248,7 +248,7 @@ Take a loan-default model with structure $A$ (race) $\to$ $E$ (educational crede
 The remedy is to drop variables downstream of the sensitive attribute along the paths you deem illegitimate. And there is the invoice. *Which* paths are illegitimate is a values question the math cannot answer — worse, you cannot even pose it without first committing to a full causal graph, more than the data alone will ever hand you. Its power and its cost are one fact: counterfactual fairness separates a discriminatory path from a legitimate mediated one only if you first declare, on your own authority, which is which. The third exit lands where the first two did — the impossibility becomes a choice you have to sign, only now the choice is a directed graph of the world rather than a metric.
 
 ![Observational metrics conflate all three paths. Counterfactual fairness targets specific paths. The choice of which paths are illegitimate is a values decision.](../images/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-04.png)
-*Figure 7.4 — Causal graph with nodes: A (sensitive attribute /*
+*Figure 7.4 — Observational metrics conflate all paths; counterfactual fairness targets specific ones, and which paths are illegitimate is a values decision.*
 
 ### What causal fairness requires that statistical fairness does not
 
@@ -284,7 +284,7 @@ $$GE(2) = \frac{1}{2N\mu^2} \sum_{i=1}^{N} (b_i - \mu)^2 = \frac{1}{2}\left(\fra
 The parameter $\alpha$ tunes sensitivity: low $\alpha$ weights differences at the bottom of the distribution, high $\alpha$ weights differences at the top. Note already that choosing $\alpha$ is choosing whose unfairness counts more — the exit has a values dial built into it before you've computed anything.
 
 ![The α parameter shifts attention across the distribution. Low α catches inequity at the bottom; high α catches it at the top.](../images/07-fairness-metrics-choosing-a-definition-and-defending-it-fig-05.png)
-*Figure 7.5 — Chart showing the GE index for the same*
+*Figure 7.5 — The alpha parameter shifts attention across the distribution: low alpha catches inequity at the bottom, high alpha at the top.*
 
 ### The decomposition
 
