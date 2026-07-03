@@ -1,0 +1,71 @@
+<svg viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-title-13-04">
+  <title id="fig-title-13-04">The Epic Sepsis Model's circular signal</title>
+  <desc>A cycle: a clinician suspects sepsis and orders a blood culture; the trace enters the EHR; the model reads the trace as a feature and fires a sepsis-risk alert, which lands with the clinician who already suspected. The return arrow is confirmatory, not early. Internal validation scores this loop as high accuracy. The marketed path, warning before suspicion forms, is shown greyed.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#C8102E"/>
+    </marker>
+    <marker id="arrow-grey" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#ADADAD"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="700" height="480" fill="#FFFFFF"/>
+
+  <text x="32" y="48" font-family="'EB Garamond', 'Garamond', Georgia, serif" font-size="16" fill="#2a1a0e">The Epic Sepsis Model&#8217;s circular signal</text>
+  <text x="32" y="66" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" fill="#545454">A model that learned to confirm suspicion, not form it.</text>
+
+  <!-- 1 Clinician suspects (top) -->
+  <rect x="200" y="96" width="210" height="52" fill="#FFFFFF" stroke="#2a1a0e" stroke-width="1"/>
+  <text x="305" y="118" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">1 &#183; Clinician suspects sepsis</text>
+  <text x="305" y="134" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">the judgment forms here</text>
+
+  <!-- arrow 1 -> 2 -->
+  <path d="M 410 122 C 480 130, 520 160, 528 200" fill="none" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 2 Blood culture (right) -->
+  <rect x="440" y="204" width="200" height="64" fill="#FFFFFF" stroke="#2a1a0e" stroke-width="1"/>
+  <text x="540" y="226" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">2 &#183; Blood culture ordered</text>
+  <text x="540" y="242" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">responsive-workflow trace</text>
+  <text x="540" y="256" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">enters the EHR</text>
+
+  <!-- arrow 2 -> 3 -->
+  <path d="M 528 268 C 520 310, 480 336, 414 344" fill="none" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 3 Model reads trace (bottom) -->
+  <rect x="200" y="330" width="210" height="60" fill="#FFFFFF" stroke="#2a1a0e" stroke-width="1"/>
+  <text x="305" y="352" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">3 &#183; Model reads the trace</text>
+  <text x="305" y="368" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">as a feature</text>
+
+  <!-- arrow 3 -> 4 -->
+  <path d="M 196 360 C 130 352, 90 322, 82 282" fill="none" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 4 Alert (left) -->
+  <rect x="32" y="212" width="160" height="56" fill="#FFFFFF" stroke="#2a1a0e" stroke-width="1"/>
+  <text x="112" y="234" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">4 &#183; Alert fires:</text>
+  <text x="112" y="250" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">&#8220;sepsis risk&#8221;</text>
+
+  <!-- RED return arrow 4 -> 1 -->
+  <path d="M 112 208 C 120 160, 160 132, 196 124" fill="none" stroke="#C8102E" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+  <text x="60" y="160" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" font-weight="600" fill="#C8102E">confirmatory,</text>
+  <text x="60" y="175" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" font-weight="600" fill="#C8102E">not early</text>
+
+  <!-- greyed intended path: model warns BEFORE suspicion -->
+  <path d="M 305 326 C 305 260, 305 200, 305 156" fill="none" stroke="#ADADAD" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-grey)"/>
+  <text x="315" y="250" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#ADADAD">marketed path: warn</text>
+  <text x="315" y="263" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#ADADAD">BEFORE suspicion forms</text>
+  <text x="315" y="276" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#ADADAD">(not what was learned)</text>
+
+  <!-- validation side panel -->
+  <rect x="460" y="330" width="208" height="76" fill="#F5F5F5" stroke="#D4D4D4" stroke-width="1"/>
+  <text x="472" y="352" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" fill="#2a1a0e">Internal validation scores</text>
+  <text x="472" y="368" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" fill="#2a1a0e">this loop as high accuracy &#8212;</text>
+  <text x="472" y="384" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" fill="#2a1a0e">the premise flaw is invisible</text>
+  <text x="472" y="398" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" fill="#2a1a0e">from inside the data frame.</text>
+
+  <!-- footer -->
+  <text x="32" y="446" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" fill="#545454">Pattern reported in external validation (Wong et al., JAMA Internal Medicine, 2021).</text>
+</svg>

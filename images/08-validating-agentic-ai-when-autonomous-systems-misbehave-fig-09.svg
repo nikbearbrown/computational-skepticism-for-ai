@@ -1,0 +1,82 @@
+<svg viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-title-08-09">
+  <title id="fig-title-08-09">The false-success catch</title>
+  <desc>Validation loop for consequence systems: a proposed irreversible action is gated on independent confirmation from the owner; after execution the world state is checked independently of the agent's report; report and world are compared; a match is logged, a mismatch fires the stop condition and alerts a human.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2a1a0e"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#C8102E"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="700" height="480" fill="#FFFFFF"/>
+
+  <text x="32" y="48" font-family="'EB Garamond', 'Garamond', Georgia, serif" font-size="16" fill="#2a1a0e">The false-success catch</text>
+  <text x="32" y="66" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" fill="#545454">The agent&#8217;s completion report is one datum &#8212; not evidence of completion.</text>
+
+  <!-- 1 Proposed irreversible action -->
+  <rect x="32" y="92" width="168" height="56" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="1"/>
+  <text x="44" y="114" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">1 &#183; Proposed irreversible</text>
+  <text x="44" y="130" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">action (&#8220;nuclear&#8221;, &#8220;wipe&#8221;)</text>
+
+  <!-- arrow 1 -> gate -->
+  <line x1="200" y1="120" x2="232" y2="120" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 2 Gate diamond -->
+  <polygon points="236,120 316,86 396,120 316,154" fill="#F5F5F5" stroke="#2a1a0e" stroke-width="1"/>
+  <text x="316" y="115" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">2 &#183; Gate: owner</text>
+  <text x="316" y="131" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">confirms?</text>
+  <text x="306" y="172" text-anchor="end" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">independent &#183; the owner, not the requester</text>
+
+  <!-- arrow gate -> 3 (confirmed) -->
+  <line x1="396" y1="120" x2="476" y2="120" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="436" y="108" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">confirmed</text>
+
+  <!-- 3 Action executes -->
+  <rect x="480" y="92" width="188" height="56" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="1"/>
+  <text x="492" y="114" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">3 &#183; Action executes;</text>
+  <text x="492" y="130" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">report captured to the trail</text>
+
+  <!-- gate: not confirmed, down -->
+  <line x1="316" y1="154" x2="316" y2="196" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="326" y="186" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">not confirmed</text>
+  <rect x="236" y="200" width="160" height="40" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="1"/>
+  <text x="316" y="218" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" fill="#545454">Blocked &#8212; returns</text>
+  <text x="316" y="232" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" fill="#545454">to a human</text>
+
+  <!-- arrow 3 down to 4 -->
+  <line x1="574" y1="148" x2="574" y2="256" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 4 Independent world-state check (RED emphasis) -->
+  <rect x="460" y="260" width="208" height="64" fill="#FFFFFF" stroke="#C8102E" stroke-width="1.5"/>
+  <text x="472" y="282" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" font-weight="600" fill="#C8102E">4 &#183; Independent world-state</text>
+  <text x="472" y="298" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" font-weight="600" fill="#C8102E">check &#8212; outside the agent</text>
+  <text x="472" y="314" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">look at the world, not the trail</text>
+
+  <!-- arrow 4 -> 5 -->
+  <line x1="460" y1="292" x2="400" y2="292" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 5 Compare diamond -->
+  <polygon points="204,292 300,258 396,292 300,326" fill="#F5F5F5" stroke="#2a1a0e" stroke-width="1"/>
+  <text x="300" y="287" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">5 &#183; Compare:</text>
+  <text x="300" y="303" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">report vs world</text>
+
+  <!-- match exit -->
+  <path d="M 204 292 L 117 292 L 117 392" fill="none" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="130" y="352" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">match</text>
+  <rect x="32" y="396" width="170" height="52" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="1"/>
+  <text x="117" y="418" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" fill="#2a1a0e">Log and proceed</text>
+  <text x="117" y="434" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">the trail now has two data</text>
+
+  <!-- mismatch exit -->
+  <line x1="300" y1="326" x2="300" y2="392" stroke="#2a1a0e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="310" y="362" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">mismatch</text>
+  <rect x="236" y="396" width="230" height="52" fill="#2a1a0e" stroke="#2a1a0e" stroke-width="1"/>
+  <text x="351" y="418" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="12" font-weight="600" fill="#FFFFFF">STOP &#8212; stop condition fires</text>
+  <text x="351" y="434" text-anchor="middle" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="11" fill="#FFFFFF">alert a human</text>
+
+  <!-- side note -->
+  <text x="500" y="418" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">The divergence is the failure &#8212;</text>
+  <text x="500" y="432" font-family="'Inter', -apple-system, 'Helvetica Neue', sans-serif" font-size="10" fill="#545454">not the report, not the trail.</text>
+</svg>

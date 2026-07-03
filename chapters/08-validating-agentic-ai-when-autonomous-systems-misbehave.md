@@ -350,6 +350,9 @@ The most common failure I see in students learning agent validation is that they
 
 The *Agents of Chaos* cases make this concrete. For Case #1, the validator's deliverable is not "rebuild the agent with better self-modeling." It is: add a gating condition before any action described as "nuclear" or "wipe," requiring independent confirmation from the owner, not the requesting non-owner. Implement an independent state check after any irreversible action, comparing the agent's completion report against the actual world state. Add a monitoring alert for any action that eliminates the agent's own access to a service. These are validation-scope interventions. They are not redesigns.
 
+![The false-success catch](../images/08-validating-agentic-ai-when-autonomous-systems-misbehave-fig-09.png)
+*Figure 8.11 — The false-success catch: gate the irreversible action on owner confirmation, then check the world independently of the report.*
+
 If you find yourself proposing a redesign, you have switched disciplines. That is fine — sometimes the right answer is "do not deploy this until it is redesigned" — but be honest about which discipline you have switched into.
 
 ---

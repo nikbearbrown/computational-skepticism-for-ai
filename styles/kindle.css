@@ -153,7 +153,8 @@ hr {
   width: 60%;
 }
 
-/* ------------------------------------------------------------------ Tables */
+/* ------------------------------------------------------------------ Tables
+   Monochrome grey: white-on-black header, white/grey zebra body rows. */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -163,22 +164,35 @@ table {
   break-inside: avoid;
 }
 
+thead tr {
+  background: #1a1a1a;
+}
+
 thead th {
-  background: #f5f2ee;
-  border-bottom: 1px solid #1a1714;
-  padding: 0.4em 0.5em;
+  background: #1a1a1a;
+  color: #ffffff;
+  border: none;
+  padding: 0.45em 0.6em;
   text-align: left;
   font-weight: bold;
 }
 
+tbody tr {
+  background: #ffffff;
+}
+
+tbody tr:nth-child(even) {
+  background: #ececec;
+}
+
 tbody td {
-  border-bottom: 1px solid #c8c4c0;
-  padding: 0.4em 0.5em;
+  border-bottom: 1px solid #d9d9d9;
+  padding: 0.45em 0.6em;
   vertical-align: top;
 }
 
 tbody tr:last-child td {
-  border-bottom: none;
+  border-bottom: 1px solid #1a1a1a;
 }
 
 /* ------------------------------------------------------------------ Images */
