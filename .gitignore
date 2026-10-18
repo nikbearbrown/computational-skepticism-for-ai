@@ -39,3 +39,5 @@ lectures/**/remotion/
 *.swp
 __pycache__/
 *.pyc
+# Canvas exports are never pushed.
+*.imscc
