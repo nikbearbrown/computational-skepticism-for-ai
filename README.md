@@ -44,3 +44,5 @@ This is the public working manuscript (2026 edition), not a finished release or 
 ## For readers evaluating an AI pilot
 
 Start with [the toolkit](chapters/01-the-skeptics-toolkit.md) and [data validation](chapters/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset.md). Use [bias](chapters/06-bias-where-it-enters-and-who-is-responsible.md) and [fairness metrics](chapters/07-fairness-metrics-choosing-a-definition-and-defending-it.md) to choose what to compare, then use [delegation](chapters/09-delegation-trust-and-the-supervisory-role.md) and [accountability](chapters/12-accountability-who-is-responsible-when-the-system-fails.md) to keep approval with a named human. These chapters provide methods and teaching examples; they do not show that any specific pilot has passed.
+
+To apply the book to an evaluation packet, use the separate [Computational Skepticism audit skill](https://github.com/nikbearbrown/computational-skepticism-skill).
