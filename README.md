@@ -2,60 +2,40 @@
 
 ## About the book
 
-A practical textbook from **Humanitarians AI Incorporated** on checking AI before people rely on it. Start with the claim, reconstruct what the evidence can support, test what could go wrong, and decide what needs human review.
+This 2026 working manuscript is for graduate engineering students and practitioners supervising work done with AI. Use a longitudinal casebook to reconstruct what evidence can support, design a test that can disagree with a fluent result, and make an accountable recommendation about what to approve or hold. Familiarity with software and reading empirical evidence helps; this is not an expert-reviewed or certification edition.
 
-This is the public working manuscript (2026 edition), not a finished release or a certification standard. You can read the chapters directly on GitHub. Reuse remains subject to the [book license](LICENSE.md).
+## Start reading
 
-For students, educators, and practitioners who need to evaluate whether an AI-assisted result is ready to use.
+Start with [The Skeptic's Toolkit](chapters/01-the-skeptics-toolkit.md). The [complete chapter guide](chapters/README.md) follows the intended reading order. An older [EPUB](output/computational-skepticism-for-ai.epub) and [HTML download](output/computational-skepticism-for-ai.html) are available; they are not the current manuscript.
 
-## Learning outcomes
+## Chapter guide
 
-- Turn a model output into testable claims and check the provenance and limits of its evidence.
-- Test robustness and compare fairness measures using explicit definitions and denominators.
-- Design human review and stop rules for an agent workflow, then communicate the uncertainty that remains.
+[Complete chapter guide](chapters/README.md).
 
-## Read the book
+**Before Chapter 1:** [Introduction](chapters/00-introduction.md), [Understanding Before Delegating](chapters/00a-agents-understanding-before-delegating.md) and [Agentic Loops](chapters/00b-agentic-loops.md). **After Chapter 13:** [Fundamental themes](chapters/97-fundamental-themes.md) and [back matter](chapters/99-back-matter.md).
 
-- [Front matter](chapters/00-frontmatter.md)
-- [Introduction](chapters/00-introduction.md)
+Use the 13 numbered files for reading order. The [renumbering note](RENUMBERING.md) records the adopted order; older [exports](output/README.md) and extracted exercises retain the earlier numbering and standalone Frictional Method chapter. Alternate drafts, [the editorial decision](FRICTIONAL-DECISION.md) and crosswalks are preserved, not included as additional numbered chapters.
 
-### Before delegating
+## How to teach or study it
 
-- [Agents: Understanding Before Delegating](chapters/00a-agents-understanding-before-delegating.md)
-- [Agentic Loops: Where Evidence Enters and Action Stops](chapters/00b-agentic-loops.md)
+Start with the toolkit and commit to a prediction or failure condition before seeing the output. Reconstruct the data and test robustness before assessing fairness or delegating actions. Build a running evidence record and end with a decision a reviewer can challenge. See the [plan of record](BLUEPRINT.md) and [casebook chain](CASEBOOK-CHAIN.md) for the proposed teaching sequence; the [exercise extraction](exercises/computational-skepticism-for-ai-exercises.md) still uses the older numbering, so match by title. For a separate evaluation packet, see the [audit skill](https://github.com/nikbearbrown/computational-skepticism-skill).
 
-### Foundations
+## What’s in this repo
 
-1. [The Skeptic's Toolkit](chapters/01-the-skeptics-toolkit.md): Turn a confident output into specific claims you can test.
-2. [Probability, Uncertainty, and the Confidence Illusion](chapters/02-probability-uncertainty-and-the-confidence-illusion.md): Calibrate confidence and distinguish evidence from a guess.
-3. [Data Validation: Reconstructing the Epistemic Frame Behind a Dataset](chapters/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset.md): Check provenance, missing data, definitions and denominators.
+| Resource | Link | Coverage | Status |
+| --- | --- | --- | --- |
+| Manuscript | [README.md](chapters/README.md) | 13 numbered chapters plus opening essays | Working manuscript; reference for planned rewrite |
+| Teaching plan | [BLUEPRINT.md](BLUEPRINT.md), [outline.md](outline.md), [CASEBOOK-CHAIN.md](CASEBOOK-CHAIN.md) | Blueprint, outline and longitudinal casebook | Proposed teaching sequence |
+| Slides | [INFO 7375 — Computational Skepticism for AI · Course Overview.pdf](presentations/INFO%207375%20%E2%80%94%20Computational%20Skepticism%20for%20AI%20%C2%B7%20Course%20Overview.pdf), [Botspeak — One Slide Per Chapter.pdf](presentations/Botspeak%20%E2%80%94%20One%20Slide%20Per%20Chapter.pdf), [01-the-skeptics-toolkit.dc.html](lectures/01-the-skeptics-toolkit/deck/01-the-skeptics-toolkit.dc.html), [STATUS.md](lectures/02-probability-uncertainty-and-the-confidence-illusion/STATUS.md) | 2 overview-style PDFs; Chapter 1 deck source; Chapter 2 plan and assets; Chapter 3 asset inventory | Not chapter decks for the whole book |
+| Exercises | [computational-skepticism-for-ai-exercises.md](exercises/computational-skepticism-for-ai-exercises.md) | 14 substantive blocks keyed to the older 14-chapter sequence | Match by title; not the current order |
+| Assessments and flashcards | [computational-skepticism-for-ai-assessments.md](assessments/computational-skepticism-for-ai-assessments.md), [computational-skepticism-for-ai-anki.md](anki/computational-skepticism-for-ai-anki.md) | Extracted files contain placeholder headings | Authored collections not found |
+| Figures | [images](images), [d3](d3) | 319 image files in images/ and 102 HTML figures in d3/; alternate formats not counted as separate concepts | Checked-in assets and interactive source |
+| Video material | [media-plan.md](media-plan.md), [video-ideas.md](vids/video-ideas.md), [youtube](youtube) | 33 imported beat sheets and 34 transcripts; plans and references | Rendered video files not found |
+| Code and workflows | [build.sh](build.sh), [README.md](scripts/README.md), [onet-project-description.md](ONET_Job_Trend_Analyzer/onet-project-description.md) | Book scripts and an O*NET project description/recipe | No verified live service or bundled observation dataset |
+| Book exports | [computational-skepticism-for-ai.epub](output/computational-skepticism-for-ai.epub), [computational-skepticism-for-ai.html](output/computational-skepticism-for-ai.html), [combined.md](output/combined.md) | 3 checked-in artifacts; older 14-chapter sequence | EPUB archive checked; export not current or a live site |
+| Standalone quizzes | — | — | Not found |
+| Separate answer keys | — | — | Not found |
 
-### Model behavior and equity
+## Credits, license, and corrections
 
-4. [Robustness: What "Understanding" Means When a Pixel Can Break the Model](chapters/04-robustness-what-understanding-means-when-a-pixel-can-break-the-model.md): Test whether evidence carries over when inputs change.
-5. [Model Explainability: Distinguishing Explanation from the Appearance of Explanation](chapters/05-model-explainability-distinguishing-explanation-from-the-appearance-of-explanation.md): Check whether an explanation supports the decision it accompanies.
-6. [Bias: Where It Enters and Who Is Responsible](chapters/06-bias-where-it-enters-and-who-is-responsible.md): Trace where unfairness can enter a pipeline.
-7. [Fairness Metrics: Choosing a Definition and Defending It](chapters/07-fairness-metrics-choosing-a-definition-and-defending-it.md): Choose and justify an equity measure, including its denominator.
-
-### Agents, supervision and communication
-
-8. [Validating Agentic AI: When Autonomous Systems Misbehave](chapters/08-validating-agentic-ai-when-autonomous-systems-misbehave.md): Distinguish a tool result or a reported success from a verified outcome.
-9. [Delegation, Trust, and the Supervisory Role](chapters/09-delegation-trust-and-the-supervisory-role.md): Define who can act, what a human must check and when to stop.
-10. [Visualization Under Validation: Honest, Misleading, and the Choices Between](chapters/10-visualization-under-validation-honest-misleading-and-the-choices-between.md): Check whether a graphic supports the inference it invites.
-11. [Communicating Uncertainty: Calibrating Claims to Evidence](chapters/11-communicating-uncertainty-calibrating-claims-to-evidence.md): Write claims that match the evidence and state what is unknown.
-
-### Accountability and limits
-
-12. [Accountability: Who Is Responsible When the System Fails?](chapters/12-accountability-who-is-responsible-when-the-system-fails.md): Assign a person to each consequential decision and escalation.
-13. [The Limits of AI: What the Tools Cannot Do](chapters/13-the-limits-of-ai-what-the-tools-cannot-do.md): Recognize when the system is not suited to the task.
-
-## Resources
-
-- [Fundamental themes](chapters/97-fundamental-themes.md)
-- [Back matter](chapters/99-back-matter.md)
-
-### Evaluating an AI pilot
-
-Start with [the toolkit](chapters/01-the-skeptics-toolkit.md) and [data validation](chapters/03-data-validation-reconstructing-the-epistemic-frame-behind-a-dataset.md). Use [bias](chapters/06-bias-where-it-enters-and-who-is-responsible.md) and [fairness metrics](chapters/07-fairness-metrics-choosing-a-definition-and-defending-it.md) to choose what to compare, then use [delegation](chapters/09-delegation-trust-and-the-supervisory-role.md) and [accountability](chapters/12-accountability-who-is-responsible-when-the-system-fails.md) to keep approval with a named human. These chapters provide methods and teaching examples; they do not show that any specific pilot has passed.
-
-To apply the book to an evaluation packet, use the separate [Computational Skepticism audit skill](https://github.com/nikbearbrown/computational-skepticism-skill).
+Repository metadata credits Humanitarians AI Incorporated as author and publisher; the [blueprint](BLUEPRINT.md) names Nik Bear Brown and Humanitarians AI for the reframed plan. See the [rights notice](LICENSE.md). Report a correction through the [repository issues](https://github.com/nikbearbrown/computational-skepticism-for-ai/issues) with the chapter, affected passage, and proposed evidence.

@@ -1,0 +1,5 @@
+# Claude liam verification matrix
+
+Imported production reference material in claude liam verification matrix. Not a rendered video.
+
+Start with [beat_sheet.json](beat_sheet.json). [Book overview](../../../../../../README.md).
