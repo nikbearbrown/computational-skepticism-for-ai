@@ -8,6 +8,10 @@ This 2026 working manuscript is for graduate engineering students and practition
 
 Start with [The Skeptic's Toolkit](chapters/01-the-skeptics-toolkit.md). The [complete chapter guide](chapters/README.md) follows the intended reading order. An older [EPUB](output/computational-skepticism-for-ai.epub) and [HTML download](output/computational-skepticism-for-ai.html) are available; they are not the current manuscript.
 
+## Companion research paper
+
+[Computational Skepticism for AI Pilot Assurance](paper/): a rough methods manuscript and a fictional workshop protocol. No study results yet.
+
 ## Chapter guide
 
 [Complete chapter guide](chapters/README.md).
